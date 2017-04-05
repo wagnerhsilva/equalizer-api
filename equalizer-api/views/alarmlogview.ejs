@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-us" ng-app="app">
+<head>
+    <% include partials/head %>
+</head>
+<body class="">
+<% include partials/header %>
+<div id="main" role="main">
+ <div id="ribbon">
+  <ol class="breadcrumb">
+   <li>Logfiles</li>
+   <li>AlarmLog</li>
+  </ol>
+ </div>
+ <div id="content">
+  <div class="row">
+   <article class="col-sm-12 col-md-12 col-lg-12">
+    <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+     <header>
+      <span class="widget-icon"><i class="fa fa-edit"></i></span>
+      <h2>AlarmLog </h2>
+     </header>
+     <div>
+      <div class="jarviswidget-editbox">
+      </div>
+      <div class="widget-body no-padding">
+       <ng-view></ng-view>
+      </div>
+     </div>
+    </div>
+   </article>
+
+  </div>
+  <script type="text/ng-template" id="/alarmlog.html">
+   <div class="table-responsive">
+    <table id="datatable_tabletools" class="table table-striped table-bordered table-hover">
+     <thead>
+     <tr>
+      <td>Data</td>
+      <td>Alarm/Event</td>
+     </tr>
+     </thead>
+     <tbody>
+     <tr ng-repeat="alog in alarmlogs" ng-class="rowClass(alog)" on-finish-render="ngRepeatFinished">
+      <td>{{ alog.data | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+      <td>{{ alog.conteudo }}</td>
+     </tr>
+     </tbody>
+    </table>
+   </div>
+
+  </script>
+  <script>
+      angular.module('app', ['ngRoute', 'ngResource'])
+      //---------------
+      // Services
+      //---------------
+          .factory('AlarmLog', ['$resource', function($resource){
+              return $resource('/alarmlog/:id', null, {
+                  'update': { method:'PUT' }
+              });
+          }])
+          //---------------
+          // Controllers
+          //---------------
+          .controller('AlarmLogController', ['$scope', 'AlarmLog', function ($scope, AlarmLog) {
+              $scope.alarmlogs = AlarmLog.query();
+          }])
+          .directive('onFinishRender', function ($timeout) {
+              return {
+                  restrict: 'A',
+                  link: function (scope, element, attr) {
+                      if (scope.$last === true) {
+                          $timeout(function () {
+                              setDataTable();
+                          });
+                      }
+                  }
+              }
+          })
+          //---------------
+          // Routes
+          //---------------
+          .config(['$routeProvider', function ($routeProvider) {
+              $routeProvider
+                  .when('/', {
+                      templateUrl: '/alarmlog.html',
+                      controller: 'AlarmLogController'
+                  })
+          }]);
+
+  </script>
+
+ </div>
+</div>
+<% include partials/footer %>
+<script type="text/javascript">
+    function setDataTable(){
+        $("#datatable_tabletools").dataTable({
+
+            // Tabletools options:
+            //   https://datatables.net/extensions/tabletools/button_options
+            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T>r>"+
+            "t"+
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "oLanguage": {
+                "sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
+            },
+            "oTableTools": {
+                "aButtons": [
+                    "copy",
+                    "csv",
+                    "xls",
+                    {
+                        "sExtends": "pdf",
+                        "sTitle": "SmartAdmin_PDF",
+                        "sPdfMessage": "SmartAdmin PDF Export",
+                        "sPdfSize": "letter"
+                    },
+                    {
+                        "sExtends": "print"
+                    }
+                ],
+                "sSwfPath": "smartadmin/js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+            },
+            "autoWidth" : true
+        });
+    }
+</script>
+</body>
+</html>

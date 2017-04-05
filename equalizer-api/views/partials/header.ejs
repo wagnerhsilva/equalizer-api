@@ -1,0 +1,103 @@
+<!-- HEADER -->
+<header id="header">
+    <div id="logo-group">
+
+        <!-- PLACE YOUR LOGO HERE -->
+        <span id="logo">
+                <img src="smartadmin/img/logo.png" alt="Equalizer">
+            </span>
+        <!-- END LOGO PLACEHOLDER -->
+    </div>
+    <!-- pulled right: nav area -->
+    <div class="pull-right">
+
+        <!-- collapse menu button -->
+        <div id="hide-menu" class="btn-header pull-right">
+            <span> <a href="smartadmin/javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
+        </div>
+        <!-- end collapse menu -->
+        <!-- #MOBILE -->
+        <!-- Top menu profile link : this shows only when top menu is active -->
+        <!-- logout button -->
+        <div id="logout" class="btn-header transparent pull-right">
+            <span> <a href="/signout" title="Sign Out" data-action="userLogout" data-logout-msg="Você irá encerrar sua sessão."><i class="fa fa-sign-out"></i></a> </span>
+        </div>
+        <!-- fullscreen button -->
+        <div id="fullscreen" class="btn-header transparent pull-right">
+            <span> <a href="smartadmin/javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i class="fa fa-arrows-alt"></i></a> </span>
+        </div>
+        <!-- end fullscreen button -->
+
+    </div>
+    <!-- end pulled right: nav area -->
+
+</header>
+<!-- END HEADER -->
+<!-- Left panel : Navigation area -->
+<!-- Note: This width of the aside area can be adjusted through LESS variables -->
+<aside id="left-panel">
+
+    <!-- end user info -->
+    <!-- NAVIGATION : This navigation is also responsive-->
+    <nav>
+        <!-- User info -->
+        <div class="login-info">
+            <span>
+                <!-- User image size is adjusted inside CSS, it should stay as it -->
+
+                <a href="smartadmin/javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+                    <span>
+                        <%= username %>
+                    </span>
+                </a>
+
+            </span>
+        </div>
+        <!-- end user info -->
+
+        <ul>
+            <li class="top-menu-invisible">
+                <a href="#" title="Status"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Status</span></a>
+                <ul>
+                    <li class="">
+                        <a href="/home" title="Módulos"><span class="menu-item-parent">Módulos</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="top-menu-invisible">
+                <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Configuração</span></a>
+                <ul>
+                    <li class="">
+                        <a href="usuarioview" title="Gerenciamento de usuários"><span class="menu-item-parent">Gerenciamento de usuários</span></a>
+                    </li>
+                    <li class="">
+                        <a href="/home" title="Cadastro de e-mail"><span class="menu-item-parent">Cadastro de e-mail</span></a>
+                    </li>
+                    <li class="">
+                        <a href="redesegurancaview" title="Cadastro de dispositivo"><span class="menu-item-parent">Cadastro de dispositivo</span></a>
+                    </li>
+                    <li class="">
+                        <a href="/home" title="Configuração da bateria"><span class="menu-item-parent">Configuração da bateria</span></a>
+                    </li>
+                    <li class="">
+                        <a href="/home" title="Dashboard"><span class="menu-item-parent">Configuração de timeserver</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="active">
+                <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Logfiles</span></a>
+                <ul>
+                    <li class="active">
+                        <a href="alarmlogview" title="Alarme de eventos"><span class="menu-item-parent">Alarme de eventos</span></a>
+                    </li>
+                    <li class="">
+                        <a href="/home" title="DataLogger"><span class="menu-item-parent">DataLogger</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <span class="minifyme" data-action="minifyMenu">
+            <i class="fa fa-arrow-circle-left hit"></i>
+    </span>
+</aside>

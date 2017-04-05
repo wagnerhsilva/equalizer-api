@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en-us" ng-app="app">
+<head>
+    <% include partials/head %>
+</head>
+<body class="">
+<% include partials/header %>
+<div id="main" role="main">
+
+    <div id="ribbon">
+        <ol class="breadcrumb">
+            <li>Configuração</li>
+            <li>Rede & Segurança</li>
+        </ol>
+    </div>
+    <div id="content">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+
+                <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                    <header>
+                        <span class="widget-icon"><i class="fa fa-edit"></i></span>
+                        <h2>Rede & Segurança </h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <form id="smart-form-register" class="smart-form">
+
+                                <ng-view></ng-view>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+        <script type="text/ng-template" id="/redeseguranca.html">
+            <fieldset>
+                <section class="col-sm-6 col-md-6 col-lg-6">
+                    <fieldset>
+                        <section>
+                            <label class="input">
+                                <label class="label">Endereço MAC</label>
+                                <input type="text" ng-model="redeseguranca[0].enderecoMac" placeholder="Endereço MAC" readonly>
+                                <b class="tooltip tooltip-bottom-right">Endereço MAC</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="label">Speed Placa de Rede</label>
+                            <label class="select">
+                                <select name="multipleSelect" id="multipleSelect" ng-model="redeseguranca[0].speedPlacaDeRede">
+                                    <option value="option-1">AUTO</option>
+                                    <option value="option-2">9600</option>
+                                    <option value="option-3">11000</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Local Address</label>
+                                <input type="text" ng-model="redeseguranca[0].localAddress" placeholder="Local Address">
+                                <b class="tooltip tooltip-bottom-right">Local Address</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Gateway Endereço</label>
+                                <input type="text" ng-model="redeseguranca[0].gatewayEndereco" placeholder="Gateway Endereço">
+                                <b class="tooltip tooltip-bottom-right">Gateway Endereço</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Máscara</label>
+                                <input type="text" ng-model="redeseguranca[0].mascara" placeholder="Máscara">
+                                <b class="tooltip tooltip-bottom-right">Máscara</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Servidor DNS</label>
+                                <input type="text" ng-model="redeseguranca[0].servidorDNS" placeholder="Servidor DNS">
+                                <b class="tooltip tooltip-bottom-right">Servidor DNS</b>
+                            </label>
+                        </section>
+                        <section style="height: 50px;">
+                            <div class="col-sm-4 col-md-4 col-lg-2">
+                                <section>
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="useDhcp" id="useDhcp" ng-model="redeseguranca[0].useDhcp">
+                                        <i></i>Use DHCP</label>
+                                </section>
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-lg-5">
+                                <section style="padding-right: 10px;">
+                                    <label class="input">
+                                        <input type="text" ng-model="redeseguranca[0].dhcp" placeholder="DHCP">
+                                        <b class="tooltip tooltip-bottom-right">DHCP</b>
+                                    </label>
+                                </section>
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-lg-5">
+                                <section style="padding-left: 10px;">
+                                    <label class="input">
+                                        <input type="text" ng-model="redeseguranca[0].hostname" placeholder="Hostname">
+                                        <b class="tooltip tooltip-bottom-right">Hostname</b>
+                                    </label>
+                                </section>
+                            </div>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="forceConfiguredGateway" id="forceConfiguredGateway" ng-model="redeseguranca[0].forceConfiguredGateway">
+                                <i></i>Force Configured Gateway</label>
+                        </section>
+                        <section style="height: 100px;">
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <section>
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="usarVerificacaoICMP" id="usarVerificacaoICMP" ng-model="redeseguranca[0].usarVerificacaoICMP">
+                                        <i></i>Usar verificação ICMP</label>
+                                </section>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <section style="padding-right: 10px;">
+                                    <label class="input">
+                                        <input type="text" ng-model="redeseguranca[0].icmp1" placeholder="0.0.0.0">
+                                    </label>
+                                </section>
+                                <section style="padding-right: 10px;">
+                                    <label class="input">
+                                        <input type="text" ng-model="redeseguranca[0].icmp2" placeholder="0.0.0.0">
+                                    </label>
+                                </section>
+                                <section style="padding-right: 10px;">
+                                    <label class="input">
+                                        <input type="text" ng-model="redeseguranca[0].icmp3" placeholder="0.0.0.0">
+                                    </label>
+                                </section>
+                            </div>
+
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Alterar senha administrador</label>
+                                <input type="password" ng-model="redeseguranca[0].senhaAdministrador" placeholder="Alterar senha administrador">
+                                <b class="tooltip tooltip-bottom-right">Alterar senha administrador</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Confirmar senha administrador</label>
+                                <input type="password"placeholder="Confirmar senha administrador">
+                                <b class="tooltip tooltip-bottom-right">Confirmar senha administrador</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Change UNMS Server Password for Web Pages</label>
+                                <input type="password" ng-model="redeseguranca[0].unmsServerPwd" placeholder="Change UNMS Server Password for Web Pages">
+                                <b class="tooltip tooltip-bottom-right">Change UNMS Server Password for Web Pages</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Confirmar UNMS Server Password for Web Pages</label>
+                                <input type="password" placeholder="Confirmar UNMS Server Password for Web Pages">
+                                <b class="tooltip tooltip-bottom-right">Confirmar UNMS Server Password for Web Pages</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="useUNMSServerPwd" id="useUNMSServerPwd" ng-model="redeseguranca[0].useUNMSServerPwd">
+                                <i></i>Use UNMS Server Password for Web Pages</label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Nome do Sistema</label>
+                                <input type="text" ng-model="redeseguranca[0].nomeDoSistema" placeholder="Nome do Sistema">
+                                <b class="tooltip tooltip-bottom-right">Nome do Sistema</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Local do Sistema</label>
+                                <input type="text" ng-model="redeseguranca[0].localSistema" placeholder="Local do Sistema">
+                                <b class="tooltip tooltip-bottom-right">Local do Sistema</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Contato do Sistema</label>
+                                <input type="text" ng-model="redeseguranca[0].contatoSistema" placeholder="Contato do Sistema">
+                                <b class="tooltip tooltip-bottom-right">Contato do Sistema</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Dispositivos conectados</label>
+                                <input type="text" ng-model="redeseguranca[0].dispositivosConectados" placeholder="Dispositivos conectados">
+                                <b class="tooltip tooltip-bottom-right">Dispositivos conectados</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">RASMAN_G IP Address</label>
+                                <input type="text" ng-model="redeseguranca[0].rasmanGIpAddress" placeholder="RASMAN_G IP Address">
+                                <b class="tooltip tooltip-bottom-right">RASMAN_G IP Address</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">RASMAN_G IP Port</label>
+                                <input type="text" ng-model="redeseguranca[0].rasmanGIpPort" placeholder="RASMAN_G IP Port">
+                                <b class="tooltip tooltip-bottom-right">RASMAN_G IP Port</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="AutoUpdateARPCache" id="AutoUpdateARPCache" ng-model="redeseguranca[0].AutoUpdateARPCache">
+                                <i></i>Auto-Update ARP Cache</label>
+                        </section>
+                    </fieldset>
+
+                </section>
+                <section class="col-sm-6 col-md-6 col-lg-6">
+                    <fieldset>
+                        <section>
+                            <label class="input">
+                                <label class="label">TCP MSS</label>
+                                <input type="text" ng-model="redeseguranca[0].tcpMss" placeholder="TCP MSS">
+                                <b class="tooltip tooltip-bottom-right">TCP MSS</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Serviços e Atualização do Porto</label>
+                                <input type="text" ng-model="redeseguranca[0].servAtualPorto" placeholder="Serviços e Atualização do Porto">
+                                <b class="tooltip tooltip-bottom-right">Serviços e Atualização do Porto</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="ativarTelnet" id="ativarTelnet" ng-model="redeseguranca[0].ativarTelnet">
+                                <i></i>Ativar o servidor Telnet</label>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="habilitarFtpServidor" id="habilitarFtpServidor" ng-model="redeseguranca[0].habilitarFtpServidor">
+                                <i></i>Habilitar FTP Servidor</label>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="habilitarHttpServidor" id="habilitarHttpServidor" ng-model="redeseguranca[0].habilitarHttpServidor">
+                                <i></i>Habilitar HTTP Servidor</label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">HTTP Port</label>
+                                <input type="text" ng-model="redeseguranca[0].httpPort" placeholder="HTTP Port">
+                                <b class="tooltip tooltip-bottom-right">HTTP Port</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="useHTTPS" id="useHTTPS" ng-model="redeseguranca[0].useHTTPS">
+                                <i></i>Use HTTPS</label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">HTTPS Port</label>
+                                <input type="text" ng-model="redeseguranca[0].httpsPort" placeholder="HTTPS Port">
+                                <b class="tooltip tooltip-bottom-right">HTTPS Port</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">HTTP Tempo de atualização</label>
+                                <input type="text" ng-model="redeseguranca[0].httpTempoAtualizacao" placeholder="HTTP Tempo de atualização">
+                                <b class="tooltip tooltip-bottom-right">HTTP Tempo de atualização</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="label">Página padrão HTTP</label>
+                            <label class="select">
+                                <select name="multipleSelect" id="multipleSelect" ng-model="redeseguranca[0].paginaPadraoHttp">
+                                    <option value="option-1">BACS Status</option>
+                                    <option value="option-2">Rede & Segurança</option>
+                                    <option value="option-3">Usuários</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="ativarDicasFerramenta" id="ativarDicasFerramenta" ng-model="redeseguranca[0].ativarDicasFerramenta">
+                                <i></i>Ativar dicas de ferramentas</label>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="enableHttpCaching" id="enableHttpCaching" ng-model="redeseguranca[0].enableHttpCaching">
+                                <i></i>Enable HTTP Caching</label>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="ocultarDispHttpLigacaoFuncoes" id="ocultarDispHttpLigacaoFuncoes" ng-model="redeseguranca[0].ocultarDispHttpLigacaoFuncoes">
+                                <i></i>Ocultar dispositivos HTTP ligação funções</label>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="enableUNMSServer" id="enableUNMSServer" ng-model="redeseguranca[0].enableUNMSServer">
+                                <i></i>Enable UNMS Server</label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">UNMS Port</label>
+                                <input type="text" ng-model="redeseguranca[0].UNMSPort" placeholder="UNMS Port">
+                                <b class="tooltip tooltip-bottom-right">UNMS Port</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="useRCCMD2Armadilhas" id="useRCCMD2Armadilhas" ng-model="redeseguranca[0].useRCCMD2Armadilhas">
+                                <i></i>Use RCCMD2 Armadilhas</label>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="ativarListenerRCCMD" id="ativarListenerRCCMD" ng-model="redeseguranca[0].ativarListenerRCCMD">
+                                <i></i>Ativar Listener RCCMD</label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Port Listener RCCMD</label>
+                                <input type="text" ng-model="redeseguranca[0].portListenerRCCMD" placeholder="Port Listener RCCMD">
+                                <b class="tooltip tooltip-bottom-right">Port Listener RCCMD</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">RCCMD Timeout</label>
+                                <input type="text" ng-model="redeseguranca[0].rccmdTimeout" placeholder="RCCMD Timeout">
+                                <b class="tooltip tooltip-bottom-right">RCCMD Timeout</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="useRCCMDSSL" id="useRCCMDSSL" ng-model="redeseguranca[0].useRCCMDSSL">
+                                <i></i>Use RCCMD SSL</label>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="ativarModBusOverIP" id="ativarModBusOverIP" ng-model="redeseguranca[0].ativarModBusOverIP">
+                                <i></i>Ativar Modbus over IP</label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Endereço Modbus Slave</label>
+                                <input type="text" ng-model="redeseguranca[0].enderecoModBusSlave" placeholder="Endereço Modbus Slave">
+                                <b class="tooltip tooltip-bottom-right">Endereço Modbus Slave</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="input">
+                                <label class="label">Modo Modbus</label>
+                                <input type="text" ng-model="redeseguranca[0].modoModBus" placeholder="Modo Modbus">
+                                <b class="tooltip tooltip-bottom-right">Modo Modbus</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="saveLogFilesAutomatically" id="saveLogFilesAutomatically" ng-model="redeseguranca[0].saveLogFilesAutomatically">
+                                <i></i>Save Logfiles automatically</label>
+                        </section>
+                        <section>
+                            <button ng-click="update(0)" class="btn btn-primary pull-right" style="width: 100px; height: 30px;">
+                                Salvar
+                            </button>
+                        </section>
+                    </fieldset>
+                </section>
+            </fieldset>
+
+        </script>
+        <script>
+            angular.module('app', ['ngRoute', 'ngResource'])
+            //---------------
+            // Services
+            //---------------
+                .factory('RedeSeguranca', ['$resource', function($resource){
+                    return $resource('/redeseguranca/:id', null, {
+                        'update': { method:'PUT' }
+                    });
+                }])
+                //---------------
+                // Controllers
+                //---------------
+                .controller('RedeSegurancaController', ['$scope', 'RedeSeguranca', function ($scope, RedeSeguranca) {
+                    $scope.redeseguranca = RedeSeguranca.query();
+                    $scope.update = function(index){
+                        var redeseguranca = $scope.redeseguranca[index];
+                        RedeSeguranca.update({id: redeseguranca._id}, redeseguranca);
+                        $.bigBox({
+                            title : "Rede & Segurança",
+                            content : "Dados salvos com sucesso!",
+                            color : "#275B89",
+                            timeout: 5000,
+                            icon : "fa fa-check fadeInLeft animated",
+                            number : redeseguranca._id
+                        });
+                    }
+                }])
+                //---------------
+                // Routes
+                //---------------
+                .config(['$routeProvider', function ($routeProvider) {
+                    $routeProvider
+                        .when('/', {
+                            templateUrl: '/redeseguranca.html',
+                            controller: 'RedeSegurancaController'
+                        })
+                }]);
+
+
+        </script>
+
+    </div>
+    <!-- END MAIN CONTENT -->
+
+</div>
+<% include partials/footer %>
+</body>
+
+</html>

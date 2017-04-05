@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en-us" ng-app="app">
+<head>
+    <% include partials/head %>
+</head>
+<body class="">
+<% include partials/header %>
+<div id="main" role="main">
+
+    <div id="ribbon">
+        <ol class="breadcrumb">
+            <li>Status</li>
+            <li>BACS Status</li>
+        </ol>
+    </div>
+    <div id="content">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+
+                <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                    <header>
+                        <span class="widget-icon"><i class="fa fa-edit"></i></span>
+                        <h2>BACS Status </h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <form id="smart-form-register" class="smart-form">
+
+                                <ng-view></ng-view>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+        <script type="text/ng-template" id="/bacsstatus.html">
+            <fieldset>
+                <section>
+                    <div ng-repeat="bacs in bacsstatus">{{ bacs.location }}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <td align="center">Number</td>
+                                    <td align="center">Voltage</td>
+                                    <td align="center">Temperature</td>
+                                    <td align="center">Impedance</td>
+                                    <td align="center">Equalization</td>
+                                    <td align="center">Status</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="det in bacs.details" ng-class="rowClass(det)">
+                                    <td align="center">{{ det.number }}</td>
+                                    <td align="center">{{ det.voltage }}</td>
+                                    <td align="center">{{ det.temperature }}</td>
+                                    <td align="center">{{ det.impedance }}</td>
+                                    <td align="center"><span dynamicbar data="x.bars">10,20,30,40,50,60</span></td>
+                                    <td align="center">{{ det.status }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </section>
+            </fieldset>
+
+        </script>
+        <script>
+            angular.module('app', ['ngRoute', 'ngResource'])
+            //---------------
+            // Services
+            //---------------
+                .factory('BACSStatus', ['$resource', function($resource){
+                    return $resource('/bacsstatus/:id', null, {
+                        'update': { method:'PUT' }
+                    });
+                }])
+                //---------------
+                // Controllers
+                //---------------
+                .controller('BACSStatusController', ['$scope', 'BACSStatus', function ($scope, BACSStatus) {
+                    $scope.bacsstatus = BACSStatus.query();
+                }])
+                .directive('dynamicbar', function() {
+                    return {
+                        scope: {
+                            data: '='
+                        },
+                        link: function(scope, element) {
+                            element.sparkline(scope.data, {
+                                type: 'bar',
+                                width: 50,
+                                height: 15,
+                                barWidth: 3,
+                                barColor: 'green'
+                            });
+                        }
+                    }
+                })
+                //---------------
+                // Routes
+                //---------------
+                .config(['$routeProvider', function ($routeProvider) {
+                    $routeProvider
+                        .when('/', {
+                            templateUrl: '/bacsstatus.html',
+                            controller: 'BACSStatusController'
+                        })
+                }]);
+
+
+        </script>
+
+    </div>
+    <!-- END MAIN CONTENT -->
+
+</div>
+<% include partials/footer %>
+</body>
+
+</html>

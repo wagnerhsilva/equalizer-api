@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html lang="en-us" ng-app="app">
+<head>
+    <% include partials/head %>
+</head>
+<body class="">
+<% include partials/header %>
+<div id="main" role="main">
+
+    <!-- RIBBON -->
+    <div id="ribbon">
+
+        <!-- breadcrumb -->
+        <ol class="breadcrumb">
+            <li>Configuração</li>
+            <li>Usuário</li>
+        </ol>
+        <!-- end breadcrumb -->
+        <!-- You can also add more buttons to the
+        ribbon for further usability
+
+        Example below:
+
+        <span class="ribbon-button-alignment pull-right">
+        <span id="search" class="btn btn-ribbon hidden-xs" data-title="search"><i class="fa-grid"></i> Change Grid</span>
+        <span id="add" class="btn btn-ribbon hidden-xs" data-title="add"><i class="fa-plus"></i> Add</span>
+        <span id="search" class="btn btn-ribbon" data-title="search"><i class="fa-search"></i> <span class="hidden-mobile">Search</span></span>
+        </span> -->
+
+    </div>
+    <!-- END RIBBON -->
+    <!-- MAIN CONTENT -->
+    <div id="content">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                    <header>
+                        <span class="widget-icon"><i class="fa fa-edit"></i></span>
+                        <h2>Gerenciamento de Usuários </h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+
+                        <!-- widget content -->
+                        <div class="widget-body">
+
+                            <form id="smart-form-register" class="smart-form">
+                                <ng-view></ng-view>
+                            </form>
+
+                        </div>
+                        <!-- end widget content -->
+
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+                <!-- end widget -->
+            </article>
+
+        </div>
+        <script type="text/ng-template" id="/usuarios.html">
+            </header>
+            <section>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <td>Nome</td>
+                            <td>Sobrenome</td>
+                            <td>Email</td>
+                            <td>Telefone</td>
+                            <td>Acesso</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="usuario in usuarios">
+                            <td>{{ usuario.nome }}</td>
+                            <td>{{ usuario.sobreNome }}</td>
+                            <td>{{ usuario.email }}</td>
+                            <td>{{ usuario.telefone }}</td>
+                            <td>
+                                <label class="select">
+                                    <select name="ddlAcesso" id="ddlAcesso" ng-model="usuario.acesso" ng-change="update($index)">
+                                        <option value="usuario">Usuário</option>
+                                        <option value="administrador">Administrador</option>
+                                    </select>
+                                    <i></i>
+                                </label>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            </fieldset>
+
+        </script>
+        <script>
+            angular.module('app', ['ngRoute', 'ngResource'])
+            //---------------
+            // Services
+            //---------------
+                .factory('Usuarios', ['$resource', function($resource){
+                    return $resource('/usuarios/:id', null, {
+                        'update': { method:'PUT' }
+                    });
+                }])
+                //---------------
+                // Controllers
+                //---------------
+                .controller('UsuarioController', ['$scope', 'Usuarios', function ($scope, Usuarios) {
+                    $scope.editing = [];
+                    $scope.usuarios = Usuarios.query();
+                    $scope.save = function(){
+                        if(!$scope.newUsuario || $scope.newUsuario.length < 1) return;
+                        var usuario = new Usuarios({ nome: $scope.newUsuario, email: $scope.newEmail, senha: $scope.newSenha });
+                        usuario.$save(function(){
+                            $scope.usuarios.push(usuario);
+                            $scope.newUsuario = ''; // clear textbox
+                            $scope.newEmail = '';
+                            $scope.newSenha = '';
+                        });
+                    }
+                    $scope.remove = function(index){
+                        var usuario = $scope.usuarios[index];
+                        Usuarios.remove({id: usuario._id}, function(){
+                            $scope.usuarios.splice(index, 1);
+                        });
+                    }
+                    $scope.update = function(index){
+                        var usuario = $scope.usuarios[index];
+                        Usuarios.update({id: usuario.id}, usuario);
+                        $scope.editing[index] = false;
+                    }
+                }])
+                //---------------
+                // Routes
+                //---------------
+                .config(['$routeProvider', function ($routeProvider) {
+                    $routeProvider
+                        .when('/', {
+                            templateUrl: '/usuarios.html',
+                            controller: 'UsuarioController'
+                        })
+                }]);
+        </script>
+
+    </div>
+    <!-- END MAIN CONTENT -->
+
+</div>
+<% include partials/footer %>
+</body>
+
+</html>
