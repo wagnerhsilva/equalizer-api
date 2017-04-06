@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
 var TimeServer = require('../models/TimeServer');
 /* GET */
 router.get('/', function (req, res, next) {

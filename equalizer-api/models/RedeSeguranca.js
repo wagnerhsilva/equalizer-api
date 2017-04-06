@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+/*var mongoose = require('mongoose');
 var RedeSegurancaSchema = new mongoose.Schema(
     {
         enderecoMac: String,
@@ -53,3 +53,4 @@ var RedeSegurancaSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model('RedeSegurancaSchema', RedeSegurancaSchema);
+*/

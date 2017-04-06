@@ -1,6 +1,5 @@
 ﻿var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
 var BACSStatus = require('../models/BACSStatus');
 /* GET */
 router.get('/', function (req, res, next) {

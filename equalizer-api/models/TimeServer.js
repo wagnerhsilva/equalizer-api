@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+/*var mongoose = require('mongoose');
 var TimeServerSchema = new mongoose.Schema({
     timeServerAddress1: String,
     timeServerAddress1_complemento: String,
@@ -12,3 +12,4 @@ var TimeServerSchema = new mongoose.Schema({
 
 });
 module.exports = mongoose.model('TimeServer', TimeServerSchema);
+*/

@@ -11,7 +11,7 @@ var isAuthenticated = function (req, res, next) {
 }
 /* GET home page. */
 router.get('/', isAuthenticated,  function (req, res, next) {
-    res.render('usuarioview', { title: 'Usuários', username: req.user.nome });
+    res.render('usuarioview', { title: 'Usuários', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email });
 });
 
 module.exports = router;

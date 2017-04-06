@@ -1,4 +1,4 @@
-﻿var mongoose = require('mongoose');
+﻿/*var mongoose = require('mongoose');
 var BACSStatusSchema = new mongoose.Schema(
     {
         location: String,
@@ -14,3 +14,4 @@ var BACSStatusSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model('BACSStatus', BACSStatusSchema);
+*/
