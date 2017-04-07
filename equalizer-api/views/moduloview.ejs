@@ -71,7 +71,7 @@
                                     <section>
                                         <label class="label">Tensão nominal da bateria</label>
                                         <label class="select">
-                                            <select name="multipleSelect" id="multipleSelect"  ng-disabled="acessoUsuario != 'administrador'" >
+                                            <select name="multipleSelect" id="multipleSelect"  ng-disabled="acessoUsuario != 'administrador'" ng-model="modulos[0].tensao_nominal" >
                                                 <option value="6v">6v</option>
                                                 <option value="12v">12v</option>
                                             </select>
@@ -81,7 +81,7 @@
                                     <section>
                                         <label class="label">Capacidade nominal da bateria</label>
                                         <label class="input">
-										<input type="number" name="capBateria" placeholder="Capacidade nominal da bateria" ng-model="modulos[0].tensao_nominal" ng-disabled="acessoUsuario != 'administrador'" required>
+										<input type="number" name="capBateria" placeholder="Capacidade nominal da bateria" ng-model="modulos[0].capacidade_nominal" ng-disabled="acessoUsuario != 'administrador'" required>
 										<b class="tooltip tooltip-bottom-right">Capacidade nominal da bateria</b> </label>
                                     </section>
                                     <section>

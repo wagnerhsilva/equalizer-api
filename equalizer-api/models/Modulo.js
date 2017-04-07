@@ -1,11 +1,12 @@
 var sqlite3 = require('sqlite3').verbose();
 var bCrypt = require('bcrypt-nodejs');
 
-var createModulo = function (id, descricao, tensao_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, tipo, data_instalacao, conf_alarme_id) {
+var createModulo = function (id, descricao, tensao_nominal, capacidade_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, tipo, data_instalacao, conf_alarme_id) {
     return {
         id: id,
         descricao: descricao,
         tensao_nominal: tensao_nominal,
+        capacidade_nominal: capacidade_nominal,
         n_strings: n_strings,
         n_baterias_por_strings: n_baterias_por_strings,
         contato: contato,
@@ -18,9 +19,9 @@ var createModulo = function (id, descricao, tensao_nominal, n_strings, n_bateria
 }
 var save = function (modulo, err) {
     var db = new sqlite3.Database('equalizerdb');
-    var stmt = db.prepare("INSERT INTO Modulo(descricao, tensao_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, " +
+    var stmt = db.prepare("INSERT INTO Modulo(descricao, tensao_nominal, capacidade_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, " +
                             "tipo, data_instalacao, conf_alarme_id) VALUES (?,?,?,?,?,?,?,?,?,?)");
-    stmt.run(modulo.descricao, modulo.tensao_nominal, modulo.n_strings, modulo.n_baterias_por_strings, modulo.contato, modulo.localizacao, modulo.fabricante, 
+    stmt.run(modulo.descricao, modulo.tensao_nominal, modulo.capacidade_nominal, modulo.n_strings, modulo.n_baterias_por_strings, modulo.contato, modulo.localizacao, modulo.fabricante, 
                 modulo.tipo, modulo.data_instalacao, modulo.conf_alarme_id, function (error) {
         if (error)
             err(error);
@@ -32,11 +33,11 @@ var save = function (modulo, err) {
 }
 var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.all("SELECT id, descricao, tensao_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, tipo, data_instalacao, conf_alarme_id " +
+    db.all("SELECT id, descricao, tensao_nominal, capacidade_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, tipo, data_instalacao, conf_alarme_id " +
             "FROM Modulo", function (err, rows) {
         var modulos = [];
         rows.forEach(function row(row) {
-            modulos.push(new createModulo(row.id, row.descricao, row.tensao_nominal, row.n_strings, row.n_baterias_por_strings, row.contato, row.localizacao, 
+            modulos.push(new createModulo(row.id, row.descricao, row.tensao_nominal, row.capacidade_nominal, row.n_strings, row.n_baterias_por_strings, row.contato, row.localizacao, 
                                             row.fabricante, row.tipo, row.data_instalacao, row.conf_alarme_id));
         });
         data(err, modulos);
@@ -45,10 +46,10 @@ var getAll = function (data) {
 }
 var getById = function (id, data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.get("SELECT id, descricao, tensao_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, tipo, data_instalacao, conf_alarme_id " +
+    db.get("SELECT id, descricao, tensao_nominal, capacidade_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, tipo, data_instalacao, conf_alarme_id " +
             "FROM Modulo WHERE id = $id", { $id: id }, function (err, row) {
         if (row) {
-            var modulo = new createModulo(row.id, row.descricao, row.tensao_nominal, row.n_strings, row.n_baterias_por_strings, row.contato, row.localizacao, 
+            var modulo = new createModulo(row.id, row.descricao, row.tensao_nominal, row.capacidade_nominal, row.n_strings, row.n_baterias_por_strings, row.contato, row.localizacao, 
                                             row.fabricante, row.tipo, row.data_instalacao, row.conf_alarme_id);
             console.log(modulo);
             data(err, modulo);
@@ -62,11 +63,12 @@ var update = function (modulo) {
     console.log("update");
     console.log(modulo);
     var db = new sqlite3.Database('equalizerdb');
-    db.run("UPDATE Modulo SET descricao = $descricao, tensao_nominal = $tensao_nominal, n_strings = $n_strings, n_baterias_por_strings = $n_baterias_por_strings "+
+    db.run("UPDATE Modulo SET descricao = $descricao, tensao_nominal = $tensao_nominal, capacidade_nominal = $capacidade_nominal, n_strings = $n_strings, n_baterias_por_strings = $n_baterias_por_strings "+
             ", contato = $contato, localizacao = $localizacao, fabricante = $fabricante, tipo = $tipo, data_instalacao = $data_instalacao, conf_alarme_id = $conf_alarme_id " +
                 "WHERE id = $id", { $id: modulo.id,
                                     $descricao: modulo.descricao,
                                     $tensao_nominal: modulo.tensao_nominal,
+                                    $capacidade_nominal: modulo.capacidade_nominal,
                                     $n_strings: modulo.n_strings,
                                     $n_baterias_por_strings: modulo.n_baterias_por_strings,
                                     $contato: modulo.contato,
