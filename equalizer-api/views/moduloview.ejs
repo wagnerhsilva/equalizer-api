@@ -322,7 +322,6 @@
                         // Controllers
                         //---------------
                         .controller('ModuloController', ['$scope', 'Modulos', 'AlarmesConfig', function ($scope, Modulos, AlarmesConfig) {
-                            $scope.modulos = Modulos.query();
                             $scope.alarmes = AlarmesConfig.query();
                             $scope.saveModulo = function () {
                                 var modulo = $scope.modulos[0];

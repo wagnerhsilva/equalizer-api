@@ -11,7 +11,7 @@ var isAuthenticated = function (req, res, next) {
 }
 /* GET home page. */
 router.get('/', isAuthenticated,  function (req, res, next) {
-    res.render('moduloview', { title: 'Configuração de módulo e alarme', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email });
+    res.render('moduloview', { title: 'Configuração de módulo e alarme', pageName: 'moduloview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email });
 });
 
 module.exports = router;

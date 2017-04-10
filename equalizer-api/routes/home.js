@@ -13,7 +13,7 @@ var isAuthenticated = function (req, res, next) {
 
 /* GET home page. */
 router.get('/', isAuthenticated, function (req, res, next) {
-    res.render('index', { title: 'Home', username: req.user.nome });
+    res.render('index', { title: 'Home', pageName: 'home', username: req.user.nome });
 });
 
 module.exports = router;

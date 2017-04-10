@@ -13,6 +13,7 @@ var home = require('./routes/home');
 var horaservidor = require('./routes/horaservidor');
 var usuarios = require('./routes/usuarios');
 var modulo = require('./routes/modulo');
+var statusmodulo = require('./routes/statusmodulo');
 var alarmeConfig = require('./routes/alarmeConfig');
 var dataLog = require('./routes/dataLog');
 var bacsstatus = require('./routes/bacsstatus');
@@ -26,8 +27,8 @@ var bacsstatusview = require('./routes/bacsstatusview');
 var redesegurancaview = require('./routes/redesegurancaview');
 var alarmlogview = require('./routes/alarmlogview');
 var timeserverview = require('./routes/timeserverview');
+var statusmoduloview = require('./routes/statusmoduloview');
 var equalizerdb = require('./database/equalizerdb');
-var usuario = require('./models/Usuario');
 
 
 //init sqlite database
@@ -84,6 +85,7 @@ app.use('/home', home);
 app.use('/horaservidor', horaservidor);
 app.use('/usuarios', usuarios);
 app.use('/modulo', modulo);
+app.use('/statusmodulo', statusmodulo);
 app.use('/dataLog', dataLog);
 app.use('/alarmeConfig', alarmeConfig);
 app.use('/bacsstatus', bacsstatus);
@@ -97,6 +99,7 @@ app.use('/bacsstatusview', bacsstatusview);
 app.use('/redesegurancaview', redesegurancaview);
 app.use('/alarmlogview', alarmlogview);
 app.use('/timeserverview', timeserverview);
+app.use('/statusmoduloview', statusmoduloview);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

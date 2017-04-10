@@ -1,4 +1,4 @@
-﻿var express = require('express');
+var express = require('express');
 var router = express.Router();
 var isAuthenticated = function (req, res, next) {
     // if user is authenticated in the session, call the next() to call the next request handler
@@ -11,7 +11,6 @@ var isAuthenticated = function (req, res, next) {
 }
 /* GET home page. */
 router.get('/', isAuthenticated,  function (req, res, next) {
-    res.render('usuarioview', { title: 'Usuários', pageName: 'usuarioview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email });
+    res.render('statusModuloView', { title: 'Status dos Módulos', pageName: 'statusmoduloview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email });
 });
-
 module.exports = router;

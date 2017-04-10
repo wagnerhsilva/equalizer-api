@@ -3,37 +3,35 @@ var router = express.Router();
 var RedeSeguranca = require('../models/RedeSeguranca');
 /* GET */
 router.get('/', function (req, res, next) {
-    RedeSeguranca.find(function (err, redeSeguranca) {
+    RedeSeguranca.getAll(function (err, redeSeguranca) {
         if (err) return next(err);
         res.json(redeSeguranca);
     });
 });
 /* GET /redeseguranca/id */
 router.get('/:id', function (req, res, next) {
-    RedeSeguranca.findById(req.params.id, function (err, post) {
-        if (err) return next(err);
-        res.json(post);
-    });
+    
 });
-module.exports = router;
 /* POST */
 router.post('/', function (req, res, next) {
-    RedeSeguranca.create(req.body, function (err, post) {
-        if (err) return next(err);
-        res.json(post);
+    console.log(req.body);
+    RedeSeguranca.getAll(function (err, redeSeguranca) {
+        if (redeSeguranca.length > 0) {
+            RedeSeguranca.update(req.body);
+            res.render('redesegurancaview', { title: 'Rede & Segurança', username: req.user.nome, usuarios: usuarios, network: obj, redeSeguranca: redeSeguranca });
+        } else {
+            RedeSeguranca.save(req.body);
+            res.render('redesegurancaview', { title: 'Rede & Segurança', username: req.user.nome, usuarios: usuarios, network: obj, redeSeguranca: redeSeguranca });
+        }
     });
 });
+
 /* PUT /redeseguranca/:id */
 router.put('/:id', function (req, res, next) {
-    RedeSeguranca.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
-        if (err) return next(err);
-        res.json(post);
-    });
+    
 });
 /* DELETE /redeseguranca/:id */
 router.delete('/:id', function (req, res, next) {
-    RedeSeguranca.findByIdAndRemove(req.params.id, req.body, function (err, post) {
-        if (err) return next(err);
-        res.json(post);
-    });
+    
 });
+module.exports = router;

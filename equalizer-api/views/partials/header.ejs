@@ -59,35 +59,38 @@
             <li class="top-menu-invisible">
                 <a href="#" title="Status"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Status</span></a>
                 <ul>
-                    <li class="">
-                        <a href="/home" title="Módulos"><span class="menu-item-parent">Módulos</span></a>
+                    <li <%if (pageName=='statusmoduloview') {%>  class='active'  <%}%>>
+                        <a href="statusmoduloview" title="Módulos"><span class="menu-item-parent">Módulos</span></a>
                     </li>
                 </ul>
             </li>
             <li class="top-menu-invisible">
                 <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Configuração</span></a>
                 <ul>
-                    <li class="">
+                    <li <%if (pageName=='usuarioview') {%>  class='active'  <%}%>>
                         <a href="usuarioview" title="Gerenciamento de usuários"><span class="menu-item-parent">Gerenciamento de usuários</span></a>
                     </li>
                     <li class="">
-                        <a href="/home" title="Cadastro de e-mail"><span class="menu-item-parent">Cadastro de e-mail</span></a>
+                        <a href="home" title="Cadastro de e-mail"><span class="menu-item-parent">Cadastro de e-mail</span></a>
                     </li>
-                    <li class="">
+                    <li <%if (pageName=='moduloview') {%>  class='active'  <%}%>>
                         <a href="moduloview" title="Módulos, alarme e bateria"><span class="menu-item-parent">Módulos, alarme e bateria</span></a>
                     </li>
                     <li class="">
-                        <a href="/home" title="Dashboard"><span class="menu-item-parent">Configuração de timeserver</span></a>
+                        <a href="home" title="Dashboard"><span class="menu-item-parent">Configuração de timeserver</span></a>
+                    </li>
+                    <li <%if (pageName=='redesegurancaview') {%>  class='active'  <%}%>>
+                        <a href="redesegurancaview" title="Rede & Segurança"><span class="menu-item-parent">Rede & Segurança</span></a>
                     </li>
                 </ul>
             </li>
-            <li class="active">
+            <li>
                 <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Logfiles</span></a>
                 <ul>
-                    <li class="active">
+                    <li <%if (pageName=='alarmlogview') {%>  class='active'  <%}%>>
                         <a href="alarmlogview" title="Alarme de eventos"><span class="menu-item-parent">Alarme de eventos</span></a>
                     </li>
-                    <li class="">
+                    <li <%if (pageName=='datalogview') {%>  class='active'  <%}%>>
                         <a href="datalogview" title="DataLogger"><span class="menu-item-parent">DataLogger</span></a>
                     </li>
                 </ul>
