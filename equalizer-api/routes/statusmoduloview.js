@@ -11,6 +11,6 @@ var isAuthenticated = function (req, res, next) {
 }
 /* GET home page. */
 router.get('/', isAuthenticated,  function (req, res, next) {
-    res.render('statusModuloView', { title: 'Status dos Módulos', pageName: 'statusmoduloview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email });
+    res.render('statusmoduloview', { title: 'Status dos Módulos', pageName: 'statusmoduloview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email });
 });
 module.exports = router;
