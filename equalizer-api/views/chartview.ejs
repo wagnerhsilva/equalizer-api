@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en-us" ng-app="app">
+
+<head>
+    <% include partials/head %>
+</head>
+
+<body class="">
+    <% include partials/header %>
+        <div id="main" role="main">
+
+            <!-- RIBBON -->
+            <div id="ribbon">
+
+                <!-- breadcrumb -->
+                <ol class="breadcrumb">
+                    <li>Status</li>
+                    <li>Gráfico</li>
+                </ol>
+            </div>
+            <div id="content">
+                <div class="row">
+                    <article class="col-sm-12 col-md-12 col-lg-12">
+                        <div>
+
+                            <div class="jarviswidget-editbox">
+                            </div>
+                            <div class="widget-body">
+                                <ng-view></ng-view>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <script type="text/ng-template" id="/chart.html">
+                    <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="chart(3)">Tensão</button>
+                    <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="chart(2)">Temperatura</button>
+                    <button type="submit" class="btn btn-primary pull-right" ng-click="chart(1)">Impedância</button>
+                    <br />
+                    <br />
+                    <div class="jarviswidget" id="wid-id-0">
+                        <!-- widget options:
+									usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+									
+									data-widget-colorbutton="false"	
+									data-widget-editbutton="false"
+									data-widget-togglebutton="false"
+									data-widget-deletebutton="false"
+									data-widget-fullscreenbutton="false"
+									data-widget-custombutton="false"
+									data-widget-collapsed="true" 
+									data-widget-sortable="false"
+									
+								-->
+                        <header>
+                            <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+
+                        </header>
+
+                        <!-- widget div-->
+                        <div>
+
+                            <!-- widget edit box -->
+                            <div class="jarviswidget-editbox">
+                                <!-- This area used as dropdown edit box -->
+                                <input class="form-control" type="text">
+                            </div>
+                            <!-- end widget edit box -->
+
+                            <!-- widget content -->
+                            <div class="widget-body">
+
+                                <!-- this is what the user will see -->
+                                <div id="noroll" style="width:100%; height:500px;"></div>
+
+                            </div>
+                            <!-- end widget content -->
+
+                        </div>
+                        <!-- end widget div -->
+
+                    </div>
+                </script>
+                <script>
+                    angular.module('app', ['ngRoute', 'ngResource'])
+                        //---------------
+                        // Services
+                        //---------------
+                        .factory('Charts', ['$resource', function ($resource) {
+                            return $resource('/chart/:id', null, {
+                                'update': { method: 'PUT' },
+                                'remove': { method: 'DELETE' }
+                            });
+                        }])
+                        //---------------
+                        // Controllers
+                        //---------------
+                        .controller('ChartController', ['$scope', 'Charts', function ($scope, Charts) {
+                            $scope.charts = Charts.query(function (res) {
+                                chart(res, 1);
+                            }, function (error) {
+
+                            });
+                            $scope.chart = function (index) {
+                                chart($scope.charts, index);
+                            }
+                        }])
+                        //---------------
+                        // Routes
+                        //---------------
+                        .config(['$routeProvider', function ($routeProvider) {
+                            $routeProvider
+                                .when('/', {
+                                    templateUrl: '/chart.html',
+                                    controller: 'ChartController'
+                                })
+                        }]);
+                </script>
+
+            </div>
+            <!-- END MAIN CONTENT -->
+
+        </div>
+        <script>
+            $(function () {
+                $("#ddlVisao").val(0);
+            });
+
+            function setDataTable() {
+                $("#datatable_tabletools").dataTable({
+
+                    // Tabletools options:
+                    //   https://datatables.net/extensions/tabletools/button_options
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                    "oLanguage": {
+                        "sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
+                    },
+                    "oTableTools": {
+                        "aButtons": [
+                            "copy",
+                            "csv",
+                            "xls",
+                            {
+                                "sExtends": "pdf",
+                                "sTitle": "SmartAdmin_PDF",
+                                "sPdfMessage": "SmartAdmin PDF Export",
+                                "sPdfSize": "letter"
+                            },
+                            {
+                                "sExtends": "print"
+                            }
+                        ],
+                        "sSwfPath": "smartadmin/js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+                    },
+                    "autoWidth": true
+                });
+            }
+        </script>
+        <script type="text/javascript">
+            function chart(data, index) {
+                var visao = index;
+                if (visao == 1) {
+                    var dataText = "Data,Média,Atual";
+                    data.forEach(function (element) {
+                        dataText += '\n' + element.data + ',' + element.min_impedancia + ';' + element.avg_impedancia + ';' + element.max_impedancia + ',' + element.min_impedancia + ';' + element.impedancia_atual + ';' + element.max_impedancia;
+                    }, this);
+                    g1 = new Dygraph(document.getElementById("noroll"), dataText, {
+                        customBars: true,
+                        title: 'Impedância Média(Mín/Máx) / Atual(Mín/Máx)',
+                        ylabel: 'Impedância(V)',
+                        legend: 'always',
+                        labelsDivStyles: {
+                            'textAlign': 'right'
+                        },
+                        showRangeSelector: true
+                    });
+                }
+                else if (visao == 2) {
+                    var dataText = "Data,Média,Atual";
+                    data.forEach(function (element) {
+                        dataText += '\n' + element.data + ',' + element.min_temperatura + ';' + element.avg_temperatura + ';' + element.max_temperatura + ',' + element.min_temperatura + ';' + element.temperatura_atual + ';' + element.max_temperatura;
+                    }, this);
+                    g1 = new Dygraph(document.getElementById("noroll"), dataText, {
+                        customBars: true,
+                        title: 'Temperatura Média(Mín/Máx) / Atual(Mín/Máx)',
+                        ylabel: 'Temperatura',
+                        legend: 'always',
+                        labelsDivStyles: {
+                            'textAlign': 'right'
+                        },
+                        showRangeSelector: true
+                    });
+                } else  if (visao == 3){
+                    var dataText = "Data,Média,Atual";
+                    data.forEach(function (element) {
+                        dataText += '\n' + element.data + ',' + element.min_tensao + ';' + element.avg_tensao + ';' + element.max_tensao + ',' + element.min_tensao + ';' + element.tensao_atual + ';' + element.max_tensao;
+                    }, this);
+                    g1 = new Dygraph(document.getElementById("noroll"), dataText, {
+                        customBars: true,
+                        title: 'Tensão Média(Mín/Máx) / Atual(Mín/Máx)',
+                        ylabel: 'Tensão(V)',
+                        legend: 'always',
+                        labelsDivStyles: {
+                            'textAlign': 'right'
+                        },
+                        showRangeSelector: true
+                    });
+                }
+            }
+        </script>
+        <% include partials/footer %>
+</body>
+
+</html>

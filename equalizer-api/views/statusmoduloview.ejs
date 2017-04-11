@@ -63,7 +63,13 @@
                                             <td align="center">{{status.tensao}}</td>
                                             <td align="center">{{status.temperatura}}</td>
                                             <td align="center">{{status.impedancia}}</td>
-                                            <td align="center"><span dynamicbar data="x.bars">10,20,30,40,50,60</span></td>
+                                            <td align="center">
+                                                <span ng-if="status.percentualEqualizacao <= 20" dynamicbar1 data="x.bars">20,30,40,50,60</span>
+                                                <span ng-if="status.percentualEqualizacao <= 40 && status.percentualEqualizacao > 20" dynamicbar2 data="x.bars">20,30,40,50,60</span>
+                                                <span ng-if="status.percentualEqualizacao <= 60 && status.percentualEqualizacao > 40" dynamicbar3 data="x.bars">20,30,40,50,60</span>
+                                                <span ng-if="status.percentualEqualizacao <= 80 && status.percentualEqualizacao > 60" dynamicbar4 data="x.bars">20,30,40,50,60</span>
+                                                <span ng-if="status.percentualEqualizacao <= 100 && status.percentualEqualizacao > 80" dynamicbar5 data="x.bars">20,30,40,50,60</span>
+                                            </td>
                                             <td align="center"></td>
                                         </tr>
                                     </tbody>
@@ -118,7 +124,7 @@
                                                 <tr>
                                                     <td style="width:100px;">Equalização</td>
                                                     <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }" ng-class="rowClass(status)">
-
+                                                        {{status.equalizacao}}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -169,7 +175,7 @@
                             $scope.acessoUsuario = '<%= userAccess %>';
                             $scope.emailUsuario = '<%= userEmail %>';
                         }])
-                        .directive('dynamicbar', function () {
+                        .directive('dynamicbar1', function () {
                             return {
                                 scope: {
                                     data: '='
@@ -180,7 +186,71 @@
                                         width: 50,
                                         height: 15,
                                         barWidth: 3,
-                                        barColor: 'green'
+                                        colorMap: ["green", "green", "gray", "gray", "gray", "gray"]
+                                    });
+                                }
+                            }
+                        })
+                        .directive('dynamicbar2', function () {
+                            return {
+                                scope: {
+                                    data: '='
+                                },
+                                link: function (scope, element) {
+                                    element.sparkline(scope.data, {
+                                        type: 'bar',
+                                        width: 50,
+                                        height: 15,
+                                        barWidth: 3,
+                                        colorMap: ["green", "green", "green", "gray", "gray", "gray"]
+                                    });
+                                }
+                            }
+                        })
+                        .directive('dynamicbar3', function () {
+                            return {
+                                scope: {
+                                    data: '='
+                                },
+                                link: function (scope, element) {
+                                    element.sparkline(scope.data, {
+                                        type: 'bar',
+                                        width: 50,
+                                        height: 15,
+                                        barWidth: 3,
+                                        colorMap: ["green", "green", "green", "green", "gray", "gray"]
+                                    });
+                                }
+                            }
+                        })
+                        .directive('dynamicbar4', function () {
+                            return {
+                                scope: {
+                                    data: '='
+                                },
+                                link: function (scope, element) {
+                                    element.sparkline(scope.data, {
+                                        type: 'bar',
+                                        width: 50,
+                                        height: 15,
+                                        barWidth: 3,
+                                        colorMap: ["green", "green", "green", "green", "green", "gray"]
+                                    });
+                                }
+                            }
+                        })
+                        .directive('dynamicbar5', function () {
+                            return {
+                                scope: {
+                                    data: '='
+                                },
+                                link: function (scope, element) {
+                                    element.sparkline(scope.data, {
+                                        type: 'bar',
+                                        width: 50,
+                                        height: 15,
+                                        barWidth: 3,
+                                        colorMap: ["green", "green", "green", "green", "green", "green"]
                                     });
                                 }
                             }
