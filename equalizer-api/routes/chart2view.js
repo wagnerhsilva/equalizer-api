@@ -11,7 +11,6 @@ var isAuthenticated = function (req, res, next) {
 }
 /* GET home page. */
 router.get('/', isAuthenticated,  function (req, res, next) {
-    res.render('alarmlogview', { title: 'AlarmLog', pageName: 'alarmlogview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email });
+    res.render('chart2view', { title: 'Gráficos', pageName: 'chart2view', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email });
 });
-
 module.exports = router;

@@ -15,6 +15,7 @@ var usuarios = require('./routes/usuarios');
 var modulo = require('./routes/modulo');
 var statusmodulo = require('./routes/statusmodulo');
 var chart = require('./routes/chart');
+var chart2 = require('./routes/chart2');
 var alarmeConfig = require('./routes/alarmeConfig');
 var dataLog = require('./routes/dataLog');
 var bacsstatus = require('./routes/bacsstatus');
@@ -30,6 +31,7 @@ var alarmlogview = require('./routes/alarmlogview');
 var timeserverview = require('./routes/timeserverview');
 var statusmoduloview = require('./routes/statusmoduloview');
 var chartview = require('./routes/chartview');
+var chart2view = require('./routes/chart2view');
 var equalizerdb = require('./database/equalizerdb');
 
 
@@ -95,6 +97,7 @@ app.use('/redeseguranca', redeseguranca);
 app.use('/alarmlog', alarmlog);
 app.use('/timeserver', timeserver);
 app.use('/chart', chart);
+app.use('/chart2', chart2);
 app.use('/usuarioview', usuarioview);
 app.use('/moduloview', moduloview);
 app.use('/dataLogView', dataLogView);
@@ -104,6 +107,7 @@ app.use('/alarmlogview', alarmlogview);
 app.use('/timeserverview', timeserverview);
 app.use('/statusmoduloview', statusmoduloview);
 app.use('/chartview', chartview);
+app.use('/chart2view', chart2view);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

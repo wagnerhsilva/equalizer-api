@@ -94,8 +94,9 @@
                                     </section>
                                 </fieldset>
                                 <footer>
-                                    <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'"  ng-click="save();">Salvar</button>
-                                    <input type="button" id="btnCancelarEdicao" class="btn btn-primary" value="Cancelar" style="display:none;" ng-click="cancelarEdicao();" />
+                                    <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="save();">Salvar</button>
+                                    <input type="button" id="btnCancelarEdicao" class="btn btn-primary" value="Cancelar" style="display:none;" ng-click="cancelarEdicao();"
+                                    />
                                 </footer>
                             </form>
                         </div>
@@ -126,8 +127,10 @@
                                                 <i></i>
                                             </label>
                                         </td>
-                                        <td align="center"><span class="glyphicon glyphicon-pencil" style="cursor:pointer;" title="Editar" ng-click="editar($index);" ng-if="acessoUsuario == 'administrador' || emailUsuario == usuario.email"></span>&nbsp&nbsp
-                                            <span class="glyphicon glyphicon-trash" style="cursor:pointer;" title="Excluir" ng-if="acessoUsuario == 'administrador' && emailUsuario != usuario.email" ng-click="remove($index);"></span>
+                                        <td align="center"><span class="glyphicon glyphicon-pencil" style="cursor:pointer;" title="Editar" ng-click="editar($index);"
+                                                ng-if="acessoUsuario == 'administrador' || emailUsuario == usuario.email"></span>&nbsp&nbsp
+                                            <span class="glyphicon glyphicon-trash" style="cursor:pointer;" title="Excluir" ng-if="acessoUsuario == 'administrador' && emailUsuario != usuario.email"
+                                                ng-click="remove($index);"></span>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -145,7 +148,7 @@
                         .factory('Usuarios', ['$resource', function ($resource) {
                             return $resource('/usuarios/:id', null, {
                                 'update': { method: 'PUT' },
-                                'remove': {method: 'DELETE' }
+                                'remove': { method: 'DELETE' }
                             });
                         }])
                         //---------------
@@ -156,22 +159,22 @@
                             $scope.usuarios = Usuarios.query();
                             $scope.save = function () {
                                 var usuario = $scope.usuarioSelecionado;
-                                if(usuario == null)
+                                if (usuario == null)
                                     return;
-                                if(usuario.sobreNome == null || usuario.sobreNome.trim() == "")
+                                if (usuario.sobreNome == null || usuario.sobreNome.trim() == "")
                                     return;
-                                if(usuario.email == null || usuario.email.trim() == "")
+                                if (usuario.email == null || usuario.email.trim() == "")
                                     return;
-                                if(usuario.telefone == null || usuario.telefone.trim() == "")
+                                if (usuario.telefone == null || usuario.telefone.trim() == "")
                                     return;
-                                if(usuario.senha == null || usuario.senha.trim() == "")
+                                if (usuario.senha == null || usuario.senha.trim() == "")
                                     return;
-                                if($scope.isEditing){
+                                if ($scope.isEditing) {
                                     $scope.update();
-                                }else{
+                                } else {
                                     Usuarios.save(usuario);
-                                     $scope.usuarioSelecionado = null;
-                                     setTimeout(function(){ $scope.usuarios = Usuarios.query(); }, 500);
+                                    $scope.usuarioSelecionado = null;
+                                    setTimeout(function () { $scope.usuarios = Usuarios.query(); }, 500);
                                 }
                             }
                             $scope.remove = function (index) {
@@ -185,7 +188,7 @@
                             }
                             $scope.update = function () {
                                 var usuario = $scope.usuarioSelecionado;
-                                if(usuario != null)
+                                if (usuario != null)
                                     Usuarios.update(usuario);
                                 $scope.cancelarEdicao();
                             }
@@ -203,8 +206,9 @@
                                 $scope.usuarioSelecionado = null;
                                 $('#btnGravarDb').val("Salvar");
                                 $('#btnCancelarEdicao').hide();
-                                if($scope.acessoUsuario != 'administrador')
+                                if ($scope.acessoUsuario != 'administrador')
                                     $("#btnGravarDb").prop('disabled', true);
+                                $scope.usuarios = Usuarios.query();
                             }
                             $scope.nomeUsuario = '<%= username %>';
                             $scope.acessoUsuario = '<%= userAccess %>';

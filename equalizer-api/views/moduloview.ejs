@@ -66,234 +66,171 @@
                                     Informações sobre string e bateria
                                 </header>
                                 <div class="row" style="padding: 20px;">
-                                <section class="col-sm-6 col-md-6 col-lg-6">
-                                <fieldset >
-                                    <section>
-                                        <label class="label">Tensão nominal da bateria</label>
-                                        <label class="select">
+                                    <section class="col-sm-6 col-md-6 col-lg-6">
+                                        <fieldset>
+                                            <section>
+                                                <label class="label">Tensão nominal da bateria</label>
+                                                <label class="select">
                                             <select name="multipleSelect" id="multipleSelect"  ng-disabled="acessoUsuario != 'administrador'" ng-model="modulos[0].tensao_nominal" >
                                                 <option value="6v">6v</option>
                                                 <option value="12v">12v</option>
                                             </select>
                                             <i></i>
                                         </label>
-                                    </section>
-                                    <section>
-                                        <label class="label">Capacidade nominal da bateria</label>
-                                        <label class="input">
+                                            </section>
+                                            <section>
+                                                <label class="label">Capacidade nominal da bateria</label>
+                                                <label class="input">
 										<input type="number" name="capBateria" placeholder="Capacidade nominal da bateria" ng-model="modulos[0].capacidade_nominal" ng-disabled="acessoUsuario != 'administrador'" required>
 										<b class="tooltip tooltip-bottom-right">Capacidade nominal da bateria</b> </label>
-                                    </section>
-                                    <section>
-                                        <label class="label">Quantidade de Strings</label>
-                                        <label class="input">
+                                            </section>
+                                            <section>
+                                                <label class="label">Quantidade de Strings</label>
+                                                <label class="input">
 										<input type="number" name="qtdStrings" placeholder="Quantidade de Strings" ng-model="modulos[0].n_strings"  ng-disabled="acessoUsuario != 'administrador'" required>
 										<b class="tooltip tooltip-bottom-right">Quantidade de Strings</b> </label>
-                                    </section>
-                                    <section>
-                                        <label class="label">Quantidade de Baterias por String</label>
-                                        <label class="input">
+                                            </section>
+                                            <section>
+                                                <label class="label">Quantidade de Baterias por String</label>
+                                                <label class="input">
 										<input type="number" name="qtdBatPorStrings" placeholder="Quantidade de Baterias por String"  ng-disabled="acessoUsuario != 'administrador'" ng-model="modulos[0].n_baterias_por_strings" required>
 										<b class="tooltip tooltip-bottom-right">Quantidade de Baterias por String</b> </label>
+                                            </section>
+                                        </fieldset>
                                     </section>
-                                </fieldset>
-                                </section>
-                                <section class="col-sm-6 col-md-6 col-lg-6">
-                                <fieldset>
-                                     <section>
-                                        <label class="label">Accumulator Manufacturer</label>
-                                        <label class="input">
+                                    <section class="col-sm-6 col-md-6 col-lg-6">
+                                        <fieldset>
+                                            <section>
+                                                <label class="label">Accumulator Manufacturer</label>
+                                                <label class="input">
 										<input type="text" name="accMan" placeholder="Accumulator Manufacturer"  ng-disabled="acessoUsuario != 'administrador'" ng-model="modulos[0].fabricante" required>
 										<b class="tooltip tooltip-bottom-right">Accumulator Manufacturer</b> </label>
-                                    </section>
-                                    <section>
-                                        <label class="label">Accumulator Type</label>
-                                        <label class="input">
+                                            </section>
+                                            <section>
+                                                <label class="label">Accumulator Type</label>
+                                                <label class="input">
 										<input type="text" name="accType" placeholder="Accumulator Type"  ng-disabled="acessoUsuario != 'administrador'" ng-model="modulos[0].tipo" required>
 										<b class="tooltip tooltip-bottom-right">Accumulator Type</b> </label>
-                                    </section>
-                                    <section>
-                                        <label class="label">Accumulator Location</label>
-                                        <label class="input">
+                                            </section>
+                                            <section>
+                                                <label class="label">Accumulator Location</label>
+                                                <label class="input">
 										<input type="text" name="accLocation" placeholder="Accumulator Location"  ng-disabled="acessoUsuario != 'administrador'" ng-model="modulos[0].localizacao" required>
 										<b class="tooltip tooltip-bottom-right">Accumulator Location</b> </label>
-                                    </section>
-                                    <section>
-                                        <label class="label">Data de instalação da bateria</label>
-                                        <label class="input"><i class="icon-append fa fa-calendar"></i>
+                                            </section>
+                                            <section>
+                                                <label class="label">Data de instalação da bateria</label>
+                                                <label class="input"><i class="icon-append fa fa-calendar"></i>
 										<input type="text" name="dataInstalacao" id="dataInstalacao" placeholder="Data de instalação da bateria" ng-disabled="acessoUsuario != 'administrador'" ng-model="modulos[0].data_instalacao" required>
 										<b class="tooltip tooltip-bottom-right">Data de instalação da bateria</b> </label>
+                                            </section>
+                                        </fieldset>
                                     </section>
-                                </fieldset>
-                                </section>
-                                <footer>
-                                    <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'"  ng-click="saveModulo();">Aplicar</button>
-                                </footer>
+                                    <footer>
+                                        <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="saveModulo();">Aplicar</button>
+                                    </footer>
                                 </div>
-                                </form>
-                                <form  name="form2">
+                            </form>
+                            <form name="form2">
                                 <header>
                                     Configurações do módulo e alarme
                                 </header>
                                 <div class="row" style="padding: 20px;">
-                                <section class="col-sm-6 col-md-6 col-lg-6">
-                                <fieldset>
-                                    <section>
-                                        <label class="label">Tipo de Módulo</label>
-                                        <label class="select">
+                                    <section class="col-sm-6 col-md-6 col-lg-6">
+                                        <fieldset>
+                                            <section>
+                                                <label class="label">Tipo de Módulo</label>
+                                                <label class="select">
                                             <select name="multipleSelect" id="multipleSelect" ng-disabled="acessoUsuario != 'administrador'" ng-model="alarmes[0].tipo_modulo" >
                                                 <option value="2">2</option>
                                                 <option value="12">12</option>
                                             </select>
                                             <i></i>
                                         </label>
-                                    </section>
-                                    <section>
-                                        <label class="label">Níveis de Alerta</label>
-                                        <table  class="table table-striped table-bordered table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>Min.</td>
-                                                    <td>Máx.</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Tensão:</td>
-                                                    <td>
-                                                        <label class="input">
-                                                            <input type="text" name="alerta_tensMin" id="alerta_tensMin" ng-disabled="acessoUsuario != 'administrador'" placeholder="Tensão Mín."  ng-model="alarmes[0].nivel_alert_tensao_min">
+                                            </section>
+                                            <section>
+                                                <label class="label">Níveis de Alerta</label>
+                                                <table class="table table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td>Min.</td>
+                                                            <td>Máx.</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Tensão:</td>
+                                                            <td>
+                                                                <label class="input">
+                                                            <input type="text" name="alarme_tensMin" id="alarme_tensMin" ng-disabled="acessoUsuario != 'administrador'" placeholder="Tensão Mín." ng-model="alarmes[0].alarme_nivel_tensao_min">
                                                             <b class="tooltip tooltip-bottom-right">Tensão Mín.</b> 
                                                         </label>
-                                                    </td>
-                                                    <td>
-                                                        <label class="input">
-                                                            <input type="text" name="alerta_tensMax" id="alerta_tensMax" ng-disabled="acessoUsuario != 'administrador'" placeholder="Tensão Máx." ng-model="alarmes[0].nivel_alert_tensao_max">
+                                                            </td>
+                                                            <td>
+                                                                <label class="input">
+                                                            <input type="text" name="alarme_tensMax" id="alarme_tensMax" ng-disabled="acessoUsuario != 'administrador'" placeholder="Tensão Máx." ng-model="alarmes[0].alarme_nivel_tensao_max">
                                                             <b class="tooltip tooltip-bottom-right">Tensão Máx.</b> 
                                                         </label>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Temperatura:</td>
-                                                    <td>
-                                                        <label class="input">
-                                                            <input type="text" name="alerta_tempMin" id="alerta_tempMin" ng-disabled="acessoUsuario != 'administrador'" placeholder="Temp. Mín." ng-model="alarmes[0].nivel_alert_temp_min">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Temperatura:</td>
+                                                            <td>
+                                                                <label class="input">
+                                                            <input type="text" name="alarme_tempMin" id="alarme_tempMin" ng-disabled="acessoUsuario != 'administrador'" placeholder="Temp. Mín." ng-model="alarmes[0].alarme_nivel_temp_min">
                                                             <b class="tooltip tooltip-bottom-right">Temp. Mín.</b> 
                                                         </label>
-                                                    </td>
-                                                    <td>
-                                                        <label class="input">
-                                                            <input type="text" name="alerta_tempMax" id="alerta_tempMax" ng-disabled="acessoUsuario != 'administrador'" placeholder="Temp. Máx." ng-model="alarmes[0].nivel_alert_temp_max">
+                                                            </td>
+                                                            <td>
+                                                                <label class="input">
+                                                            <input type="text" name="alarme_tempMax" id="alarme_tempMax" ng-disabled="acessoUsuario != 'administrador'" placeholder="Temp. Máx." ng-model="alarmes[0].alarme_nivel_temp_max">
                                                             <b class="tooltip tooltip-bottom-right">Temp. Máx.</b> 
                                                         </label>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Impedância:</td>
-                                                    <td>
-                                                        <label class="input">
-                                                            <input type="text" name="alerta_impMin" id="alerta_impMin" ng-disabled="acessoUsuario != 'administrador'" placeholder="Imped. Mín." ng-model="alarmes[0].nivel_alert_impedancia_min">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Impedância:</td>
+                                                            <td>
+                                                                <label class="input">
+                                                            <input type="text" name="alarme_impMin" id="alarme_impMin" ng-disabled="acessoUsuario != 'administrador'" placeholder="Imped. Mín." ng-model="alarmes[0].alarme_nivel_imped_min">
                                                             <b class="tooltip tooltip-bottom-right">Imped. Mín.</b> 
                                                         </label>
-                                                    </td>
-                                                    <td>
-                                                        <label class="input">
-                                                            <input type="text" name="alerta_impMax" id="alerta_impMax" ng-disabled="acessoUsuario != 'administrador'" placeholder="Imped. Máx." ng-model="alarmes[0].nivel_alert_impedancia_max">
+                                                            </td>
+                                                            <td>
+                                                                <label class="input">
+                                                            <input type="text" name="alarme_impMax" id="alarme_impMax" ng-disabled="acessoUsuario != 'administrador'" placeholder="Imped. Máx." ng-model="alarmes[0].alarme_nivel_imped_max">
                                                             <b class="tooltip tooltip-bottom-right">Imped. Máx.</b> 
                                                         </label>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <label class="checkbox">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <label class="checkbox">
                                                             <input type="checkbox" name="ativarMaxTensao" ng-disabled="acessoUsuario != 'administrador'" id="ativarMaxTensao" ng-model="alarmes[0].nivel_max_tensao_ativo">
                                                             <i></i>Ativar Máx diferença tensão
                                                         </label>
-                                                    </td>
-                                                    <td>
-                                                        <label class="select">
+                                                            </td>
+                                                            <td>
+                                                                <label class="select">
                                                             <select name="multipleSelect" id="multipleSelect" ng-disabled="acessoUsuario != 'administrador'" ng-model="alarmes[0].nivel_max_tensao_val">
                                                                 <option value="0">0</option>
                                                                 <option value="12">12</option>
                                                             </select>
                                                             <i></i>
                                                         </label>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </section>
+
+                                        </fieldset>
                                     </section>
-                                    
-                                </fieldset>
-                                </section>
-                                <section class="col-sm-6 col-md-6 col-lg-6">
-                                <fieldset>
-                                     <section>
-                                        <label class="label">Alarmes Níveis</label>
-                                        <table  class="table table-striped table-bordered table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>Min.</td>
-                                                    <td>Máx.</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Tensão:</td>
-                                                    <td>
-                                                        <label class="input">
-                                                            <input type="text" name="alarme_tensMin" id="alarme_tensMin" ng-disabled="acessoUsuario != 'administrador'" placeholder="Tensão Mín." ng-model="alarmes[0].alarme_nivel_tensao_min">
-                                                            <b class="tooltip tooltip-bottom-right">Tensão Mín.</b> 
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <label class="input">
-                                                            <input type="text" name="alarme_tensMax" id="alarme_tensMax" ng-disabled="acessoUsuario != 'administrador'" placeholder="Tensão Máx." ng-model="alarmes[0].alarme_nivel_tensao_max">
-                                                            <b class="tooltip tooltip-bottom-right">Tensão Máx.</b> 
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Temperatura:</td>
-                                                    <td>
-                                                        <label class="input">
-                                                            <input type="text" name="alarme_tempMin" id="alarme_tempMin" ng-disabled="acessoUsuario != 'administrador'" placeholder="Temp. Mín." ng-model="alarmes[0].alarme_nivel_temp_min">
-                                                            <b class="tooltip tooltip-bottom-right">Temp. Mín.</b> 
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <label class="input">
-                                                            <input type="text" name="alarme_tempMax" id="alarme_tempMax" ng-disabled="acessoUsuario != 'administrador'" placeholder="Temp. Máx." ng-model="alarmes[0].alarme_nivel_temp_max">
-                                                            <b class="tooltip tooltip-bottom-right">Temp. Máx.</b> 
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Impedância:</td>
-                                                    <td>
-                                                        <label class="input">
-                                                            <input type="text" name="alarme_impMin" id="alarme_impMin" ng-disabled="acessoUsuario != 'administrador'" placeholder="Imped. Mín." ng-model="alarmes[0].alarme_nivel_imped_min">
-                                                            <b class="tooltip tooltip-bottom-right">Imped. Mín.</b> 
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <label class="input">
-                                                            <input type="text" name="alarme_impMax" id="alarme_impMax" ng-disabled="acessoUsuario != 'administrador'" placeholder="Imped. Máx." ng-model="alarmes[0].alarme_nivel_imped_max">
-                                                            <b class="tooltip tooltip-bottom-right">Imped. Máx.</b> 
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </section>
-                                </fieldset>
-                                </section>
                                 </div>
                                 <footer>
-                                    <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'"  ng-click="saveAlarmeConfig();">Aplicar</button>
-                                    <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'"  ng-click="reset();">Reset Defaults</button>
+                                    <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="saveAlarmeConfig();">Aplicar</button>
+                                    <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="reset();">Reset Defaults</button>
                                 </footer>
                             </form>
                         </div>
@@ -309,13 +246,13 @@
                         .factory('Modulos', ['$resource', function ($resource) {
                             return $resource('/modulo/:id', null, {
                                 'update': { method: 'PUT' },
-                                'remove': {method: 'DELETE' }
+                                'remove': { method: 'DELETE' }
                             });
                         }])
                         .factory('AlarmesConfig', ['$resource', function ($resource) {
                             return $resource('/alarmeConfig/:id', null, {
                                 'update': { method: 'PUT' },
-                                'remove': {method: 'DELETE' }
+                                'remove': { method: 'DELETE' }
                             });
                         }])
                         //---------------
@@ -323,27 +260,28 @@
                         //---------------
                         .controller('ModuloController', ['$scope', 'Modulos', 'AlarmesConfig', function ($scope, Modulos, AlarmesConfig) {
                             $scope.alarmes = AlarmesConfig.query();
+                            $scope.modulos = Modulos.query();
                             $scope.saveModulo = function () {
                                 var modulo = $scope.modulos[0];
                                 Modulos.update(modulo);
                                 $.bigBox({
-                                            title : "Informações sobre string e bateria",
-                                            content : "Dados salvos com sucesso!",
-                                            color : "#275B89",
-                                            timeout: 5000,
-                                            icon : "fa fa-check fadeInLeft animated"
-                                        });
+                                    title: "Informações sobre string e bateria",
+                                    content: "Dados salvos com sucesso!",
+                                    color: "#275B89",
+                                    timeout: 5000,
+                                    icon: "fa fa-check fadeInLeft animated"
+                                });
                             }
                             $scope.saveAlarmeConfig = function () {
                                 var alarmeConfig = $scope.alarmes[0];
                                 AlarmesConfig.update(alarmeConfig);
                                 $.bigBox({
-                                            title : "Configurações do módulo e alarme",
-                                            content : "Dados salvos com sucesso!",
-                                            color : "#275B89",
-                                            timeout: 5000,
-                                            icon : "fa fa-check fadeInLeft animated"
-                                        });
+                                    title: "Configurações do módulo e alarme",
+                                    content: "Dados salvos com sucesso!",
+                                    color: "#275B89",
+                                    timeout: 5000,
+                                    icon: "fa fa-check fadeInLeft animated"
+                                });
                             }
                             $scope.nomeUsuario = '<%= username %>';
                             $scope.acessoUsuario = '<%= userAccess %>';
@@ -366,26 +304,25 @@
 
         </div>
         <script>
-        $(document).ready(function() {
-            $('#dataInstalacao').datepicker({
-				dateFormat : 'dd/mm/yy',
-				prevText : '<i class="fa fa-chevron-left"></i>',
-				nextText : '<i class="fa fa-chevron-right"></i>'
-			});
-            $("#alerta_tensMin").maskMoney({decimal: ",", thousands: "."});
-            $("#alerta_tensMax").maskMoney({decimal: ",", thousands: "."});
-            $("#alerta_tempMin").maskMoney({decimal: ",", thousands: "."});
-            $("#alerta_tempMax").maskMoney({decimal: ",", thousands: "."});
-            $("#alerta_impMin").maskMoney({decimal: ",", thousands: "."});
-            $("#alerta_impMax").maskMoney({decimal: ",", thousands: "."});
-            $("#alarme_tensMin").maskMoney({decimal: ",", thousands: "."});
-            $("#alarme_tensMax").maskMoney({decimal: ",", thousands: "."});
-            $("#alarme_tempMin").maskMoney({decimal: ",", thousands: "."});
-            $("#alarme_tempMax").maskMoney({decimal: ",", thousands: "."});
-            $("#alarme_impMin").maskMoney({decimal: ",", thousands: "."});
-            $("#alarme_impMax").maskMoney({decimal: ",", thousands: "."});
-        });
-        
+            $(document).ready(function () {
+                $('#dataInstalacao').datepicker({
+                    dateFormat: 'dd/mm/yy',
+                    prevText: '<i class="fa fa-chevron-left"></i>',
+                    nextText: '<i class="fa fa-chevron-right"></i>'
+                });
+                $("#alerta_tensMin").maskMoney({ decimal: ".", thousands: "" });
+                $("#alerta_tensMax").maskMoney({ decimal: ".", thousands: "" });
+                $("#alerta_tempMin").maskMoney({ decimal: ".", thousands: "" });
+                $("#alerta_tempMax").maskMoney({ decimal: ".", thousands: "" });
+                $("#alerta_impMin").maskMoney({ decimal: ".", thousands: "" });
+                $("#alerta_impMax").maskMoney({ decimal: ".", thousands: "" });
+                $("#alarme_tensMin").maskMoney({ decimal: ".", thousands: "" });
+                $("#alarme_tensMax").maskMoney({ decimal: ".", thousands: "" });
+                $("#alarme_tempMin").maskMoney({ decimal: ".", thousands: "" });
+                $("#alarme_tempMax").maskMoney({ decimal: ".", thousands: "" });
+                $("#alarme_impMin").maskMoney({ decimal: ".", thousands: "" });
+                $("#alarme_impMax").maskMoney({ decimal: ".", thousands: "" });
+            });
         </script>
         <% include partials/footer %>
 </body>

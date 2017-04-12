@@ -1,131 +1,317 @@
 <!DOCTYPE html>
 <html lang="en-us" ng-app="app">
+
 <head>
     <% include partials/head %>
 </head>
+
 <body class="">
-<% include partials/header %>
-<div id="main" role="main">
- <div id="ribbon">
-  <ol class="breadcrumb">
-   <li>Logfiles</li>
-   <li>AlarmLog</li>
-  </ol>
- </div>
- <div id="content">
-  <div class="row">
-   <article class="col-sm-12 col-md-12 col-lg-12">
-    <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
-     <header>
-      <span class="widget-icon"><i class="fa fa-edit"></i></span>
-      <h2>AlarmLog </h2>
-     </header>
-     <div>
-      <div class="jarviswidget-editbox">
-      </div>
-      <div class="widget-body no-padding">
-       <ng-view></ng-view>
-      </div>
-     </div>
-    </div>
-   </article>
+    <% include partials/header %>
+        <div id="main" role="main">
+            <div id="ribbon">
+                <ol class="breadcrumb">
+                    <li>Logfiles</li>
+                    <li>AlarmLog</li>
+                </ol>
+            </div>
+            <div id="content">
+                <div class="row">
+                    <article class="col-sm-12 col-md-12 col-lg-12">
 
-  </div>
-  <script type="text/ng-template" id="/alarmlog.html">
-   <div class="table-responsive">
-    <table id="datatable_tabletools" class="table table-striped table-bordered table-hover">
-     <thead>
-     <tr>
-      <td>Data</td>
-      <td>Alarm/Event</td>
-     </tr>
-     </thead>
-     <tbody>
-     <tr ng-repeat="alog in alarmlogs" ng-class="rowClass(alog)" on-finish-render="ngRepeatFinished">
-      <td>{{ alog.data | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-      <td>{{ alog.conteudo }}</td>
-     </tr>
-     </tbody>
-    </table>
-   </div>
+                        <div class="widget-body">
+                            <ng-view></ng-view>
+                        </div>
 
-  </script>
-  <script>
-      angular.module('app', ['ngRoute', 'ngResource'])
-      //---------------
-      // Services
-      //---------------
-          .factory('AlarmLog', ['$resource', function($resource){
-              return $resource('/alarmlog/:id', null, {
-                  'update': { method:'PUT' }
-              });
-          }])
-          //---------------
-          // Controllers
-          //---------------
-          .controller('AlarmLogController', ['$scope', 'AlarmLog', function ($scope, AlarmLog) {
-              $scope.alarmlogs = AlarmLog.query();
-          }])
-          .directive('onFinishRender', function ($timeout) {
-              return {
-                  restrict: 'A',
-                  link: function (scope, element, attr) {
-                      if (scope.$last === true) {
-                          $timeout(function () {
-                              setDataTable();
-                          });
-                      }
-                  }
-              }
-          })
-          //---------------
-          // Routes
-          //---------------
-          .config(['$routeProvider', function ($routeProvider) {
-              $routeProvider
-                  .when('/', {
-                      templateUrl: '/alarmlog.html',
-                      controller: 'AlarmLogController'
-                  })
-          }]);
+                    </article>
 
-  </script>
+                </div>
+                <script type="text/ng-template" id="/alarmlog.html">
+                    <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="showCalendar();">Calendário</button>
+                    <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="showGrid();">Grid</button>
+                    <br />
+                    <br />
+                    <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                        <header>
+                            <span class="widget-icon"><i class="fa fa-edit"></i></span>
+                            <h2>AlarmLog </h2>
+                        </header>
+                        <div>
+                            <div class="jarviswidget-editbox">
+                            </div>
+                            <div class="table-responsive" id="dataGrid">
+                                <table id="datatable_tabletools" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <td>Data</td>
+                                            <td>Alarm/Event</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="alog in alarmlogs" ng-class="rowClass(alog)" on-finish-render="ngRepeatFinished">
+                                            <td>{{ alog.dataHora | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                                            <td>{{ alog.descricao }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="calendarDiv" style="display:none;" class="jarviswidget jarviswidget-color-blueDark">
+                                <header>
+                                    <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
+                                    <h2> Calendário </h2>
+                                    <div class="widget-toolbar">
+                                        <!-- add: non-hidden - to disable auto hide -->
+                                        <div class="btn-group">
+                                            <button class="btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">
+											Visão <i class="fa fa-caret-down"></i>
+										</button>
+                                            <ul class="dropdown-menu js-status-update pull-right">
+                                                <li>
+                                                    <a href="javascript:void(0);" id="mt">Mês</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" id="ag">Agenda</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" id="td">Hoje</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </header>
 
- </div>
-</div>
-<% include partials/footer %>
-<script type="text/javascript">
-    function setDataTable(){
-        $("#datatable_tabletools").dataTable({
+                                <!-- widget div-->
+                                <div>
 
-            // Tabletools options:
-            //   https://datatables.net/extensions/tabletools/button_options
-            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T>r>"+
-            "t"+
-            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
-            "oLanguage": {
-                "sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
-            },
-            "oTableTools": {
-                "aButtons": [
-                    "copy",
-                    "csv",
-                    "xls",
-                    {
-                        "sExtends": "pdf",
-                        "sTitle": "SmartAdmin_PDF",
-                        "sPdfMessage": "SmartAdmin PDF Export",
-                        "sPdfSize": "letter"
+                                    <div class="widget-body no-padding">
+                                        <!-- content goes here -->
+                                        <div class="widget-body-toolbar">
+
+                                            <div id="calendar-buttons">
+
+                                                <div class="btn-group">
+                                                    <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
+                                                    <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-next"><i class="fa fa-chevron-right"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="calendar"></div>
+
+                                        <!-- end content -->
+                                    </div>
+
+                                </div>
+                                <!-- end widget div -->
+                            </div>
+                        </div>
+                    </div>
+                </script>
+                <script>
+                    angular.module('app', ['ngRoute', 'ngResource'])
+                        //---------------
+                        // Services
+                        //---------------
+                        .factory('AlarmLog', ['$resource', function ($resource) {
+                            return $resource('/alarmlog/:id', null, {
+                                'update': { method: 'PUT' }
+                            });
+                        }])
+                        //---------------
+                        // Controllers
+                        //---------------
+                        .controller('AlarmLogController', ['$scope', 'AlarmLog', function ($scope, AlarmLog) {
+                            AlarmLog.query(function (res) {
+                                $scope.alarmlogs = res;
+                            });
+                            $scope.showCalendar = function (index) {
+                                setCalendar($scope.alarmlogs);
+                            }
+                            $scope.showGrid = function (index) {
+                                setGrid();
+                            }
+                        }])
+                        .directive('onFinishRender', function ($timeout) {
+                            return {
+                                restrict: 'A',
+                                link: function (scope, element, attr) {
+                                    if (scope.$last === true) {
+                                        $timeout(function () {
+                                            setDataTable();
+                                        });
+                                    }
+                                }
+                            }
+                        })
+                        //---------------
+                        // Routes
+                        //---------------
+                        .config(['$routeProvider', function ($routeProvider) {
+                            $routeProvider
+                                .when('/', {
+                                    templateUrl: '/alarmlog.html',
+                                    controller: 'AlarmLogController'
+                                })
+                        }]);
+                </script>
+
+            </div>
+        </div>
+        <script type="text/javascript">
+            "use strict";
+
+            var date = new Date();
+            var d = date.getDate();
+            var m = date.getMonth();
+            var y = date.getFullYear();
+
+            var hdr = {
+                left: 'title',
+                center: 'mês,semana,dia',
+                right: 'anterior,hoje,próximo'
+            };
+            function setDataTable() {
+                $("#datatable_tabletools").dataTable({
+
+                    // Tabletools options:
+                    //   https://datatables.net/extensions/tabletools/button_options
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                    "oLanguage": {
+                        "sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
                     },
-                    {
-                        "sExtends": "print"
+                    "oTableTools": {
+                        "aButtons": [
+                            "copy",
+                            "csv",
+                            "xls",
+                            {
+                                "sExtends": "pdf",
+                                "sTitle": "SmartAdmin_PDF",
+                                "sPdfMessage": "SmartAdmin PDF Export",
+                                "sPdfSize": "letter"
+                            },
+                            {
+                                "sExtends": "print"
+                            }
+                        ],
+                        "sSwfPath": "smartadmin/js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+                    },
+                    "autoWidth": true
+                });
+            }
+            function setGrid() {
+                $('#calendarDiv').fadeOut();
+                $('#dataGrid').fadeIn();
+            }
+            function setCalendar(data) {
+                $('#dataGrid').fadeOut();
+                $('#calendarDiv').fadeIn();
+                var eventos = [];
+                data.forEach(function (element) {
+                    eventos.push({
+                        title: 'Evento de Alerta',
+                        allDay: false,
+                        start: element.dataHora,
+                        description: element.descricao,
+                        className: ["event", "bg-color-greenLight"],
+                        icon: 'fa-check'
+                    });
+                }, this);
+                $('#calendar').fullCalendar({
+                    locale: 'pt-BR',
+                    header: hdr,
+                    editable: false,
+                    droppable: false, // this allows things to be dropped onto the calendar !!!
+
+                    drop: function (date, allDay) { // this function is called when something is dropped
+
+                        // retrieve the dropped element's stored Event Object
+                        var originalEventObject = $(this).data('eventObject');
+
+                        // we need to copy it, so that multiple events don't have a reference to the same object
+                        var copiedEventObject = $.extend({}, originalEventObject);
+
+                        // assign it the date that was reported
+                        copiedEventObject.start = date;
+                        copiedEventObject.allDay = allDay;
+
+                        // render the event on the calendar
+                        // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                        $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                        // is the "remove after drop" checkbox checked?
+                        if ($('#drop-remove').is(':checked')) {
+                            // if so, remove the element from the "Draggable Events" list
+                            $(this).remove();
+                        }
+
+                    },
+
+                    select: function (start, end, allDay) {
+                        var title = prompt('Event Title:');
+                        if (title) {
+                            calendar.fullCalendar('renderEvent', {
+                                title: title,
+                                start: start,
+                                end: end,
+                                allDay: allDay
+                            }, true // make the event "stick"
+                            );
+                        }
+                        calendar.fullCalendar('unselect');
+                    },
+
+                    events: eventos,
+
+                    eventRender: function (event, element, icon) {
+                        if (!event.description == "") {
+                            element.find('.fc-title').append("<br/><span class='ultra-light'>" + event.description +
+                                "</span>");
+                        }
+                        if (!event.icon == "") {
+                            element.find('.fc-title').append("<i class='air air-top-right fa " + event.icon +
+                                " '></i>");
+                        }
+                    },
+
+                    windowResize: function (event, ui) {
+                        $('#calendar').fullCalendar('render');
                     }
-                ],
-                "sSwfPath": "smartadmin/js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-            },
-            "autoWidth" : true
-        });
-    }
-</script>
+                });
+                /* hide default buttons */
+			    $('.fc-right, .fc-center').hide();
+
+			
+				$('#calendar-buttons #btn-prev').click(function () {
+				    $('.fc-prev-button').click();
+				    return false;
+				});
+				
+				$('#calendar-buttons #btn-next').click(function () {
+				    $('.fc-next-button').click();
+				    return false;
+				});
+				
+				$('#calendar-buttons #btn-today').click(function () {
+				    $('.fc-today-button').click();
+				    return false;
+				});
+				
+				$('#mt').click(function () {
+				    $('#calendar').fullCalendar('changeView', 'month');
+				});
+				
+				$('#ag').click(function () {
+				    $('#calendar').fullCalendar('changeView', 'agendaWeek');
+				});
+				
+				$('#td').click(function () {
+				    $('#calendar').fullCalendar('changeView', 'agendaDay');
+				});	
+            }
+        </script>
+        <% include partials/footer %>
+
 </body>
+
 </html>

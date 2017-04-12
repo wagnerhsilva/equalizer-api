@@ -1,22 +1,25 @@
 var express = require('express');
 var router = express.Router();
-var AlarmLog = require('../models/AlarmLog');
+var StatusModulo = require('../models/StatusModulo');
 var bCrypt = require('bcrypt-nodejs');
 /* GET */
 router.get('/', function (req, res, next) {
-    AlarmLog.getAll(function (err, alarmLog) {
+    StatusModulo.get(function (err, statusModulos) {
+        console.log("getChart2");
         if (err) return next(err);
-        res.json(alarmLog);
+        console.log(statusModulos);
+        res.json(statusModulos);
     });
 });
-/* GET /dataLog/id */
+/* GET /statusmodulo/id */
 router.get('/:id', function (req, res, next) {
+    
 });
 module.exports = router;
 /* POST */
 router.post('/', function (req, res, next) {
-
+   
 });
-/* PUT /dataLog/:id */
+/* PUT /statusmodulo/:id */
 router.put('/', function (req, res, next) {
 });

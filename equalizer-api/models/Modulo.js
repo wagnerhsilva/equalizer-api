@@ -17,17 +17,12 @@ var createModulo = function (id, descricao, tensao_nominal, capacidade_nominal, 
         conf_alarme_id: conf_alarme_id
     }
 }
-var save = function (modulo, err) {
+var save = function (modulo) {
     var db = new sqlite3.Database('equalizerdb');
     var stmt = db.prepare("INSERT INTO Modulo(descricao, tensao_nominal, capacidade_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, " +
-                            "tipo, data_instalacao, conf_alarme_id) VALUES (?,?,?,?,?,?,?,?,?,?)");
+                            "tipo, data_instalacao, conf_alarme_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
     stmt.run(modulo.descricao, modulo.tensao_nominal, modulo.capacidade_nominal, modulo.n_strings, modulo.n_baterias_por_strings, modulo.contato, modulo.localizacao, modulo.fabricante, 
-                modulo.tipo, modulo.data_instalacao, modulo.conf_alarme_id, function (error) {
-        if (error)
-            err(error);
-        else
-            err(false);
-    });
+                modulo.tipo, modulo.data_instalacao, modulo.conf_alarme_id);
     stmt.finalize();
     db.close();
 }
@@ -61,6 +56,12 @@ var getById = function (id, data) {
 }
 var update = function (modulo) {
     console.log("update");
+    getAll(function(err, modulos){
+        if(modulos.length <= 0){
+            save(modulo);
+            return;
+        }
+    });
     console.log(modulo);
     var db = new sqlite3.Database('equalizerdb');
     db.run("UPDATE Modulo SET descricao = $descricao, tensao_nominal = $tensao_nominal, capacidade_nominal = $capacidade_nominal, n_strings = $n_strings, n_baterias_por_strings = $n_baterias_por_strings "+

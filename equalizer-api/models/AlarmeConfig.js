@@ -27,16 +27,11 @@ var save = function (alarmeConfig, err) {
     var db = new sqlite3.Database('equalizerdb');
     var stmt = db.prepare("INSERT INTO AlarmeConfig(tipo_modulo, nivel_alert_tensao_max, nivel_alert_tensao_min, nivel_alert_temp_max, nivel_alert_temp_min, nivel_alert_impedancia_max, " +
                                     "nivel_alert_impedancia_min, nivel_max_tensao_ativo, nivel_max_tensao_val, alarme_nivel_tensao_max, alarme_nivel_tensao_min, " +
-                                    "alarme_nivel_temp_max, alarme_nivel_temp_min, alarme_nivel_imped_max, alarme_nivel_imped_min) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                                    "alarme_nivel_temp_max, alarme_nivel_temp_min, alarme_nivel_imped_max, alarme_nivel_imped_min) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
     stmt.run(alarmeConfig.tipo_modulo, alarmeConfig.nivel_alert_tensao_max, alarmeConfig.nivel_alert_tensao_min, alarmeConfig.nivel_alert_temp_max, alarmeConfig.nivel_alert_temp_min, 
                 alarmeConfig.nivel_alert_impedancia_max, alarmeConfig.nivel_alert_impedancia_min, alarmeConfig.nivel_max_tensao_ativo, alarmeConfig.nivel_max_tensao_val, 
                 alarmeConfig.alarme_nivel_tensao_max, alarmeConfig.alarme_nivel_tensao_min, alarmeConfig.alarme_nivel_temp_max, alarmeConfig.alarme_nivel_temp_min, 
-                alarmeConfig.alarme_nivel_imped_max, alarmeConfig.alarme_nivel_imped_min, function (error) {
-        if (error)
-            err(error);
-        else
-            err(false);
-    });
+                alarmeConfig.alarme_nivel_imped_max, alarmeConfig.alarme_nivel_imped_min);
     stmt.finalize();
     db.close();
 }
@@ -77,6 +72,12 @@ var getById = function (id, data) {
     db.close();
 }
 var update = function (alarmeConfig) {
+    getAll(function(err, alarmesConfig){
+        if(alarmesConfig.length <= 0){
+            save(alarmeConfig);
+            return;
+        }
+    });
     var db = new sqlite3.Database('equalizerdb');
     db.run("UPDATE AlarmeConfig SET tipo_modulo = $tipo_modulo, nivel_alert_tensao_max = $nivel_alert_tensao_max, nivel_alert_tensao_min = $nivel_alert_tensao_min, nivel_alert_temp_max = $nivel_alert_temp_max, nivel_alert_temp_min = $nivel_alert_temp_min, nivel_alert_impedancia_max = $nivel_alert_impedancia_max, " +
                                     "nivel_alert_impedancia_min = $nivel_alert_impedancia_min, nivel_max_tensao_ativo = $nivel_max_tensao_ativo, nivel_max_tensao_val = $nivel_max_tensao_val, alarme_nivel_tensao_max = $alarme_nivel_tensao_max, alarme_nivel_tensao_min = $alarme_nivel_tensao_min, " +
