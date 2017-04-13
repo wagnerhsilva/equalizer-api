@@ -82,8 +82,11 @@
                     <li <%if (pageName=='moduloview') {%>  class='active'  <%}%>>
                         <a href="moduloview" title="Módulos, alarme e bateria"><span class="menu-item-parent">Módulos, alarme e bateria</span></a>
                     </li>
-                    <li class="">
-                        <a href="home" title="Dashboard"><span class="menu-item-parent">Configuração de timeserver</span></a>
+                    <li <%if (pageName=='emailserverview') {%>  class='active'  <%}%>>
+                        <a href="emailserverview" title="Configuração de email server"><span class="menu-item-parent">Configuração de email server</span></a>
+                    </li>
+                    <li <%if (pageName=='timeserverview') {%>  class='active'  <%}%>>
+                        <a href="timeserverview" title="Configuração de timeserver"><span class="menu-item-parent">Configuração de timeserver</span></a>
                     </li>
                     <li <%if (pageName=='redesegurancaview') {%>  class='active'  <%}%>>
                         <a href="redesegurancaview" title="Rede & Segurança"><span class="menu-item-parent">Rede & Segurança</span></a>

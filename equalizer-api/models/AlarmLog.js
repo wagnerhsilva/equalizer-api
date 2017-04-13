@@ -22,7 +22,7 @@ var save = function (alarmLog, err) {
 }
 var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.all("SELECT id, dataHora, descricao FROM AlarmLog ORDER BY id", function (err, rows) {
+    db.all("SELECT id, dataHora, descricao FROM AlarmLog ORDER BY id desc", function (err, rows) {
         var alarmLogs = [];
         rows.forEach(function row(row) {
             alarmLogs.push(new createAlarmLog(row.id, new Date(row.dataHora), row.descricao));

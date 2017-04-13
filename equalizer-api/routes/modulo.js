@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
 });
 /* GET /modulo/id */
 router.get('/:id', function (req, res, next) {
-    MOdulo.getById(req.params.id, function (err, post) {
+    Modulo.getById(req.params.id, function (err, post) {
         if (err) return next(err);
         res.json(post);
     });

@@ -11,7 +11,7 @@ var isAuthenticated = function (req, res, next) {
 }
 /* GET home page. */
 router.get('/', isAuthenticated, function (req, res, next) {
-    res.render('timeserverview', { title: 'TimeServer Settings', pageName: 'timeserverview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email, serverDate: new Date() });
+    res.render('emailserverview', { title: 'EmailServer Config', pageName: 'emailserverview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email });
 });
 
 module.exports = router;
