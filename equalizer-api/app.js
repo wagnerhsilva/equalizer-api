@@ -35,6 +35,7 @@ var statusmoduloview = require('./routes/statusmoduloview');
 var chartview = require('./routes/chartview');
 var chart2view = require('./routes/chart2view');
 var equalizerdb = require('./database/equalizerdb');
+var emailServerModel = require('./models/EmailServer.js');
 
 
 //init sqlite database
@@ -131,4 +132,6 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
+//iteração envio email
+setInterval(function(){ emailServerModel.sendEmail(); }, 10000);
 module.exports = app;

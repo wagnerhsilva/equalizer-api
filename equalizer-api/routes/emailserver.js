@@ -36,5 +36,10 @@ router.put('/', function (req, res, next) {
 });
 /* DELETE /timeserver/:id */
 router.delete('/:id', function (req, res, next) {
-    
+
+});
+
+/* DELETE /timeserver/:id */
+router.delete('/:id', function (req, res, next) {
+
 });
