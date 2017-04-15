@@ -61,7 +61,7 @@ var update = function (user) {
                                     $sobreNome: user.sobreNome, 
                                     $telefone: user.telefone, 
                                     $email: user.email, 
-                                    $senha: createHash(user.senha), 
+                                    $senha: user.senha, 
                                     $acesso: user.acesso });
     db.close();
 }

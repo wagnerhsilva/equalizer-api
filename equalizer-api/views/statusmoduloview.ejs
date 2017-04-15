@@ -49,11 +49,11 @@
                                 <table class="table table-striped table-bordered table-hover datatabletemplate">
                                     <thead>
                                         <tr>
-                                            <td align="center">Number</td>
-                                            <td align="center">Voltage</td>
-                                            <td align="center">Temperature</td>
-                                            <td align="center">Impedance</td>
-                                            <td align="center">Equalization</td>
+                                            <td align="center">Bateria</td>
+                                            <td align="center">Tensão</td>
+                                            <td align="center">Temperatura</td>
+                                            <td align="center">Impedância</td>
+                                            <td align="center">Equalização</td>
                                             <td align="center">Status</td>
                                         </tr>
                                     </thead>
@@ -70,14 +70,19 @@
                                                 <span ng-if="status.percentualEqualizacao <= 80 && status.percentualEqualizacao > 60" dynamicbar4 data="x.bars">20,30,40,50,60</span>
                                                 <span ng-if="status.percentualEqualizacao <= 100 && status.percentualEqualizacao > 80" dynamicbar5 data="x.bars">20,30,40,50,60</span>
                                             </td>
-                                            <td align="center"></td>
+                                            <td align="center">
+                                                <img ng-if="status.temperatura < status.min_temp || status.temperatura > status.max_temp || status.impedancia < status.min_imp || status.impedancia > status.max_imp || status.tensao < status.min_tensao || status.tensao > status.max_tensao"
+                                                    src="/smartadmin/img/red_bullet.png" width="20" />
+                                                <img ng-if="status.temperatura >= status.min_temp && status.temperatura <= status.max_temp && status.impedancia >= status.min_imp && status.impedancia <= status.max_imp && status.tensao >= status.min_tensao && status.tensao <= status.max_tensao"
+                                                    src="/smartadmin/img/green_bullet.png" width="20" />
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </section>
-                    <section id="visao2" style="display:none;">
+                    <section id="visao2">
                         <button id="btn" class="btn btn-primary pull-right" onclick="alterarVisao();">Alterar Visão</button>
                         <div ng-repeat="string in stringsDistintas">
                             <h3>{{ string }}</h3>
@@ -86,7 +91,7 @@
                                     <thead>
                                         <tr>
                                             <td style="width:100px;"></td>
-                                            <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }" ng-class="rowClass(status)">
+                                            <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }">
                                                 <div ng-if="status.precentualMinTensao > 90" style="background-color: green; height:100px; width:100%;">
                                                     <div style="background-color: gray; height:{{status.percentualTensao}}%; width:100%;">
                                                     </div>
@@ -105,31 +110,35 @@
                                             <tbody>
                                                 <tr>
                                                     <td style="width:100px;">Tensão</td>
-                                                    <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }" ng-class="rowClass(status)">
+                                                    <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }">
                                                         {{status.tensao}}
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width:100px;">Temperatura</td>
-                                                    <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }" ng-class="rowClass(status)">
+                                                    <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }">
                                                         {{status.temperatura}}
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width:100px;">Impedância</td>
-                                                    <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }" ng-class="rowClass(status)">
+                                                    <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }">
                                                         {{status.impedancia}}
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width:100px;">Equalização</td>
-                                                    <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }" ng-class="rowClass(status)">
-                                                        {{status.equalizacao}}
+                                                    <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }">
+                                                        <span ng-if="status.percentualEqualizacao <= 20" dynamicbar1 data="x.bars">20,30,40,50,60</span>
+                                                        <span ng-if="status.percentualEqualizacao <= 40 && status.percentualEqualizacao > 20" dynamicbar2 data="x.bars">20,30,40,50,60</span>
+                                                        <span ng-if="status.percentualEqualizacao <= 60 && status.percentualEqualizacao > 40" dynamicbar3 data="x.bars">20,30,40,50,60</span>
+                                                        <span ng-if="status.percentualEqualizacao <= 80 && status.percentualEqualizacao > 60" dynamicbar4 data="x.bars">20,30,40,50,60</span>
+                                                        <span ng-if="status.percentualEqualizacao <= 100 && status.percentualEqualizacao > 80" dynamicbar5 data="x.bars">20,30,40,50,60</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width:100px;">Número</td>
-                                                    <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }" ng-class="rowClass(status)">
+                                                    <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }">
                                                         {{status.bateria}}
                                                     </td>
                                                 </tr>
@@ -293,9 +302,6 @@
                     "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T>r>" +
                     "t" +
                     "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
-                    "oLanguage": {
-                        "sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
-                    },
                     "oTableTools": {
                         "aButtons": [
                             "copy",
@@ -312,6 +318,29 @@
                             }
                         ],
                         "sSwfPath": "smartadmin/js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+                    },
+                    "language": {
+                        "sEmptyTable": "Nenhum registro encontrado",
+                        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sInfoThousands": ".",
+                        "sLengthMenu": "_MENU_ resultados por página",
+                        "sLoadingRecords": "Carregando...",
+                        "sProcessing": "Processando...",
+                        "sZeroRecords": "Nenhum registro encontrado",
+                        "sSearch": "Pesquisar",
+                        "oPaginate": {
+                            "sNext": "Próximo",
+                            "sPrevious": "Anterior",
+                            "sFirst": "Primeiro",
+                            "sLast": "Último"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Ordenar colunas de forma ascendente",
+                            "sSortDescending": ": Ordenar colunas de forma descendente"
+                        }
                     },
                     "autoWidth": true
                 });
@@ -355,6 +384,7 @@
                 $("#alarme_tempMax").maskMoney({ decimal: ",", thousands: "." });
                 $("#alarme_impMin").maskMoney({ decimal: ",", thousands: "." });
                 $("#alarme_impMax").maskMoney({ decimal: ",", thousands: "." });
+                setTimeout(function () { $("#visao2").hide() }, 200);
             });
             function alterarVisao() {
                 if ($("#visao1").is(":visible")) {

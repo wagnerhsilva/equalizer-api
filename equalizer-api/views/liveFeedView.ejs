@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <% include partials/head %>
+</head>
+
+<body class="">
+    <% include partials/header %>
+        <div id="main" role="main">
+
+            <!-- RIBBON -->
+            <div id="ribbon">
+
+                <!-- breadcrumb -->
+                <ol class="breadcrumb">
+                    <li>Status</li>
+                    <li>Live Feed</li>
+                </ol>
+            </div>
+            <div id="content">
+                <div class="row">
+                    <article class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                            <header>
+                                <span class="widget-icon"><i class="fa fa-bar-chart-o"></i></span>
+                                <h2>Live Feed</h2>
+                            </header>
+                            <div>
+                                <div class="widget-body">
+                                    <div class="row no-space">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div id="updating-chart" class="chart-large txt-color-blue" style="height: 500px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="show-stat-microcharts">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                                    <div id="smartChart" class="easy-pie-chart txt-color-orangeDark" data-percent="0" data-pie-size="50">
+                                        <span class="percent percent-sign">50</span>
+                                    </div>
+                                    <span class="easy-pie-title"> Descargas(%) </span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT -->
+
+        </div>
+        <script>
+
+        </script>
+        <script type="text/javascript">
+            var $on = true;
+            $(document).ready(function () {
+                getDescarga(function (descarga) {
+                    $('#smartChart').data('easyPieChart').update(
+                        descarga
+                    );
+                });
+                update();
+            });
+            function update() {
+                if ($on == true) {
+
+                    plot.setData([getRandomData()]);
+                    plot.draw();
+                    setTimeout(update, updateInterval);
+
+                } else {
+                    clearInterval(updateInterval)
+                }
+
+            }
+            var data = [], totalPoints = 200, $UpdatingChartColors = $("#updating-chart").css('color');
+
+            function getRandomData() {
+                getSoma(function (soma) {
+                    data.push(soma);
+                });
+
+                // zip the generated y values with the x values
+                var res = [];
+                for (var i = 0; i < data.length; ++i)
+                    res.push([i, data[i]])
+                return res;
+            }
+            // setup control widget
+            var updateInterval = 1500;
+            $("#updating-chart").val(updateInterval).change(function () {
+
+                var v = $(this).val();
+                if (v && !isNaN(+v)) {
+                    updateInterval = +v;
+                    $(this).val("" + updateInterval);
+                }
+
+            });
+
+            // setup plot
+            var options = {
+                yaxis: {
+                    min: 0,
+                    max: 5000
+                },
+                xaxis: {
+                    min: 0,
+                    max: 20
+                },
+                colors: [$UpdatingChartColors],
+                series: {
+                    lines: {
+                        lineWidth: 2,
+                        fill: true,
+                        fillColor: {
+                            colors: [{
+                                opacity: 0.2
+                            }, {
+                                opacity: 0
+                            }]
+                        },
+                        steps: false
+
+                    }
+                }
+            };
+
+            var plot = $.plot($("#updating-chart"), [getRandomData()], options);
+
+            /* live switch */
+            $('input[type="checkbox"]#start_interval').click(function () {
+                if ($(this).prop('checked')) {
+                    $on = true;
+                    updateInterval = 1500;
+                    update();
+                } else {
+                    clearInterval(updateInterval);
+                    $on = false;
+                }
+            });
+            function getSoma(soma) {
+                $.get("/livefeeds", "", function (data, status) {
+                    soma(data.somaTensao);
+                });
+            }
+            function getDescarga(descarga) {
+                $.get("/livefeeds", "", function (data, status) {
+                    descarga(data.descarga);
+                });
+            }
+        </script>
+        <% include partials/footer %>
+</body>
+
+</html>

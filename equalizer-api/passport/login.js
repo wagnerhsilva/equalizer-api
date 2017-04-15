@@ -22,7 +22,7 @@ module.exports = function(passport){
                         return done(null, false, req.flash('message', 'Usuário ou senha inválidos.'));
                     }
                     // User exists but wrong password, log the error 
-                    if (!isValidPassword(user, password)){
+                    if (user.senha != password){
                         console.log('Usuário ou senha inválidos.');
                         return done(null, false, req.flash('message', 'Usuário ou senha inválidos.')); // redirect back to login page
                     }

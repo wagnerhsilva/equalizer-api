@@ -124,8 +124,61 @@ var sendEmail = function (data) {
         });
     });
 }
+var testeEmail = function (data) {
+    getAll(function (err, emailServer) {
+        AlarmLog.getAll(function (err2, alarmLogs) {
+            if (err) return next(err);
+            if (err2) return next(err2);
+            var logToText = "dataHora;descricao;\n";
+            alarmLogs.forEach(function (alarm) {
+                logToText += alarm.dataHora.toISOString() + ";" + alarm.descricao + ";\n"
+            }, this);
+            var attachment = [
+                {   // define custom content type for the attachment
+                    filename: 'log.csv',
+                    content: logToText,
+                    contentType: 'text/plain',
+                    encoding: 'UTF-8'
+                }
+            ];
+            var smtpConfig = {
+                host: emailServer[0].server,
+                port: emailServer[0].portaSMTP,
+                secureConnection: emailServer[0].usarCriptografiaTLS == 1 ? false : true,
+                auth: {
+                    user: emailServer[0].login,
+                    pass: emailServer[0].senha
+                }
+            };
+            var transporter = nodemailer.createTransport(smtpConfig);
+            var mailOptions = {
+                from: emailServer[0].email,
+                to: data.emailsDestino,
+                subject: data.assunto,
+                text: data.mensagem,
+                html: data.mensagem,
+                attachments: attachment
+            };
+            transporter.verify(function (error, success) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Server is ready to take our messages');
+                    transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) {
+                            return console.log(error);
+                        }
+                        console.log('Message %s sent: %s', info.messageId, info.response);
+                        AlarmLog.updateEnviaEmail();
+                    });
+                }
+            });
+        });
+    });
+}
 module.exports.save = save;
 module.exports.createEmailServer = createEmailServer;
 module.exports.getAll = getAll;
 module.exports.update = update;
 module.exports.sendEmail = sendEmail;
+module.exports.testeEmail = testeEmail;

@@ -23,7 +23,7 @@ module.exports = function(passport){
                     } else {
                         // if there is no user with that email
                         // create the user
-                        var newUser = new User.createUser('',  req.param('nomeUsuario'), req.param('sobrenomeUsuario'), req.param('telefoneUsuario'), username, createHash(password), "");
+                        var newUser = new User.createUser('',  req.param('nomeUsuario'), req.param('sobrenomeUsuario'), req.param('telefoneUsuario'), username, password, "");
                         // save the user
                         User.save(newUser, function(err) {
                             if (err){

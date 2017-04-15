@@ -49,7 +49,35 @@ var getLast = function (id, data) {
     });
     db.close();
 }
+var getSomaTensao = function (data) {
+    var db = new sqlite3.Database('equalizerdb');
+    db.get("SELECT SUM(tensao) soma FROM DataLog", function (err, row) {
+        if (row) {
+            var soma = row.soma;
+            console.log(soma);
+            data(err, soma);
+        }
+        else
+            data(err, null);
+    });
+    db.close();
+}
+var getPercentualDescarga = function (data) {
+    var db = new sqlite3.Database('equalizerdb');
+    db.get("select (0.00 + count(distinct a.id)) / (0.00 + count(distinct d.id)) * 100.00 as descargas from datalog d, alarmlog a", function (err, row) {
+        if (row) {
+            var descargas = row.descargas;
+            console.log(descargas);
+            data(err, descargas);
+        }
+        else
+            data(err, null);
+    });
+    db.close();
+}
 module.exports.save = save;
 module.exports.createDataLog = createDataLog;
 module.exports.getAll = getAll;
 module.exports.getLast = getLast;
+module.exports.getSomaTensao = getSomaTensao;
+module.exports.getPercentualDescarga = getPercentualDescarga;

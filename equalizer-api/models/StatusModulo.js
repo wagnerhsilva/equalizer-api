@@ -65,7 +65,7 @@ var get = function (data) {
     db.all(strSql, function (err, rows) {
         var statusModulos = [];
         rows.forEach(function row(row) {
-            statusModulos.push(new createStatusModulo(row.STRING, row.BATERIA, row.temperatura, row.impedancia, row.tensao, row.equalizacao, row.nivel_alert_temp_min, row.nivel_alert_temp_max, row.nivel_alert_impedancia_min, row.nivel_alert_impedancia_max, 10.5, 13.5));
+            statusModulos.push(new createStatusModulo(row.STRING, row.BATERIA, row.temperatura, row.impedancia, row.tensao, row.equalizacao, row.alarme_nivel_temp_min, row.alarme_nivel_temp_max, row.alarme_nivel_imped_min, row.alarme_nivel_imped_max, 10.5, 13.5));
         });
         data(err, statusModulos);
     });

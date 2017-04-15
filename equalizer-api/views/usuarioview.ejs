@@ -196,7 +196,6 @@
                             $scope.editar = function (index) {
                                 $scope.isEditing = true;
                                 $scope.usuarioSelecionado = $scope.usuarios[index];
-                                $scope.usuarioSelecionado.senha = "";
                                 $('#btnGravarDb').val("Atualizar");
                                 $("#btnGravarDb").prop('disabled', false);
                                 $('#btnCancelarEdicao').show();

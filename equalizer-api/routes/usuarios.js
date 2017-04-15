@@ -33,7 +33,7 @@ router.post('/', function (req, res, next) {
                     } else {
                         // if there is no user with that email
                         // create the user
-                        var newUser = new Usuario.createUser('',  usuarioPost.nome, usuarioPost.sobreNome, usuarioPost.telefone, usuarioPost.email, createHash(usuarioPost.senha), "");
+                        var newUser = new Usuario.createUser('',  usuarioPost.nome, usuarioPost.sobreNome, usuarioPost.telefone, usuarioPost.email, usuarioPost.senha, "usuario");
                         // save the user
                         Usuario.save(newUser, function(err) {
                             if (err){
