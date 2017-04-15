@@ -143,12 +143,12 @@
                 }
             });
             function getSoma(soma) {
-                $.get("/livefeeds", "", function (data, status) {
+                $.get("/livefeed", "", function (data, status) {
                     soma(data.somaTensao);
                 });
             }
             function getDescarga(descarga) {
-                $.get("/livefeeds", "", function (data, status) {
+                $.get("/livefeed", "", function (data, status) {
                     descarga(data.descarga);
                 });
             }
