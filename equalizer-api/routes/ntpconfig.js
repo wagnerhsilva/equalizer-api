@@ -33,7 +33,7 @@ router.get('/', isAuthenticated, function (req, res, next) {
                     return;
                 } else {
                     console.log("setting time");
-                    setup.clock.set(new Date(time.referenceTimestamp));
+                    //setup.clock.set(new Date(time.referenceTimestamp));
                     res.json(new Date(time.referenceTimestamp));
                     return;
                 }
