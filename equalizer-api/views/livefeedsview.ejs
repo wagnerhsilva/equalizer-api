@@ -38,10 +38,14 @@
                             <div class="show-stat-microcharts">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-                                    <div id="smartChart" class="easy-pie-chart txt-color-orangeDark" data-percent="0" data-pie-size="50">
-                                        <span class="percent percent-sign">50</span>
+                                    <div id="smartChart" class="easy-pie-chart txt-color-orangeDark" data-percent="100" data-pie-size="50">
+                                        <span class="percent"></span>
                                     </div>
-                                    <span class="easy-pie-title"> Descargas(%) </span>
+                                    <span class="easy-pie-title"> Descargas </span>
+                                    <div id="smartChart2" class="easy-pie-chart txt-color-orangeDark" data-percent="0" data-pie-size="50">
+                                        <span class="percent percent-sign"></span>
+                                    </div>
+                                    <span class="easy-pie-title"> % Bateria </span>
                                 </div>
                             </div>
                         </div>
@@ -57,11 +61,6 @@
         <script type="text/javascript">
             var $on = true;
             $(document).ready(function () {
-                getDescarga(function (descarga) {
-                    $('#smartChart').data('easyPieChart').update(
-                        descarga
-                    );
-                });
                 update();
             });
             function update() {
@@ -77,10 +76,35 @@
 
             }
             var data = [], totalPoints = 200, $UpdatingChartColors = $("#updating-chart").css('color');
+            var qtdQueda = 0;
+            var percentualCarga = 0;
+            var primeiraLeitura = 0;
 
             function getRandomData() {
+                if (data.length > 0)
+                    data = data.slice(1);
                 getSoma(function (soma) {
-                    data.push(soma);
+                    if (soma > plot.getAxes().yaxis.options.max) {
+                        plot.getAxes().yaxis.options.max = soma + (soma * 1.30);
+                        plot.setupGrid();
+                        plot.draw();
+                    }
+                    if (primeiraLeitura == 0)
+                        primeiraLeitura = data[0];
+                    while (data.length < totalPoints) {
+                        if (data.length > 0) {
+                            if (soma < data[data.length - 1])
+                                qtdQueda++;
+                            percentualCarga = soma / data[0] * 100;
+                            $('#smartChart').data('easyPieChart').update(
+                                qtdQueda
+                            );
+                            $('#smartChart2').data('easyPieChart').update(
+                                percentualCarga > 100 ? 100 : percentualCarga
+                            );
+                        }
+                        data.push(soma);
+                    }
                 });
 
                 // zip the generated y values with the x values
@@ -105,11 +129,11 @@
             var options = {
                 yaxis: {
                     min: 0,
-                    max: 5000
+                    max: 0
                 },
                 xaxis: {
                     min: 0,
-                    max: 20
+                    max: 200
                 },
                 colors: [$UpdatingChartColors],
                 series: {
@@ -131,17 +155,6 @@
 
             var plot = $.plot($("#updating-chart"), [getRandomData()], options);
 
-            /* live switch */
-            $('input[type="checkbox"]#start_interval').click(function () {
-                if ($(this).prop('checked')) {
-                    $on = true;
-                    updateInterval = 1500;
-                    update();
-                } else {
-                    clearInterval(updateInterval);
-                    $on = false;
-                }
-            });
             function getSoma(soma) {
                 $.get("/livefeed", "", function (data, status) {
                     soma(data.somaTensao);

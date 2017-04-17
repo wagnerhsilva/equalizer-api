@@ -164,7 +164,8 @@
             <i></i>Update BACS RealTimeClock</label>
                                                 </section>
                                             </section>
-                                            <button id="btnSetDateTimeManually" class="btn btn-primary pull-right" style="width: 100px; height: 30px;" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                            <button id="btnSetDateTimeManually" class="btn btn-primary pull-right" style="width: 100px; height: 30px;" <%if (userAccess
+                                                !='administrador' ) {%>  disabled  <%}%>>
           Apply
          </button>
                                         </fieldset>
@@ -195,7 +196,7 @@
                                     </section>
                                     <section class="col-sm-4 col-md-4 col-lg-3">
                                         <label class="input">
-         <input type="text" ng-model="timeserver[0].timeServerAddress1" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço 1 Time Server" style="margin-right: 5px;">
+         <input type="text" ng-model="timeserver[0].timeServerAddress1" id="txtServer1" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço 1 Time Server" style="margin-right: 5px;">
          <b class="tooltip tooltip-bottom-right">Endereço 1 Time Server</b>
         </label>
                                     </section>
@@ -206,8 +207,8 @@
         </label>
                                     </section>
                                     <section class="col-sm-4 col-md-3 col-lg-2">
-                                        <input type="button" value="Testar" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" style="margin-left: 20px;width: 100px; height: 32px;"
-                                        />
+                                        <input type="button" value="Testar" class="btn btn-primary" onclick="testServer(1);" ng-disabled="acessoUsuario != 'administrador'"
+                                            style="margin-left: 20px;width: 100px; height: 32px;" />
                                     </section>
                                 </section>
                                 <section class="col-sm-12 col-md-12 col-lg-12">
@@ -216,7 +217,7 @@
                                     </section>
                                     <section class="col-sm-4 col-md-4 col-lg-3">
                                         <label class="input">
-         <input type="text" ng-model="timeserver[0].timeServerAddress2" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço 2 Time Server" style="margin-right: 5px;">
+         <input type="text" ng-model="timeserver[0].timeServerAddress2"  id="txtServer2" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço 2 Time Server" style="margin-right: 5px;">
          <b class="tooltip tooltip-bottom-right">Endereço 2 Time Server</b>
         </label>
                                     </section>
@@ -227,8 +228,8 @@
         </label>
                                     </section>
                                     <section class="col-sm-4 col-md-3 col-lg-2">
-                                        <input type="button" value="Testar" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" style="margin-left: 20px;width: 100px; height: 32px;"
-                                        />
+                                        <input type="button" value="Testar" onclick="testServer(2);" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'"
+                                            style="margin-left: 20px;width: 100px; height: 32px;" />
                                     </section>
                                 </section>
                                 <section class="col-sm-12 col-md-12 col-lg-12">
@@ -237,7 +238,7 @@
                                     </section>
                                     <section class="col-sm-4 col-md-4 col-lg-3">
                                         <label class="input">
-         <input type="text" ng-model="timeserver[0].timeServerAddress3" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço 3 Time Server" style="margin-right: 5px;">
+         <input type="text" ng-model="timeserver[0].timeServerAddress3"  id="txtServer3" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço 3 Time Server" style="margin-right: 5px;">
          <b class="tooltip tooltip-bottom-right">Endereço 3 Time Server</b>
         </label>
                                     </section>
@@ -248,8 +249,8 @@
         </label>
                                     </section>
                                     <section class="col-sm-4 col-md-3 col-lg-2">
-                                        <input type="button" value="Testar" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" style="margin-left: 20px;width: 100px; height: 32px;"
-                                        />
+                                        <input type="button" value="Testar" onclick="testServer(3);" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'"
+                                            style="margin-left: 20px;width: 100px; height: 32px;" />
                                     </section>
                                 </section>
                                 <section class="col-sm-12 col-md-12 col-lg-12">
@@ -359,7 +360,7 @@
                                 </section>
                                 <section class="col-sm-12 col-md-12 col-lg-12">
                                     <section class="col-sm-4 col-md-4 col-lg-4">
-                                            <label class="checkbox">
+                                        <label class="checkbox">
             <input type="checkbox" name="automAdjustTimeDaylightSavingChanges" ng-disabled="acessoUsuario != 'administrador'" id="automAdjustTimeDaylightSavingChanges" ng-model="timeserver[0].automAdjustTimeDaylightSavingChanges">
             <i></i>Ajustar automaticamente para horário de verão</label>
                                     </section>
@@ -401,6 +402,7 @@
                                     icon: "fa fa-check fadeInLeft animated",
                                     number: timeserver._id
                                 });
+                                setTime();
                             }
                             $scope.nomeUsuario = '<%= username %>';
                             $scope.acessoUsuario = '<%= userAccess %>';
@@ -422,6 +424,30 @@
             <!-- END MAIN CONTENT -->
 
         </div>
+        <script>
+            function testServer(sequencia) {
+                $.get("/ntpconfig/test/" + $("#txtServer" + sequencia).val(), null, function (data, status) {
+                    $.bigBox({
+                        title: "TimeServer",
+                        content: data,
+                        color: "#275B89",
+                        timeout: 5000,
+                        icon: "fa fa-check fadeInLeft animated"
+                    });
+                });
+            }
+            function setTime() {
+                $.get("/ntpconfig/", null, function (data, status) {
+                    $.bigBox({
+                        title: "TimeServer",
+                        content: data,
+                        color: "#275B89",
+                        timeout: 5000,
+                        icon: "fa fa-check fadeInLeft animated"
+                    });
+                });
+            }
+        </script>
         <% include partials/footer %>
 </body>
 
