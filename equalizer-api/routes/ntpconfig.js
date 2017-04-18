@@ -97,7 +97,7 @@ router.get('/manual/:dateTime/:utc', function (req, res, next) {
     try {
         console.log(dateTime);
         //setup.clock.set(dateTime);
-        require('child_process').exec('date -s "' + dateTime + '" ; hwclock --systohc;', (err, stdout, stderr) => {
+        require('child_process').exec('sudo date -s "' + dateTime + '" ; hwclock --systohc;', (err, stdout, stderr) => {
             if (err) {
                 console.error(err);
                 return;
