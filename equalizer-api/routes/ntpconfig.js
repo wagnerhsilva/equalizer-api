@@ -115,6 +115,7 @@ router.get('/manual/:dateTime/:utc', function (req, res, next) {
                 console.error(err);
                 return;
             }
+            console.log("efetuado");
             console.log(stdout);
         });
     } catch (ex) {
