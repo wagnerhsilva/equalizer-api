@@ -110,7 +110,13 @@ router.get('/manual/:dateTime/:utc', function (req, res, next) {
     try {
         console.log(dateTime);
         //setup.clock.set(dateTime);
-        require('child_process').exec('date -s "'+dateTime+'" ; hwclock --systohc;', null);
+        require('child_process').exec('date -s "' + dateTime + '" ; hwclock --systohc;', (err, stdout, stderr) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            console.log(stdout);
+        });
     } catch (ex) {
         console.log("Erro ao recuperar data/hora.");
         console.log(ex);
