@@ -5,6 +5,7 @@ var RedeSeguranca = require('../models/RedeSeguranca');
 var getMac = require('getmac');
 var ip = require('ip');
 var network = require('network');
+var setup = require('setup')();
 var isAuthenticated = function (req, res, next) {
     // if user is authenticated in the session, call the next() to call the next request handler
     // Passport adds this method to request object. A middleware is allowed to add properties to
@@ -38,6 +39,27 @@ router.get('/', isAuthenticated, function (req, res, next) {
 });
 router.post('/', function (req, res, next) {
     console.log(req.body);
+    try {
+            console.log("iniciando config rede setup");
+            var config = setup.network.config({
+
+                eth0: {
+                    auto: true,
+                    ipv4: {
+                        address: req.body.localAddress,
+                        netmask: req.body.mascara,
+                        gateway: req.body.gateway,
+                        dns: req.body.servidorDNS
+                    }
+                }
+            });
+            console.log("salvando config rede setup");
+            console.log(config);
+            setup.network.save(config);
+        } catch (ex) {
+            console.log("Erro ao definir dados rede");
+            console.log(ex);
+        }
     RedeSeguranca.getAll(function (err, redeSeguranca) {
         if (redeSeguranca.length > 0) {
             RedeSeguranca.update(req.body);

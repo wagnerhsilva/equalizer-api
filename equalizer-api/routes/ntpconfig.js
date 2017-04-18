@@ -46,6 +46,8 @@ router.get('/', isAuthenticated, function (req, res, next) {
             });
         } catch (ex) {
             res.json("Erro ao recuperar data/hora.");
+            console.log("Erro ao recuperar data/hora.");
+            console.log(ex);
             return;
         }
 
@@ -76,6 +78,8 @@ router.get('/test/:server', function (req, res, next) {
         });
     } catch (ex) {
         res.json("Erro ao recuperar data/hora.");
+        console.log("Erro ao recuperar data/hora.");
+        console.log(ex);
         return;
     }
 });
@@ -105,7 +109,8 @@ router.get('/manual/:dateTime/:utc', function (req, res, next) {
         console.log(dateTime);
         setup.clock.set(dateTime);
     } catch (ex) {
-        console.log("Erro ao definir data/hora.");
+        console.log("Erro ao recuperar data/hora.");
+        console.log(ex);
         res.json("Erro ao definir data/hora.");
         return;
     }
