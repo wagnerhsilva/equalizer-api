@@ -15,7 +15,6 @@ var isAuthenticated = function (req, res, next) {
 /* GET home page. */
 router.get('/', isAuthenticated, function (req, res, next) {
     TimeServer.getAll(function (err, timeServer) {
-        console.log(options);
         try {
             var exec = require('child_process').exec;
             var cmd = 'sudo ntpdate -u ' + timeServer[0].timeServerAddress1;
