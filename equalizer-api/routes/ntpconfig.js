@@ -37,6 +37,7 @@ router.get('/', isAuthenticated, function (req, res, next) {
                         setup.clock.set(new Date(time.referenceTimestamp));
                     } catch (ex) {
                         console.log("Erro ao definir data/hora.");
+                        console.log(ex);
                         res.json("Erro ao definir data/hora.");
                         return;
                     }
@@ -46,6 +47,7 @@ router.get('/', isAuthenticated, function (req, res, next) {
             });
         } catch (ex) {
             res.json("Erro ao recuperar data/hora.");
+            console.log(ex);
             console.log("Erro ao recuperar data/hora.");
             console.log(ex);
             return;
