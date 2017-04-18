@@ -15,40 +15,28 @@ var isAuthenticated = function (req, res, next) {
 /* GET home page. */
 router.get('/', isAuthenticated, function (req, res, next) {
     TimeServer.getAll(function (err, timeServer) {
-        var options = {
-            host: timeServer[0].timeServerAddress1,  // Defaults to pool.ntp.org 
-            port: 123,                      // Defaults to 123 (NTP) 
-            resolveReference: true,         // Default to false (not resolving) 
-            timeout: 1000                   // Defaults to zero (no timeout) 
-        };
         console.log(options);
         try {
-            Sntp.time(options, function (err, time) {
-                if (err) {
-                    res.json("Erro ao recuperar data/hora.");
-                    return;
-                }
-                if (time == null) {
-                    res.json("Erro ao recuperar data/hora.");
-                    return;
-                } else {
-                    console.log("setting time");
-                    try {
-                        setup.clock.set(new Date(time.referenceTimestamp));
-                    } catch (ex) {
-                        console.log("Erro ao definir data/hora.");
-                        console.log(ex);
-                        res.json("Erro ao definir data/hora.");
+            var exec = require('child_process').exec;
+            var cmd = 'sudo ntpdate -u ' + timeServer[0].timeServerAddress1;
+            setInterval(updateDate, 1000 * 60 * 60 * 24); // atualizar uma vez por dia
+            function updateDate() {
+                exec(cmd, function (error, stdout, stderr) {
+                    if (err) {
+                        console.error(err);
+                        res.json("Erro ao definir ntp server.");
                         return;
                     }
-                    res.json(new Date(time.referenceTimestamp));
-                    return;
-                }
-            });
+                    console.log("efetuado");
+                    console.log(stdout);
+                    res.json("efetuado.");
+                });
+            }
+            updateDate();
         } catch (ex) {
-            res.json("Erro ao recuperar data/hora.");
+            res.json("Erro ao definir ntp server.");
             console.log(ex);
-            console.log("Erro ao recuperar data/hora.");
+            console.log("Erro ao definir ntp server.");
             console.log(ex);
             return;
         }
