@@ -59,8 +59,16 @@
                                                 </section>
                                                 <section class="col-sm-3 col-md-3 col-lg-3">
                                                     <label class="input"> <i class="icon-append fa fa-calendar"></i>
-            <input type="text" name="request" placeholder="Selecione a data/hora" class="datepicker" data-dateformat='dd/mm/yy'<%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+            <input type="text" name="request" id="txtDate" readonly placeholder="Selecione a data" required class="datepicker" data-dateformat='dd/mm/yy'<%if (userAccess != 'administrador') {%>  disabled  <%}%>>
            </label>
+                                                </section>
+                                                <section class="col-sm-3 col-md-3 col-lg-3">
+                                                    <div class="form-group" style="margin-left:20px;">
+                                                        <div class="input-group">
+                                                            <input readonly class="form-control" required id="clockpicker" type="text" placeholder="Hora" data-autoclose="true">
+                                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                                        </div>
+                                                    </div>
                                                 </section>
                                             </section>
                                             <section class="col-sm-12 col-md-12 col-lg-12">
@@ -157,16 +165,9 @@
            </label>
                                                 </section>
                                             </section>
-                                            <section class="col-sm-12 col-md-12 col-lg-12">
-                                                <section class="col-sm-4 col-md-4 col-lg-4">
-                                                    <label class="checkbox">
-            <input type="checkbox" name="updateBacsRealtimeClock" id="updateBacsRealtimeClock" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-            <i></i>Update BACS RealTimeClock</label>
-                                                </section>
-                                            </section>
-                                            <button id="btnSetDateTimeManually" class="btn btn-primary pull-right" style="width: 100px; height: 30px;" <%if (userAccess
-                                                !='administrador' ) {%>  disabled  <%}%>>
-          Apply
+                                            <button id="btnSetDateTimeManually" onclick="setManualTime();" class="btn btn-primary pull-right" style="width: 100px; height: 30px;"
+                                                <%if (userAccess !='administrador' ) {%>  disabled  <%}%>>
+          Definir
          </button>
                                         </fieldset>
                                     </form>
@@ -358,13 +359,6 @@
         </label>
                                     </section>
                                 </section>
-                                <section class="col-sm-12 col-md-12 col-lg-12">
-                                    <section class="col-sm-4 col-md-4 col-lg-4">
-                                        <label class="checkbox">
-            <input type="checkbox" name="automAdjustTimeDaylightSavingChanges" ng-disabled="acessoUsuario != 'administrador'" id="automAdjustTimeDaylightSavingChanges" ng-model="timeserver[0].automAdjustTimeDaylightSavingChanges">
-            <i></i>Ajustar automaticamente para horário de verão</label>
-                                    </section>
-                                </section>
                             </fieldset>
                         </section>
                         <section>
@@ -447,6 +441,33 @@
                     });
                 });
             }
+            function setManualTime() {
+                if ($("#txtDate").val().trim() == "" || $("#clockpicker").val().trim() == "") {
+                    $.bigBox({
+                        title: "TimeServer",
+                        content: "Preencha os valores de data e hora",
+                        color: "#275B89",
+                        timeout: 5000,
+                        icon: "fa fa-check fadeInLeft animated"
+                    });
+                    return;
+                }
+                $.get("/ntpconfig/manual/" + $("#txtDate").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#clockpicker").val() + "/" + $("#timezoneSelectManually").val(), null, function (data, status) {
+                    $.bigBox({
+                        title: "TimeServer",
+                        content: data,
+                        color: "#275B89",
+                        timeout: 5000,
+                        icon: "fa fa-check fadeInLeft animated"
+                    });
+                });
+            }
+            $(document).ready(function () {
+                $('#clockpicker').clockpicker({
+                    placement: 'top',
+                    donetext: 'Done'
+                });
+            });
         </script>
         <% include partials/footer %>
 </body>
