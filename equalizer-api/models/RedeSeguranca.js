@@ -23,6 +23,7 @@ var createRedeSeguranca = function (id, mac, velocidadePlacaRede, localAddress, 
 }
 var save = function (redeSeguranca, err) {
     var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 10000')
     var stmt = db.prepare("INSERT INTO RedeSeguranca(mac, velocidadePlacaRede, localAddress, gateway, mascara, servidorDNS, nomeDoSistema, localDoSistema, contatoDoSistema, httpPort, "+
                                     "useHttps, httpsPort, httpTempoDeAtualizacao, paginaPadraoHttp) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
     stmt.run(redeSeguranca.mac, redeSeguranca.velocidadePlacaRede, redeSeguranca.localAddress, redeSeguranca.gateway, redeSeguranca.mascara, redeSeguranca.servidorDNS, 
@@ -38,6 +39,7 @@ var save = function (redeSeguranca, err) {
 }
 var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 10000')
     db.all("SELECT id, mac, velocidadePlacaRede, localAddress, gateway, mascara, servidorDNS, nomeDoSistema, localDoSistema, contatoDoSistema, httpPort, " +
                                     "useHttps, httpsPort, httpTempoDeAtualizacao, paginaPadraoHttp " +
             "FROM RedeSeguranca", function (err, rows) {
@@ -54,6 +56,7 @@ var update = function (redeSeguranca) {
     console.log("update");
     console.log(redeSeguranca);
     var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 10000')
     db.run("UPDATE RedeSeguranca set mac = $mac, velocidadePlacaRede = $velocidadePlacaRede, localAddress = $localAddress, gateway = $gateway, mascara = $mascara" +
                                 ", servidorDNS = $servidorDNS, nomeDoSistema = $nomeDoSistema, localDoSistema = $localDoSistema, contatoDoSistema = $contatoDoSistema" +
                                 ", httpPort = $httpPort, useHttps = $useHttps, httpsPort = $httpsPort, httpTempoDeAtualizacao = $httpTempoDeAtualizacao, paginaPadraoHttp = $paginaPadraoHttp " +

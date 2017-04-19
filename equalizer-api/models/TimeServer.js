@@ -17,6 +17,7 @@ var createTimeServer = function (id, timeServerAddress1, timeServerAddress1_comp
 }
 var save = function (timeServer) {
     var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 10000')
     var stmt = db.prepare("INSERT INTO TimeServer(timeServerAddress1, timeServerAddress1_complemento, timeServerAddress2, timeServerAddress2_complemento, timeServerAddress3, " + 
                             "timeServerAddress3_complemento, connectionRetries, timeZone, automAdjustTimeDaylightSavingChanges) VALUES (?,?,?,?,?,?,?,?,?)");
     stmt.run(timeServer.timeServerAddress1, timeServer.timeServerAddress1_complemento, timeServer.timeServerAddress2, timeServer.timeServerAddress2_complemento, timeServer.timeServerAddress3, 
@@ -26,6 +27,7 @@ var save = function (timeServer) {
 }
 var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 10000')
     db.all("SELECT id, timeServerAddress1, timeServerAddress1_complemento, timeServerAddress2, timeServerAddress2_complemento, timeServerAddress3, timeServerAddress3_complemento, "+
                 "connectionRetries, timeZone, automAdjustTimeDaylightSavingChanges FROM TimeServer", function (err, rows) {
         var timeServers = [];
@@ -39,6 +41,7 @@ var getAll = function (data) {
 }
 var getById = function (id, data) {
     var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 10000')
     db.get("SELECT id, timeServerAddress1, timeServerAddress1_complemento, timeServerAddress2, timeServerAddress2_complemento, timeServerAddress3, timeServerAddress3_complemento, "+
                 "connectionRetries, timeZone, automAdjustTimeDaylightSavingChanges FROM TimeServer WHERE id = $id", { $id: id }, function (err, row) {
         if (row) {
@@ -66,6 +69,7 @@ var update = function (timeServer) {
     console.log(timeServer);
     
     var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 10000')
     db.run("UPDATE TimeServer SET timeServerAddress1 = $timeServerAddress1, timeServerAddress1_complemento = $timeServerAddress1_complemento, timeServerAddress2 = $timeServerAddress2, "+
                     "timeServerAddress2_complemento = $timeServerAddress2_complemento, timeServerAddress3 = $timeServerAddress3, timeServerAddress3_complemento = $timeServerAddress3_complemento, "+
                     "connectionRetries = $connectionRetries, timeZone = $timeZone, automAdjustTimeDaylightSavingChanges = $automAdjustTimeDaylightSavingChanges " +
