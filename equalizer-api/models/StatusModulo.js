@@ -41,7 +41,7 @@ var createChart = function (data, max_temperatura, max_impedancia, max_tensao,  
 
 var get = function (data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA busy_timeout = 10000;');
     db.run('PRAGMA journal_mode=WAL;');
     var strSql = ""
     strSql = strSql + "SELECT 	RVAL.STRING, ";
@@ -75,7 +75,7 @@ var get = function (data) {
 }
     var getChartDay = function (data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA busy_timeout = 10000;');
     db.run('PRAGMA journal_mode=WAL;');
     var strSql = "";
     strSql = strSql + "SELECT 	X.DATA, \n";
@@ -120,7 +120,7 @@ var get = function (data) {
 }
 var getChartMonth = function (data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA busy_timeout = 10000;');
     db.run('PRAGMA journal_mode=WAL;');
     var strSql = "";
     strSql = strSql + "SELECT 	X.DATA, \n";
@@ -165,7 +165,7 @@ var getChartMonth = function (data) {
 }
 var getChartYear = function (data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA busy_timeout = 10000;');
     db.run('PRAGMA journal_mode=WAL;');
     var strSql = "";
     strSql = strSql + "SELECT 	X.DATA, \n";
