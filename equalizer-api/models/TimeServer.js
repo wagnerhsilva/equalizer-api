@@ -69,7 +69,8 @@ var update = function (timeServer) {
     console.log(timeServer);
     
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.run("UPDATE TimeServer SET timeServerAddress1 = $timeServerAddress1, timeServerAddress1_complemento = $timeServerAddress1_complemento, timeServerAddress2 = $timeServerAddress2, "+
                     "timeServerAddress2_complemento = $timeServerAddress2_complemento, timeServerAddress3 = $timeServerAddress3, timeServerAddress3_complemento = $timeServerAddress3_complemento, "+
                     "connectionRetries = $connectionRetries, timeZone = $timeZone, automAdjustTimeDaylightSavingChanges = $automAdjustTimeDaylightSavingChanges " +

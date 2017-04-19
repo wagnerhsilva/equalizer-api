@@ -25,7 +25,8 @@ var createAlarmeConfig = function ( id, tipo_modulo, nivel_alert_tensao_max, niv
 }
 var save = function (alarmeConfig, err) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     var stmt = db.prepare("INSERT INTO AlarmeConfig(tipo_modulo, nivel_alert_tensao_max, nivel_alert_tensao_min, nivel_alert_temp_max, nivel_alert_temp_min, nivel_alert_impedancia_max, " +
                                     "nivel_alert_impedancia_min, nivel_max_tensao_ativo, nivel_max_tensao_val, alarme_nivel_tensao_max, alarme_nivel_tensao_min, " +
                                     "alarme_nivel_temp_max, alarme_nivel_temp_min, alarme_nivel_imped_max, alarme_nivel_imped_min) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -38,7 +39,8 @@ var save = function (alarmeConfig, err) {
 }
 var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.all("SELECT id, tipo_modulo, nivel_alert_tensao_max, nivel_alert_tensao_min, nivel_alert_temp_max, nivel_alert_temp_min, nivel_alert_impedancia_max, " +
                                     "nivel_alert_impedancia_min, nivel_max_tensao_ativo, nivel_max_tensao_val, alarme_nivel_tensao_max, alarme_nivel_tensao_min, " +
                                     "alarme_nivel_temp_max, alarme_nivel_temp_min, alarme_nivel_imped_max, alarme_nivel_imped_min " +
@@ -56,7 +58,8 @@ var getAll = function (data) {
 }
 var getById = function (id, data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.get("SELECT id, tipo_modulo, nivel_alert_tensao_max, nivel_alert_tensao_min, nivel_alert_temp_max, nivel_alert_temp_min, nivel_alert_impedancia_max, " +
                                     "nivel_alert_impedancia_min, nivel_max_tensao_ativo, nivel_max_tensao_val, alarme_nivel_tensao_max, alarme_nivel_tensao_min, " +
                                     "alarme_nivel_temp_max, alarme_nivel_temp_min, alarme_nivel_imped_max, alarme_nivel_imped_min " +
@@ -82,7 +85,8 @@ var update = function (alarmeConfig) {
         }
     });
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.run("UPDATE AlarmeConfig SET tipo_modulo = $tipo_modulo, nivel_alert_tensao_max = $nivel_alert_tensao_max, nivel_alert_tensao_min = $nivel_alert_tensao_min, nivel_alert_temp_max = $nivel_alert_temp_max, nivel_alert_temp_min = $nivel_alert_temp_min, nivel_alert_impedancia_max = $nivel_alert_impedancia_max, " +
                                     "nivel_alert_impedancia_min = $nivel_alert_impedancia_min, nivel_max_tensao_ativo = $nivel_max_tensao_ativo, nivel_max_tensao_val = $nivel_max_tensao_val, alarme_nivel_tensao_max = $alarme_nivel_tensao_max, alarme_nivel_tensao_min = $alarme_nivel_tensao_min, " +
                                     "alarme_nivel_temp_max = $alarme_nivel_temp_max, alarme_nivel_temp_min = $alarme_nivel_temp_min, alarme_nivel_imped_max = $alarme_nivel_imped_max, alarme_nivel_imped_min = $alarme_nivel_imped_min " +

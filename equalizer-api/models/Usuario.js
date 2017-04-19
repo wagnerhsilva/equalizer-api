@@ -14,7 +14,8 @@ var createUser = function (id, nome, sobrenome, telefone, email, senha, acesso) 
 }
 var save = function (user, err) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     var stmt = db.prepare("INSERT INTO Usuario(nome, sobreNome, telefone, email, senha, acesso) VALUES (?,?,?,?,?,?)");
     stmt.run(user.nome, user.sobreNome, user.telefone, user.email, user.senha, user.acesso, function (error) {
         if (error)
@@ -27,7 +28,8 @@ var save = function (user, err) {
 }
 var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.all("SELECT id, nome, sobreNome, telefone, email, senha, acesso FROM Usuario", function (err, rows) {
         var users = [];
         rows.forEach(function row(row) {
@@ -39,7 +41,8 @@ var getAll = function (data) {
 }
 var getById = function (id, data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.get("SELECT id, nome, sobreNome, telefone, email, senha, acesso FROM Usuario WHERE id = $id", { $id: id }, function (err, row) {
         if (row) {
             var user = new createUser(row.id, row.nome, row.sobreNome, row.telefone, row.email, row.senha, row.acesso);
@@ -53,13 +56,15 @@ var getById = function (id, data) {
 }
 var updateAcesso = function (user) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.run("UPDATE Usuario SET acesso = $acesso WHERE id = $id", { $id: user.id, $acesso: user.acesso });
     db.close();
 }
 var update = function (user) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.run("UPDATE Usuario SET nome = $nome, sobreNome = $sobreNome, telefone = $telefone, email = $email, senha = $senha, acesso = $acesso " +
                 "WHERE id = $id", { $id: user.id, 
                                     $nome: user.nome, 
@@ -72,7 +77,8 @@ var update = function (user) {
 }
 var getByEmail = function (email, data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.get("SELECT id, nome, sobreNome, telefone, email, senha, acesso FROM Usuario WHERE email = $email", { $email: email }, function (err, row) {
         if (row) {
             var user = new createUser(row.id, row.nome, row.sobreNome, row.telefone, row.email, row.senha, row.acesso);
@@ -86,7 +92,8 @@ var getByEmail = function (email, data) {
 }
 var deleteUser = function (id) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     console.log("Id do Usuario: "+ id);
     db.run("DELETE FROM Usuario WHERE id = $id", { $id: id });
     db.close();

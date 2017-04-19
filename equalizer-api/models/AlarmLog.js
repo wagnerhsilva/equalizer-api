@@ -11,7 +11,8 @@ var createAlarmLog = function (id, dataHora, descricao) {
 }
 var save = function (alarmLog, err) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     var stmt = db.prepare("INSERT INTO AlarmLog(dataHora, descricao) VALUES (?,?)");
     stmt.run(dataLog.dataHora, dataLog.descricao, function (error) {
         if (error)
@@ -24,7 +25,8 @@ var save = function (alarmLog, err) {
 }
 var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.all("SELECT id, dataHora, descricao FROM AlarmLog ORDER BY dataHora desc", function (err, rows) {
         var alarmLogs = [];
         rows.forEach(function row(row) {
@@ -36,7 +38,8 @@ var getAll = function (data) {
 }
 var getLast = function (id, data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.get("SELECT id, dataHora,descricao FROM AlarmLog ORDER BY id DESC LIMIT 1", function (err, row) {
         if (row) {
             var alarmLog = new createAlarmLog(row.id, new Date(row.dataHora), row.descricao);
@@ -50,7 +53,8 @@ var getLast = function (id, data) {
 }
 var getEnviaEmail = function (data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.all("SELECT count(*) conta FROM AlarmLog where emailEnviado = 0", function (err, rows) {
         var conta = 0;
         rows.forEach(function row(row) {
@@ -62,7 +66,8 @@ var getEnviaEmail = function (data) {
 }
 var updateEnviaEmail = function () {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.run("UPDATE AlarmLog set emailEnviado = 1 where emailEnviado = 0");
     db.close();
 }

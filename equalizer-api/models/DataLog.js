@@ -15,7 +15,8 @@ var createDataLog = function (id, dataHora, string, bateria, temperatura, impeda
 }
 var save = function (dataLog, err) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     var stmt = db.prepare("INSERT INTO DataLog(dataHora, string, bateria, temperatura, impedancia, tensao, equalizacao) VALUES (?,?,?,?,?,?,?)");
     stmt.run(dataLog.dataHora, dataLog.string, dataLog.bateria, dataLog.temperatura, dataLog.impedancia, dataLog.tensao, function (error) {
         if (error)
@@ -28,7 +29,8 @@ var save = function (dataLog, err) {
 }
 var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.all("SELECT id, dataHora, string, bateria, temperatura, impedancia, tensao, equalizacao FROM DataLog ORDER BY id, string, bateria DESC", function (err, rows) {
         var dataLogs = [];
         rows.forEach(function row(row) {
@@ -40,7 +42,8 @@ var getAll = function (data) {
 }
 var getLast = function (id, data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.get("SELECT id, dataHora, string, bateria, temperatura, impedancia, tensao, equalizacao FROM DataLog ORDER BY id DESC LIMIT 1", function (err, row) {
         if (row) {
             var dataLog = new createDataLog(row.id, row.dataHora, row.string, row.bateria, row.temperatura, row.impedancia, row.tensao, row.equalizacao);
@@ -54,7 +57,8 @@ var getLast = function (id, data) {
 }
 var getSomaTensao = function (data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.get("SELECT SUM(tensao) soma FROM DataLog", function (err, row) {
         if (row) {
             var soma = row.soma;
@@ -68,7 +72,8 @@ var getSomaTensao = function (data) {
 }
 var getPercentualDescarga = function (data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000')
+    db.run('PRAGMA busy_timeout = 10000');
+    db.run('PRAGMA journal_mode=WAL;');
     db.get("select (0.00 + count(distinct a.id)) / (0.00 + count(distinct d.id)) * 100.00 as descargas from datalog d, alarmlog a", function (err, row) {
         if (row) {
             var descargas = row.descargas;
