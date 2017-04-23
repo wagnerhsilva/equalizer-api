@@ -59,7 +59,22 @@ var getSomaTensao = function (data) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 10000;');
     db.run('PRAGMA journal_mode=WAL;');
-    db.get("SELECT SUM(tensao) soma FROM DataLog", function (err, row) {
+    var strSql = "";
+    strSql += "SELECT SUM(TENSAO) soma ";
+    strSql += "FROM DATALOG ";
+    strSql += "WHERE ID IN ( ";
+    strSql += "				SELECT ULTIMO_ID ";
+    strSql += "				FROM ( ";
+    strSql += "						SELECT 	STRING, ";
+    strSql += "								BATERIA, ";
+    strSql += "								MAX(ID) ULTIMO_ID ";
+    strSql += "						FROM DATALOG ";
+    strSql += "						GROUP BY 	STRING, ";
+    strSql += "									BATERIA ";
+    strSql += "					) AS X ";
+    strSql += "			)";
+    console.log(strSql);
+    db.get(strSql, function (err, row) {
         if (row) {
             var soma = row.soma;
             console.log(soma);
