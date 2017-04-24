@@ -54,15 +54,19 @@ var get = function (data) {
     strSql = strSql + "FROM ( ";
     strSql = strSql + "		    SELECT DISTINCT STRING, ";
     strSql = strSql + "						    BATERIA, ";
-    strSql = strSql + "						    MAX(ID) ID ";
+    strSql = strSql + "						    MAX(DATALOG.ID) ID ";
     strSql = strSql + " ";
-    strSql = strSql + "		    FROM        DATALOG ";
+    strSql = strSql + "		    FROM        DATALOG, MODULO ";
+    strSql = strSql + "		    WHERE 	CAST(SUBSTR(DATALOG.BATERIA, 2, length(DATALOG.BATERIA)) as integer) <= MODULO.N_BATERIAS_POR_STRINGS ";
+    strSql = strSql + "		    AND		CAST(SUBSTR(DATALOG.STRING, 2, length(DATALOG.STRING)) as integer) <= MODULO.N_STRINGS ";
     strSql = strSql + "		    GROUP BY    STRING, ";
     strSql = strSql + "				        BATERIA ";
     strSql = strSql + "		  ";
     strSql = strSql + "     ) AS 						RVAL, ";
     strSql = strSql + "			        ALARMECONFIG 	ALAR ";
-    strSql = strSql + "INNER JOIN 	    DATALOG 		DLOG ON (RVAL.ID = DLOG.ID)";
+    strSql = strSql + "INNER JOIN 	    DATALOG 		DLOG ON (RVAL.ID = DLOG.ID) ";
+    strSql = strSql + "ORDER BY 	CAST(SUBSTR(RVAL.STRING, 2, length(RVAL.STRING)) as integer), ";
+    strSql = strSql + "CAST(SUBSTR(RVAL.BATERIA, 2, length(RVAL.BATERIA)) as integer)";
     
     db.all(strSql, function (err, rows) {
         var statusModulos = [];
@@ -93,7 +97,7 @@ var get = function (data) {
     strSql = strSql + "		D.TENSAO		TENSAO_ATUAL \n";
     strSql = strSql + " FROM ( \n";
     strSql = strSql + "SELECT STRFTIME('%Y/%m/%d %H:%M:%S', DATAHORA) DATA, \n";
-    strSql = strSql + "		MAX(ID) ID, \n";
+    strSql = strSql + "		MAX(DATALOG.ID) ID, \n";
     strSql = strSql + "		MAX(TEMPERATURA) 	MAX_TEMPERATURA, \n";
     strSql = strSql + "		MAX(IMPEDANCIA)		MAX_IMPEDANCIA, \n";
     strSql = strSql + "		MAX(TENSAO)			MAX_TENSAO, \n";
@@ -103,7 +107,9 @@ var get = function (data) {
     strSql = strSql + "		AVG(TEMPERATURA)	AVG_TEMPERATURA, \n";
     strSql = strSql + "		AVG(IMPEDANCIA)		AVG_IMPEDANCIA, \n";
     strSql = strSql + "		AVG(TENSAO)			AVG_TENSAO \n";
-    strSql = strSql + "FROM DATALOG \n";
+    strSql = strSql + "FROM DATALOG, MODULO \n";
+    strSql = strSql + "WHERE 	CAST(SUBSTR(DATALOG.BATERIA, 2, length(DATALOG.BATERIA)) as integer) <= MODULO.N_BATERIAS_POR_STRINGS \n";
+    strSql = strSql + "AND		CAST(SUBSTR(DATALOG.STRING, 2, length(DATALOG.STRING)) as integer) <= MODULO.N_STRINGS \n";
     strSql = strSql + "group by STRFTIME('%Y/%m/%d %H:%M:%S', DATAHORA) \n";
     strSql = strSql + ") AS X \n";
     strSql = strSql + "LEFT JOIN DATALOG D ON (D.ID = X.ID)";
