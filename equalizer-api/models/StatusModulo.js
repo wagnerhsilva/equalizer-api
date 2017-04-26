@@ -5,9 +5,9 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
     return {
         string: string, 
         bateria: bateria, 
-        temperatura: temperatura, 
-        impedancia: impedancia, 
-        tensao: tensao, 
+        temperatura: (temperatura / 10).toFixed(1), 
+        impedancia: (impedancia / 10).toFixed(1), 
+        tensao: (tensao / 1000).toFixed(3), 
         equalizacao: equalizacao,
         min_temp: min_temp, 
         max_temp: max_temp, 
@@ -71,7 +71,7 @@ var get = function (data) {
     db.all(strSql, function (err, rows) {
         var statusModulos = [];
         rows.forEach(function row(row) {
-            statusModulos.push(new createStatusModulo(row.STRING, row.BATERIA, row.temperatura, row.impedancia, row.tensao, row.equalizacao, row.alarme_nivel_temp_min, row.alarme_nivel_temp_max, row.alarme_nivel_imped_min, row.alarme_nivel_imped_max, 10.5, 13.5));
+            statusModulos.push(new createStatusModulo(row.STRING, row.BATERIA, row.temperatura, row.impedancia, row.tensao, row.equalizacao, row.alarme_nivel_temp_min, row.alarme_nivel_temp_max, row.alarme_nivel_imped_min, row.alarme_nivel_imped_max, 8000, 16000));
         });
         data(err, statusModulos);
     });

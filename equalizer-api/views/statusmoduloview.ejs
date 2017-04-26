@@ -183,6 +183,20 @@
                             $scope.nomeUsuario = '<%= username %>';
                             $scope.acessoUsuario = '<%= userAccess %>';
                             $scope.emailUsuario = '<%= userEmail %>';
+                            setInterval(function () {
+                                StatusModulos.query(function (res) {
+                                    $scope.statusModulos = res;
+                                    var flags = [], output = [], l = $scope.statusModulos.length, i;
+                                    for (i = 0; i < l; i++) {
+                                        if (flags[$scope.statusModulos[i].string]) continue;
+                                        flags[$scope.statusModulos[i].string] = true;
+                                        output.push($scope.statusModulos[i].string);
+                                    }
+                                    $scope.stringsDistintas = output;
+                                }, function (error) {
+                                    // Error handler code
+                                });
+                            }, 1500);
                         }])
                         .directive('dynamicbar1', function () {
                             return {

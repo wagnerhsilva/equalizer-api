@@ -101,8 +101,16 @@
 
                             });
                             $scope.chart = function (index) {
-                                chart($scope.charts, index);
+                                $scope.index = index;
+                                chart($scope.charts, index == undefined ? 1 : index);
                             }
+                            setInterval(function () {
+                                $scope.charts = Charts.query(function (res) {
+                                    $scope.chart($scope.index);
+                                }, function (error) {
+                                });
+
+                            }, 1500);
                         }])
                         //---------------
                         // Routes
@@ -211,7 +219,7 @@
                         },
                         showRangeSelector: true
                     });
-                } else  if (visao == 3){
+                } else if (visao == 3) {
                     var dataText = "Data,Média,Atual";
                     data.forEach(function (element) {
                         dataText += '\n' + element.data + ',' + element.min_tensao + ';' + element.avg_tensao + ';' + element.max_tensao + ',' + element.min_tensao + ';' + element.tensao_atual + ';' + element.max_tensao;

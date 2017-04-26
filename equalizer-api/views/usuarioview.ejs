@@ -84,7 +84,7 @@
                                     </section>
                                     <section>
                                         <label class="input"> <i class="icon-append fa fa-phone"></i>
-										<input type="text" name="telefone" placeholder="Telefone" data-mask="(99) 99999-9999" ng-model="usuarioSelecionado.telefone" required>
+										<input type="text" name="telefone" placeholder="Telefone (99) 9999-9999" ng-model="usuarioSelecionado.telefone">
 										<b class="tooltip tooltip-bottom-right">Informe o telefone</b> </label>
                                     </section>
                                     <section>
@@ -164,8 +164,6 @@
                                 if (usuario.sobreNome == null || usuario.sobreNome.trim() == "")
                                     return;
                                 if (usuario.email == null || usuario.email.trim() == "")
-                                    return;
-                                if (usuario.telefone == null || usuario.telefone.trim() == "")
                                     return;
                                 if (usuario.senha == null || usuario.senha.trim() == "")
                                     return;

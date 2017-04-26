@@ -100,8 +100,23 @@
 
                             });
                             $scope.chart = function (index) {
-                                chart($scope.charts, index, $scope.stringsDistintas);
+                                $scope.index = index;
+                                chart($scope.charts, index == undefined ? 1 : index, $scope.stringsDistintas);
                             }
+                            setInterval(function () {
+                                $scope.charts = StatusModulos.query(function (res) {
+                                    var flags = [], output = [], l = res.length, i;
+                                    for (i = 0; i < l; i++) {
+                                        if (flags[res[i].string]) continue;
+                                        flags[res[i].string] = true;
+                                        output.push(res[i].string);
+                                    }
+                                    $scope.stringsDistintas = output;
+                                    $scope.chart($scope.index);
+                                }, function (error) {
+
+                                });
+                            }, 1500);
                         }])
                         //---------------
                         // Routes
@@ -146,7 +161,7 @@
                             var conta = 0;
                             data.forEach(function (element) {
                                 if (element.string == string) {
-                                    data1.push([conta, element.impedancia]);
+                                    data1.push([conta, parseFloat(element.impedancia)]);
                                     labels1.push([conta, element.bateria]);
                                     conta++;
                                 }
@@ -172,8 +187,7 @@
                                 legend: true,
                                 tooltip: true,
                                 tooltipOpts: {
-                                    content: "<b>Impedância</b> = <span>%y</span>",
-                                    defaultTheme: false
+                                    content: "<b>Impedância</b> = <span> %y.1</span>"
                                 }
                             };
                             $.plot($("#bar-chart_" + string), dataDS, options);
@@ -191,7 +205,7 @@
                             var conta = 0;
                             data.forEach(function (element) {
                                 if (element.string == string) {
-                                    data1.push([conta, element.temperatura]);
+                                    data1.push([conta, parseFloat(element.temperatura)]);
                                     labels1.push([conta, element.bateria]);
                                     conta++;
                                 }
@@ -217,7 +231,7 @@
                                 legend: true,
                                 tooltip: true,
                                 tooltipOpts: {
-                                    content: "<b>Temperatura</b> = <span>%y</span>",
+                                    content: "<b>Temperatura</b> = <span>%y.1</span>",
                                     defaultTheme: false
                                 }
                             };
@@ -234,7 +248,7 @@
                             var conta = 0;
                             data.forEach(function (element) {
                                 if (element.string == string) {
-                                    data1.push([conta, element.tensao]);
+                                    data1.push([conta, parseFloat(element.tensao)]);
                                     labels1.push([conta, element.bateria]);
                                     conta++;
                                 }
@@ -260,7 +274,7 @@
                                 legend: true,
                                 tooltip: true,
                                 tooltipOpts: {
-                                    content: "<b>Tensão</b> = <span>%y</span>",
+                                    content: "<b>Tensão</b> = <span>%y.3</span>",
                                     defaultTheme: false
                                 }
                             };
