@@ -6,7 +6,7 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
         string: string, 
         bateria: bateria, 
         temperatura: (temperatura / 10).toFixed(1), 
-        impedancia: (impedancia / 10).toFixed(1), 
+        impedancia: (impedancia / 100).toFixed(1), 
         tensao: (tensao / 1000).toFixed(3), 
         equalizacao: equalizacao,
         min_temp: min_temp, 

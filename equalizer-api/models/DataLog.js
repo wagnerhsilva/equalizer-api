@@ -8,7 +8,7 @@ var createDataLog = function (id, dataHora, string, bateria, temperatura, impeda
         string: string,
         bateria: bateria,
         temperatura: (temperatura / 10).toFixed(1),
-        impedancia: (impedancia / 10).toFixed(1),
+        impedancia: (impedancia / 100).toFixed(1),
         tensao: (tensao / 1000).toFixed(3),
         equalizacao: equalizacao
     }
