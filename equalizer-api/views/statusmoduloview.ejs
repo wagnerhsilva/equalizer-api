@@ -64,11 +64,11 @@
                                             <td align="center">{{status.temperatura}}</td>
                                             <td align="center">{{status.impedancia}}</td>
                                             <td align="center">
-                                                <span ng-if="status.percentualEqualizacao <= 20" dynamicbar1 data="x.bars">20,30,40,50,60</span>
-                                                <span ng-if="status.percentualEqualizacao <= 40 && status.percentualEqualizacao > 20" dynamicbar2 data="x.bars">20,30,40,50,60</span>
-                                                <span ng-if="status.percentualEqualizacao <= 60 && status.percentualEqualizacao > 40" dynamicbar3 data="x.bars">20,30,40,50,60</span>
-                                                <span ng-if="status.percentualEqualizacao <= 80 && status.percentualEqualizacao > 60" dynamicbar4 data="x.bars">20,30,40,50,60</span>
-                                                <span ng-if="status.percentualEqualizacao <= 100 && status.percentualEqualizacao > 80" dynamicbar5 data="x.bars">20,30,40,50,60</span>
+                                                <span ng-if="status.percentualEqualizacao <= 20" title="Equalização: {{status.percentualEqualizacao.toFixed(2)}}%" dynamicbar1 data="x.bars">20,30,40,50,60</span>
+                                                <span ng-if="status.percentualEqualizacao <= 40 && status.percentualEqualizacao > 20" title="Equalização: {{status.percentualEqualizacao.toFixed(2)}}%" dynamicbar2 data="x.bars">20,30,40,50,60</span>
+                                                <span ng-if="status.percentualEqualizacao <= 60 && status.percentualEqualizacao > 40" title="Equalização: {{status.percentualEqualizacao.toFixed(2)}}%" dynamicbar3 data="x.bars">20,30,40,50,60</span>
+                                                <span ng-if="status.percentualEqualizacao <= 80 && status.percentualEqualizacao > 60" title="Equalização: {{status.percentualEqualizacao.toFixed(2)}}%" dynamicbar4 data="x.bars">20,30,40,50,60</span>
+                                                <span ng-if="status.percentualEqualizacao <= 100 && status.percentualEqualizacao > 80" title="Equalização: {{status.percentualEqualizacao.toFixed(2)}}%" dynamicbar5 data="x.bars">20,30,40,50,60</span>
                                             </td>
                                             <td align="center">
                                                 <img ng-if="status.temperatura < status.min_temp || status.temperatura > status.max_temp || status.impedancia < status.min_imp || status.impedancia > status.max_imp || status.tensao < status.min_tensao || status.tensao > status.max_tensao"
