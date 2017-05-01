@@ -157,11 +157,15 @@
                         if ($("#bar-chart_" + string).length) {
                             $("#headerGrafico_" + string).text("String: " + string);
                             var data1 = [];
+                            var maxVal = [];
+                            var minVal = [];
                             var labels1 = [];
                             var conta = 0;
                             data.forEach(function (element) {
                                 if (element.string == string) {
                                     data1.push([conta, parseFloat(element.impedancia)]);
+                                    maxVal.push([conta, parseFloat(element.max_imp)]);
+                                    minVal.push([conta, parseFloat(element.min_imp)]);
                                     labels1.push([conta, element.bateria]);
                                     conta++;
                                 }
@@ -172,6 +176,18 @@
                                     color: '#409628',
                                     label: 'Impedância',
                                     bars: { show: true, align: 'center', barWidth: 0.5 }
+                                },
+                                {
+                                    data: maxVal,
+                                    color: '#e70000',
+                                    label: 'Tensão',
+                                    lines: { show: true, align: 'center', barWidth: 0.5 }
+                                },
+                                {
+                                    data: minVal,
+                                    color: '#e70000',
+                                    label: 'Tensão',
+                                    lines: { show: true, align: 'center', barWidth: 0.5 }
                                 }
                             ];
                             var options = {
@@ -201,11 +217,15 @@
                         if ($("#bar-chart_" + string).length) {
                             $("#headerGrafico_" + string).text("String: " + string);
                             var data1 = [];
+                            var maxVal = [];
+                            var minVal = [];
                             var labels1 = [];
                             var conta = 0;
                             data.forEach(function (element) {
                                 if (element.string == string) {
                                     data1.push([conta, parseFloat(element.temperatura)]);
+                                    maxVal.push([conta, parseFloat(element.max_temp)]);
+                                    minVal.push([conta, parseFloat(element.min_temp)]);
                                     labels1.push([conta, element.bateria]);
                                     conta++;
                                 }
@@ -216,6 +236,18 @@
                                     color: '#409628',
                                     label: 'Temperatura',
                                     bars: { show: true, align: 'center', barWidth: 0.5 }
+                                },
+                                {
+                                    data: maxVal,
+                                    color: '#e70000',
+                                    label: 'Tensão',
+                                    lines: { show: true, align: 'center', barWidth: 0.5 }
+                                },
+                                {
+                                    data: minVal,
+                                    color: '#e70000',
+                                    label: 'Tensão',
+                                    lines: { show: true, align: 'center', barWidth: 0.5 }
                                 }
                             ];
                             var options = {
@@ -244,11 +276,15 @@
                         if ($("#bar-chart_" + string).length) {
                             $("#headerGrafico_" + string).text("String: " + string);
                             var data1 = [];
+                            var maxVal = [];
+                            var minVal = [];
                             var labels1 = [];
                             var conta = 0;
                             data.forEach(function (element) {
                                 if (element.string == string) {
                                     data1.push([conta, parseFloat(element.tensao)]);
+                                    maxVal.push([conta, parseFloat(element.max_tensao)]);
+                                    minVal.push([conta, parseFloat(element.min_tensao)]);
                                     labels1.push([conta, element.bateria]);
                                     conta++;
                                 }
@@ -259,6 +295,18 @@
                                     color: '#409628',
                                     label: 'Tensão',
                                     bars: { show: true, align: 'center', barWidth: 0.5 }
+                                },
+                                {
+                                    data: maxVal,
+                                    color: '#e70000',
+                                    label: 'Tensão',
+                                    lines: { show: true, align: 'center', barWidth: 0.5 }
+                                },
+                                {
+                                    data: minVal,
+                                    color: '#e70000',
+                                    label: 'Tensão',
+                                    lines: { show: true, align: 'center', barWidth: 0.5 }
                                 }
                             ];
                             var options = {
