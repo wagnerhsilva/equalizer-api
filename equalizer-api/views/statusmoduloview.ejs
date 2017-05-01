@@ -324,23 +324,6 @@
         </script>
         <script>
             $(document).ready(function () {
-                $('#dataInstalacao').datepicker({
-                    dateFormat: 'dd/mm/yy',
-                    prevText: '<i class="fa fa-chevron-left"></i>',
-                    nextText: '<i class="fa fa-chevron-right"></i>'
-                });
-                $("#alerta_tensMin").maskMoney({ decimal: ",", thousands: "." });
-                $("#alerta_tensMax").maskMoney({ decimal: ",", thousands: "." });
-                $("#alerta_tempMin").maskMoney({ decimal: ",", thousands: "." });
-                $("#alerta_tempMax").maskMoney({ decimal: ",", thousands: "." });
-                $("#alerta_impMin").maskMoney({ decimal: ",", thousands: "." });
-                $("#alerta_impMax").maskMoney({ decimal: ",", thousands: "." });
-                $("#alarme_tensMin").maskMoney({ decimal: ",", thousands: "." });
-                $("#alarme_tensMax").maskMoney({ decimal: ",", thousands: "." });
-                $("#alarme_tempMin").maskMoney({ decimal: ",", thousands: "." });
-                $("#alarme_tempMax").maskMoney({ decimal: ",", thousands: "." });
-                $("#alarme_impMin").maskMoney({ decimal: ",", thousands: "." });
-                $("#alarme_impMax").maskMoney({ decimal: ",", thousands: "." });
                 setTimeout(function () { $("#visao2").hide() }, 1000);
             });
             function alterarVisao() {

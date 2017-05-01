@@ -104,13 +104,6 @@
                                 $scope.index = index;
                                 chart($scope.charts, index == undefined ? 1 : index);
                             }
-                            setInterval(function () {
-                                $scope.charts = Charts.query(function (res) {
-                                    $scope.chart($scope.index);
-                                }, function (error) {
-                                });
-
-                            }, 1500);
                         }])
                         //---------------
                         // Routes

@@ -310,18 +310,98 @@
                     prevText: '<i class="fa fa-chevron-left"></i>',
                     nextText: '<i class="fa fa-chevron-right"></i>'
                 });
-                $("#alerta_tensMin").maskMoney({ decimal: ".", thousands: "" });
-                $("#alerta_tensMax").maskMoney({ decimal: ".", thousands: "" });
-                $("#alerta_tempMin").maskMoney({ decimal: ".", thousands: "" });
-                $("#alerta_tempMax").maskMoney({ decimal: ".", thousands: "" });
-                $("#alerta_impMin").maskMoney({ decimal: ".", thousands: "" });
-                $("#alerta_impMax").maskMoney({ decimal: ".", thousands: "" });
-                $("#alarme_tensMin").maskMoney({ decimal: ".", thousands: "" });
-                $("#alarme_tensMax").maskMoney({ decimal: ".", thousands: "" });
-                $("#alarme_tempMin").maskMoney({ decimal: ".", thousands: "" });
-                $("#alarme_tempMax").maskMoney({ decimal: ".", thousands: "" });
-                $("#alarme_impMin").maskMoney({ decimal: ".", thousands: "" });
-                $("#alarme_impMax").maskMoney({ decimal: ".", thousands: "" });
+                $("#alerta_tensMin").maskMoney({ decimal: ".", thousands: "", precision: 3 });
+                $("#alerta_tensMax").maskMoney({ decimal: ".", thousands: "", precision: 3 });
+                $("#alerta_tempMin").maskMoney({ decimal: ".", thousands: "", precision: 1 });
+                $("#alerta_tempMax").maskMoney({ decimal: ".", thousands: "", precision: 1 });
+                $("#alerta_impMin").maskMoney({ decimal: ".", thousands: "", precision: 1 });
+                $("#alerta_impMax").maskMoney({ decimal: ".", thousands: "", precision: 1 });
+                $("#alarme_tensMin").maskMoney({ decimal: ".", thousands: "", precision: 3 });
+                $("#alarme_tensMax").maskMoney({ decimal: ".", thousands: "", precision: 3 });
+                $("#alarme_tempMin").maskMoney({ allowNegative: true, decimal: ".", thousands: "", precision: 1 });
+                $("#alarme_tempMax").maskMoney({ allowNegative: true, decimal: ".", thousands: "", precision: 1 });
+                $("#alarme_impMin").maskMoney({ decimal: ".", thousands: "", precision: 1 });
+                $("#alarme_impMax").maskMoney({ decimal: ".", thousands: "", precision: 1 });
+                $('#alarme_tensMin').on('change', function () {
+                    if ($(this).val() > 16 || $(this).val() < 0) {
+                        $.bigBox({
+                            title: "Tensão",
+                            content: "Intervalo de valores: 0v a 16v.",
+                            color: "#e70000",
+                            timeout: 5000,
+                            icon: "fa fa-check fadeInLeft animated"
+                        });
+                        $(this).focus();
+                        $(this).val("0.000");
+                    }
+                });
+                $('#alarme_tensMax').on('change', function () {
+                    if ($(this).val() > 16 || $(this).val() < 0) {
+                        $.bigBox({
+                            title: "Tensão",
+                            content: "Intervalo de valores: 0v a 16v.",
+                            color: "#e70000",
+                            timeout: 5000,
+                            icon: "fa fa-check fadeInLeft animated"
+                        });
+                        $(this).focus();
+                        $(this).val("0.000");
+                    }
+                });
+
+                $('#alarme_tempMin').on('change', function () {
+                    if ($(this).val() > 200 || $(this).val() < -100) {
+                        $.bigBox({
+                            title: "Temperatura",
+                            content: "Intervalo de valores: -100C a 200C.",
+                            color: "#e70000",
+                            timeout: 5000,
+                            icon: "fa fa-check fadeInLeft animated"
+                        });
+                        $(this).focus();
+                        $(this).val("0.000");
+                    }
+                });
+                $('#alarme_tempMax').on('change', function () {
+                    if ($(this).val() > 200 || $(this).val() < -100) {
+                        $.bigBox({
+                            title: "Temperatura",
+                            content: "Intervalo de valores: -100C a 200C.",
+                            color: "#e70000",
+                            timeout: 5000,
+                            icon: "fa fa-check fadeInLeft animated"
+                        });
+                        $(this).focus();
+                        $(this).val("0.000");
+                    }
+                });
+
+                $('#alarme_impMin').on('change', function () {
+                    if ($(this).val() > 1000 || $(this).val() < 0) {
+                        $.bigBox({
+                            title: "Impedância",
+                            content: "Intervalo de valores: 0 mOhms a 1000 mOhms.",
+                            color: "#e70000",
+                            timeout: 5000,
+                            icon: "fa fa-check fadeInLeft animated"
+                        });
+                        $(this).focus();
+                        $(this).val("0.000");
+                    }
+                });
+                $('#alarme_impMax').on('change', function () {
+                    if ($(this).val() > 1000 || $(this).val() < 0) {
+                        $.bigBox({
+                            title: "Impedância",
+                            content: "Intervalo de valores: 0 mOhms a 1000 mOhms.",
+                            color: "#e70000",
+                            timeout: 5000,
+                            icon: "fa fa-check fadeInLeft animated"
+                        });
+                        $(this).focus();
+                        $(this).val("0.000");
+                    }
+                });
             });
         </script>
         <% include partials/footer %>

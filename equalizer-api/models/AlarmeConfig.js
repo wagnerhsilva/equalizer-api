@@ -7,20 +7,20 @@ var createAlarmeConfig = function ( id, tipo_modulo, nivel_alert_tensao_max, niv
     return {
         id: id,
         tipo_modulo: tipo_modulo,
-        nivel_alert_tensao_max: nivel_alert_tensao_max.toFixed(3),
-        nivel_alert_tensao_min: nivel_alert_tensao_min.toFixed(3),
-        nivel_alert_temp_max: nivel_alert_temp_max.toFixed(1),
-        nivel_alert_temp_min: nivel_alert_temp_min.toFixed(1),
-        nivel_alert_impedancia_max: nivel_alert_impedancia_max.toFixed(1),
-        nivel_alert_impedancia_min: nivel_alert_impedancia_min.toFixed(1),
-        nivel_max_tensao_ativo: nivel_max_tensao_ativo.toFixed(3),
-        nivel_max_tensao_val: nivel_max_tensao_val.toFixed(3),
-        alarme_nivel_tensao_max: alarme_nivel_tensao_max.toFixed(3),
-        alarme_nivel_tensao_min: alarme_nivel_tensao_min.toFixed(3),
-        alarme_nivel_temp_max: alarme_nivel_temp_max.toFixed(1),
-        alarme_nivel_temp_min: alarme_nivel_temp_min.toFixed(1),
-        alarme_nivel_imped_max: alarme_nivel_imped_max.toFixed(1),
-        alarme_nivel_imped_min: alarme_nivel_imped_min.toFixed(1)
+        nivel_alert_tensao_max: nivel_alert_tensao_max != null ? nivel_alert_tensao_max.toFixed(3) : 0,
+        nivel_alert_tensao_min: nivel_alert_tensao_min != null ? nivel_alert_tensao_min.toFixed(3) : 0,
+        nivel_alert_temp_max: nivel_alert_temp_max != null ? nivel_alert_temp_max.toFixed(1) : 0,
+        nivel_alert_temp_min: nivel_alert_temp_min != null ? nivel_alert_temp_min.toFixed(1) : 0,
+        nivel_alert_impedancia_max: nivel_alert_impedancia_max != null ? nivel_alert_impedancia_max.toFixed(1) : 0,
+        nivel_alert_impedancia_min: nivel_alert_impedancia_min != null ? nivel_alert_impedancia_min.toFixed(1) : 0,
+        nivel_max_tensao_ativo: nivel_max_tensao_ativo,
+        nivel_max_tensao_val: nivel_max_tensao_val != null ? nivel_max_tensao_val.toFixed(3) : 0,
+        alarme_nivel_tensao_max: alarme_nivel_tensao_max != null ? alarme_nivel_tensao_max.toFixed(3) : 0,
+        alarme_nivel_tensao_min: alarme_nivel_tensao_min != null ? alarme_nivel_tensao_min.toFixed(3) : 0,
+        alarme_nivel_temp_max: alarme_nivel_temp_max != null ? alarme_nivel_temp_max.toFixed(1) : 0,
+        alarme_nivel_temp_min: alarme_nivel_temp_min != null ? alarme_nivel_temp_min.toFixed(1) : 0,
+        alarme_nivel_imped_max: alarme_nivel_imped_max != null ? alarme_nivel_imped_max.toFixed(1) : 0,
+        alarme_nivel_imped_min: alarme_nivel_imped_min != null ? alarme_nivel_imped_min.toFixed(1) : 0
     }
 }
 var save = function (alarmeConfig, err) {
