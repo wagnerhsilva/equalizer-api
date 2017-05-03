@@ -5,7 +5,9 @@ var DataLog = require('../models/DataLog');
 router.get('/', function (req, res, next) {
     DataLog.getSomaTensao(function (err, data) {
         DataLog.getPercentualDescarga(function (err, descargas) {
-            res.json({ somaTensao: data, descarga: descargas });
+            DataLog.getAvgLast(function (err, avgLast) {
+                res.json({ somaTensao: data, descarga: descargas, avg: avgLast });
+            });
         });
     });
 

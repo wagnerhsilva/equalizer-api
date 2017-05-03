@@ -47,11 +47,11 @@
                                     </div>
                                     <span class="easy-pie-title"> % Bateria </span>
                                     <div style="float:right;">
-                                        <div id="smartChart3" class="easy-pie-chart txt-color-orangeDark" data-percent="16" data-pie-size="50">
+                                        <div id="smartChart3" class="easy-pie-chart txt-color-blue" data-percent="16" data-pie-size="50">
                                             <span class="percent"></span>
                                         </div>
                                         <span class="easy-pie-title"> Target </span>
-                                        <div id="smartChart4" class="easy-pie-chart txt-color-orangeDark" data-percent="12" data-pie-size="50">
+                                        <div id="smartChart4" class="easy-pie-chart txt-color-green" data-percent="12" data-pie-size="50">
                                             <span class="percent"></span>
                                         </div>
                                         <span class="easy-pie-title"> Tensão de barramento </span>
@@ -93,7 +93,7 @@
             function getRandomData() {
                 if (data.length > 0)
                     data = data.slice(1);
-                getSoma(function (soma) {
+                getSoma(function (soma, avgLast) {
                     if (soma > plot.getAxes().yaxis.options.max) {
                         plot.getAxes().yaxis.options.max = soma + (soma * 1.30);
                         plot.setupGrid();
@@ -111,6 +111,12 @@
                             );
                             $('#smartChart2').data('easyPieChart').update(
                                 percentualCarga > 100 ? 100 : percentualCarga
+                            );
+                            $('#smartChart3').data('easyPieChart').update(
+                                avgLast
+                            );
+                            $('#smartChart4').data('easyPieChart').update(
+                                soma
                             );
                         }
                         data.push(soma);
@@ -165,9 +171,9 @@
 
             var plot = $.plot($("#updating-chart"), [getRandomData()], options);
 
-            function getSoma(soma) {
+            function getSoma(soma, avgLast) {
                 $.get("/livefeed", "", function (data, status) {
-                    soma(data.somaTensao);
+                    soma(data.somaTensao, data.avg);
                 });
             }
             function getDescarga(descarga) {

@@ -100,9 +100,30 @@ var getPercentualDescarga = function (data) {
     });
     db.close();
 }
+var getAvgLast = function (data) {
+    var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 10000;');
+    db.run('PRAGMA journal_mode=WAL;');
+    db.get("SELECT AVG_LAST\n" +
+            "FROM PARAMETERS WHERE ID IN (\n" +
+                                            "SELECT MAX(ID)\n"+
+                                            "FROM PARAMETERS\n" +
+                                        ")", function (err, row) {
+        if (row) {
+            var avgLast = row.avg_last;
+            console.log("avgLast: ");
+            console.log(avgLast);
+            data(err, avgLast);
+        }
+        else
+            data(err, null);
+    });
+    db.close();
+}
 module.exports.save = save;
 module.exports.createDataLog = createDataLog;
 module.exports.getAll = getAll;
 module.exports.getLast = getLast;
 module.exports.getSomaTensao = getSomaTensao;
 module.exports.getPercentualDescarga = getPercentualDescarga;
+module.exports.getAvgLast = getAvgLast;
