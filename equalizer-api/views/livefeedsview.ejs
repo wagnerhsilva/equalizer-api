@@ -46,15 +46,12 @@
                                         <span class="percent percent-sign"></span>
                                     </div>
                                     <span class="easy-pie-title"> % Bateria </span>
-                                    <div style="float:right;">
-                                        <div id="smartChart3" class="easy-pie-chart txt-color-blue" data-percent="16" data-pie-size="50">
-                                            <span class="percent"></span>
-                                        </div>
-                                        <span class="easy-pie-title"> Target </span>
-                                        <div id="smartChart4" class="easy-pie-chart txt-color-green" data-percent="12" data-pie-size="50">
-                                            <span class="percent"></span>
-                                        </div>
-                                        <span class="easy-pie-title"> Tensão de barramento </span>
+                                    <div style="float:right; margin-top: 0.8%;">
+                                        <span>Target - </span>
+                                        <b><span id="txtTarget">8.900</span></b>
+                                        &nbsp&nbsp&nbsp
+                                        <span>Tensão de barramento - </span>
+                                        <b><span id="txtTensaoBarramento">8.900</span></b>
                                     </div>
                                 </div>
                             </div>
@@ -112,12 +109,8 @@
                             $('#smartChart2').data('easyPieChart').update(
                                 percentualCarga > 100 ? 100 : percentualCarga
                             );
-                            $('#smartChart3').data('easyPieChart').update(
-                                (avgLast / 1000)
-                            );
-                            $('#smartChart4').data('easyPieChart').update(
-                                (soma / 1000)
-                            );
+                            $("#txtTensaoBarramento").text((avgLast / 1000).toFixed(3));
+                            $("#txtTarget").text((soma / 1000).toFixed(3));
                         }
                         data.push(soma);
                     }
