@@ -113,10 +113,10 @@
                                 percentualCarga > 100 ? 100 : percentualCarga
                             );
                             $('#smartChart3').data('easyPieChart').update(
-                                avgLast
+                                (avgLast / 1000)
                             );
                             $('#smartChart4').data('easyPieChart').update(
-                                soma
+                                (soma / 1000)
                             );
                         }
                         data.push(soma);
