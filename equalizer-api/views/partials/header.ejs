@@ -9,7 +9,7 @@
         <!-- END LOGO PLACEHOLDER -->
     </div>
     <!-- pulled right: nav area -->
-    <div class="pull-right">
+    <div class="pull-right" style="margin-left:10px;">
 
         <!-- collapse menu button -->
         <div id="hide-menu" class="btn-header pull-right">
@@ -28,6 +28,14 @@
         </div>
         <!-- end fullscreen button -->
 
+    </div>
+    <div class="pull-right">
+        <div style="margin-top: 6%;">
+            <span>Target - </span>
+            <b><span id="txtTarget">0</span></b> &nbsp&nbsp&nbsp
+            <span>Tensão de barramento - </span>
+            <b><span id="txtTensaoBarramento">0</span></b>
+        </div>
     </div>
     <!-- end pulled right: nav area -->
 
@@ -49,7 +57,7 @@
                     <span>
                         <%= username %>
                     </span>
-                </a>
+            </a>
 
             </span>
         </div>
@@ -59,48 +67,59 @@
             <li class="top-menu-invisible">
                 <a href="#" title="Status"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Status</span></a>
                 <ul>
-                    <li <%if (pageName=='statusmoduloview') {%>  class='active'  <%}%>>
-                        <a href="statusmoduloview" title="Módulos"><span class="menu-item-parent">Módulos</span></a>
+                    <li <%if (pageName=='statusmoduloview' ) {%> class='active'
+                        <%}%>>
+                            <a href="statusmoduloview" title="Módulos"><span class="menu-item-parent">Módulos</span></a>
                     </li>
-                    <li <%if (pageName=='chartview') {%>  class='active'  <%}%>>
-                        <a href="chartview" title="Gráficos"><span class="menu-item-parent">Gráficos</span></a>
+                    <li <%if (pageName=='chartview' ) {%> class='active'
+                        <%}%>>
+                            <a href="chartview" title="Gráficos"><span class="menu-item-parent">Gráficos</span></a>
                     </li>
-                    <li <%if (pageName=='chart2view') {%>  class='active'  <%}%>>
-                        <a href="chart2view" title="Gráficos 2"><span class="menu-item-parent">Gráficos 2</span></a>
+                    <li <%if (pageName=='chart2view' ) {%> class='active'
+                        <%}%>>
+                            <a href="chart2view" title="Gráficos 2"><span class="menu-item-parent">Gráficos 2</span></a>
                     </li>
-                    <li <%if (pageName=='livefeedsview') {%>  class='active'  <%}%>>
-                        <a href="livefeedview" title="Live Feeds"><span class="menu-item-parent">Live Feeds</span></a>
+                    <li <%if (pageName=='livefeedsview' ) {%> class='active'
+                        <%}%>>
+                            <a href="livefeedview" title="Live Feeds"><span class="menu-item-parent">Live Feeds</span></a>
                     </li>
                 </ul>
             </li>
             <li class="top-menu-invisible">
                 <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Configuração</span></a>
                 <ul>
-                    <li <%if (pageName=='usuarioview') {%>  class='active'  <%}%>>
-                        <a href="usuarioview" title="Gerenciamento de usuários"><span class="menu-item-parent">Gerenciamento de usuários</span></a>
+                    <li <%if (pageName=='usuarioview' ) {%> class='active'
+                        <%}%>>
+                            <a href="usuarioview" title="Gerenciamento de usuários"><span class="menu-item-parent">Gerenciamento de usuários</span></a>
                     </li>
-                    <li <%if (pageName=='moduloview') {%>  class='active'  <%}%>>
-                        <a href="moduloview" title="Módulos, alarme e bateria"><span class="menu-item-parent">Módulos, alarme e bateria</span></a>
+                    <li <%if (pageName=='moduloview' ) {%> class='active'
+                        <%}%>>
+                            <a href="moduloview" title="Módulos, alarme e bateria"><span class="menu-item-parent">Módulos, alarme e bateria</span></a>
                     </li>
-                    <li <%if (pageName=='emailserverview') {%>  class='active'  <%}%>>
-                        <a href="emailserverview" title="Configuração de email server"><span class="menu-item-parent">Configuração de email server</span></a>
+                    <li <%if (pageName=='emailserverview' ) {%> class='active'
+                        <%}%>>
+                            <a href="emailserverview" title="Configuração de email server"><span class="menu-item-parent">Configuração de email server</span></a>
                     </li>
-                    <li <%if (pageName=='timeserverview') {%>  class='active'  <%}%>>
-                        <a href="timeserverview" title="Configuração de timeserver"><span class="menu-item-parent">Configuração de timeserver</span></a>
+                    <li <%if (pageName=='timeserverview' ) {%> class='active'
+                        <%}%>>
+                            <a href="timeserverview" title="Configuração de timeserver"><span class="menu-item-parent">Configuração de timeserver</span></a>
                     </li>
-                    <li <%if (pageName=='redesegurancaview') {%>  class='active'  <%}%>>
-                        <a href="redesegurancaview" title="Rede & Segurança"><span class="menu-item-parent">Rede & Segurança</span></a>
+                    <li <%if (pageName=='redesegurancaview' ) {%> class='active'
+                        <%}%>>
+                            <a href="redesegurancaview" title="Rede & Segurança"><span class="menu-item-parent">Rede & Segurança</span></a>
                     </li>
                 </ul>
             </li>
             <li>
                 <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Logfiles</span></a>
                 <ul>
-                    <li <%if (pageName=='alarmlogview') {%>  class='active'  <%}%>>
-                        <a href="alarmlogview" title="Alarme de eventos"><span class="menu-item-parent">Alarme de eventos</span></a>
+                    <li <%if (pageName=='alarmlogview' ) {%> class='active'
+                        <%}%>>
+                            <a href="alarmlogview" title="Alarme de eventos"><span class="menu-item-parent">Alarme de eventos</span></a>
                     </li>
-                    <li <%if (pageName=='datalogview') {%>  class='active'  <%}%>>
-                        <a href="datalogview" title="DataLogger"><span class="menu-item-parent">DataLogger</span></a>
+                    <li <%if (pageName=='datalogview' ) {%> class='active'
+                        <%}%>>
+                            <a href="datalogview" title="DataLogger"><span class="menu-item-parent">DataLogger</span></a>
                     </li>
                 </ul>
             </li>
@@ -110,3 +129,16 @@
             <i class="fa fa-arrow-circle-left hit"></i>
     </span>
 </aside>
+<script>
+    function getSomatoria() {
+        $.get("/livefeed", "", function (data, status) {
+            $("#txtTensaoBarramento").text((data.somaTensao / 1000).toFixed(3));
+            $("#txtTarget").text((data.avg / 1000).toFixed(3));
+        });
+    }
+    $(document).ready(function () {
+        getSomatoria();
+        setInterval(function(){ getSomatoria(); }, 3000);
+    });
+
+</script>

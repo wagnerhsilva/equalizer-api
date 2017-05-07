@@ -65,10 +65,12 @@ var getSomaTensao = function (data) {
     strSql += "WHERE ID IN ( ";
     strSql += "				SELECT ULTIMO_ID ";
     strSql += "				FROM ( ";
-    strSql += "						SELECT 	STRING, ";
-    strSql += "								BATERIA, ";
-    strSql += "								MAX(ID) ULTIMO_ID ";
-    strSql += "						FROM DATALOG ";
+    strSql += "						SELECT 	DATALOG.STRING, ";
+    strSql += "								DATALOG.BATERIA, ";
+    strSql += "								MAX(DATALOG.ID) ULTIMO_ID ";
+    strSql += "						FROM DATALOG, MODULO ";
+    strSql = strSql + "		    WHERE 	CAST(SUBSTR(DATALOG.BATERIA, 2, length(DATALOG.BATERIA)) as integer) <= MODULO.N_BATERIAS_POR_STRINGS ";
+    strSql = strSql + "		    AND		CAST(SUBSTR(DATALOG.STRING, 2, length(DATALOG.STRING)) as integer) <= MODULO.N_STRINGS ";
     strSql += "						GROUP BY 	STRING, ";
     strSql += "									BATERIA ";
     strSql += "					) AS X ";

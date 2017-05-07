@@ -72,9 +72,8 @@ router.get('/test/:server', function (req, res, next) {
         return;
     }
 });
-router.get('/manual/:dateTime/:utc', function (req, res, next) {
+router.get('/manual/:dateTime', function (req, res, next) {
     var dateTimeSemFormato = req.params.dateTime;
-    var utc = req.params.utc;
     var primeiraPart = dateTimeSemFormato.split(' ')[0];
     var segundaPart = dateTimeSemFormato.split(' ')[1];
     var ano = primeiraPart.split('-')[2];
@@ -84,16 +83,6 @@ router.get('/manual/:dateTime/:utc', function (req, res, next) {
     var minuto = segundaPart.split(':')[1];
     var dateTime = new Date(Date.UTC(ano, mes - 1, dia, hora, minuto));
     console.log(dateTime);
-    console.log(utc);
-    console.log(utc.toString().indexOf('-'));
-    if (utc.toString().indexOf('-') > -1) {
-        dateTime.removeHours(parseInt(utc.toString().replace("+", "").trim()));
-        console.log("removeHour");
-    }
-    else {
-        dateTime.addHours(parseInt(utc.toString().replace("-", "").trim()));
-        console.log("addHour");
-    }
     try {
         console.log(dateTime);
         //setup.clock.set(dateTime);

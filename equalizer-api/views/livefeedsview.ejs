@@ -46,13 +46,6 @@
                                         <span class="percent percent-sign"></span>
                                     </div>
                                     <span class="easy-pie-title"> % Bateria </span>
-                                    <div style="float:right; margin-top: 0.8%;">
-                                        <span>Target - </span>
-                                        <b><span id="txtTarget">8.900</span></b>
-                                        &nbsp&nbsp&nbsp
-                                        <span>Tensão de barramento - </span>
-                                        <b><span id="txtTensaoBarramento">8.900</span></b>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +75,7 @@
                 }
 
             }
-            var data = [], totalPoints = 200, $UpdatingChartColors = $("#updating-chart").css('color');
+            var data = [], totalPoints = 20, $UpdatingChartColors = $("#updating-chart").css('color');
             var qtdQueda = 0;
             var percentualCarga = 0;
             var primeiraLeitura = 0;
@@ -109,8 +102,6 @@
                             $('#smartChart2').data('easyPieChart').update(
                                 percentualCarga > 100 ? 100 : percentualCarga
                             );
-                            $("#txtTensaoBarramento").text((avgLast / 1000).toFixed(3));
-                            $("#txtTarget").text((soma / 1000).toFixed(3));
                         }
                         data.push(soma);
                     }
@@ -123,7 +114,7 @@
                 return res;
             }
             // setup control widget
-            var updateInterval = 1500;
+            var updateInterval = 5000;
             $("#updating-chart").val(updateInterval).change(function () {
 
                 var v = $(this).val();
@@ -142,7 +133,7 @@
                 },
                 xaxis: {
                     min: 0,
-                    max: 200
+                    max: 18
                 },
                 colors: [$UpdatingChartColors],
                 series: {
