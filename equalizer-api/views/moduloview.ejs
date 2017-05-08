@@ -323,10 +323,10 @@
                 $("#alarme_impMin").maskMoney({ decimal: ".", thousands: "", precision: 1 });
                 $("#alarme_impMax").maskMoney({ decimal: ".", thousands: "", precision: 1 });
                 $('#alarme_tensMin').on('change', function () {
-                    if ($(this).val() > 16 || $(this).val() < 0) {
+                    if ($(this).val() > 16000 || $(this).val() < 0) {
                         $.bigBox({
                             title: "Tensão",
-                            content: "Intervalo de valores: 0v a 16v.",
+                            content: "Intervalo de valores: 0v a 16000v.",
                             color: "#e70000",
                             timeout: 5000,
                             icon: "fa fa-check fadeInLeft animated"
@@ -336,10 +336,10 @@
                     }
                 });
                 $('#alarme_tensMax').on('change', function () {
-                    if ($(this).val() > 16 || $(this).val() < 0) {
+                    if ($(this).val() > 16000 || $(this).val() < 0) {
                         $.bigBox({
                             title: "Tensão",
-                            content: "Intervalo de valores: 0v a 16v.",
+                            content: "Intervalo de valores: 0v a 16000v.",
                             color: "#e70000",
                             timeout: 5000,
                             icon: "fa fa-check fadeInLeft animated"
