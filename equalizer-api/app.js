@@ -18,6 +18,7 @@ var chart = require('./routes/chart');
 var chart2 = require('./routes/chart2');
 var alarmeConfig = require('./routes/alarmeConfig');
 var dataLog = require('./routes/dataLog');
+var dataLogDB = require('./models/DataLog');
 var ntpconfig = require('./routes/ntpconfig');
 var enviaEmail = require('./routes/enviarEmail');
 var bacsstatus = require('./routes/bacsstatus');
@@ -142,4 +143,5 @@ app.use(function (err, req, res, next) {
 
 //iteração envio email
 setInterval(function(){ emailServerModel.sendEmail(); }, 10000);
+//setInterval(function(){ dataLogDB.logInsert(); }, 500);
 module.exports = app;
