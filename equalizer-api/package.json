@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node --max-old-space-size=300 ./bin/www"
   },
   "dependencies": {
     "bcrypt-nodejs": "*",
