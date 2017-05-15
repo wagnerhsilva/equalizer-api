@@ -283,7 +283,7 @@
                             data.forEach(function (element) {
                                 if (element.string == string) {
                                     data1.push([conta, parseFloat(element.tensao)]);
-                                    maxVal.push([conta, parseFloat(element.max_tensao)]);
+                                    maxVal.push([conta, parseFloat(element.max_tensao) / 1000]);
                                     minVal.push([conta, parseFloat(element.min_tensao)]);
                                     labels1.push([conta, element.bateria]);
                                     conta++;
