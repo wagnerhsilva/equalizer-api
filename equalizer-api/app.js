@@ -27,6 +27,7 @@ var alarmlog = require('./routes/alarmlog');
 var timeserver = require('./routes/timeserver');
 var emailserver = require('./routes/emailserver');
 var livefeeds = require('./routes/livefeed');
+var headerData = require('./routes/getHeaderData');
 var usuarioview = require('./routes/usuarioview');
 var moduloview = require('./routes/moduloview');
 var dataLogView = require('./routes/dataLogView');
@@ -101,6 +102,7 @@ app.use('/statusmodulo', statusmodulo);
 app.use('/dataLog', dataLog);
 app.use('/alarmeConfig', alarmeConfig);
 app.use('/livefeed', livefeeds);
+app.use('/getheaderdata', headerData);
 app.use('/bacsstatus', bacsstatus);
 app.use('/ntpconfig', ntpconfig);
 app.use('/redeseguranca', redeseguranca);
@@ -142,6 +144,6 @@ app.use(function (err, req, res, next) {
 });
 
 //iteração envio email
-setInterval(function(){ emailServerModel.sendEmail(); }, 10000);
-//setInterval(function(){ dataLogDB.logInsert(); }, 500);
+setInterval(function(){ emailServerModel.sendEmail(); }, 120000);
+setInterval(function(){ dataLogDB.logInsert(); }, 2000);
 module.exports = app;

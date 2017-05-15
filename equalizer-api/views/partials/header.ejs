@@ -4,7 +4,7 @@
 
         <!-- PLACE YOUR LOGO HERE -->
         <span id="logo">
-                <img src="smartadmin/img/logo.png" alt="Equalizer">
+                <img src="smartadmin/img/logoCM.png" alt="Equalizer" style="height: 25px; width: 80px;">
             </span>
         <!-- END LOGO PLACEHOLDER -->
     </div>
@@ -131,7 +131,7 @@
 </aside>
 <script>
     function getSomatoria() {
-        $.get("/livefeed", "", function (data, status) {
+        $.get("/getheaderdata", "", function (data, status) {
             $("#txtTensaoBarramento").text((data.somaTensao / 1000).toFixed(3));
             $("#txtTarget").text((data.avg / 1000).toFixed(3));
         });

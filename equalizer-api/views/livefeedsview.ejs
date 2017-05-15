@@ -160,11 +160,6 @@
                     soma(data.somaTensao, data.avg);
                 });
             }
-            function getDescarga(descarga) {
-                $.get("/livefeed", "", function (data, status) {
-                    descarga(data.descarga);
-                });
-            }
         </script>
         <% include partials/footer %>
 </body>

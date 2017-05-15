@@ -31,7 +31,7 @@ var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 10000;');
     db.run('PRAGMA journal_mode=WAL;');
-    db.all("SELECT id, dataHora, string, bateria, temperatura, impedancia, tensao, equalizacao FROM DataLog ORDER BY id, string, bateria DESC", function (err, rows) {
+    db.all("SELECT id, dataHora, string, bateria, temperatura, impedancia, tensao, equalizacao FROM DataLog ORDER BY id, string, bateria DESC limit 500", function (err, rows) {
         var dataLogs = [];
         rows.forEach(function row(row) {
             dataLogs.push(new createDataLog(row.id, row.dataHora, row.string, row.bateria, row.temperatura, row.impedancia, row.tensao, row.equalizacao));
@@ -91,7 +91,7 @@ var getPercentualDescarga = function (data) {
     var db = new sqlite3.Database('equalizerdb');
     var countDataLog = 0;
     var countAlarmLog = 0;
-db.run('PRAGMA busy_timeout = 10000;');
+    db.run('PRAGMA busy_timeout = 10000;');
     db.run('PRAGMA journal_mode=WAL;');
     db.get("select (0.00 + count(distinct d.id)) * 100.00 as descargas from datalog d", function (err, row) {
         if (row) {
@@ -99,7 +99,7 @@ db.run('PRAGMA busy_timeout = 10000;');
             db.get("select (0.00 + count(distinct a.id)) * 100.00 as descargas from alarmlog a", function (err, row2) {
                 if (row2) {
                     countAlarmLog = row.descargas;
-                    data(err, (countAlarmLog/countDataLog * 100));
+                    data(err, (countAlarmLog / countDataLog * 100));
                 } else
                     data(err, null);
             });
@@ -114,19 +114,20 @@ var getAvgLast = function (data) {
     db.run('PRAGMA busy_timeout = 10000;');
     db.run('PRAGMA journal_mode=WAL;');
     db.get("SELECT AVG_LAST\n" +
-            "FROM PARAMETERS WHERE ID IN (\n" +
-                                            "SELECT MAX(ID)\n"+
-                                            "FROM PARAMETERS\n" +
-                                        ")", function (err, row) {
-        if (row) {
-            var avgLast = row.avg_last;
-            console.log("avgLast: ");
-            console.log(avgLast);
-            data(err, avgLast);
-        }
-        else
-            data(err, null);
-    });
+        ", param1\n" +
+        "FROM PARAMETERS WHERE ID IN (\n" +
+        "SELECT MAX(ID)\n" +
+        "FROM PARAMETERS\n" +
+        ")", function (err, row) {
+            if (row) {
+                var avgLast = { avg: parseFloat(row.avg_last), soma: parseFloat(row.param1) };
+                console.log("avgLast: ");
+                console.log(avgLast);
+                data(err, avgLast);
+            }
+            else
+                data(err, null);
+        });
     db.close();
 }
 var logInsert = function (data) {

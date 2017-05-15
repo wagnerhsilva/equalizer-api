@@ -3,8 +3,8 @@ var router = express.Router();
 var DataLog = require('../models/DataLog');
 /* GET */
 router.get('/', function (req, res, next) {
-    DataLog.getAvgLast(function (err, data) {
-        res.json({ somaTensao: data.soma });
+    DataLog.getAvgLast(function (err, avgLast) {
+        res.json({ somaTensao: avgLast.soma, avg: avgLast.avg });
     });
 
 });

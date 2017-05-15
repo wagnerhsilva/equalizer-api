@@ -11,7 +11,7 @@ var init = function () {
         db.run("CREATE TABLE IF NOT EXISTS RedeSeguranca (id INTEGER PRIMARY KEY AUTOINCREMENT, mac TEXT, velocidadePlacaRede TEXT, localAddress TEXT, gateway TEXT, mascara TEXT, servidorDNS TEXT, nomeDoSistema TEXT, localDoSistema TEXT, contatoDoSistema TEXT, httpPort INTEGER, useHttps INTEGER, httpsPort INTEGER, httpTempoDeAtualizacao INTEGER, paginaPadraoHttp TEXT)");
         db.run("CREATE TABLE IF NOT EXISTS TimeServer (id INTEGER PRIMARY KEY AUTOINCREMENT, timeServerAddress1 TEXT, timeServerAddress1_complemento TEXT, timeServerAddress2 TEXT, timeServerAddress2_complemento TEXT, timeServerAddress3 TEXT, timeServerAddress3_complemento TEXT, connectionRetries INTEGER, timeZone TEXT, automAdjustTimeDaylightSavingChanges INTEGER)");
         db.run("CREATE TABLE IF NOT EXISTS EmailServer (id INTEGER PRIMARY KEY AUTOINCREMENT, server TEXT, portaSMTP INTEGER, usarCriptografiaTLS INTEGER, email TEXT, assunto TEXT, usarAutenticacao INTEGER, login TEXT, senha TEXT)");
-        db.run("CREATE TABLE IF NOT EXISTS Parameters (id INTEGER PRIMARY KEY AUTOINCREMENT, avg_last TEXT, duty_min TEXT, duty_max TEXT, cte_index TEXT, delay TEXT)");
+        db.run("CREATE TABLE IF NOT EXISTS Parameters ( id INTEGER PRIMARY KEY AUTOINCREMENT , avg_last TEXT , duty_min TEXT , duty_max TEXT , cte_index TEXT , delay TEXT , num_cycles_var_read TEXT , param1 TEXT , param2 TEXT , param3 TEXT , param4 TEXT , param5 TEXT , param6 TEXT , param7 TEXT , param8 TEXT , param9 TEXT )");
 
         //Triggers
         var strSql = "";

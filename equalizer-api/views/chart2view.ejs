@@ -103,20 +103,6 @@
                                 $scope.index = index;
                                 chart($scope.charts, index == undefined ? 1 : index, $scope.stringsDistintas);
                             }
-                            setInterval(function () {
-                                $scope.charts = StatusModulos.query(function (res) {
-                                    var flags = [], output = [], l = res.length, i;
-                                    for (i = 0; i < l; i++) {
-                                        if (flags[res[i].string]) continue;
-                                        flags[res[i].string] = true;
-                                        output.push(res[i].string);
-                                    }
-                                    $scope.stringsDistintas = output;
-                                    $scope.chart($scope.index);
-                                }, function (error) {
-
-                                });
-                            }, 1500);
                         }])
                         //---------------
                         // Routes
@@ -164,7 +150,7 @@
                             data.forEach(function (element) {
                                 if (element.string == string) {
                                     data1.push([conta, parseFloat(element.impedancia)]);
-                                    maxVal.push([conta, parseFloat(element.max_imp)]);
+                                    maxVal.push([conta, parseFloat(element.max_imp / 100)]);
                                     minVal.push([conta, parseFloat(element.min_imp)]);
                                     labels1.push([conta, element.bateria]);
                                     conta++;
@@ -224,7 +210,7 @@
                             data.forEach(function (element) {
                                 if (element.string == string) {
                                     data1.push([conta, parseFloat(element.temperatura)]);
-                                    maxVal.push([conta, parseFloat(element.max_temp)]);
+                                    maxVal.push([conta, parseFloat(element.max_temp / 100)]);
                                     minVal.push([conta, parseFloat(element.min_temp)]);
                                     labels1.push([conta, element.bateria]);
                                     conta++;
