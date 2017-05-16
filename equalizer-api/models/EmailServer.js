@@ -19,7 +19,7 @@ var createEmailServer = function (id, server, portaSMTP, usarCriptografiaTLS, em
 }
 var save = function (emailServer) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000;');
+    db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
     var stmt = db.prepare("INSERT INTO EmailServer(server, portaSMTP, usarCriptografiaTLS, email, assunto, usarAutenticacao, login, senha) VALUES (?,?,?,?,?,?,?,?)");
     stmt.run(emailServer.server, emailServer.portaSMTP, emailServer.usarCriptografiaTLS, emailServer.email, emailServer.assunto, emailServer.usarAutenticacao, emailServer.login, emailServer.senha);
@@ -28,7 +28,7 @@ var save = function (emailServer) {
 }
 var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000;');
+    db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
     db.all("SELECT id, server, portaSMTP, usarCriptografiaTLS, email, assunto, usarAutenticacao, login, senha FROM EmailServer", function (err, rows) {
         var emailServers = [];
@@ -53,7 +53,7 @@ var update = function (emailServer) {
     console.log(emailServer);
 
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000;');
+    db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
     db.run("UPDATE EmailServer SET server = $server, portaSMTP = $portaSMTP, usarCriptografiaTLS = $usarCriptografiaTLS, email = $email, assunto = $assunto, usarAutenticacao = $usarAutenticacao, login = $login, senha = $senha " +
         "WHERE id = $id", {

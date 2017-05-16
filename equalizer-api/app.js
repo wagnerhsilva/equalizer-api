@@ -145,5 +145,5 @@ app.use(function (err, req, res, next) {
 
 //iteração envio email
 setInterval(function(){ emailServerModel.sendEmail(); }, 120000);
-setInterval(function(){ dataLogDB.logInsert(); }, 2000);
+//setInterval(function(){ dataLogDB.logInsert(); }, 2000);
 module.exports = app;
