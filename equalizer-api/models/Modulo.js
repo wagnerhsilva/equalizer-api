@@ -19,7 +19,7 @@ var createModulo = function (id, descricao, tensao_nominal, capacidade_nominal, 
 }
 var save = function (modulo) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000;');
+    db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
     var stmt = db.prepare("INSERT INTO Modulo(descricao, tensao_nominal, capacidade_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, " +
                             "tipo, data_instalacao, conf_alarme_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
@@ -30,7 +30,7 @@ var save = function (modulo) {
 }
 var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000;');
+    db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
     db.all("SELECT id, descricao, tensao_nominal, capacidade_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, tipo, data_instalacao, conf_alarme_id " +
             "FROM Modulo", function (err, rows) {
@@ -45,7 +45,7 @@ var getAll = function (data) {
 }
 var getById = function (id, data) {
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000;');
+    db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
     db.get("SELECT id, descricao, tensao_nominal, capacidade_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, tipo, data_instalacao, conf_alarme_id " +
             "FROM Modulo WHERE id = $id", { $id: id }, function (err, row) {
@@ -70,7 +70,7 @@ var update = function (modulo) {
     });
     console.log(modulo);
     var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 10000;');
+    db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
     db.run("UPDATE Modulo SET descricao = $descricao, tensao_nominal = $tensao_nominal, capacidade_nominal = $capacidade_nominal, n_strings = $n_strings, n_baterias_por_strings = $n_baterias_por_strings "+
             ", contato = $contato, localizacao = $localizacao, fabricante = $fabricante, tipo = $tipo, data_instalacao = $data_instalacao, conf_alarme_id = $conf_alarme_id " +
