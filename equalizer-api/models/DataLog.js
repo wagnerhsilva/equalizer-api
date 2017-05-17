@@ -114,13 +114,13 @@ var getAvgLast = function (data) {
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
     db.get("SELECT AVG_LAST\n" +
-        ", param1\n" +
+        ", bus_voltage\n" +
         "FROM PARAMETERS WHERE ID IN (\n" +
         "SELECT MAX(ID)\n" +
         "FROM PARAMETERS\n" +
         ")", function (err, row) {
             if (row) {
-                var avgLast = { avg: parseFloat(row.avg_last), soma: parseFloat(row.param1) };
+                var avgLast = { avg: parseFloat(row.avg_last), soma: parseFloat(row.bus_voltage) };
                 console.log("avgLast: ");
                 console.log(avgLast);
                 data(err, avgLast);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us" ng-app="app">
+<html lang="en-us">
 
 <head>
     <% include partials/head %>
@@ -26,209 +26,149 @@
                             <div class="jarviswidget-editbox">
                             </div>
                             <div class="widget-body">
-                                <ng-view></ng-view>
+                                <button type="button" class="btn btn-primary pull-right" style="margin-left:5px;" onclick="setVisao(3);">Tensão</button>
+                                <button type="button" class="btn btn-primary pull-right" style="margin-left:5px;" onclick="setVisao(2);">Temperatura</button>
+                                <button type="button" class="btn btn-primary pull-right" onclick="setVisao(1);">Impedância</button>
+                                <label>String:</label>
+                                <select id="ddlStrings">
+                                </select> &nbsp&nbsp&nbsp&nbsp&nbsp
+                                <label>Período:</label>
+                                <input type="text" name="txtDateStart" id="txtDateStart" readonly placeholder="Início" required class="datepicker" data-dateformat='dd/mm/yy'>
+                                <label> a </label>
+                                <input type="text" name="txtDateStart" id="txtDateEnd" readonly placeholder="Fim" required class="datepicker" data-dateformat='dd/mm/yy'>                                &nbsp
+                                <button type="button" class="btn btn-primary" onclick="pesquisar();">Pesquisar</button>
+                                <button type="button" class="btn btn-primary" onclick="gerarCSV();">CSV</button>
+                                <br />
+                                <br />
+                                <div class="jarviswidget" id="wid-id-0">
+                                    <header>
+                                        <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                                    </header>
+                                    <div>
+                                        <div class="jarviswidget-editbox">
+                                            <input class="form-control" type="text">
+                                        </div>
+                                        <div class="widget-body">
+                                            <div id="noroll" style="height:500px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </article>
                 </div>
-                <script type="text/ng-template" id="/chart.html">
-                    <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="chart(3)">Tensão</button>
-                    <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="chart(2)">Temperatura</button>
-                    <button type="submit" class="btn btn-primary pull-right" ng-click="chart(1)">Impedância</button>
-                    <br />
-                    <br />
-                    <div class="jarviswidget" id="wid-id-0">
-                        <!-- widget options:
-									usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-									
-									data-widget-colorbutton="false"	
-									data-widget-editbutton="false"
-									data-widget-togglebutton="false"
-									data-widget-deletebutton="false"
-									data-widget-fullscreenbutton="false"
-									data-widget-custombutton="false"
-									data-widget-collapsed="true" 
-									data-widget-sortable="false"
-									
-								-->
-                        <header>
-                            <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
-
-                        </header>
-
-                        <!-- widget div-->
-                        <div>
-
-                            <!-- widget edit box -->
-                            <div class="jarviswidget-editbox">
-                                <!-- This area used as dropdown edit box -->
-                                <input class="form-control" type="text">
-                            </div>
-                            <!-- end widget edit box -->
-
-                            <!-- widget content -->
-                            <div class="widget-body">
-
-                                <!-- this is what the user will see -->
-                                <div id="noroll" style="height:500px;"></div>
-
-                            </div>
-                            <!-- end widget content -->
-
-                        </div>
-                        <!-- end widget div -->
-
-                    </div>
-                </script>
-                <script>
-                    angular.module('app', ['ngRoute', 'ngResource'])
-                        //---------------
-                        // Services
-                        //---------------
-                        .factory('Charts', ['$resource', function ($resource) {
-                            return $resource('/chart/:id', null, {
-                                'update': { method: 'PUT' },
-                                'remove': { method: 'DELETE' }
-                            });
-                        }])
-                        //---------------
-                        // Controllers
-                        //---------------
-                        .controller('ChartController', ['$scope', 'Charts', function ($scope, Charts) {
-                            $scope.charts = Charts.query(function (res) {
-                                chart(res, 1);
-                            }, function (error) {
-
-                            });
-                            $scope.chart = function (index) {
-                                $scope.index = index;
-                                chart($scope.charts, index == undefined ? 1 : index);
-                            }
-                        }])
-                        //---------------
-                        // Routes
-                        //---------------
-                        .config(['$routeProvider', function ($routeProvider) {
-                            $routeProvider
-                                .when('/', {
-                                    templateUrl: '/chart.html',
-                                    controller: 'ChartController'
-                                })
-                        }]);
-                </script>
-
             </div>
-            <!-- END MAIN CONTENT -->
-
         </div>
-        <script>
-            $(function () {
-                $("#ddlVisao").val(0);
-            });
-
-            function setDataTable() {
-                $("#datatable_tabletools").dataTable({
-
-                    // Tabletools options:
-                    //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T>r>" +
-                    "t" +
-                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
-                    "oTableTools": {
-                        "aButtons": [
-                            "copy",
-                            "csv",
-                            "xls",
-                            {
-                                "sExtends": "pdf",
-                                "sTitle": "SmartAdmin_PDF",
-                                "sPdfMessage": "SmartAdmin PDF Export",
-                                "sPdfSize": "letter"
-                            },
-                            {
-                                "sExtends": "print"
-                            }
-                        ],
-                        "sSwfPath": "smartadmin/js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-                    },
-                    "language": {
-                        "sEmptyTable": "Nenhum registro encontrado",
-                        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sInfoThousands": ".",
-                        "sLengthMenu": "_MENU_ resultados por página",
-                        "sLoadingRecords": "Carregando...",
-                        "sProcessing": "Processando...",
-                        "sZeroRecords": "Nenhum registro encontrado",
-                        "sSearch": "Pesquisar",
-                        "oPaginate": {
-                            "sNext": "Próximo",
-                            "sPrevious": "Anterior",
-                            "sFirst": "Primeiro",
-                            "sLast": "Último"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": Ordenar colunas de forma ascendente",
-                            "sSortDescending": ": Ordenar colunas de forma descendente"
-                        }
-                    },
-                    "autoWidth": true
+        <script type="text/javascript">
+            var visao = 1;
+            var nBaterias = 0;
+            var csvData = "";
+            function setVisao(data) {
+                visao = data;
+                getData();
+            }
+            function getStrings() {
+                $.get("/modulo", "", function (data, status) {
+                    var n_strings = parseInt(data[0].n_strings);
+                    nBaterias = parseInt(data[0].n_baterias_por_strings);
+                    for (var i = 1; i <= n_strings; i++) {
+                        $('#ddlStrings').append($('<option>', {
+                            value: 'S' + i.toString(),
+                            text: 'S' + i.toString()
+                        }));
+                    }
                 });
             }
-        </script>
-        <script type="text/javascript">
-            function chart(data, index) {
-                var visao = index;
+            function getData() {
                 if (visao == 1) {
-                    var dataText = "Data,Média,Atual";
-                    data.forEach(function (element) {
-                        dataText += '\n' + element.data + ',' + element.min_impedancia + ';' + element.avg_impedancia + ';' + element.max_impedancia + ',' + element.min_impedancia + ';' + element.impedancia_atual + ';' + element.max_impedancia;
-                    }, this);
-                    g1 = new Dygraph(document.getElementById("noroll"), dataText, {
-                        customBars: true,
-                        title: 'Impedância Média(Mín/Máx) / Atual(Mín/Máx)',
-                        ylabel: 'Impedância(V)',
-                        legend: 'always',
-                        labelsDivStyles: {
-                            'textAlign': 'right'
-                        },
-                        showRangeSelector: true
+                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + "/" + visao, "", function (data, status) {
+                        csvData = data;
+                        g1 = new Dygraph(document.getElementById("noroll"), data, {
+                            title: 'Impedância',
+                            ylabel: 'Impedância',
+                            legend: 'always',
+                            labelsDivStyles: {
+                                'textAlign': 'right'
+                            },
+                            showRangeSelector: true
+                        });
                     });
                 }
                 else if (visao == 2) {
-                    var dataText = "Data,Média,Atual";
-                    data.forEach(function (element) {
-                        dataText += '\n' + element.data + ',' + element.min_temperatura + ';' + element.avg_temperatura + ';' + element.max_temperatura + ',' + element.min_temperatura + ';' + element.temperatura_atual + ';' + element.max_temperatura;
-                    }, this);
-                    g1 = new Dygraph(document.getElementById("noroll"), dataText, {
-                        customBars: true,
-                        title: 'Temperatura Média(Mín/Máx) / Atual(Mín/Máx)',
-                        ylabel: 'Temperatura',
-                        legend: 'always',
-                        labelsDivStyles: {
-                            'textAlign': 'right'
-                        },
-                        showRangeSelector: true
+                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + "/" + visao, "", function (data, status) {
+                        csvData = data;
+                        g1 = new Dygraph(document.getElementById("noroll"), data, {
+                            title: 'Temperatura',
+                            ylabel: 'Temperatura',
+                            legend: 'always',
+                            labelsDivStyles: {
+                                'textAlign': 'right'
+                            },
+                            showRangeSelector: true
+                        });
                     });
-                } else if (visao == 3) {
-                    var dataText = "Data,Média,Atual";
-                    data.forEach(function (element) {
-                        dataText += '\n' + element.data + ',' + element.min_tensao + ';' + element.avg_tensao + ';' + element.max_tensao + ',' + element.min_tensao + ';' + element.tensao_atual + ';' + element.max_tensao;
-                    }, this);
-                    g1 = new Dygraph(document.getElementById("noroll"), dataText, {
-                        customBars: true,
-                        title: 'Tensão Média(Mín/Máx) / Atual(Mín/Máx)',
-                        ylabel: 'Tensão(V)',
-                        legend: 'always',
-                        labelsDivStyles: {
-                            'textAlign': 'right'
-                        },
-                        showRangeSelector: true
+                }
+                else if (visao == 3) {
+                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + "/" + visao, "", function (data, status) {
+                        csvData = data;
+                        g1 = new Dygraph(document.getElementById("noroll"), data, {
+                            title: 'Tensão',
+                            ylabel: 'Tensão(V)',
+                            legend: 'always',
+                            labelsDivStyles: {
+                                'textAlign': 'right'
+                            },
+                            showRangeSelector: true
+                        });
                     });
                 }
             }
+            function pesquisar() {
+                if ($("#txtDateStart").val().toString().trim() != "" && $("#txtDateEnd").val().toString().trim() != "") {
+                    getData();
+                }else{
+                    g1 = new Dygraph(document.getElementById("noroll"), null, {
+                            title: 'Tensão',
+                            ylabel: 'Tensão(V)',
+                            legend: 'always',
+                            labelsDivStyles: {
+                                'textAlign': 'right'
+                            },
+                            showRangeSelector: true
+                        });
+                }
+            }
+            function gerarCSV() {
+                var filename = "";
+                switch (visao) {
+                    case 1:
+                        filename = "relatorio_impedancia.csv";
+                        break;
+                    case 2:
+                        filename = "relatorio_temperatura.csv";
+                        break;
+                    case 3:
+                        filename = "relatorio_tensao.csv";
+                        break;
+                    default:
+                        filename = "relatorio.csv";
+                        break;
+                }
+                var a = document.createElement('a');
+                a.href = 'data:attachment/csv,' + encodeURIComponent(csvData.replaceAll(",", ";"));
+                a.target = '_blank';
+                a.download = filename;
+
+                document.body.appendChild(a);
+                a.click();
+            }
+            $(function () {
+                getStrings();
+            });
+            String.prototype.replaceAll = function (search, replacement) {
+                var target = this;
+                return target.replace(new RegExp(search, 'g'), replacement);
+            };
         </script>
         <% include partials/footer %>
 </body>

@@ -3,25 +3,25 @@ var bCrypt = require('bcrypt-nodejs');
 
 var createStatusModulo = function (string, bateria, temperatura, impedancia, tensao, equalizacao, min_temp, max_temp, min_imp, max_imp, min_tensao, max_tensao) {
     return {
-        string: string, 
-        bateria: bateria, 
-        temperatura: (temperatura / 10).toFixed(1), 
-        impedancia: (impedancia / 100).toFixed(1), 
-        tensao: (tensao / 1000).toFixed(3), 
+        string: string,
+        bateria: bateria,
+        temperatura: (temperatura / 10).toFixed(1),
+        impedancia: (impedancia / 100).toFixed(1),
+        tensao: (tensao / 1000).toFixed(3),
         equalizacao: equalizacao,
-        min_temp: min_temp, 
-        max_temp: max_temp, 
-        min_imp: min_imp, 
-        max_imp: max_imp, 
-        min_tensao: min_tensao, 
+        min_temp: min_temp,
+        max_temp: max_temp,
+        min_imp: min_imp,
+        max_imp: max_imp,
+        min_tensao: min_tensao,
         max_tensao: max_tensao,
-        percentualTensao: 100- (((parseFloat((tensao / 1000))/parseFloat(16)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000))/parseFloat(16)) * 100.00)),
-        precentualMinTensao: (((parseFloat((tensao / 1000))/parseFloat(8)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000))/parseFloat(8)) * 100.00)),
+        percentualTensao: 100 - (((parseFloat((tensao / 1000)) / parseFloat(16)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(16)) * 100.00)),
+        precentualMinTensao: (((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00)),
         percentualEqualizacao: equalizacao / 60000 * 100
     }
 }
-var createChart = function (data, max_temperatura, max_impedancia, max_tensao,  min_temperatura, min_impedancia, min_tensao,  avg_temperatura, avg_impedancia, avg_tensao,
-                            temperatura_atual, impedancia_atual, tensao_atual) {
+var createChart = function (data, max_temperatura, max_impedancia, max_tensao, min_temperatura, min_impedancia, min_tensao, avg_temperatura, avg_impedancia, avg_tensao,
+    temperatura_atual, impedancia_atual, tensao_atual) {
     return {
         data: data,
         max_temperatura: max_temperatura,
@@ -36,6 +36,15 @@ var createChart = function (data, max_temperatura, max_impedancia, max_tensao,  
         temperatura_atual: temperatura_atual,
         impedancia_atual: impedancia_atual,
         tensao_atual: tensao_atual
+    }
+}
+var createChartDefault = function (data, bateria, temperatura, impedancia, tensao) {
+    return {
+        data: data,
+        bateria: bateria,
+        temperatura: temperatura,
+        impedancia: impedancia,
+        tensao: tensao
     }
 }
 
@@ -67,7 +76,7 @@ var get = function (data) {
     strSql = strSql + "INNER JOIN 	    DATALOG 		DLOG ON (RVAL.ID = DLOG.ID) ";
     strSql = strSql + "ORDER BY 	CAST(SUBSTR(RVAL.STRING, 2, length(RVAL.STRING)) as integer), ";
     strSql = strSql + "CAST(SUBSTR(RVAL.BATERIA, 2, length(RVAL.BATERIA)) as integer)";
-    
+
     db.all(strSql, function (err, rows) {
         var statusModulos = [];
         rows.forEach(function row(row) {
@@ -77,7 +86,7 @@ var get = function (data) {
     });
     db.close();
 }
-    var getChartDay = function (data) {
+var getChartDay = function (data) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
@@ -117,10 +126,60 @@ var get = function (data) {
     db.all(strSql, function (err, rows) {
         var chartData = [];
         rows.forEach(function row(row) {
-            chartData.push(new createChart(row.DATA, row.MAX_TEMPERATURA, row.MAX_IMPEDANCIA, row.MAX_TENSAO, row.MIN_TEMPERATURA, row.MIN_IMPEDANCIA, row.MIN_TENSAO,  
-                                            row.AVG_TEMPERATURA, row.AVG_IMPEDANCIA, row.AVG_TENSAO, row.TEMPERATURA_ATUAL, row.IMPEDANCIA_ATUAL, row.TENSAO_ATUAL));
+            chartData.push(new createChart(row.DATA, row.MAX_TEMPERATURA, row.MAX_IMPEDANCIA, row.MAX_TENSAO, row.MIN_TEMPERATURA, row.MIN_IMPEDANCIA, row.MIN_TENSAO,
+                row.AVG_TEMPERATURA, row.AVG_IMPEDANCIA, row.AVG_TENSAO, row.TEMPERATURA_ATUAL, row.IMPEDANCIA_ATUAL, row.TENSAO_ATUAL));
         });
         data(err, chartData);
+    });
+    db.close();
+}
+var getChartDefault = function (params, data) {
+    var anoInicial = params.dtInicial.split('-')[2];
+    var mesInicial = params.dtInicial.split('-')[1];
+    var diaInicial = params.dtInicial.split('-')[0];
+    var anoFinal = params.dtFinal.split('-')[2];
+    var mesFinal = params.dtFinal.split('-')[1];
+    var diaFinal = params.dtFinal.split('-')[0];
+    var string = params.string;
+    var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 60000;');
+    db.run('PRAGMA journal_mode=WAL;');
+    var strSql = "";
+    strSql = strSql + "SELECT 	STRFTIME('%Y/%m/%d %H:%M:%S', DATAHORA)";
+    if (params.visao == 1) {
+        for (var i = 1; i <= params.totalBaterias; i++) {
+            strSql = strSql + " ||\",\"|| AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN IMPEDANCIA / 100.0 ELSE 0 END)";
+        }
+    } else if (params.visao == 2) {
+        for (var i = 1; i <= params.totalBaterias; i++) {
+            strSql = strSql + " ||\",\"|| AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TEMPERATURA / 100.0 ELSE 0 END)";
+        }
+    } else if (params.visao == 3) {
+        for (var i = 1; i <= params.totalBaterias; i++) {
+            strSql = strSql + " ||\",\"|| AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TENSAO / 1000.0000 ELSE 0 END)";
+        }
+        strSql = strSql + " ||\",\"|| (SELECT AVG(AVG_LAST / 1000.0000) FROM PARAMETERS)";
+    }
+    strSql = strSql + " as \"data\"";
+    strSql = strSql + " FROM DATALOG, MODULO ";
+    strSql = strSql + "WHERE DATAHORA BETWEEN '" + anoInicial + "-" + mesInicial + "-" + diaInicial + "' AND '" + anoFinal + "-" + mesFinal + "-" + diaFinal + "' ";
+    strSql = strSql + "AND STRING = '" + string + "' ";
+    strSql = strSql + "AND 	CAST(SUBSTR(DATALOG.BATERIA, 2, length(DATALOG.BATERIA)) as integer) <= MODULO.N_BATERIAS_POR_STRINGS ";
+    strSql = strSql + "AND		CAST(SUBSTR(DATALOG.STRING, 2, length(DATALOG.STRING)) as integer) <= MODULO.N_STRINGS ";
+    strSql = strSql + "GROUP BY 	DATAHORA";
+    console.log(strSql);
+    db.all(strSql, function (err, rows) {
+        var strResult = "dataHora";
+        for (var i = 1; i <= params.totalBaterias; i++) {
+            strResult = strResult + ",m" + i.toString();
+        }
+        if (params.visao == 3)
+            strResult = strResult + ",target";
+        rows.forEach(function row(row) {
+            strResult = strResult + "\n" + row.data;
+        });
+        console.log(strResult);
+        data(err, strResult);
     });
     db.close();
 }
@@ -162,8 +221,8 @@ var getChartMonth = function (data) {
     db.all(strSql, function (err, rows) {
         var chartData = [];
         rows.forEach(function row(row) {
-            chartData.push(new createChart(row.DATA, row.MAX_TEMPERATURA, row.MAX_IMPEDANCIA, row.MAX_TENSAO, row.MIN_TEMPERATURA, row.MIN_IMPEDANCIA, row.MIN_TENSAO,  
-                                            row.AVG_TEMPERATURA, row.AVG_IMPEDANCIA, row.AVG_TENSAO, row.TEMPERATURA_ATUAL, row.IMPEDANCIA_ATUAL, row.TENSAO_ATUAL));
+            chartData.push(new createChart(row.DATA, row.MAX_TEMPERATURA, row.MAX_IMPEDANCIA, row.MAX_TENSAO, row.MIN_TEMPERATURA, row.MIN_IMPEDANCIA, row.MIN_TENSAO,
+                row.AVG_TEMPERATURA, row.AVG_IMPEDANCIA, row.AVG_TENSAO, row.TEMPERATURA_ATUAL, row.IMPEDANCIA_ATUAL, row.TENSAO_ATUAL));
         });
         data(err, chartData);
     });
@@ -207,8 +266,8 @@ var getChartYear = function (data) {
     db.all(strSql, function (err, rows) {
         var chartData = [];
         rows.forEach(function row(row) {
-            chartData.push(new createChart(row.DATA, row.MAX_TEMPERATURA, row.MAX_IMPEDANCIA, row.MAX_TENSAO, row.MIN_TEMPERATURA, row.MIN_IMPEDANCIA, row.MIN_TENSAO,  
-                                            row.AVG_TEMPERATURA, row.AVG_IMPEDANCIA, row.AVG_TENSAO, row.TEMPERATURA_ATUAL, row.IMPEDANCIA_ATUAL, row.TENSAO_ATUAL));
+            chartData.push(new createChart(row.DATA, row.MAX_TEMPERATURA, row.MAX_IMPEDANCIA, row.MAX_TENSAO, row.MIN_TEMPERATURA, row.MIN_IMPEDANCIA, row.MIN_TENSAO,
+                row.AVG_TEMPERATURA, row.AVG_IMPEDANCIA, row.AVG_TENSAO, row.TEMPERATURA_ATUAL, row.IMPEDANCIA_ATUAL, row.TENSAO_ATUAL));
         });
         data(err, chartData);
     });
@@ -218,3 +277,4 @@ module.exports.get = get;
 module.exports.getChartDay = getChartDay;
 module.exports.getChartMonth = getChartMonth;
 module.exports.getChartYear = getChartYear;
+module.exports.getChartDefault = getChartDefault;

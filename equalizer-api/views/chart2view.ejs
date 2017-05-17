@@ -150,7 +150,7 @@
                             data.forEach(function (element) {
                                 if (element.string == string) {
                                     data1.push([conta, parseFloat(element.impedancia)]);
-                                    maxVal.push([conta, parseFloat(element.max_imp / 100)]);
+                                    maxVal.push([conta, parseFloat(element.max_imp)]);
                                     minVal.push([conta, parseFloat(element.min_imp)]);
                                     labels1.push([conta, element.bateria]);
                                     conta++;
@@ -210,7 +210,7 @@
                             data.forEach(function (element) {
                                 if (element.string == string) {
                                     data1.push([conta, parseFloat(element.temperatura)]);
-                                    maxVal.push([conta, parseFloat(element.max_temp / 100)]);
+                                    maxVal.push([conta, parseFloat(element.max_temp)]);
                                     minVal.push([conta, parseFloat(element.min_temp)]);
                                     labels1.push([conta, element.bateria]);
                                     conta++;
@@ -269,7 +269,7 @@
                             data.forEach(function (element) {
                                 if (element.string == string) {
                                     data1.push([conta, parseFloat(element.tensao)]);
-                                    maxVal.push([conta, parseFloat(element.max_tensao) / 1000]);
+                                    maxVal.push([conta, parseFloat(element.max_tensao)]);
                                     minVal.push([conta, parseFloat(element.min_tensao)]);
                                     labels1.push([conta, element.bateria]);
                                     conta++;
