@@ -148,15 +148,15 @@ var getChartDefault = function (params, data) {
     strSql = strSql + "SELECT 	STRFTIME('%Y/%m/%d %H:%M:%S', DATAHORA)";
     if (params.visao == 1) {
         for (var i = 1; i <= params.totalBaterias; i++) {
-            strSql = strSql + " ||\",\"|| AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN IMPEDANCIA / 100.0 ELSE 0 END)";
+            strSql = strSql + " ||\",\"|| IFNULL(AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN IMPEDANCIA / 100.0 ELSE NULL END), \"\")";
         }
     } else if (params.visao == 2) {
         for (var i = 1; i <= params.totalBaterias; i++) {
-            strSql = strSql + " ||\",\"|| AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TEMPERATURA / 100.0 ELSE 0 END)";
+            strSql = strSql + " ||\",\"|| IFNULL(AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TEMPERATURA / 100.0 ELSE NULL END), \"\")";
         }
     } else if (params.visao == 3) {
         for (var i = 1; i <= params.totalBaterias; i++) {
-            strSql = strSql + " ||\",\"|| AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TENSAO / 1000.0000 ELSE 0 END)";
+            strSql = strSql + " ||\",\"|| IFNULL(AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TENSAO / 1000.0000 ELSE NULL END), \"\")";
         }
         strSql = strSql + " ||\",\"|| (SELECT AVG(AVG_LAST / 1000.0000) FROM PARAMETERS)";
     }
@@ -166,7 +166,24 @@ var getChartDefault = function (params, data) {
     strSql = strSql + "AND STRING = '" + string + "' ";
     strSql = strSql + "AND 	CAST(SUBSTR(DATALOG.BATERIA, 2, length(DATALOG.BATERIA)) as integer) <= MODULO.N_BATERIAS_POR_STRINGS ";
     strSql = strSql + "AND		CAST(SUBSTR(DATALOG.STRING, 2, length(DATALOG.STRING)) as integer) <= MODULO.N_STRINGS ";
-    strSql = strSql + "GROUP BY 	DATAHORA";
+    strSql = strSql + "GROUP BY 	DATAHORA\n";
+    strSql = strSql + "HAVING ";
+    if (params.visao == 1) {
+        for (var i = 1; i < params.totalBaterias; i++) {
+            strSql = strSql + "AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN IMPEDANCIA / 100.0 ELSE NULL END) \nAND ";
+        }
+        strSql = strSql + "AVG(CASE WHEN BATERIA = 'M" + params.totalBaterias.toString() + "' THEN IMPEDANCIA / 100.0 ELSE NULL END)";
+    } else if (params.visao == 2) {
+        for (var i = 1; i < params.totalBaterias; i++) {
+            strSql = strSql + " AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TEMPERATURA / 100.0 ELSE NULL END) \nAND ";
+        }
+        strSql = strSql + " AVG(CASE WHEN BATERIA = 'M" + params.totalBaterias.toString() + "' THEN TEMPERATURA / 100.0 ELSE NULL END)";
+    } else if (params.visao == 3) {
+        for (var i = 1; i < params.totalBaterias; i++) {
+            strSql = strSql + " AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TENSAO / 1000.0000 ELSE NULL END) \nAND ";
+        }
+        strSql = strSql + " AVG(CASE WHEN BATERIA = 'M" + params.totalBaterias.toString() + "' THEN TENSAO / 1000.0000 ELSE NULL END)";
+    }
     console.log(strSql);
     db.all(strSql, function (err, rows) {
         var strResult = "dataHora";
