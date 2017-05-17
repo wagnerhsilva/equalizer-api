@@ -43,6 +43,10 @@ var chart2view = require('./routes/chart2view');
 var equalizerdb = require('./database/equalizerdb');
 var emailServerModel = require('./models/EmailServer.js');
 
+// Flavio Alves: configurando o timezone do projeto para o Brasil,
+// com o intuito de evitar divergencias na coleta de data e hora
+// do sistema
+process.env.TZ = 'America/Sao_Paulo';
 
 //init sqlite database
 equalizerdb.init();

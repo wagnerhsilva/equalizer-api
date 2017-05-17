@@ -81,7 +81,9 @@ router.get('/manual/:dateTime', function (req, res, next) {
     var dia = primeiraPart.split('-')[0];
     var hora = segundaPart.split(':')[0];
     var minuto = segundaPart.split(':')[1];
-    var dateTime = new Date(Date.UTC(ano, mes - 1, dia, hora, minuto));
+    // Flavio Alves: retirando o ajuste para UTC da hora, que estava
+    // causando inconsistencia de horario com o Linux
+    var dateTime = new Date(ano, mes - 1, dia, hora, minuto);
     console.log(dateTime);
     try {
         console.log(dateTime);
