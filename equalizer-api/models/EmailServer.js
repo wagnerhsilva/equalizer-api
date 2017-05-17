@@ -113,6 +113,7 @@ var sendEmail = function (data) {
                         transporter.verify(function (error, success) {
                             if (error) {
                                 console.log(error);
+				
                             } else {
                                 console.log('Server is ready to take our messages');
                                 transporter.sendMail(mailOptions, (error, info) => {
@@ -175,9 +176,11 @@ var testeEmail = function (data) {
                             return console.log(error);
                         }
                         console.log('Message %s sent: %s', info.messageId, info.response);
-                        AlarmLog.updateEnviaEmail();
                     });
                 }
+                // Flavio Alves: o email, mesmo quando não e enviado com sucesso,
+                // nao deve ser armazenado para envio posterior
+                AlarmLog.updateEnviaEmail();
             });
         });
     });
