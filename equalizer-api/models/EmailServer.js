@@ -121,9 +121,11 @@ var sendEmail = function (data) {
                                         return console.log(error);
                                     }
                                     console.log('Message %s sent: %s', info.messageId, info.response);
-                                    AlarmLog.updateEnviaEmail();
                                 });
                             }
+                            // Flavio Alves: o email, mesmo quando não e enviado com sucesso,
+                            // nao deve ser armazenado para envio posterior
+                            AlarmLog.updateEnviaEmail();
                         });
                     }
                 });
