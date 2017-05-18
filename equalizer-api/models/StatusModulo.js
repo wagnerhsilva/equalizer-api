@@ -63,17 +63,17 @@ var get = function (data) {
     strSql = strSql + "FROM ( ";
     strSql = strSql + "		    SELECT DISTINCT STRING, ";
     strSql = strSql + "						    BATERIA, ";
-    strSql = strSql + "						    MAX(DATALOG.ID) ID ";
+    strSql = strSql + "						    MAX(DATALOGRT.ID) ID ";
     strSql = strSql + " ";
-    strSql = strSql + "		    FROM        DATALOG, MODULO ";
-    strSql = strSql + "		    WHERE 	CAST(SUBSTR(DATALOG.BATERIA, 2, length(DATALOG.BATERIA)) as integer) <= MODULO.N_BATERIAS_POR_STRINGS ";
-    strSql = strSql + "		    AND		CAST(SUBSTR(DATALOG.STRING, 2, length(DATALOG.STRING)) as integer) <= MODULO.N_STRINGS ";
+    strSql = strSql + "		    FROM        DATALOGRT, MODULO ";
+    strSql = strSql + "		    WHERE 	CAST(SUBSTR(DATALOGRT.BATERIA, 2, length(DATALOGRT.BATERIA)) as integer) <= MODULO.N_BATERIAS_POR_STRINGS ";
+    strSql = strSql + "		    AND		CAST(SUBSTR(DATALOGRT.STRING, 2, length(DATALOGRT.STRING)) as integer) <= MODULO.N_STRINGS ";
     strSql = strSql + "		    GROUP BY    STRING, ";
     strSql = strSql + "				        BATERIA ";
     strSql = strSql + "		  ";
     strSql = strSql + "     ) AS 						RVAL, ";
     strSql = strSql + "			        ALARMECONFIG 	ALAR ";
-    strSql = strSql + "INNER JOIN 	    DATALOG 		DLOG ON (RVAL.ID = DLOG.ID) ";
+    strSql = strSql + "INNER JOIN 	    DATALOGRT 		DLOG ON (RVAL.ID = DLOG.ID) ";
     strSql = strSql + "ORDER BY 	CAST(SUBSTR(RVAL.STRING, 2, length(RVAL.STRING)) as integer), ";
     strSql = strSql + "CAST(SUBSTR(RVAL.BATERIA, 2, length(RVAL.BATERIA)) as integer)";
 
