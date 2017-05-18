@@ -3,6 +3,15 @@
 
 <head>
     <% include partials/head %>
+        <style>
+            div.container4 {
+                margin: 0;
+                position: absolute;
+                left: 50%;
+                margin-right: -50%;
+                transform: translate(-50%, -50%)
+            }
+        </style>
 </head>
 
 <body class="">
@@ -48,6 +57,11 @@
                                         <div class="jarviswidget-editbox">
                                             <input class="form-control" type="text">
                                         </div>
+                                        <td valign="top">
+                                            <div id="labels" class=container4></div>
+                                            <br />
+                                            <br />
+                                        </td>
                                         <div class="widget-body">
                                             <div id="noroll" style="height:500px;"></div>
                                         </div>
@@ -87,8 +101,15 @@
                             title: 'Impedância',
                             ylabel: 'Impedância',
                             legend: 'always',
-                            labelsDivStyles: {
-                                'textAlign': 'right'
+                            labelsDiv: document.getElementById("labels"),
+                            highlightCircleSize: 2,
+                            strokeWidth: 1,
+                            strokeBorderWidth: 1,
+
+                            highlightSeriesOpts: {
+                                strokeWidth: 3,
+                                strokeBorderWidth: 1,
+                                highlightCircleSize: 5
                             },
                             showRangeSelector: true
                         });
@@ -101,8 +122,15 @@
                             title: 'Temperatura',
                             ylabel: 'Temperatura',
                             legend: 'always',
-                            labelsDivStyles: {
-                                'textAlign': 'right'
+                            labelsDiv: document.getElementById("labels"),
+                            highlightCircleSize: 2,
+                            strokeWidth: 1,
+                            strokeBorderWidth: 1,
+
+                            highlightSeriesOpts: {
+                                strokeWidth: 3,
+                                strokeBorderWidth: 1,
+                                highlightCircleSize: 5
                             },
                             showRangeSelector: true
                         });
@@ -115,8 +143,30 @@
                             title: 'Tensão',
                             ylabel: 'Tensão(V)',
                             legend: 'always',
-                            labelsDivStyles: {
-                                'textAlign': 'right'
+                            labelsDiv: document.getElementById("labels"),
+                            series: {
+                                'Tensão de Barramento': {
+                                    axis: 'y2'
+                                },
+                            },
+                            axes: {
+                                y: {
+                                    axisLabelWidth: 100
+                                },
+                                y2: {
+                                    // set axis-related properties here
+                                    labelsKMB: true,
+                                    axisLineColor: "#DD1124"
+                                }
+                            },
+                            highlightCircleSize: 2,
+                            strokeWidth: 1,
+                            strokeBorderWidth: 1,
+
+                            highlightSeriesOpts: {
+                                strokeWidth: 3,
+                                strokeBorderWidth: 1,
+                                highlightCircleSize: 5
                             },
                             showRangeSelector: true
                         });
@@ -126,16 +176,16 @@
             function pesquisar() {
                 if ($("#txtDateStart").val().toString().trim() != "" && $("#txtDateEnd").val().toString().trim() != "") {
                     getData();
-                }else{
+                } else {
                     g1 = new Dygraph(document.getElementById("noroll"), null, {
-                            title: 'Tensão',
-                            ylabel: 'Tensão(V)',
-                            legend: 'always',
-                            labelsDivStyles: {
-                                'textAlign': 'right'
-                            },
-                            showRangeSelector: true
-                        });
+                        title: 'Tensão',
+                        ylabel: 'Tensão(V)',
+                        legend: 'always',
+                        labelsDivStyles: {
+                            'textAlign': 'right'
+                        },
+                        showRangeSelector: true
+                    });
                 }
             }
             function gerarCSV() {

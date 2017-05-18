@@ -230,7 +230,7 @@
                                 </div>
                                 <footer>
                                     <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="saveAlarmeConfig();">Aplicar</button>
-                                    <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="reset();">Resetar Padrões</button>
+                                    <button id="btnResetarPadroes" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="resetarPadroes();">Resetar Padrões</button>
                                 </footer>
                             </form>
                         </div>
@@ -282,6 +282,20 @@
                                     timeout: 5000,
                                     icon: "fa fa-check fadeInLeft animated"
                                 });
+                            }
+                            $scope.resetarPadroes = function () {
+                                $("#alarme_tensMin").val("10.500");
+                                $scope.alarmes[0].alarme_nivel_tensao_min = "10.500";
+                                $("#alarme_tensMax").val("13.500");
+                                $scope.alarmes[0].alarme_nivel_tensao_max = "13.500";
+                                $("#alarme_tempMin").val("-10.0");
+                                $scope.alarmes[0].alarme_nivel_temp_min = "-10.0";
+                                $("#alarme_tempMax").val("50.0");
+                                $scope.alarmes[0].alarme_nivel_temp_max = "50.0";
+                                $("#alarme_impMin").val("1.0");
+                                $scope.alarmes[0].alarme_nivel_imped_min = "1.0";
+                                $("#alarme_impMax").val("100.0");
+                                $scope.alarmes[0].alarme_nivel_imped_max = "100.0";
                             }
                             $scope.nomeUsuario = '<%= username %>';
                             $scope.acessoUsuario = '<%= userAccess %>';
@@ -403,6 +417,9 @@
                     }
                 });
             });
+            function resetarPadroes() {
+
+            }
         </script>
         <% include partials/footer %>
 </body>

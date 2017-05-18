@@ -159,10 +159,11 @@ var getChartDefault = function (params, data) {
             strSql = strSql + " ||\",\"|| IFNULL(AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TENSAO / 1000.0000 ELSE NULL END), \"\")";
         }
         strSql = strSql + " ||\",\"|| (SELECT AVG(AVG_LAST / 1000.0000) FROM PARAMETERS)";
+        strSql = strSql + " ||\",\"|| IFNULL(SUM(TENSAO / 1000), \"\")";
     }
     strSql = strSql + " as \"data\"";
     strSql = strSql + " FROM DATALOG, MODULO ";
-    strSql = strSql + "WHERE DATAHORA BETWEEN '" + anoInicial + "-" + mesInicial + "-" + diaInicial + "' AND '" + anoFinal + "-" + mesFinal + "-" + diaFinal + "' ";
+    strSql = strSql + "WHERE DATAHORA BETWEEN '" + anoInicial + "-" + mesInicial + "-" + diaInicial + "' AND '" + anoFinal + "-" + mesFinal + "-" + diaFinal + " 23:59:59" + "' ";
     strSql = strSql + "AND STRING = '" + string + "' ";
     strSql = strSql + "AND 	CAST(SUBSTR(DATALOG.BATERIA, 2, length(DATALOG.BATERIA)) as integer) <= MODULO.N_BATERIAS_POR_STRINGS ";
     strSql = strSql + "AND		CAST(SUBSTR(DATALOG.STRING, 2, length(DATALOG.STRING)) as integer) <= MODULO.N_STRINGS ";
@@ -190,8 +191,10 @@ var getChartDefault = function (params, data) {
         for (var i = 1; i <= params.totalBaterias; i++) {
             strResult = strResult + ",m" + i.toString();
         }
-        if (params.visao == 3)
-            strResult = strResult + ",target";
+        if (params.visao == 3) {
+            strResult = strResult + ",Target";
+            strResult = strResult + ",Tensão de Barramento";
+        }
         rows.forEach(function row(row) {
             strResult = strResult + "\n" + row.data;
         });
