@@ -134,12 +134,17 @@ var getChartDay = function (data) {
     db.close();
 }
 var getChartDefault = function (params, data) {
-    var anoInicial = params.dtInicial.split('-')[2];
-    var mesInicial = params.dtInicial.split('-')[1];
-    var diaInicial = params.dtInicial.split('-')[0];
-    var anoFinal = params.dtFinal.split('-')[2];
-    var mesFinal = params.dtFinal.split('-')[1];
-    var diaFinal = params.dtFinal.split('-')[0];
+    var dtInicialPrimeiraPart = params.dtInicial.split(' ')[0];
+    var dtInicialSegundaPart = params.dtInicial.split(' ')[1];
+    var dtFinalPrimeiraPart = params.dtFinal.split(' ')[0];
+    var dtFinalSegundaPart = params.dtFinal.split(' ')[1];
+
+    var anoInicial = dtInicialPrimeiraPart.split('-')[2];
+    var mesInicial = dtInicialPrimeiraPart.split('-')[1];
+    var diaInicial = dtInicialPrimeiraPart.split('-')[0];
+    var anoFinal = dtFinalPrimeiraPart.split('-')[2];
+    var mesFinal = dtFinalPrimeiraPart.split('-')[1];
+    var diaFinal = dtFinalPrimeiraPart.split('-')[0];
     var string = params.string;
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
@@ -163,7 +168,7 @@ var getChartDefault = function (params, data) {
     }
     strSql = strSql + " as \"data\"";
     strSql = strSql + " FROM DATALOG, MODULO ";
-    strSql = strSql + "WHERE DATAHORA BETWEEN '" + anoInicial + "-" + mesInicial + "-" + diaInicial + "' AND '" + anoFinal + "-" + mesFinal + "-" + diaFinal + " 23:59:59" + "' ";
+    strSql = strSql + "WHERE DATAHORA BETWEEN '" + anoInicial + "-" + mesInicial + "-" + diaInicial + " " + dtInicialSegundaPart + "' AND '" + anoFinal + "-" + mesFinal + "-" + diaFinal + " " + dtFinalSegundaPart + "' ";
     strSql = strSql + "AND STRING = '" + string + "' ";
     strSql = strSql + "AND 	CAST(SUBSTR(DATALOG.BATERIA, 2, length(DATALOG.BATERIA)) as integer) <= MODULO.N_BATERIAS_POR_STRINGS ";
     strSql = strSql + "AND		CAST(SUBSTR(DATALOG.STRING, 2, length(DATALOG.STRING)) as integer) <= MODULO.N_STRINGS ";

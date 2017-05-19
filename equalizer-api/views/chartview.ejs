@@ -42,9 +42,12 @@
                                 <select id="ddlStrings">
                                 </select> &nbsp&nbsp&nbsp&nbsp&nbsp
                                 <label>Período:</label>
-                                <input type="text" name="txtDateStart" id="txtDateStart" readonly placeholder="Início" required class="datepicker" data-dateformat='dd/mm/yy'>
+                                <input type="text" name="txtDateStart" style="width: 100px;" id="txtDateStart" readonly placeholder="Data Início" required class="datepicker" data-dateformat='dd/mm/yy'>
+                                <input type="text" name="txtHourStart" style="width: 80px;" value="00:00" id="txtHourStart" readonly placeholder="Hora Início" required>
                                 <label> a </label>
-                                <input type="text" name="txtDateStart" id="txtDateEnd" readonly placeholder="Fim" required class="datepicker" data-dateformat='dd/mm/yy'>                                &nbsp
+                                <input type="text" name="txtDateStart" style="width: 100px;" id="txtDateEnd" readonly placeholder="Data Fim" required class="datepicker" data-dateformat='dd/mm/yy'>
+                                <input type="text" name="txtHourEnd" style="width: 80px;" value="23:59" id="txtHourEnd" readonly placeholder="Hora Fim" required>
+                                &nbsp
                                 <button type="button" class="btn btn-primary" onclick="pesquisar();">Pesquisar</button>
                                 <button type="button" class="btn btn-primary" onclick="gerarCSV();">CSV</button>
                                 <br />
@@ -95,7 +98,7 @@
             }
             function getData() {
                 if (visao == 1) {
-                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + "/" + visao, "", function (data, status) {
+                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-")  + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
                         csvData = data;
                         g1 = new Dygraph(document.getElementById("noroll"), data, {
                             title: 'Impedância',
@@ -214,6 +217,14 @@
             }
             $(function () {
                 getStrings();
+                $('#txtHourStart').clockpicker({
+                    placement: 'bottom',
+                    donetext: 'Done'
+                });
+                $('#txtHourEnd').clockpicker({
+                    placement: 'bottom',
+                    donetext: 'Done'
+                });
             });
             String.prototype.replaceAll = function (search, replacement) {
                 var target = this;
