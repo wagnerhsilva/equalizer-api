@@ -12,6 +12,7 @@ var init = function () {
         db.run("CREATE TABLE IF NOT EXISTS TimeServer (id INTEGER PRIMARY KEY AUTOINCREMENT, timeServerAddress1 TEXT, timeServerAddress1_complemento TEXT, timeServerAddress2 TEXT, timeServerAddress2_complemento TEXT, timeServerAddress3 TEXT, timeServerAddress3_complemento TEXT, connectionRetries INTEGER, timeZone TEXT, automAdjustTimeDaylightSavingChanges INTEGER)");
         db.run("CREATE TABLE IF NOT EXISTS EmailServer (id INTEGER PRIMARY KEY AUTOINCREMENT, server TEXT, portaSMTP INTEGER, usarCriptografiaTLS INTEGER, email TEXT, assunto TEXT, usarAutenticacao INTEGER, login TEXT, senha TEXT)");
         db.run("CREATE TABLE IF NOT EXISTS Parameters ( id INTEGER PRIMARY KEY AUTOINCREMENT , avg_last TEXT , duty_min TEXT , duty_max TEXT , cte_index TEXT , delay TEXT , num_cycles_var_read TEXT , bus_voltage TEXT , param1 TEXT , param2 TEXT , param3 TEXT , param4 TEXT , param5 TEXT , param6 TEXT , param7 TEXT , param8 TEXT , param9 TEXT , param10 TEXT )");
+        db.run("CREATE TABLE IF NOT EXISTS DataLogRT (id INTEGER PRIMARY KEY AUTOINCREMENT, dataHora TEXT, string TEXT, bateria TEXT, temperatura REAL, impedancia REAL, tensao REAL, equalizacao REAL)");
 
         //Triggers
         var strSql = "";
