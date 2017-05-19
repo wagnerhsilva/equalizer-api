@@ -119,7 +119,7 @@
                     });
                 }
                 else if (visao == 2) {
-                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + "/" + visao, "", function (data, status) {
+                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-")  + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
                         csvData = data;
                         g1 = new Dygraph(document.getElementById("noroll"), data, {
                             title: 'Temperatura',
@@ -140,7 +140,7 @@
                     });
                 }
                 else if (visao == 3) {
-                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + "/" + visao, "", function (data, status) {
+                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-")  + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
                         csvData = data;
                         g1 = new Dygraph(document.getElementById("noroll"), data, {
                             title: 'Tensão',
