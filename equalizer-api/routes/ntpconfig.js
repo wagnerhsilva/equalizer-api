@@ -17,7 +17,7 @@ router.get('/', isAuthenticated, function (req, res, next) {
     TimeServer.getAll(function (err, timeServer) {
         try {
             var exec = require('child_process').exec;
-            var cmd = 'sudo ntpdate -u ' + timeServer[0].timeServerAddress1;
+            var cmd = 'sudo ntpd -q -g -x ' + timeServer[0].timeServerAddress1;
             setInterval(updateDate, 1000 * 60 * 60 * 24); // atualizar uma vez por dia
             function updateDate() {
                 exec(cmd, function (error, stdout, stderr) {
