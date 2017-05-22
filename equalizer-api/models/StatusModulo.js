@@ -157,7 +157,7 @@ var getChartDefault = function (params, data) {
         }
     } else if (params.visao == 2) {
         for (var i = 1; i <= params.totalBaterias; i++) {
-            strSql = strSql + " ||\",\"|| IFNULL(AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TEMPERATURA / 100.0 ELSE NULL END), \"\")";
+            strSql = strSql + " ||\",\"|| IFNULL(AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TEMPERATURA / 10.0 ELSE NULL END), \"\")";
         }
     } else if (params.visao == 3) {
         for (var i = 1; i <= params.totalBaterias; i++) {
@@ -181,9 +181,9 @@ var getChartDefault = function (params, data) {
         strSql = strSql + "AVG(CASE WHEN BATERIA = 'M" + params.totalBaterias.toString() + "' THEN IMPEDANCIA / 100.0 ELSE NULL END)";
     } else if (params.visao == 2) {
         for (var i = 1; i < params.totalBaterias; i++) {
-            strSql = strSql + " AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TEMPERATURA / 100.0 ELSE NULL END) \nAND ";
+            strSql = strSql + " AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TEMPERATURA / 10.0 ELSE NULL END) \nAND ";
         }
-        strSql = strSql + " AVG(CASE WHEN BATERIA = 'M" + params.totalBaterias.toString() + "' THEN TEMPERATURA / 100.0 ELSE NULL END)";
+        strSql = strSql + " AVG(CASE WHEN BATERIA = 'M" + params.totalBaterias.toString() + "' THEN TEMPERATURA / 10.0 ELSE NULL END)";
     } else if (params.visao == 3) {
         for (var i = 1; i < params.totalBaterias; i++) {
             strSql = strSql + " AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TENSAO / 1000.0000 ELSE NULL END) \nAND ";
