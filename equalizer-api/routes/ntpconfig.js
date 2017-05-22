@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Sntp = require('sntp');
+var Sntp = require('sntp-node');
 var TimeServer = require('../models/TimeServer');
 var setup = require('setup')();
 var isAuthenticated = function (req, res, next) {
