@@ -32,7 +32,7 @@
                                                     <section>
                                                         <label class="input">
                                                             <label class="label">Endereço MAC</label>
-                                                        <input type="text" name="mac" id="mac" placeholder="Endereço MAC" readonly value="<%= network.mac_address %>">
+                                                        <input type="text" name="mac" id="mac" placeholder="Endereço MAC" value="<%= network.mac_address %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
                                                         <b class="tooltip tooltip-bottom-right">Endereço MAC</b>
                                                         </label>
                                                     </section>
