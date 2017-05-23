@@ -92,15 +92,15 @@
                                         <tr>
                                             <td style="width:100px;"></td>
                                             <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }">
-                                                <div ng-if="status.precentualMinTensao > 90" style="background-color: green; height:100px; width:100%;">
+                                                <div ng-if="status.tensao > status.max_tensao" style="background-color:red; height:100px; width:100%;">
                                                     <div style="background-color: gray; height:{{status.percentualTensao}}%; width:100%;">
                                                     </div>
                                                 </div>
-                                                <div ng-if="status.precentualMinTensao == 90" style="background-color: yellow; height:100px; width:100%;">
+                                                <div ng-if="status.tensao >= status.min_tensao && status.tensao<= status.max_tensao" style="background-color: green; height:100px; width:100%;">
                                                     <div style="background-color: gray; height:{{status.percentualTensao}}%; width:100%;">
                                                     </div>
                                                 </div>
-                                                <div ng-if="status.precentualMinTensao < 90" style="background-color: red; height:100px; width:100%;">
+                                                <div ng-if="status.tensao < status.min_tensao" style="background-color: red; height:100px; width:100%;">
                                                     <div style="background-color: gray; height:{{status.percentualTensao}}%; width:100%;">
                                                     </div>
                                                 </div>
