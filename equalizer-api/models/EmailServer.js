@@ -82,7 +82,7 @@ var sendEmail = function (data) {
                     if (conta > 0) {
                         var logToText = "dataHora;descricao;\n";
                         alarmLogs.forEach(function (alarm) {
-                            logToText += alarm.dataHora.toISOString() + ";" + alarm.descricao + ";\n"
+                            logToText += alarm.dataHora.toLocaleString() + ";" + alarm.descricao + ";\n"
                         }, this);
                         var attachment = [
                             {   // define custom content type for the attachment
