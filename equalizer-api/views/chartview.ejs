@@ -42,16 +42,32 @@
                                 <select id="ddlStrings">
                                 </select> &nbsp&nbsp&nbsp&nbsp&nbsp
                                 <label>Período:</label>
-                                <input type="text" name="txtDateStart" style="width: 100px;" id="txtDateStart" readonly placeholder="Data Início" required class="datepicker" data-dateformat='dd/mm/yy'>
-                                <input type="text" name="txtHourStart" style="width: 80px;" value="00:00" id="txtHourStart" readonly placeholder="Hora Início" required>
+                                <input type="text" name="txtDateStart" style="width: 100px;" id="txtDateStart" readonly placeholder="Data Início" required
+                                    class="datepicker" data-dateformat='dd/mm/yy'>
+                                <input type="text" name="txtHourStart" style="width: 80px;" value="00:00" id="txtHourStart" readonly placeholder="Hora Início"
+                                    required>
                                 <label> a </label>
-                                <input type="text" name="txtDateStart" style="width: 100px;" id="txtDateEnd" readonly placeholder="Data Fim" required class="datepicker" data-dateformat='dd/mm/yy'>
-                                <input type="text" name="txtHourEnd" style="width: 80px;" value="23:59" id="txtHourEnd" readonly placeholder="Hora Fim" required>
-                                &nbsp
+                                <input type="text" name="txtDateEnd" style="width: 100px;" id="txtDateEnd" readonly placeholder="Data Fim" required class="datepicker"
+                                    data-dateformat='dd/mm/yy'>
+                                <input type="text" name="txtHourEnd" style="width: 80px;" value="23:59" id="txtHourEnd" readonly placeholder="Hora Fim" required>                                &nbsp
                                 <button type="button" class="btn btn-primary" onclick="pesquisar();">Pesquisar</button>
                                 <button type="button" class="btn btn-primary" onclick="gerarCSV();">CSV</button>
                                 <br />
                                 <br />
+                                <div>
+                                    <label>Escala Y mín.:</label>
+                                    <input id="txtEscalaYMin" type="number" style="width: 60px;" />
+                                    <label>Escala Y máx.:</label>
+                                    <input id="txtEscalaYMax" type="number" style="width: 60px;" />
+                                    <button type="button" class="btn btn-primary" onclick="aplicarEscalaY();">Aplicar</button>
+                                    <div style="float:right;">
+                                        <label>Escala Y sec. mín.:</label>
+                                        <input id="txtEscalaYSecMin" type="number" style="width: 60px;" />
+                                        <label>Escala Y sec. máx.:</label>
+                                        <input id="txtEscalaYSecMax" type="number" style="width: 60px;" />
+                                        <button type="button" class="btn btn-primary" onclick="aplicarEscalaYSec();">Aplicar</button>
+                                    </div>
+                                </div>
                                 <div class="jarviswidget" id="wid-id-0">
                                     <header>
                                         <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
@@ -81,6 +97,10 @@
             var visao = 3;
             var nBaterias = 0;
             var csvData = "";
+            var escalaYTensao = [0, 18];
+            var escalaYImpedancia = [0, 50];
+            var escalaYTemperatura = [0, 70];
+            var escalaYSec = [];
             function setVisao(data) {
                 visao = data;
                 getData();
@@ -99,7 +119,7 @@
             }
             function getData() {
                 if (visao == 1) {
-                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-")  + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
+                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
                         csvData = data;
                         g1 = new Dygraph(document.getElementById("noroll"), data, {
                             title: 'Impedância',
@@ -117,12 +137,12 @@
                             },
                             showRangeSelector: true,
                             // Flavio Alves: Definindo o range de plotagem
-                            valueRange: [0, 50]
+                            valueRange: escalaYImpedancia
                         });
                     });
                 }
                 else if (visao == 2) {
-                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-")  + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
+                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
                         csvData = data;
                         g1 = new Dygraph(document.getElementById("noroll"), data, {
                             title: 'Temperatura',
@@ -140,12 +160,12 @@
                             },
                             showRangeSelector: true,
                             // Flavio Alves: Definindo o range de plotagem
-                            valueRange: [0, 70]
+                            valueRange: escalaYTemperatura
                         });
                     });
                 }
                 else if (visao == 3) {
-                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-")  + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
+                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
                         csvData = data;
                         g1 = new Dygraph(document.getElementById("noroll"), data, {
                             title: 'Tensão',
@@ -159,12 +179,16 @@
                             },
                             axes: {
                                 y: {
-                                    axisLabelWidth: 100
+                                    axisLabelWidth: 100,
+                                    // Flavio Alves: Definindo o range de plotagem
+                                    valueRange: escalaYTensao
                                 },
                                 y2: {
                                     // set axis-related properties here
                                     labelsKMB: true,
-                                    axisLineColor: "#DD1124"
+                                    axisLineColor: "#DD1124",
+                                    // Flavio Alves: Definindo o range de plotagem
+                                    valueRange: escalaYSec
                                 }
                             },
                             highlightCircleSize: 2,
@@ -176,9 +200,7 @@
                                 strokeBorderWidth: 1,
                                 highlightCircleSize: 5
                             },
-                            showRangeSelector: true,
-                            // Flavio Alves: Definindo o range de plotagem
-                            valueRange: [0, 18]
+                            showRangeSelector: true
                         });
                     });
                 }
@@ -195,9 +217,9 @@
                             'textAlign': 'right'
                         },
                         showRangeSelector: true
-			// Flavio Alves: Definindo o range de plotagem
-			// valueRange: [0, 14]
-			// Esse aqui e o vazio ... por hora, fica sem
+                        // Flavio Alves: Definindo o range de plotagem
+                        // valueRange: [0, 14]
+                        // Esse aqui e o vazio ... por hora, fica sem
                     });
                 }
             }
@@ -226,6 +248,19 @@
                 a.click();
             }
             $(function () {
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1;
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                var today = dd + '/' + mm + '/' + yyyy;
+                $("#txtDateStart").val(today);
+                $("#txtDateEnd").val(today);
                 getStrings();
                 $('#txtHourStart').clockpicker({
                     placement: 'bottom',
@@ -235,11 +270,34 @@
                     placement: 'bottom',
                     donetext: 'Done'
                 });
+                setTimeout(function () {
+                    pesquisar();
+                }, 600);
             });
             String.prototype.replaceAll = function (search, replacement) {
                 var target = this;
                 return target.replace(new RegExp(search, 'g'), replacement);
             };
+            function aplicarEscalaY() {
+                if (visao == 1) {
+                    escalaYImpedancia[0] = parseInt($("#txtEscalaYMin").val());
+                    escalaYImpedancia[1] = parseInt($("#txtEscalaYMax").val());
+                }
+                else if (visao == 2) {
+                    escalaYTemperatura[0] = parseInt($("#txtEscalaYMin").val());
+                    escalaYTemperatura[1] = parseInt($("#txtEscalaYMax").val());
+                }
+                else if (visao == 3) {
+                    escalaYTensao[0] = parseInt($("#txtEscalaYMin").val());
+                    escalaYTensao[1] = parseInt($("#txtEscalaYMax").val());
+                }
+                pesquisar();
+            }
+            function aplicarEscalaYSec(){
+                escalaYSec[0] =  parseInt($("#txtEscalaYSecMin").val());
+                escalaYSec[1] =  parseInt($("#txtEscalaYSecMax").val());
+                pesquisar();
+            }
         </script>
         <% include partials/footer %>
 </body>

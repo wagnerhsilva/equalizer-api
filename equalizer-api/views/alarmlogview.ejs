@@ -229,7 +229,7 @@
                 var eventos = [];
                 data.forEach(function (element) {
                     eventos.push({
-                        title: 'Evento de Alerta',
+                        title: 'Evento de Alerta (' + element.nOcorrencias.toString() + ' ocorrência(s))',
                         allDay: false,
                         start: element.dataHora,
                         description: element.descricao,

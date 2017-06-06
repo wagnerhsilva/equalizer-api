@@ -1,12 +1,13 @@
 var sqlite3 = require('sqlite3').verbose();
 var bCrypt = require('bcrypt-nodejs');
 
-var createAlarmLog = function (id, dataHora, descricao) {
+var createAlarmLog = function (id, dataHora, descricao, nOcorrencias) {
     return {
         id: id,
         dataHora: dataHora,
         descricao: descricao,
-        emailEnviado: 0
+        emailEnviado: 0,
+        nOcorrencias: nOcorrencias
     }
 }
 var save = function (alarmLog, err) {
@@ -27,10 +28,10 @@ var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
-    db.all("SELECT id, dataHora, descricao FROM AlarmLog ORDER BY dataHora desc limit 500", function (err, rows) {
+    db.all("SELECT id, dataHora, descricao, n_ocorrencias FROM AlarmLog ORDER BY dataHora desc limit 500", function (err, rows) {
         var alarmLogs = [];
         rows.forEach(function row(row) {
-            alarmLogs.push(new createAlarmLog(row.id, new Date(row.dataHora), row.descricao));
+            alarmLogs.push(new createAlarmLog(row.id, new Date(row.dataHora), row.descricao, row.n_ocorrencias));
         });
         data(err, alarmLogs);
     });
@@ -40,9 +41,9 @@ var getLast = function (id, data) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
-    db.get("SELECT id, dataHora,descricao FROM AlarmLog ORDER BY id DESC LIMIT 1", function (err, row) {
+    db.get("SELECT id, dataHora,descricao, n_ocorrencias FROM AlarmLog ORDER BY id DESC LIMIT 1", function (err, row) {
         if (row) {
-            var alarmLog = new createAlarmLog(row.id, new Date(row.dataHora), row.descricao);
+            var alarmLog = new createAlarmLog(row.id, new Date(row.dataHora), row.descricao, row.n_ocorrencias);
             console.log(alarmLog);
             data(err, alarmLog);
         }
