@@ -37,17 +37,6 @@
                                                         </label>
                                                     </section>
                                                     <section>
-                                                        <label class="label">Speed Placa de Rede</label>
-                                                        <label class="select">
-                                                            <select name="velocidadePlacaRede" id="velocidadePlacaRede" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                                <option value="AUTO" <%if (redeSeguranca[0].velocidadePlacaRede=='AUTO') {%>  selected  <%}%>>AUTO</option>
-                                                                <option value="9600" <%if (redeSeguranca[0].velocidadePlacaRede=='9600') {%>  selected  <%}%>>9600</option>
-                                                                <option value="11000" <%if (redeSeguranca[0].velocidadePlacaRede=='11000') {%>  selected  <%}%>>11000</option>
-                                                            </select>
-                                                            <i></i>
-                                                        </label>
-                                                    </section>
-                                                    <section>
                                                         <label class="input">
                                                             <label class="label">Endereço Local</label>
                                                         <input type="text" name="localAddress" id="localAddress" placeholder="Endereço Local" value="<%= network.ip_address %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
@@ -75,6 +64,10 @@
                                                         <b class="tooltip tooltip-bottom-right">Servidor DNS</b>
                                                         </label>
                                                     </section>
+                                                </fieldset>
+                                            </section>
+                                            <section class="col-sm-6 col-md-6 col-lg-6">
+                                                <fieldset>
                                                     <section>
                                                         <label class="input">
                                                             <label class="label">Nome do Sistema</label>
@@ -102,42 +95,6 @@
                                                                 <% } %>
                                                             </select>
                                                             <i></i>
-                                                        </label>
-                                                    </section>
-                                                </fieldset>
-                                            </section>
-                                            <section class="col-sm-6 col-md-6 col-lg-6">
-                                                <fieldset>
-                                                    <section>
-                                                        <label class="input">
-                                                            <label class="label">HTTP Port</label>
-                                                        <input type="number" name="httpPort" id="httpPort" placeholder="HTTP Port" value="<%= redeSeguranca[0].httpPort %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                        <b class="tooltip tooltip-bottom-right">HTTP Port</b>
-                                                        </label>
-                                                    </section>
-                                                    <section>
-                                                        <input type="hidden" name="useHttps" id="useHttps" value="<%= redeSeguranca[0].useHttps %>" />
-                                                        <label class="checkbox">
-                                                            <% if (redeSeguranca[0].useHttps) { %>
-                                                                <input type="checkbox" checked onchange="check(this);"  <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                            <% }else{ %>
-                                                                <input type="checkbox" onchange="check(this);" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                            <% } %>
-                                                                <i></i>Use HTTPS
-                                                            </label>
-                                                    </section>
-                                                    <section>
-                                                        <label class="input">
-                                                            <label class="label">HTTPS Port</label>
-                                                        <input type="number" name="httpsPort" id="httpsPort" placeholder="HTTPS Port" value="<%= redeSeguranca[0].httpsPort %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                        <b class="tooltip tooltip-bottom-right">HTTPS Port</b>
-                                                        </label>
-                                                    </section>
-                                                    <section>
-                                                        <label class="input">
-                                                            <label class="label">HTTP Tempo de atualização</label>
-                                                        <input type="number" name="httpTempoDeAtualizacao" id="httpTempoDeAtualizacao" placeholder="HTTP Tempo de atualização" value="<%= redeSeguranca[0].httpTempoDeAtualizacao %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                        <b class="tooltip tooltip-bottom-right">HTTP Tempo de atualização</b>
                                                         </label>
                                                     </section>
                                                     <section>

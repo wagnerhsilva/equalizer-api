@@ -143,39 +143,21 @@
                         if ($("#bar-chart_" + string).length) {
                             $("#headerGrafico_" + string).text("String: " + string);
                             var data1 = [];
-                            var maxVal = [];
-                            var minVal = [];
                             var labels1 = [];
                             var conta = 0;
                             data.forEach(function (element) {
                                 if (element.string == string) {
-                                    data1.push([conta, parseFloat(element.impedancia)]);
-                                    maxVal.push([conta, parseFloat(element.max_imp)]);
-                                    minVal.push([conta, parseFloat(element.min_imp)]);
+                                    if (element.impedancia > element.max_imp) {
+                                        data1.push({ data: [[conta, parseFloat(element.impedancia)]], color: "red", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
+                                    } else if (element.impedancia < element.min_imp) {
+                                        data1.push({ data: [[conta, parseFloat(element.impedancia)]], color: "yellow", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
+                                    } else {
+                                        data1.push({ data: [[conta, parseFloat(element.impedancia)]], color: "green", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
+                                    }
                                     labels1.push([conta, element.bateria]);
                                     conta++;
                                 }
                             }, this);
-                            var dataDS = [
-                                {
-                                    data: data1,
-                                    color: '#409628',
-                                    label: 'Impedância',
-                                    bars: { show: true, align: 'center', barWidth: 0.5 }
-                                }/*,
-                                {
-                                    data: maxVal,
-                                    color: '#e70000',
-                                    label: 'Tensão',
-                                    lines: { show: true, align: 'center', barWidth: 0.5 }
-                                },
-                                {
-                                    data: minVal,
-                                    color: '#e70000',
-                                    label: 'Tensão',
-                                    lines: { show: true, align: 'center', barWidth: 0.5 }
-                                }*/
-                            ];
                             var options = {
                                 xaxis: { ticks: labels1 },
                                 grid: {
@@ -189,10 +171,11 @@
                                 legend: true,
                                 tooltip: true,
                                 tooltipOpts: {
-                                    content: "<b>Impedância</b> = <span> %y.1</span>"
+                                    content: "<b>Impedância</b> = <span>%y.1</span>",
+                                    defaultTheme: false
                                 }
                             };
-                            $.plot($("#bar-chart_" + string), dataDS, options);
+                            $.plot($("#bar-chart_" + string), data1, options);
                         }
                     }, this);
 
@@ -203,39 +186,21 @@
                         if ($("#bar-chart_" + string).length) {
                             $("#headerGrafico_" + string).text("String: " + string);
                             var data1 = [];
-                            var maxVal = [];
-                            var minVal = [];
                             var labels1 = [];
                             var conta = 0;
                             data.forEach(function (element) {
                                 if (element.string == string) {
-                                    data1.push([conta, parseFloat(element.temperatura)]);
-                                    maxVal.push([conta, parseFloat(element.max_temp)]);
-                                    minVal.push([conta, parseFloat(element.min_temp)]);
+                                    if (element.temperatura > element.max_temp) {
+                                        data1.push({ data: [[conta, parseFloat(element.temperatura)]], color: "red", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
+                                    } else if (element.temperatura < element.min_temp) {
+                                        data1.push({ data: [[conta, parseFloat(element.temperatura)]], color: "yellow", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
+                                    } else {
+                                        data1.push({ data: [[conta, parseFloat(element.temperatura)]], color: "green", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
+                                    }
                                     labels1.push([conta, element.bateria]);
                                     conta++;
                                 }
                             }, this);
-                            var dataDS = [
-                                {
-                                    data: data1,
-                                    color: '#409628',
-                                    label: 'Temperatura',
-                                    bars: { show: true, align: 'center', barWidth: 0.5 }
-                                }/*,
-                                {
-                                    data: maxVal,
-                                    color: '#e70000',
-                                    label: 'Tensão',
-                                    lines: { show: true, align: 'center', barWidth: 0.5 }
-                                },
-                                {
-                                    data: minVal,
-                                    color: '#e70000',
-                                    label: 'Tensão',
-                                    lines: { show: true, align: 'center', barWidth: 0.5 }
-                                }*/
-                            ];
                             var options = {
                                 xaxis: { ticks: labels1 },
                                 grid: {
@@ -253,7 +218,7 @@
                                     defaultTheme: false
                                 }
                             };
-                            $.plot($("#bar-chart_" + string), dataDS, options);
+                            $.plot($("#bar-chart_" + string), data1, options);
                         }
                     }, this);
                 } else if (visao == 3) {
@@ -262,39 +227,21 @@
                         if ($("#bar-chart_" + string).length) {
                             $("#headerGrafico_" + string).text("String: " + string);
                             var data1 = [];
-                            var maxVal = [];
-                            var minVal = [];
                             var labels1 = [];
                             var conta = 0;
                             data.forEach(function (element) {
                                 if (element.string == string) {
-                                    data1.push([conta, parseFloat(element.tensao)]);
-                                    maxVal.push([conta, parseFloat(element.max_tensao)]);
-                                    minVal.push([conta, parseFloat(element.min_tensao)]);
+                                    if (element.tensao > element.max_tensao) {
+                                        data1.push({ data: [[conta, parseFloat(element.tensao)]], color: "red", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
+                                    } else if (element.tensao < element.min_tensao) {
+                                        data1.push({ data: [[conta, parseFloat(element.tensao)]], color: "yellow", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
+                                    } else {
+                                        data1.push({ data: [[conta, parseFloat(element.tensao)]], color: "green", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
+                                    }
                                     labels1.push([conta, element.bateria]);
                                     conta++;
                                 }
                             }, this);
-                            var dataDS = [
-                                {
-                                    data: data1,
-                                    color: '#409628',
-                                    label: 'Tensão',
-                                    bars: { show: true, align: 'center', barWidth: 0.5 }
-                                }/*,
-                                {
-                                    data: maxVal,
-                                    color: '#e70000',
-                                    label: 'Tensão',
-                                    lines: { show: true, align: 'center', barWidth: 0.5 }
-                                },
-                                {
-                                    data: minVal,
-                                    color: '#e70000',
-                                    label: 'Tensão',
-                                    lines: { show: true, align: 'center', barWidth: 0.5 }
-                                }*/
-                            ];
                             var options = {
                                 xaxis: { ticks: labels1 },
                                 grid: {
@@ -312,7 +259,7 @@
                                     defaultTheme: false
                                 }
                             };
-                            $.plot($("#bar-chart_" + string), dataDS, options);
+                            $.plot($("#bar-chart_" + string), data1, options);
                         }
                     }, this);
                 }

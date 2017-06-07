@@ -11,6 +11,6 @@ var isAuthenticated = function (req, res, next) {
 }
 /* GET home page. */
 router.get('/', isAuthenticated,  function (req, res, next) {
-    res.render('livefeedsview', { title: 'Live Feed', pageName: 'livefeedsview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email });
+    res.render('livefeedsview', { title: 'Live Feed', pageName: 'livefeedsview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email, showHeaderData: global.showHeaderInfo });
 });
 module.exports = router;

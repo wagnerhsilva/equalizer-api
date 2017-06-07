@@ -204,23 +204,6 @@
                                                         </label>
                                                             </td>
                                                         </tr>
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <label class="checkbox">
-                                                            <input type="checkbox" name="ativarMaxTensao" ng-disabled="acessoUsuario != 'administrador'" id="ativarMaxTensao" ng-model="alarmes[0].nivel_max_tensao_ativo">
-                                                            <i></i>Ativar Máx diferença tensão
-                                                        </label>
-                                                            </td>
-                                                            <td>
-                                                                <label class="select">
-                                                            <select name="multipleSelect" id="multipleSelect" ng-disabled="acessoUsuario != 'administrador'" ng-model="alarmes[0].nivel_max_tensao_val">
-                                                                <option value="0">0</option>
-                                                                <option value="12">12</option>
-                                                            </select>
-                                                            <i></i>
-                                                        </label>
-                                                            </td>
-                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </section>
@@ -231,6 +214,7 @@
                                 <footer>
                                     <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="saveAlarmeConfig();">Aplicar</button>
                                     <button id="btnResetarPadroes" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="resetarPadroes();">Resetar Padrões</button>
+                                    <button id="btnResetarPadroes" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="showHideHeaderInfo();">Mostrar/Esconder Tensão de Target e Barramento</button>
                                 </footer>
                             </form>
                         </div>
@@ -296,6 +280,16 @@
                                 $scope.alarmes[0].alarme_nivel_imped_min = "1.0";
                                 $("#alarme_impMax").val("100.0");
                                 $scope.alarmes[0].alarme_nivel_imped_max = "100.0";
+                            }
+                            $scope.showHideHeaderInfo = function () {
+                                if ($("#divInfoHeader").is(":visible"))
+                                    $("#divInfoHeader").hide();
+                                else {
+                                    $("#divInfoHeader").show();
+                                }
+                                $.get("/moduloview/showHideHeaderInfo/", null, function (data, status) {
+                                    
+                                });
                             }
                             $scope.nomeUsuario = '<%= username %>';
                             $scope.acessoUsuario = '<%= userAccess %>';

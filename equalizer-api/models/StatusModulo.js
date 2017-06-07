@@ -168,7 +168,7 @@ var getChartDefault = function (params, data) {
     }
     strSql = strSql + " as \"data\"";
     strSql = strSql + " FROM DATALOG, MODULO ";
-    strSql = strSql + "WHERE DATAHORA BETWEEN '" + anoInicial + "-" + mesInicial + "-" + diaInicial + " " + dtInicialSegundaPart + "' AND '" + anoFinal + "-" + mesFinal + "-" + diaFinal + " " + dtFinalSegundaPart + "' ";
+    strSql = strSql + "WHERE DATAHORA BETWEEN '" + anoInicial + "-" + mesInicial + "-" + diaInicial + " " + dtInicialSegundaPart + "' AND '" + anoFinal + "-" + mesFinal + "-" + diaFinal + " " + dtFinalSegundaPart + ":59' ";
     strSql = strSql + "AND STRING = '" + string + "' ";
     strSql = strSql + "AND 	CAST(SUBSTR(DATALOG.BATERIA, 2, length(DATALOG.BATERIA)) as integer) <= MODULO.N_BATERIAS_POR_STRINGS ";
     strSql = strSql + "AND		CAST(SUBSTR(DATALOG.STRING, 2, length(DATALOG.STRING)) as integer) <= MODULO.N_STRINGS ";

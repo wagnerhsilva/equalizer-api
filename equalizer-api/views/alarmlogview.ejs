@@ -44,12 +44,14 @@
                                         <tr>
                                             <td>Data</td>
                                             <td>Evento Alarme</td>
+                                            <td style="width:70px;"></td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="alog in alarmlogs" ng-class="rowClass(alog)" on-finish-render="ngRepeatFinished">
                                             <td>{{ alog.dataHora | date:'dd/MM/yyyy HH:mm:ss' }}</td>
                                             <td>{{ alog.descricao }}</td>
+                                            <td><button type="button" class="btn btn-primary" ng-click="goToChart(alog.dataHora, alog.descricao);">Gráfico</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -127,6 +129,9 @@
                             }
                             $scope.showGrid = function (index) {
                                 setGrid();
+                            }
+                            $scope.goToChart = function(dateTime, descricao){
+                                goToChart(dateTime, descricao);
                             }
                         }])
                         .directive('onFinishRender', function ($timeout) {
@@ -216,7 +221,8 @@
                         }
                     },
                     "autoWidth": true,
-                    "order": [[ 0, "desc" ]]
+                    "order": [[ 0, "desc" ]],
+                    "pageLength": 15
                 });
             }
             function setGrid() {
@@ -328,6 +334,11 @@
 				$('#td').click(function () {
 				    $('#calendar').fullCalendar('changeView', 'agendaDay');
 				});	
+            }
+            function goToChart(dateTime, descricao){
+                var string = descricao.split(" ")[4].split("-")[0];
+                var bateria = descricao.split(" ")[4].split("-")[1].replace(",", "");
+                window.location = "/chartview?datetime=" + dateTime + "&string=" + string + "&bateria=" + bateria;
             }
         </script>
         <% include partials/footer %>

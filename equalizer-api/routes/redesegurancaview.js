@@ -32,7 +32,7 @@ router.get('/', isAuthenticated, function (req, res, next) {
             console.log(redeSeguranca.length);
             Usuario.getAll(function (err, usuarios) {
                 if (err) return next(err);
-                res.render('redesegurancaview', { title: 'Rede & Segurança', pageName: 'redesegurancaview', username: req.user.nome, userAccess: req.user.acesso, usuarios: usuarios, network: obj, redeSeguranca: redeSeguranca });
+                res.render('redesegurancaview', { title: 'Rede & Segurança', pageName: 'redesegurancaview', username: req.user.nome, userAccess: req.user.acesso, usuarios: usuarios, network: obj, redeSeguranca: redeSeguranca, showHeaderData: global.showHeaderInfo });
             });
         });
     })

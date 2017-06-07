@@ -76,16 +76,12 @@
                                         <div class="jarviswidget-editbox">
                                             <input class="form-control" type="text">
                                         </div>
-                                        <td valign="top">
-                                            <div id="labels" class=container4></div>
-                                            <br />
-                                            <br />
-                                        </td>
                                         <div class="widget-body">
                                             <div id="noroll" style="height:500px;"></div>
                                         </div>
                                     </div>
                                 </div>
+                                <div id="labels" class="container4"></div>
                             </div>
                         </div>
                     </article>
@@ -248,6 +244,7 @@
                 a.click();
             }
             $(function () {
+                getStrings();
                 var today = new Date();
                 var dd = today.getDate();
                 var mm = today.getMonth() + 1;
@@ -261,7 +258,6 @@
                 var today = dd + '/' + mm + '/' + yyyy;
                 $("#txtDateStart").val(today);
                 $("#txtDateEnd").val(today);
-                getStrings();
                 $('#txtHourStart').clockpicker({
                     placement: 'bottom',
                     donetext: 'Done'
@@ -271,8 +267,20 @@
                     donetext: 'Done'
                 });
                 setTimeout(function () {
+                    var dateTimeParam = getUrlVars()["datetime"];
+                    var stringParam = getUrlVars()["string"];
+                    var bateriaParam = getUrlVars()["bateria"];
+                    if (dateTimeParam != undefined && stringParam != undefined && bateriaParam != undefined) {
+                        var dataFormatada = dateTimeParam.split("-")[2].substring(0, 2) + "/" + dateTimeParam.split("-")[1] + "/" + dateTimeParam.split("-")[0];
+                        var horaFormatada = (parseInt(dateTimeParam.split("T")[1].substring(0, 2)) - 3).toString();
+                        $("#txtDateStart").val(dataFormatada);
+                        $("#txtDateEnd").val(dataFormatada);
+                        $("#txtHourStart").val((horaFormatada.length < 5 ? "0" + horaFormatada : horaFormatada) + ":00");
+                        $("#txtHourEnd").val((horaFormatada.length < 5 ? "0" + horaFormatada : horaFormatada) + ":59");
+                        $("#ddlStrings").val(stringParam);
+                    }
                     pesquisar();
-                }, 600);
+                }, 500);
             });
             String.prototype.replaceAll = function (search, replacement) {
                 var target = this;
@@ -293,10 +301,20 @@
                 }
                 pesquisar();
             }
-            function aplicarEscalaYSec(){
-                escalaYSec[0] =  parseInt($("#txtEscalaYSecMin").val());
-                escalaYSec[1] =  parseInt($("#txtEscalaYSecMax").val());
+            function aplicarEscalaYSec() {
+                escalaYSec[0] = parseInt($("#txtEscalaYSecMin").val());
+                escalaYSec[1] = parseInt($("#txtEscalaYSecMax").val());
                 pesquisar();
+            }
+            function getUrlVars() {
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for (var i = 0; i < hashes.length; i++) {
+                    hash = hashes[i].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
+                return vars;
             }
         </script>
         <% include partials/footer %>

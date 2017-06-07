@@ -151,3 +151,4 @@ app.use(function (err, req, res, next) {
 setInterval(function(){ emailServerModel.sendEmail(); }, 120000);
 //setInterval(function(){ dataLogDB.logInsert(); }, 2000);
 module.exports = app;
+global.showHeaderInfo = true;

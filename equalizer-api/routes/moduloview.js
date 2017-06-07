@@ -11,7 +11,13 @@ var isAuthenticated = function (req, res, next) {
 }
 /* GET home page. */
 router.get('/', isAuthenticated,  function (req, res, next) {
-    res.render('moduloview', { title: 'Configuração de módulo e alarme', pageName: 'moduloview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email });
+    res.render('moduloview', { title: 'Configuração de módulo e alarme', pageName: 'moduloview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email, showHeaderData: global.showHeaderInfo });
 });
-
+router.get('/showHideHeaderInfo', function (req, res, next) {
+    if (global.showHeaderInfo)
+        global.showHeaderInfo = false;
+    else
+        global.showHeaderInfo = true;
+    console.log("ShowHideHeaderInfo = " + global.showHeaderInfo);
+});
 module.exports = router;

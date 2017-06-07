@@ -12,7 +12,7 @@ var isAuthenticated = function (req, res, next) {
 }
 /* GET home page. */
 router.get('/', isAuthenticated, function (req, res, next) {
-    res.render('bacsstatusview', { title: 'BACS Status', username: req.user.nome });
+    res.render('bacsstatusview', { title: 'BACS Status', username: req.user.nome, showHeaderData: global.showHeaderInfo });
 });
 
 module.exports = router;

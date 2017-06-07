@@ -4,8 +4,10 @@
 
         <!-- PLACE YOUR LOGO HERE -->
         <span id="logo">
-                <img src="smartadmin/img/logoCM.png" alt="Equalizer" style="height: 25px; width: 80px;">
+                <span style="font-size: 18px; font-weight: bolder; margin-left: 30%;">
+                EQUALIZER
             </span>
+        </span>
         <!-- END LOGO PLACEHOLDER -->
     </div>
     <!-- pulled right: nav area -->
@@ -29,42 +31,52 @@
         <!-- end fullscreen button -->
 
     </div>
-    <div class="pull-right">
-        <div style="margin-top: 6%;">
-            <span>Target - </span>
-            <b><span id="txtTarget">0</span></b> &nbsp&nbsp&nbsp
-            <span>Tensão de barramento - </span>
-            <b><span id="txtTensaoBarramento">0</span></b>
+    <div>
+        <div style="margin-top: 8%; font-size: 14px;">
+            <span>
+                &nbsp&nbspActive Battery Management
+            </span>
         </div>
     </div>
-    <!-- end pulled right: nav area -->
+    
+        <div id="divInfoHeader" class="pull-right" <%if (!showHeaderData) {%> style="display: none;"<%}%>>
+            <div style="margin-top: 6%;">
+                <span>Target - </span>
+                <b><span id="txtTarget">0</span></b> &nbsp&nbsp&nbsp
+                <span>Tensão de barramento - </span>
+                <b><span id="txtTensaoBarramento">0</span></b>
+            </div>
+        </div>
+        
+
+            <!-- end pulled right: nav area -->
 
 </header>
 <!-- END HEADER -->
 <!-- Left panel : Navigation area -->
 <!-- Note: This width of the aside area can be adjusted through LESS variables -->
 <aside id="left-panel">
-
+    <img src="smartadmin/img/logoCM.png" alt="Equalizer" style="width: 80%; margin-left:9%; margin-top: 20%;">
+    <br/>
+    <br/>
+    <br/>
     <!-- end user info -->
     <!-- NAVIGATION : This navigation is also responsive-->
     <nav>
         <!-- User info -->
-        <div class="login-info">
-            <span>
-                <!-- User image size is adjusted inside CSS, it should stay as it -->
-
+        <div class="login-info" style="border: none;">
+            <span style="text-align: center; border: 1px solid white; margin-left: 5%; margin-right: 5%; height: 55px;">
                 <a href="smartadmin/javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-                    <span>
+                    <span style="margin-top: 12%;">
                         <%= username %>
                     </span>
             </a>
-
             </span>
         </div>
-        <!-- end user info -->
-
+        <br />
+        <br />
         <ul>
-            <li class="top-menu-invisible">
+            <li style="border: 1px solid white; margin-left: 5%; margin-right: 5%;" class="top-menu-invisible">
                 <a href="#" title="Status"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Status</span></a>
                 <ul>
                     <li <%if (pageName=='statusmoduloview' ) {%> class='active'
@@ -81,7 +93,9 @@
                     </li>
                 </ul>
             </li>
-            <li class="top-menu-invisible">
+            <br />
+            <br />
+            <li style="border: 1px solid white; margin-left: 5%; margin-right: 5%;" class="top-menu-invisible">
                 <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Configuração</span></a>
                 <ul>
                     <li <%if (pageName=='usuarioview' ) {%> class='active'
@@ -106,7 +120,9 @@
                     </li>
                 </ul>
             </li>
-            <li>
+            <br />
+            <br />
+            <li style="border: 1px solid white; margin-left: 5%; margin-right: 5%;">
                 <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Logfiles</span></a>
                 <ul>
                     <li <%if (pageName=='alarmlogview' ) {%> class='active'
@@ -130,7 +146,7 @@
     }
     $(document).ready(function () {
         getSomatoria();
-        setInterval(function(){ getSomatoria(); }, 3000);
+        setInterval(function () { getSomatoria(); }, 3000);
     });
 
 </script>
