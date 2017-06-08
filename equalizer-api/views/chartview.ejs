@@ -11,6 +11,18 @@
                 margin-right: -50%;
                 transform: translate(-50%, -50%)
             }
+
+            .few .dygraph-legend>span.highlight {
+                border: 1px solid grey;
+            }
+
+            .many .dygraph-legend>span {
+                display: none;
+            }
+
+            .many .dygraph-legend>span.highlight {
+                display: inline;
+            }
         </style>
 </head>
 
@@ -68,7 +80,8 @@
                                         <button type="button" class="btn btn-primary" onclick="aplicarEscalaYSec();">Aplicar</button>
                                     </div>
                                 </div>
-                                <div class="jarviswidget" id="wid-id-0">
+                                <br />
+                                <div class="jarviswidget" id="wid-id-0" style="z-index: -0;">
                                     <header>
                                         <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
                                     </header>
@@ -77,11 +90,24 @@
                                             <input class="form-control" type="text">
                                         </div>
                                         <div class="widget-body">
-                                            <div id="noroll" style="height:500px;"></div>
+                                            <div id="noroll" class="few" style="height:500px;"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="labels" class="container4"></div>
+                                <div id="labels" class="few"></div>
+                                <br />
+                                <form class="smart-form" id="frmSeries" style="display: none;">
+                                    <section>
+                                        <label class="label">Selecione as baterias (Series)</label>
+                                        <label class="select select-multiple">
+														<select id="ddlSeries" multiple="" class="custom-scroll">
+															
+														</select> </label>
+                                        <div class="note">
+                                            <strong>Note:</strong> hold down the ctrl/cmd button to select multiple options.
+                                        </div>
+                                    </section>
+                                </form>
                             </div>
                         </div>
                     </article>
@@ -97,6 +123,20 @@
             var escalaYImpedancia = [0, 50];
             var escalaYTemperatura = [0, 70];
             var escalaYSec = [];
+            var g1 = null;
+            $('#ddlSeries').change(function () {
+                var allOptions = [];
+                $("#ddlSeries > option").each(function () {
+                    allOptions.push(this.value);
+                });
+                allOptions.forEach(function (value) {
+                    g1.setVisibility(parseInt(value), false);
+                }, this);
+                var selectedValues = $(this).val();
+                selectedValues.forEach(function (value) {
+                    g1.setVisibility(parseInt(value), true);
+                }, this);
+            });
             function setVisao(data) {
                 visao = data;
                 getData();
@@ -117,89 +157,233 @@
                 if (visao == 1) {
                     $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
                         csvData = data;
-                        g1 = new Dygraph(document.getElementById("noroll"), data, {
-                            title: 'Impedância',
-                            ylabel: 'Impedância',
-                            legend: 'always',
-                            labelsDiv: document.getElementById("labels"),
-                            highlightCircleSize: 2,
-                            strokeWidth: 1,
-                            strokeBorderWidth: 1,
-
-                            highlightSeriesOpts: {
-                                strokeWidth: 3,
+                        var rows = csvData.toString().split('\n');
+                        var lstObj = [];
+                        var conta = 0;
+                        var rotulos = [];
+                        var seriesVisibility = [];
+                        rows.forEach(function (element) {
+                            row = element.toString().replace("'", "\"").replace("'", "\"").split(',');
+                            if (conta > 0) {
+                                for (x = 0; x < row.length; x++) {
+                                    if (x == 0)
+                                        row[x] = new Date(row[x].toString());
+                                }
+                                lstObj.push(row);
+                            }
+                            else {
+                                $('#ddlSeries').empty();
+                                for (x = 0; x < row.length; x++) {
+                                    rotulos.push(row[x].toString());
+                                    seriesVisibility.push(true);
+                                    if (x > 0) {
+                                        $('#ddlSeries').append($('<option>', {
+                                            value: (x - 1),
+                                            text: row[x].toString(),
+                                            selected: "selected"
+                                        }));
+                                    }
+                                }
+                            }
+                            conta++;
+                        }, this);
+                        if (lstObj.length > 0) {
+                            $("#frmSeries").show();
+                            g1 = new Dygraph(document.getElementById("noroll"), data, {
+                                title: 'Impedância',
+                                ylabel: 'Impedância',
+                                legend: 'always',
+                                labelsDiv: document.getElementById("labels"),
+                                highlightCircleSize: 2,
+                                strokeWidth: 1,
                                 strokeBorderWidth: 1,
-                                highlightCircleSize: 5
-                            },
-                            showRangeSelector: true,
-                            // Flavio Alves: Definindo o range de plotagem
-                            valueRange: escalaYImpedancia
-                        });
+
+                                highlightSeriesOpts: {
+                                    strokeWidth: 3,
+                                    strokeBorderWidth: 1,
+                                    highlightCircleSize: 5
+                                },
+                                showRangeSelector: true,
+                                // Flavio Alves: Definindo o range de plotagem
+                                valueRange: escalaYImpedancia
+                            });
+                            var onclick = function (ev) {
+                                if (g1.isSeriesLocked()) {
+                                    g1.clearSelection();
+                                } else {
+                                    g1.setSelection(g1.getSelection(), g1.getHighlightSeries(), true);
+                                }
+                            };
+                            g1.updateOptions({ clickCallback: onclick }, true);
+                            g1.setSelection(false, 's005');
+                        }
                     });
                 }
                 else if (visao == 2) {
                     $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
                         csvData = data;
-                        g1 = new Dygraph(document.getElementById("noroll"), data, {
-                            title: 'Temperatura',
-                            ylabel: 'Temperatura',
-                            legend: 'always',
-                            labelsDiv: document.getElementById("labels"),
-                            highlightCircleSize: 2,
-                            strokeWidth: 1,
-                            strokeBorderWidth: 1,
-
-                            highlightSeriesOpts: {
-                                strokeWidth: 3,
+                        var rows = csvData.toString().split('\n');
+                        var lstObj = [];
+                        var conta = 0;
+                        var rotulos = [];
+                        var seriesVisibility = [];
+                        rows.forEach(function (element) {
+                            row = element.toString().replace("'", "\"").replace("'", "\"").split(',');
+                            if (conta > 0) {
+                                for (x = 0; x < row.length; x++) {
+                                    if (x == 0)
+                                        row[x] = new Date(row[x].toString());
+                                }
+                                lstObj.push(row);
+                            }
+                            else {
+                                $('#ddlSeries').empty();
+                                for (x = 0; x < row.length; x++) {
+                                    rotulos.push(row[x].toString());
+                                    seriesVisibility.push(true);
+                                    if (x > 0) {
+                                        $('#ddlSeries').append($('<option>', {
+                                            value: (x - 1),
+                                            text: row[x].toString(),
+                                            selected: "selected"
+                                        }));
+                                    }
+                                }
+                            }
+                            conta++;
+                        }, this);
+                        if (lstObj.length > 0) {
+                            $("#frmSeries").show();
+                            g1 = new Dygraph(document.getElementById("noroll"), data, {
+                                title: 'Temperatura',
+                                ylabel: 'Temperatura',
+                                legend: 'always',
+                                labelsDiv: document.getElementById("labels"),
+                                highlightCircleSize: 2,
+                                strokeWidth: 1,
                                 strokeBorderWidth: 1,
-                                highlightCircleSize: 5
-                            },
-                            showRangeSelector: true,
-                            // Flavio Alves: Definindo o range de plotagem
-                            valueRange: escalaYTemperatura
-                        });
+
+                                highlightSeriesOpts: {
+                                    strokeWidth: 3,
+                                    strokeBorderWidth: 1,
+                                    highlightCircleSize: 5
+                                },
+                                showRangeSelector: true,
+                                // Flavio Alves: Definindo o range de plotagem
+                                valueRange: escalaYTemperatura
+                            });
+                            var onclick = function (ev) {
+                                if (g1.isSeriesLocked()) {
+                                    g1.clearSelection();
+                                } else {
+                                    g1.setSelection(g1.getSelection(), g1.getHighlightSeries(), true);
+                                }
+                            };
+                            g1.updateOptions({ clickCallback: onclick }, true);
+                            g1.setSelection(false, 's005');
+                        }
                     });
                 }
                 else if (visao == 3) {
                     $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
                         csvData = data;
-                        g1 = new Dygraph(document.getElementById("noroll"), data, {
-                            title: 'Tensão',
-                            ylabel: 'Tensão(V)',
-                            legend: 'always',
-                            labelsDiv: document.getElementById("labels"),
-                            series: {
-                                'Tensão de Barramento': {
-                                    axis: 'y2'
-                                },
-                            },
-                            axes: {
-                                y: {
-                                    axisLabelWidth: 100,
-                                    // Flavio Alves: Definindo o range de plotagem
-                                    valueRange: escalaYTensao
-                                },
-                                y2: {
-                                    // set axis-related properties here
-                                    labelsKMB: true,
-                                    axisLineColor: "#DD1124",
-                                    // Flavio Alves: Definindo o range de plotagem
-                                    valueRange: escalaYSec
+                        var rows = csvData.toString().split('\n');
+                        var lstObj = [];
+                        var conta = 0;
+                        var rotulos = [];
+                        var seriesVisibility = [];
+                        rows.forEach(function (element) {
+                            row = element.toString().replace("'", "\"").replace("'", "\"").split(',');
+                            if (conta > 0) {
+                                for (x = 0; x < row.length; x++) {
+                                    if (x == 0)
+                                        row[x] = new Date(row[x].toString());
                                 }
-                            },
-                            highlightCircleSize: 2,
-                            strokeWidth: 1,
-                            strokeBorderWidth: 1,
-
-                            highlightSeriesOpts: {
-                                strokeWidth: 3,
+                                lstObj.push(row);
+                            }
+                            else {
+                                $('#ddlSeries').empty();
+                                for (x = 0; x < row.length; x++) {
+                                    rotulos.push(row[x].toString());
+                                    seriesVisibility.push(true);
+                                    if (x > 0) {
+                                        $('#ddlSeries').append($('<option>', {
+                                            value: (x - 1),
+                                            text: row[x].toString(),
+                                            selected: "selected"
+                                        }));
+                                    }
+                                }
+                            }
+                            conta++;
+                        }, this);
+                        if (lstObj.length > 0) {
+                            $("#frmSeries").show();
+                            g1 = new Dygraph(document.getElementById("noroll"), lstObj, {
+                                title: 'Tensão',
+                                ylabel: 'Tensão(V)',
+                                legend: 'always',
+                                labels: rotulos,
+                                visibility: seriesVisibility,
+                                series: {
+                                    'Tensão de Barramento': {
+                                        axis: 'y2'
+                                    },
+                                },
+                                axes: {
+                                    y: {
+                                        axisLabelWidth: 100,
+                                        // Flavio Alves: Definindo o range de plotagem
+                                        valueRange: escalaYTensao
+                                    },
+                                    y2: {
+                                        // set axis-related properties here
+                                        labelsKMB: true,
+                                        axisLineColor: "#DD1124",
+                                        // Flavio Alves: Definindo o range de plotagem
+                                        valueRange: escalaYSec
+                                    }
+                                },
+                                highlightCircleSize: 2,
+                                strokeWidth: 1,
                                 strokeBorderWidth: 1,
-                                highlightCircleSize: 5
-                            },
-                            showRangeSelector: true
-                        });
+                                labelsDiv: document.getElementById("labels"),
+                                highlightSeriesOpts: {
+                                    strokeWidth: 3,
+                                    strokeBorderWidth: 1,
+                                    highlightCircleSize: 5
+                                },
+                                showRangeSelector: true
+                            });
+                            var onclick = function (ev) {
+                                if (g1.isSeriesLocked()) {
+                                    g1.clearSelection();
+                                } else {
+                                    g1.setSelection(g1.getSelection(), g1.getHighlightSeries(), true);
+                                }
+                            };
+                            g1.updateOptions({ clickCallback: onclick }, true);
+                            g1.setSelection(false, 's005');
+                        }
                     });
                 }
+            }
+            function legendFormatter(data) {
+                if (data.x == null) {
+                    // This happens when there's no selection and {legend: 'always'} is set.
+                    return '<br>' + data.series.map(function (series) { return series.dashHTML + ' ' + series.labelHTML }).join('<br>');
+                }
+
+                var html = this.getLabels()[0] + ': ' + data.xHTML;
+                data.series.forEach(function (series) {
+                    if (!series.isVisible) return;
+                    var labeledData = series.labelHTML + ': ' + series.yHTML;
+                    if (series.isHighlighted) {
+                        labeledData = '<b>' + labeledData + '</b>';
+                    }
+                    html += '<br>' + series.dashHTML + ' ' + labeledData;
+                });
+                return html;
             }
             function pesquisar() {
                 if ($("#txtDateStart").val().toString().trim() != "" && $("#txtDateEnd").val().toString().trim() != "") {
@@ -268,9 +452,10 @@
                 });
                 setTimeout(function () {
                     var dateTimeParam = getUrlVars()["datetime"];
+                    var tipoParam = getUrlVars()["tipo"];
                     var stringParam = getUrlVars()["string"];
                     var bateriaParam = getUrlVars()["bateria"];
-                    if (dateTimeParam != undefined && stringParam != undefined && bateriaParam != undefined) {
+                    if (dateTimeParam != undefined && tipoParam != undefined && stringParam != undefined && bateriaParam != undefined) {
                         var dataFormatada = dateTimeParam.split("-")[2].substring(0, 2) + "/" + dateTimeParam.split("-")[1] + "/" + dateTimeParam.split("-")[0];
                         var horaFormatada = (parseInt(dateTimeParam.split("T")[1].substring(0, 2)) - 3).toString();
                         $("#txtDateStart").val(dataFormatada);
@@ -278,14 +463,44 @@
                         $("#txtHourStart").val((horaFormatada.length < 5 ? "0" + horaFormatada : horaFormatada) + ":00");
                         $("#txtHourEnd").val((horaFormatada.length < 5 ? "0" + horaFormatada : horaFormatada) + ":59");
                         $("#ddlStrings").val(stringParam);
+                        switch (decodeURIComponent(tipoParam)) {
+                            case "Tensão":
+                                setVisao(3);
+                                break;
+                            case "Temperatura":
+                                setVisao(2);
+                                break;
+                            case "Impedância":
+                                setVisao(1);
+                                break;
+                        }
+                        selectSerie(bateriaParam);
+                        return;
+                    } else {
+                        pesquisar();
                     }
-                    pesquisar();
                 }, 500);
             });
             String.prototype.replaceAll = function (search, replacement) {
                 var target = this;
                 return target.replace(new RegExp(search, 'g'), replacement);
             };
+            function selectSerie(bateria) {
+                setTimeout(function () {
+                    if ($("#ddlSeries > option").length <= 0)
+                        selectSerie(bateria);
+                    $("#ddlSeries > option").each(function () {
+                        if (this.text.toLowerCase() == bateria.toLowerCase()) {
+                            g1.setVisibility(parseInt(this.value), true);
+                            this.selected = true;
+                        }
+                        else {
+                            g1.setVisibility(parseInt(this.value), false);
+                            this.selected = false;
+                        }
+                    });
+                }, 200);
+            }
             function aplicarEscalaY() {
                 if (visao == 1) {
                     escalaYImpedancia[0] = parseInt($("#txtEscalaYMin").val());

@@ -336,9 +336,10 @@
 				});	
             }
             function goToChart(dateTime, descricao){
+                var tipo = descricao.split(" ")[2];
                 var string = descricao.split(" ")[4].split("-")[0];
                 var bateria = descricao.split(" ")[4].split("-")[1].replace(",", "");
-                window.location = "/chartview?datetime=" + dateTime + "&string=" + string + "&bateria=" + bateria;
+                window.location = "/chartview?datetime=" + dateTime + "&tipo=" + tipo + "&string=" + string + "&bateria=" + bateria;
             }
         </script>
         <% include partials/footer %>
