@@ -126,9 +126,8 @@
                                             </section>
                                         </fieldset>
                                     </section>
-                                    <footer>
-                                        <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="saveModulo();">Aplicar</button>
-                                    </footer>
+                                    <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="saveModulo();"
+                                        style="float: right; width:100px; height:30px;">Aplicar</button>
                                 </div>
                             </form>
                             <form name="form2">
@@ -211,10 +210,13 @@
                                         </fieldset>
                                     </section>
                                 </div>
+                                <div class="row"><button id="btnGravarDb" class="btn btn-primary pull-right" ng-disabled="acessoUsuario != 'administrador'"
+                                        ng-click="saveAlarmeConfig();" style="margin-right:20px; margin-bottom:10px; width:100px; height:30px;">Aplicar</button></div>
                                 <footer>
-                                    <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="saveAlarmeConfig();">Aplicar</button>
                                     <button id="btnResetarPadroes" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="resetarPadroes();">Resetar Padrões</button>
-                                    <button id="btnResetarPadroes" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="showHideHeaderInfo();">Mostrar/Esconder Tensão de Target e Barramento</button>
+                                    <button id="btnShowHideHeaderInfo" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="showHideHeaderInfo();">Mostrar/Esconder Tensão de Target e Barramento</button>
+                                    <button id="btnClearDbData" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" onclick="clearDbData();">Apagar Dados BD</button>
+                                    <button id="btnClearLog" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" onclick="clearLog();">Apagar Log</button>
                                 </footer>
                             </form>
                         </div>
@@ -288,7 +290,7 @@
                                     $("#divInfoHeader").show();
                                 }
                                 $.get("/moduloview/showHideHeaderInfo/", null, function (data, status) {
-                                    
+
                                 });
                             }
                             $scope.nomeUsuario = '<%= username %>';
@@ -413,6 +415,44 @@
             });
             function resetarPadroes() {
 
+            }
+            function clearDbData() {
+                $.SmartMessageBox({
+                    title: "Excluir dados do banco de dados",
+                    content: "Este procedimento irá excluir todos os registros e alertas do banco de dados, deseja prosseguir?",
+                    buttons: '[Não][Sim]'
+                }, function (ButtonPressed) {
+                    if (ButtonPressed === "Sim") {
+                        $.get("/moduloview/clearDb/", null, function (data, status) {
+                        });
+                        $.smallBox({
+                            title: "Excluir dados do banco de dados",
+                            content: "<i class='fa fa-clock-o'></i> <i>Procedimento realizado com sucesso.</i>",
+                            color: "#659265",
+                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                            timeout: 4000
+                        });
+                    }
+                });
+            }
+            function clearLog() {
+                $.SmartMessageBox({
+                    title: "Apagar log",
+                    content: "Este procedimento irá apagar os dados de log do sistema, deseja prosseguir?",
+                    buttons: '[Não][Sim]'
+                }, function (ButtonPressed) {
+                    if (ButtonPressed === "Sim") {
+                        $.get("/moduloview/clearLog/", null, function (data, status) {
+                        });
+                        $.smallBox({
+                            title: "Apagar log",
+                            content: "<i class='fa fa-clock-o'></i> <i>Procedimento realizado com sucesso.</i>",
+                            color: "#659265",
+                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                            timeout: 4000
+                        });
+                    }
+                });
             }
         </script>
         <% include partials/footer %>

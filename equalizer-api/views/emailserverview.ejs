@@ -239,14 +239,15 @@
                     return;
                 var params = { "emailsDestino": dests, "assunto": assunto, "mensagem": mensagem };
                 $.post("/enviarEmail", params, function (data, status) {
-                    $.bigBox({
+                   
+                });
+                 $.bigBox({
                         title: "EmailServer",
                         content: "Email enviado!",
                         color: "#275B89",
                         timeout: 5000,
                         icon: "fa fa-check fadeInLeft animated"
                     });
-                });
             }
             function isEmail(email) {
                 var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;

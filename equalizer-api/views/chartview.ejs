@@ -23,6 +23,25 @@
             .many .dygraph-legend>span.highlight {
                 display: inline;
             }
+
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                background: rgba( 255, 255, 255, .8) url('http://i.stack.imgur.com/FhHRx.gif') 50% 50% no-repeat;
+            }
+
+            body.loading {
+                overflow: hidden;
+            }
+
+            body.loading .modal {
+                display: block;
+            }
         </style>
 </head>
 
@@ -114,7 +133,9 @@
                 </div>
             </div>
         </div>
+        <div class="modal"><img src="/equalizer-api/public/smartadmin/img/loader.gif" /></div>
         <script type="text/javascript">
+            $body = $("body");
             // Flavio Alves: a visao padrao dos graficos e a de tensao
             var visao = 3;
             var nBaterias = 0;
@@ -155,6 +176,7 @@
             }
             function getData() {
                 if (visao == 1) {
+                    $body.addClass("loading");
                     $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
                         csvData = data;
                         var rows = csvData.toString().split('\n');
@@ -217,9 +239,11 @@
                             g1.updateOptions({ clickCallback: onclick }, true);
                             g1.setSelection(false, 's005');
                         }
+                        $body.removeClass("loading"); 
                     });
                 }
                 else if (visao == 2) {
+                    $body.addClass("loading"); 
                     $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
                         csvData = data;
                         var rows = csvData.toString().split('\n');
@@ -282,9 +306,11 @@
                             g1.updateOptions({ clickCallback: onclick }, true);
                             g1.setSelection(false, 's005');
                         }
+                        $body.removeClass("loading"); 
                     });
                 }
                 else if (visao == 3) {
+                    $body.addClass("loading"); 
                     $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
                         csvData = data;
                         var rows = csvData.toString().split('\n');
@@ -365,6 +391,7 @@
                             g1.updateOptions({ clickCallback: onclick }, true);
                             g1.setSelection(false, 's005');
                         }
+                        $body.removeClass("loading"); 
                     });
                 }
             }

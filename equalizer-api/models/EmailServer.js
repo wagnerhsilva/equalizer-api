@@ -171,10 +171,12 @@ var testeEmail = function (data) {
             transporter.verify(function (error, success) {
                 if (error) {
                     console.log(error);
+                    data(error);
                 } else {
                     console.log('Server is ready to take our messages');
                     transporter.sendMail(mailOptions, (error, info) => {
                         if (error) {
+                            data(error);
                             return console.log(error);
                         }
                         console.log('Message %s sent: %s', info.messageId, info.response);

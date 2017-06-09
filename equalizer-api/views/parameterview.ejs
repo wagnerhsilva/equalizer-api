@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en-us" ng-app="app">
+
+<head>
+    <% include partials/head %>
+</head>
+
+<body class="">
+    <% include partials/header %>
+        <div id="main" role="main">
+
+            <!-- RIBBON -->
+            <div id="ribbon">
+
+                <!-- breadcrumb -->
+                <ol class="breadcrumb">
+                    <li>Configuração</li>
+                    <li>Parâmetros</li>
+                </ol>
+            </div>
+            <div id="content">
+                <div class="row">
+                    <article class="col-sm-12 col-md-12 col-lg-12">
+
+                        <!-- Widget ID (each widget will need unique ID)-->
+                        <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                            <header>
+                                <span class="widget-icon"><i class="fa fa-edit"></i></span>
+                                <h2>Parâmetros </h2>
+
+                            </header>
+
+                            <!-- widget div-->
+                            <div>
+
+                                <!-- widget edit box -->
+                                <div class="jarviswidget-editbox">
+                                    <!-- This area used as dropdown edit box -->
+
+                                </div>
+                                <!-- end widget edit box -->
+
+                                <!-- widget content -->
+                                <div class="widget-body">
+
+                                    <form id="smart-form-register" class="smart-form">
+                                        <ng-view></ng-view>
+                                    </form>
+
+                                </div>
+                                <!-- end widget content -->
+
+                            </div>
+                            <!-- end widget div -->
+
+                        </div>
+                        <!-- end widget -->
+                    </article>
+
+                </div>
+                <script type="text/ng-template" id="/parametro.html">
+                    <section>
+                        <div class="widget-body no-padding">
+                            <form name="form1" ng-disabled="acessoUsuario != 'administrador'">
+                                <header>
+                                    Cadastro de parâmetros
+                                </header>
+                                <div class="row" style="padding: 20px;">
+                                    <section class="col-sm-6 col-md-6 col-lg-6">
+                                        <fieldset>
+                                            <section>
+                                                <label class="label">Duty mín.</label>
+                                                <label class="input">
+                                                <input type="text" name="duty_min" placeholder="Duty mín." ng-model="parameter.duty_min" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Duty mín.</b> </label>
+                                            </section>
+                                            <section>
+                                                <label class="label">Duty máx.</label>
+                                                <label class="input">
+                                                <input type="text" name="duty_max" placeholder="Duty máx." ng-model="parameter.duty_max" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Duty máx.</b> </label>
+                                            </section>
+                                            <section>
+                                                <label class="label">Delay</label>
+                                                <label class="input">
+                                                <input type="text" name="Delay" placeholder="Duty mín." ng-model="parameter.delay" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Delay</b> </label>
+                                            </section>
+                                        </fieldset>
+                                    </section>
+                                    <section class="col-sm-6 col-md-6 col-lg-6">
+                                        <fieldset>
+                                            <section>
+                                                <label class="label">Num. Cycles Var Read</label>
+                                                <label class="input">
+                                                <input type="text" name="num_cycles_var_read" placeholder="Num. Cycles Var Read" ng-model="parameter.num_cycles_var_read" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Num. Cycles Var Read</b> </label>
+                                            </section>
+                                            <section>
+                                                <label class="label">Save Log Time</label>
+                                                <label class="input">
+                                                <input type="text" name="save_log_time" placeholder="Save Log Time" ng-model="parameter.save_log_time" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Save Log Time</b> </label>
+                                            </section>
+                                        </fieldset>
+                                    </section>
+                                    <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="saveParameter();"
+                                        style="float: right; width:100px; height:30px; margin-right:15px;">Aplicar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                    </fieldset>
+                </script>
+                <script>
+                    angular.module('app', ['ngRoute', 'ngResource'])
+                        //---------------
+                        // Services
+                        //---------------
+                        .factory('Parameter', ['$resource', function ($resource) {
+                            return $resource('/parameter/:id', null, {
+                                'update': { method: 'PUT' }
+                            });
+                        }])
+                        //---------------
+                        // Controllers
+                        //---------------
+                        .controller('ParameterController', ['$scope', 'Parameter', function ($scope,Parameter) {
+                            $scope.parameter = Parameter.get();
+                            $scope.saveParameter = function () {
+                                var parameter  = $scope.parameter;
+                                Parameter.update(parameter);
+                                $.bigBox({
+                                    title: "Informações sobre parâmetros",
+                                    content: "Dados salvos com sucesso!",
+                                    color: "#275B89",
+                                    timeout: 5000,
+                                    icon: "fa fa-check fadeInLeft animated"
+                                });
+                            }
+                            $scope.nomeUsuario = '<%= username %>';
+                            $scope.acessoUsuario = '<%= userAccess %>';
+                            $scope.emailUsuario = '<%= userEmail %>';
+                        }])
+                        //---------------
+                        // Routes
+                        //---------------
+                        .config(['$routeProvider', function ($routeProvider) {
+                            $routeProvider
+                                .when('/', {
+                                    templateUrl: '/parametro.html',
+                                    controller: 'ParameterController'
+                                })
+                        }]);
+                </script>
+
+            </div>
+            <!-- END MAIN CONTENT -->
+
+        </div>
+        <script>
+            
+        </script>
+        <% include partials/footer %>
+</body>
+
+</html>

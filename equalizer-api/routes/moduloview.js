@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var child_process = require('child_process');
 var isAuthenticated = function (req, res, next) {
     // if user is authenticated in the session, call the next() to call the next request handler
     // Passport adds this method to request object. A middleware is allowed to add properties to
@@ -19,5 +20,24 @@ router.get('/showHideHeaderInfo', function (req, res, next) {
     else
         global.showHeaderInfo = true;
     console.log("ShowHideHeaderInfo = " + global.showHeaderInfo);
+});
+router.get('/clearDb', function (req, res, next) {
+    var sqlite3 = require('sqlite3').verbose();
+    var db = new sqlite3.Database('equalizerdb');
+    db.run('DELETE FROM DataLog;');
+    db.run('DELETE FROM AlarmLog;');
+    db.run('VACUUM;');
+    console.log("DB cleared");
+});
+router.get('/clearLog', function (req, res, next) {
+    child_process.exec('rm -r debug.txt;', (err, stdout, stderr) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            console.log("efetuado");
+            console.log(stdout);
+        });
+    console.log("Log cleared");
 });
 module.exports = router;
