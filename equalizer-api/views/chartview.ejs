@@ -239,11 +239,11 @@
                             g1.updateOptions({ clickCallback: onclick }, true);
                             g1.setSelection(false, 's005');
                         }
-                        $body.removeClass("loading"); 
+                        $body.removeClass("loading");
                     });
                 }
                 else if (visao == 2) {
-                    $body.addClass("loading"); 
+                    $body.addClass("loading");
                     $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
                         csvData = data;
                         var rows = csvData.toString().split('\n');
@@ -306,11 +306,11 @@
                             g1.updateOptions({ clickCallback: onclick }, true);
                             g1.setSelection(false, 's005');
                         }
-                        $body.removeClass("loading"); 
+                        $body.removeClass("loading");
                     });
                 }
                 else if (visao == 3) {
-                    $body.addClass("loading"); 
+                    $body.addClass("loading");
                     $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
                         csvData = data;
                         var rows = csvData.toString().split('\n');
@@ -391,7 +391,7 @@
                             g1.updateOptions({ clickCallback: onclick }, true);
                             g1.setSelection(false, 's005');
                         }
-                        $body.removeClass("loading"); 
+                        $body.removeClass("loading");
                     });
                 }
             }
@@ -479,18 +479,28 @@
                 });
                 setTimeout(function () {
                     var dateTimeParam = getUrlVars()["datetime"];
-                    var tipoParam = getUrlVars()["tipo"];
+                    var tipoParam = decodeURIComponent(getUrlVars()["tipo"]);
                     var stringParam = getUrlVars()["string"];
                     var bateriaParam = getUrlVars()["bateria"];
-                    if (dateTimeParam != undefined && tipoParam != undefined && stringParam != undefined && bateriaParam != undefined) {
-                        var dataFormatada = dateTimeParam.split("-")[2].substring(0, 2) + "/" + dateTimeParam.split("-")[1] + "/" + dateTimeParam.split("-")[0];
-                        var horaFormatada = (parseInt(dateTimeParam.split("T")[1].substring(0, 2)) - 3).toString();
+                    if (tipoParam == "Target" || tipoParam == "Tensão de Barramento") {
+                        var dataFormatada = (new Date(dateTimeParam).getDate().toString().length < 2 ? "0" + new Date(dateTimeParam).getDate().toString() : new Date(dateTimeParam).getDate().toString()) + "/" + ((new Date(dateTimeParam).getMonth() + 1).toString().length < 2 ? "0" + (new Date(dateTimeParam).getMonth() + 1).toString() : (new Date(dateTimeParam).getMonth() + 1).toString()) + "/" + new Date(dateTimeParam).getFullYear().toString();
+                        var horaFormatada = new Date(dateTimeParam).getHours().toString();
                         $("#txtDateStart").val(dataFormatada);
                         $("#txtDateEnd").val(dataFormatada);
-                        $("#txtHourStart").val((horaFormatada.length < 5 ? "0" + horaFormatada : horaFormatada) + ":00");
-                        $("#txtHourEnd").val((horaFormatada.length < 5 ? "0" + horaFormatada : horaFormatada) + ":59");
+                        $("#txtHourStart").val((horaFormatada.length < 2 ? "0" + horaFormatada : horaFormatada) + ":00");
+                        $("#txtHourEnd").val((horaFormatada.length < 2 ? "0" + horaFormatada : horaFormatada) + ":59");
+                        setVisao(3);
+                        selectSerie(tipoParam);
+                        return;
+                    } else if (dateTimeParam != undefined && tipoParam != undefined && stringParam != undefined && bateriaParam != undefined) {
+                        var dataFormatada = (new Date(dateTimeParam).getDate().toString().length < 2 ? "0" + new Date(dateTimeParam).getDate().toString() : new Date(dateTimeParam).getDate().toString()) + "/" + ((new Date(dateTimeParam).getMonth() + 1).toString().length < 2 ? "0" + (new Date(dateTimeParam).getMonth() + 1).toString() : (new Date(dateTimeParam).getMonth() + 1).toString()) + "/" + new Date(dateTimeParam).getFullYear().toString();
+                        var horaFormatada = new Date(dateTimeParam).getHours().toString();
+                        $("#txtDateStart").val(dataFormatada);
+                        $("#txtDateEnd").val(dataFormatada);
+                        $("#txtHourStart").val((horaFormatada.length < 2 ? "0" + horaFormatada : horaFormatada) + ":00");
+                        $("#txtHourEnd").val((horaFormatada.length < 2 ? "0" + horaFormatada : horaFormatada) + ":59");
                         $("#ddlStrings").val(stringParam);
-                        switch (decodeURIComponent(tipoParam)) {
+                        switch (tipoParam) {
                             case "Tensão":
                                 setVisao(3);
                                 break;

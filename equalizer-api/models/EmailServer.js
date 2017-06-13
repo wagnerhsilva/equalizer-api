@@ -113,7 +113,7 @@ var sendEmail = function (data) {
                         transporter.verify(function (error, success) {
                             if (error) {
                                 console.log(error);
-				
+
                             } else {
                                 console.log('Server is ready to take our messages');
                                 transporter.sendMail(mailOptions, (error, info) => {
@@ -170,13 +170,19 @@ var testeEmail = function (data) {
             };
             transporter.verify(function (error, success) {
                 if (error) {
+                    var db = new sqlite3.Database('equalizerdb');
+                    db.run('PRAGMA busy_timeout = 60000;');
+                    db.run('PRAGMA journal_mode=WAL;');
+                    db.run("INSERT INTO AlarmLog(dataHora, descricao, emailEnviado, n_ocorrencias) VALUES (datetime('now','localtime'), 'Erro ao enviar email de teste.', 0, 1)");
                     console.log(error);
-                    data(error);
                 } else {
                     console.log('Server is ready to take our messages');
                     transporter.sendMail(mailOptions, (error, info) => {
                         if (error) {
-                            data(error);
+                            var db = new sqlite3.Database('equalizerdb');
+                            db.run('PRAGMA busy_timeout = 60000;');
+                            db.run('PRAGMA journal_mode=WAL;');
+                            db.run("INSERT INTO AlarmLog(dataHora, descricao, emailEnviado, n_ocorrencias) VALUES (datetime('now','localtime'), 'Erro ao enviar email de teste.', 0, 1)");
                             return console.log(error);
                         }
                         console.log('Message %s sent: %s', info.messageId, info.response);

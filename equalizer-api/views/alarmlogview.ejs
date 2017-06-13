@@ -130,7 +130,7 @@
                             $scope.showGrid = function (index) {
                                 setGrid();
                             }
-                            $scope.goToChart = function(dateTime, descricao){
+                            $scope.goToChart = function (dateTime, descricao) {
                                 goToChart(dateTime, descricao);
                             }
                         }])
@@ -221,7 +221,7 @@
                         }
                     },
                     "autoWidth": true,
-                    "order": [[ 0, "desc" ]],
+                    "order": [[0, "desc"]],
                     "pageLength": 15
                 });
             }
@@ -305,41 +305,47 @@
                     }
                 });
                 /* hide default buttons */
-			    $('.fc-right, .fc-center').hide();
+                $('.fc-right, .fc-center').hide();
 
-			
-				$('#calendar-buttons #btn-prev').click(function () {
-				    $('.fc-prev-button').click();
-				    return false;
-				});
-				
-				$('#calendar-buttons #btn-next').click(function () {
-				    $('.fc-next-button').click();
-				    return false;
-				});
-				
-				$('#calendar-buttons #btn-today').click(function () {
-				    $('.fc-today-button').click();
-				    return false;
-				});
-				
-				$('#mt').click(function () {
-				    $('#calendar').fullCalendar('changeView', 'month');
-				});
-				
-				$('#ag').click(function () {
-				    $('#calendar').fullCalendar('changeView', 'agendaWeek');
-				});
-				
-				$('#td').click(function () {
-				    $('#calendar').fullCalendar('changeView', 'agendaDay');
-				});	
+
+                $('#calendar-buttons #btn-prev').click(function () {
+                    $('.fc-prev-button').click();
+                    return false;
+                });
+
+                $('#calendar-buttons #btn-next').click(function () {
+                    $('.fc-next-button').click();
+                    return false;
+                });
+
+                $('#calendar-buttons #btn-today').click(function () {
+                    $('.fc-today-button').click();
+                    return false;
+                });
+
+                $('#mt').click(function () {
+                    $('#calendar').fullCalendar('changeView', 'month');
+                });
+
+                $('#ag').click(function () {
+                    $('#calendar').fullCalendar('changeView', 'agendaWeek');
+                });
+
+                $('#td').click(function () {
+                    $('#calendar').fullCalendar('changeView', 'agendaDay');
+                });
             }
-            function goToChart(dateTime, descricao){
-                var tipo = descricao.split(" ")[2];
-                var string = descricao.split(" ")[4].split("-")[0];
-                var bateria = descricao.split(" ")[4].split("-")[1].replace(",", "");
-                window.location = "/chartview?datetime=" + dateTime + "&tipo=" + tipo + "&string=" + string + "&bateria=" + bateria;
+            function goToChart(dateTime, descricao) {
+                if (descricao.indexOf('Target') > -1) {
+                    window.location = "/chartview?datetime=" + dateTime + "&tipo=Target";
+                } else if (descricao.indexOf('Barramento') > -1) {
+                    window.location = "/chartview?datetime=" + dateTime + "&tipo=Tensão de Barramento";
+                } else {
+                    var tipo = descricao.split(" ")[2];
+                    var string = descricao.split(" ")[4].split("-")[0];
+                    var bateria = descricao.split(" ")[4].split("-")[1].replace(",", "");
+                    window.location = "/chartview?datetime=" + dateTime + "&tipo=" + tipo + "&string=" + string + "&bateria=" + bateria;
+                }
             }
         </script>
         <% include partials/footer %>
