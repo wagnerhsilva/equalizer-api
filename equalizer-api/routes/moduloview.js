@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var child_process = require('child_process');
 var path = require('path');
-var mime = require('mime');
+var rotuloString = require('../models/RotuloString');
 
 var isAuthenticated = function (req, res, next) {
     // if user is authenticated in the session, call the next() to call the next request handler
@@ -15,7 +15,7 @@ var isAuthenticated = function (req, res, next) {
 }
 /* GET home page. */
 router.get('/', isAuthenticated, function (req, res, next) {
-    res.render('moduloview', { title: 'Configuração de módulo e alarme', pageName: 'moduloview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email, showHeaderData: global.showHeaderInfo });
+    res.render('moduloview', { title: 'Configuração de módulo e alarme', pageName: 'moduloview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email, showHeaderData: global.showHeaderInfo, headerInfoCDec: global.headerInfoCDec });
 });
 router.get('/showHideHeaderInfo', function (req, res, next) {
     if (global.showHeaderInfo)
@@ -44,18 +44,51 @@ router.get('/clearLog', function (req, res, next) {
     console.log("Log cleared");
 });
 router.get('/downloadDB', isAuthenticated, function (req, res) {
-console.log("downloadDB");
+    console.log("downloadDB");
     var file = path.join(__dirname, '..', 'equalizerdb');
     console.log(file);
     res.download(file);
-    /*var filename = path.basename(file);
-    console.log(filename);
-    var mimetype = "application/x-sqlite3";
-
-    res.setHeader('Content-disposition', 'attachment; filename=' + filename);
-    res.setHeader('Content-type', mimetype);
-
-    var filestream = fs.createReadStream(file);
-    filestream.pipe(res);*/
+});
+router.post('/gravarRotuloString', isAuthenticated, function (req, res) {
+    console.log("gravarRotuloString");
+    var rotuloStringPost = req.body;
+    console.log(rotuloStringPost);
+    rotuloString.getByString(rotuloStringPost.string, function (data) {
+        if (data != null) {
+            rotuloString.update(rotuloStringPost);
+        } else {
+            rotuloString.save(rotuloStringPost);
+        }
+    });
+    res.send("Rótulo definido com sucesso!");
+});
+router.get('/rotuloString/:string', isAuthenticated, function (req, res) {
+    var string = req.params.string;
+    console.log("rotuloString");
+    console.log(string);
+    rotuloString.getByString(string, function (data) {
+        if (data != null) {
+            res.send(data.apelido);
+        } else {
+            res.send("");
+        }
+    });
+});
+router.get('/rotuloStringObj/:string', isAuthenticated, function (req, res) {
+    var string = req.params.string;
+    console.log("rotuloString");
+    console.log(string);
+    rotuloString.getByString(string, function (data) {
+        if (data != null) {
+            res.send(data);
+        } else {
+            res.send(req.params.string);
+        }
+    });
+});
+router.get('/changeCasasDecHeader/:casas', isAuthenticated, function (req, res) {
+    var casas = req.params.casas;
+    global.headerInfoCDec = parseInt(casas);
+    res.send("Casas decimais redefinidas.");
 });
 module.exports = router;

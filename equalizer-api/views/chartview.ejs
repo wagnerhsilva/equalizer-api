@@ -167,10 +167,13 @@
                     var n_strings = parseInt(data[0].n_strings);
                     nBaterias = parseInt(data[0].n_baterias_por_strings);
                     for (var i = 1; i <= n_strings; i++) {
-                        $('#ddlStrings').append($('<option>', {
-                            value: 'S' + i.toString(),
-                            text: 'S' + i.toString()
+                        $.get("/moduloview/rotuloStringObj/" + "S" + i.toString(), "", function (data) {
+                             $('#ddlStrings').append($('<option>', {
+                            value: data.string == null ? data : data.string,
+                            text: data.string == null ? data : data.apelido
                         }));
+                        });
+                       
                     }
                 });
             }

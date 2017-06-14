@@ -4,7 +4,7 @@ var DataLog = require('../models/DataLog');
 /* GET */
 router.get('/', function (req, res, next) {
     DataLog.getAvgLast(function (err, avgLast) {
-        res.json({ somaTensao: avgLast.soma, avg: avgLast.avg });
+        res.json({ somaTensao: avgLast.soma, avg: avgLast.avg, capBanco: avgLast.capBanco });
     });
 
 });

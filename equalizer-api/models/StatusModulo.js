@@ -53,7 +53,7 @@ var get = function (data) {
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
     var strSql = ""
-    strSql = strSql + "SELECT 	RVAL.STRING, ";
+    strSql = strSql + "SELECT 	CASE WHEN APEL.APELIDO IS NULL THEN RVAL.STRING ELSE APEL.APELIDO END STRING, ";
     strSql = strSql + "		    RVAL.BATERIA, ";
     strSql = strSql + "		    DLOG.TEMPERATURA, ";
     strSql = strSql + "		    DLOG.IMPEDANCIA, ";
@@ -73,7 +73,8 @@ var get = function (data) {
     strSql = strSql + "		  ";
     strSql = strSql + "     ) AS 						RVAL, ";
     strSql = strSql + "			        ALARMECONFIG 	ALAR ";
-    strSql = strSql + "INNER JOIN 	    DATALOGRT 		DLOG ON (RVAL.ID = DLOG.ID) ";
+    strSql = strSql + "INNER JOIN 	    DATALOGRT 		DLOG ON (RVAL.ID        = DLOG.ID) ";
+    strSql = strSql + "LEFT  JOIN 	    APELIDOSTRING	APEL ON (APEL.STRING    = RVAL.STRING) ";
     strSql = strSql + "ORDER BY 	CAST(SUBSTR(RVAL.STRING, 2, length(RVAL.STRING)) as integer), ";
     strSql = strSql + "CAST(SUBSTR(RVAL.BATERIA, 2, length(RVAL.BATERIA)) as integer)";
 

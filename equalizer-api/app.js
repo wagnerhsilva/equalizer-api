@@ -156,3 +156,4 @@ setInterval(function(){ emailServerModel.sendEmail(); }, 30000);
 //setInterval(function(){ dataLogDB.logInsert(); }, 2000);
 module.exports = app;
 global.showHeaderInfo = true;
+global.headerInfoCDec = 3;

@@ -39,7 +39,7 @@
                         <h3 id="headerVisao">Impedância</h3>
 
                     </header>
-                    <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" ng-repeat="string in stringsDistintas">
+                    <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" ng-repeat="string in stringsDistintas2">
                         <header>
                             <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
                             <h2 id="headerGrafico_{{string}}"></h2>
@@ -88,13 +88,15 @@
                         //---------------
                         .controller('Chart2Controller', ['$scope', 'StatusModulos', function ($scope, StatusModulos) {
                             $scope.charts = StatusModulos.query(function (res) {
-                                var flags = [], output = [], l = res.length, i;
+                                var flags = [], output = [], output2 = [], l = res.length, i;
                                 for (i = 0; i < l; i++) {
                                     if (flags[res[i].string]) continue;
                                     flags[res[i].string] = true;
                                     output.push(res[i].string);
+                                    output2.push(res[i].string.replace(" ", "_"));
                                 }
                                 $scope.stringsDistintas = output;
+                                $scope.stringsDistintas2 = output2;
                                 setTimeout(function () { chart(res, 1, output); }, 500);
                             }, function (error) {
 
@@ -140,8 +142,8 @@
                 if (visao == 1) {
                     $("#headerVisao").text("Impedância");
                     strings.forEach(function (string) {
-                        if ($("#bar-chart_" + string).length) {
-                            $("#headerGrafico_" + string).text("String: " + string);
+                        if ($("#bar-chart_" + string.replace(" ", "_")).length) {
+                            $("#headerGrafico_" + string.replace(" ", "_")).text("String: " + string);
                             var data1 = [];
                             var labels1 = [];
                             var conta = 0;
@@ -175,7 +177,7 @@
                                     defaultTheme: false
                                 }
                             };
-                            $.plot($("#bar-chart_" + string), data1, options);
+                            $.plot($("#bar-chart_" + string.replace(" ", "_")), data1, options);
                         }
                     }, this);
 
@@ -183,8 +185,8 @@
                 else if (visao == 2) {
                     $("#headerVisao").text("Temperatura");
                     strings.forEach(function (string) {
-                        if ($("#bar-chart_" + string).length) {
-                            $("#headerGrafico_" + string).text("String: " + string);
+                        if ($("#bar-chart_" + string.replace(" ", "_")).length) {
+                            $("#headerGrafico_" + string.replace(" ", "_")).text("String: " + string);
                             var data1 = [];
                             var labels1 = [];
                             var conta = 0;
@@ -218,14 +220,14 @@
                                     defaultTheme: false
                                 }
                             };
-                            $.plot($("#bar-chart_" + string), data1, options);
+                            $.plot($("#bar-chart_" + string.replace(" ", "_")), data1, options);
                         }
                     }, this);
                 } else if (visao == 3) {
                     $("#headerVisao").text("Tensão");
                     strings.forEach(function (string) {
-                        if ($("#bar-chart_" + string).length) {
-                            $("#headerGrafico_" + string).text("String: " + string);
+                        if ($("#bar-chart_" + string.replace(" ", "_")).length) {
+                            $("#headerGrafico_" + string.replace(" ", "_")).text("String: " + string);
                             var data1 = [];
                             var labels1 = [];
                             var conta = 0;
@@ -259,7 +261,7 @@
                                     defaultTheme: false
                                 }
                             };
-                            $.plot($("#bar-chart_" + string), data1, options);
+                            $.plot($("#bar-chart_" + string.replace(" ", "_")), data1, options);
                         }
                     }, this);
                 }

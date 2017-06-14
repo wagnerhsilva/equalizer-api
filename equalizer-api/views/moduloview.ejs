@@ -87,7 +87,7 @@
                                             <section>
                                                 <label class="label">Quantidade de Strings</label>
                                                 <label class="input">
-										<input type="number" name="qtdStrings" placeholder="Quantidade de Strings" ng-model="modulos[0].n_strings"  ng-disabled="acessoUsuario != 'administrador'" required>
+										<input type="number" name="qtdStrings" id="qtdStrings" placeholder="Quantidade de Strings" ng-model="modulos[0].n_strings"  ng-disabled="acessoUsuario != 'administrador'" required>
 										<b class="tooltip tooltip-bottom-right">Quantidade de Strings</b> </label>
                                             </section>
                                             <section>
@@ -128,6 +128,8 @@
                                     </section>
                                     <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="saveModulo();"
                                         style="float: right; width:100px; height:30px;">Aplicar</button>
+                                    <button id="btnStringRotulos" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" onclick="abrirModalRotulosStrings();"
+                                        style="float: right; width:150px; height:30px; margin-right:10px;">Rótulos das Strings</button>
                                 </div>
                             </form>
                             <form name="form2">
@@ -236,7 +238,17 @@
                                                     </tbody>
                                                 </table>
                                             </section>
-
+                                            <div style="width:350px;">
+                                                <label>Casas decimais para Target e Tensão de Barramento</label>
+                                                <label class="select">
+                                                        <select id="ddlCasasDecimaisHeader" onchange="alterarCasasDecimaisGlobal();" ng-disabled="acessoUsuario != 'administrador'">
+                                                            <option value="2" <%if (headerInfoCDec == 2) {%> selected<%}%>>2</option>
+                                                            <option value="3" <%if (headerInfoCDec == 3) {%> selected<%}%>>3</option>
+                                                        </select>
+                                                        <i></i>
+                                                    </label>
+                                                </label>
+                                            </div>
                                         </fieldset>
                                     </section>
                                 </div>
@@ -344,6 +356,47 @@
             <!-- END MAIN CONTENT -->
 
         </div>
+        <div class="modal fade" id="modalRotulosString" tabindex="-1" role="dialog" aria-labelledby="modalRotulosString" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+                        <h4 class="modal-title" id="modalRotulosString">Rótulos das Strings</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="ddlString"> String</label>
+                                    <select class="form-control" id="ddlString" onchange="getRotuloValue();">
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tags"> Rótulo</label>
+                                    <input type="text" class="form-control" id="txtRotuloString" placeholder="Rótulo" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+									Cancelar
+								</button>
+                        <button type="button" class="btn btn-primary" onclick="saveRotuloString();">
+									Gravar
+								</button>
+
+                    </div>
+                    <label style="font-size: 8pt;">&nbsp&nbspObs.: Você deve gravar os rótulos para cada string separadamente.</label>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
         <script>
             $(document).ready(function () {
                 $('#dataInstalacao').datepicker({
@@ -501,6 +554,53 @@
                     if (ButtonPressed === "Sim") {
                         window.location.href = '/moduloview/downloadDB/';
                     }
+                });
+            }
+            function abrirModalRotulosStrings() {
+                var numeroStrings = parseInt($("#qtdStrings").val());
+                $("#txtRotuloString").val("");
+                for (var i = 1; i <= numeroStrings; i++) {
+                    $('#ddlString').append($('<option>', {
+                        value: i,
+                        text: 'S' + i.toString()
+                    }));
+                }
+                getRotuloValue();
+                $('#modalRotulosString').modal('show');
+            }
+            function getRotuloValue() {
+                $("#txtRotuloString").val("");
+                var parametros = { string: $("#ddlString option:selected").text(), apelido: $("#txtRotuloString").val() };
+                $.get("/moduloview/rotuloString/" + $("#ddlString option:selected").text(), null, function (data) {
+                    $("#txtRotuloString").val(data);
+                });
+            }
+            function saveRotuloString() {
+                if ($("#ddlString option:selected").text().trim() == "" || $("#txtRotuloString").val().trim() == "") {
+                    alert("String ou Rótulo não preenchidos.");
+                    return;
+                }
+                var parametros = { string: $("#ddlString option:selected").text(), apelido: $("#txtRotuloString").val() };
+                $.post("/moduloview/gravarRotuloString/", parametros, function (data) {
+                    $.bigBox({
+                        title: "Rótulo String",
+                        content: data,
+                        color: "#659265",
+                        timeout: 1000,
+                        icon: "fa fa-check fadeInLeft animated"
+                    });
+                });
+            }
+            function alterarCasasDecimaisGlobal() {
+                $.get("/moduloview/changeCasasDecHeader/" + $("#ddlCasasDecimaisHeader").val(), null, function (data) {
+                    $.bigBox({
+                        title: "Casas Decimais",
+                        content: data,
+                        color: "#659265",
+                        timeout: 1000,
+                        icon: "fa fa-check fadeInLeft animated"
+                    });
+                    setTimeout(function () { location.reload() }, 1000);
                 });
             }
         </script>

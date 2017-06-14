@@ -115,12 +115,13 @@ var getAvgLast = function (data) {
     db.run('PRAGMA journal_mode=WAL;');
     db.get("SELECT AVG_LAST\n" +
         ", bus_voltage\n" +
+        ", disk_capacity\n" +
         "FROM PARAMETERS WHERE ID IN (\n" +
         "SELECT MAX(ID)\n" +
         "FROM PARAMETERS\n" +
         ")", function (err, row) {
             if (row) {
-                var avgLast = { avg: parseFloat(row.avg_last), soma: parseFloat(row.bus_voltage) };
+                var avgLast = { avg: parseFloat(row.avg_last), soma: parseFloat(row.bus_voltage), capBanco: row.disk_capacity };
                 console.log("avgLast: ");
                 console.log(avgLast);
                 data(err, avgLast);
