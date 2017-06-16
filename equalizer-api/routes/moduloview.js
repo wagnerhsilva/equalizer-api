@@ -35,7 +35,7 @@ router.get('/clearDb', function (req, res, next) {
     console.log("DB cleared");
 });
 router.get('/clearLog', function (req, res, next) {
-    child_process.exec('rm -r debug.txt;', (err, stdout, stderr) => {
+    child_process.exec('rm -r /var/www/serial_service/debug.txt;', (err, stdout, stderr) => {
         if (err) {
             console.error(err);
             return;
