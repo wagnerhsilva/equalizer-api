@@ -27,6 +27,8 @@ router.get('/showHideHeaderInfo', function (req, res, next) {
 router.get('/clearDb', function (req, res, next) {
     var sqlite3 = require('sqlite3').verbose();
     var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 60000;');
+    db.run('PRAGMA journal_mode=WAL;');
     db.run('DELETE FROM DataLog;');
     db.run('DELETE FROM AlarmLog;');
     db.run('VACUUM;');
