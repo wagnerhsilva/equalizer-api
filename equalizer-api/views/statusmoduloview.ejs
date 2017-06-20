@@ -60,9 +60,9 @@
                                     <tbody>
                                         <tr ng-repeat="status in statusModulos | filter: { string: string }" ng-class="rowClass(status)">
                                             <td align="center">{{status.bateria}}</td>
-                                            <td align="center">{{status.tensao}}
-                                                <input type="hidden" ng-value="status.min_tensao" />
-                                                <input type="hidden" ng-value="status.max_tensao" />
+                                            <td align="center">{{status.tensao | number: <%- headerInfoCDec %>}}
+                                                <input type="hidden" ng-value="status.min_target" />
+                                                <input type="hidden" ng-value="status.max_target" />
                                             </td>
                                             <td align="center">{{status.temperatura}}</td>
                                             <td align="center">{{status.impedancia}}</td>
@@ -119,7 +119,7 @@
                                                 <tr>
                                                     <td style="width:100px;">Tensão</td>
                                                     <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }">
-                                                        {{status.tensao}}
+                                                        {{status.tensao | number: <%- headerInfoCDec %>}}
                                                         <input type="hidden" ng-value="status.min_tensao" />
                                                         <input type="hidden" ng-value="status.max_tensao" />
                                                     </td>
@@ -139,8 +139,8 @@
                                                 <tr>
                                                     <td style="width:100px;">Equalização</td>
                                                     <td align="center" style="width:50px;" ng-repeat="status in statusModulos | filter: { string: string }">
-                                                        <input type="hidden" ng-value="status.min_tensao" />
-                                                        <input type="hidden" ng-value="status.max_tensao" />
+                                                        <input type="hidden" ng-value="status.min_target" />
+                                                        <input type="hidden" ng-value="status.max_target" />
                                                         <input type="hidden" ng-value="status.tensao" />
                                                         <span id="2" ng-if="status.percentualEqualizacao <= 20" title="Equalização: {{status.percentualEqualizacao.toFixed(2)}}%"
                                                             dynamicbar1 data="x.bars">20,30,40,50,60</span>

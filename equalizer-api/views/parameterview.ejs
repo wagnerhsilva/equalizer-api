@@ -65,7 +65,7 @@
                                 <header>
                                     Cadastro de parâmetros
                                 </header>
-                                <div class="row" style="padding: 20px;">
+                                <div class="row" style="padding-left: 20px;padding-right: 20px;padding-top: 20px;">
                                     <section class="col-sm-6 col-md-6 col-lg-6">
                                         <fieldset>
                                             <section>
@@ -80,33 +80,115 @@
                                                 <input type="text" name="duty_max" placeholder="Duty máx." ng-model="parameter.duty_max" ng-disabled="acessoUsuario != 'administrador'">
                                                 <b class="tooltip tooltip-bottom-right">Duty máx.</b> </label>
                                             </section>
+                                            <section ng-if="parameter.duty_max == 0">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" id="chkDesligarEqualizacao" checked="checked">
+                                                    <i></i>Desligar equalização
+                                                </label>
+                                            </section>
+                                            <section ng-if="parameter.duty_max != 0">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" id="chkDesligarEqualizacao">
+                                                    <i></i>Desligar equalização
+                                                </label>
+                                            </section>
                                             <section>
-                                                <label class="label">Delay</label>
+                                                <label class="label">Delay para leitura de sensor</label>
                                                 <label class="input">
-                                                <input type="text" name="Delay" placeholder="Duty mín." ng-model="parameter.delay" ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Delay</b> </label>
+                                                <input type="text" name="Delay" placeholder="Delay para leitura de sensor" ng-model="parameter.delay" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Delay para leitura de sensor</b> </label>
                                             </section>
                                         </fieldset>
                                     </section>
                                     <section class="col-sm-6 col-md-6 col-lg-6">
                                         <fieldset>
                                             <section>
-                                                <label class="label">Num. Cycles Var Read</label>
+                                                <label class="label">Intervalo para leitura de impedância</label>
                                                 <label class="input">
-                                                <input type="text" name="num_cycles_var_read" placeholder="Num. Cycles Var Read" ng-model="parameter.num_cycles_var_read" ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Num. Cycles Var Read</b> </label>
+                                                <input type="text" name="num_cycles_var_read" placeholder="Intervalo para leitura de impedância" ng-model="parameter.num_cycles_var_read" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Intervalo para leitura de impedância</b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Save Log Time</label>
+                                                <label class="label">Intervalo para escrita em gráfico</label>
                                                 <label class="input">
-                                                <input type="text" name="save_log_time" placeholder="Save Log Time" ng-model="parameter.save_log_time" ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Save Log Time</b> </label>
+                                                <input type="text" name="save_log_time" placeholder="Intervalo para escrita em gráfico" ng-model="parameter.save_log_time" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Intervalo para escrita em gráfico</b> </label>
                                             </section>
                                         </fieldset>
                                     </section>
-                                    <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="saveParameter();"
-                                        style="float: right; width:100px; height:30px; margin-right:15px;">Aplicar</button>
                                 </div>
+                                <div class="row" style="padding-left: 20px;padding-right: 20px;padding-bottom: 20px;">
+                                    <section class="col-sm-6 col-md-6 col-lg-6">
+                                        <fieldset>
+                                            <section>
+                                                <label class="label">Param. 1</label>
+                                                <label class="input">
+                                                <input type="text" name="param1" placeholder="Param. 1" ng-model="parameter.param1" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Param. 1</b> </label>
+                                            </section>
+                                            <section>
+                                                <label class="label">Param. 2</label>
+                                                <label class="input">
+                                                <input type="text" name="param2" placeholder="Param. 2" ng-model="parameter.param2" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Param. 2</b> </label>
+                                            </section>
+                                            <section>
+                                                <label class="label">Param. 3</label>
+                                                <label class="input">
+                                                <input type="text" name="param3" placeholder="Param. 3" ng-model="parameter.param3" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Param. 3</b> </label>
+                                            </section>
+                                            <section>
+                                                <label class="label">Param. 4</label>
+                                                <label class="input">
+                                                <input type="text" name="param1" placeholder="Param. 4" ng-model="parameter.param4" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Param. 4</b> </label>
+                                            </section>
+                                            <section>
+                                                <label class="label">Param. 5</label>
+                                                <label class="input">
+                                                <input type="text" name="param5" placeholder="Param. 5" ng-model="parameter.param5" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Param. 5</b> </label>
+                                            </section>
+                                        </fieldset>
+                                    </section>
+                                    <section class="col-sm-6 col-md-6 col-lg-6">
+                                        <fieldset>
+                                            <section>
+                                                <label class="label">Param. 6</label>
+                                                <label class="input">
+                                                <input type="text" name="param6" placeholder="Param. 6" ng-model="parameter.param6" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Param. 6</b> </label>
+                                            </section>
+                                            <section>
+                                                <label class="label">Param. 7</label>
+                                                <label class="input">
+                                                <input type="text" name="param7" placeholder="Param. 7" ng-model="parameter.param7" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Param. 7</b> </label>
+                                            </section>
+                                            <section>
+                                                <label class="label">Param. 8</label>
+                                                <label class="input">
+                                                <input type="text" name="param8" placeholder="Param. 8" ng-model="parameter.param8" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Param. 8</b> </label>
+                                            </section>
+                                            <section>
+                                                <label class="label">Param. 9</label>
+                                                <label class="input">
+                                                <input type="text" name="param9" placeholder="Param. 9" ng-model="parameter.param9" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Param. 9</b> </label>
+                                            </section>
+                                            <section>
+                                                <label class="label">Param. 10</label>
+                                                <label class="input">
+                                                <input type="text" name="param10" placeholder="Param. 10" ng-model="parameter.param10" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Param. 10</b> </label>
+                                            </section>
+                                        </fieldset>
+                                    </section>
+                                    </div>
+                                    <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="saveParameter();"
+                                        style="float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;">Aplicar</button>
                             </form>
                         </div>
                     </section>
@@ -129,6 +211,8 @@
                             $scope.parameter = Parameter.get();
                             $scope.saveParameter = function () {
                                 var parameter  = $scope.parameter;
+                                if($("#chkDesligarEqualizacao").is(":checked"))
+                                    parameter.duty_max = 0;
                                 Parameter.update(parameter);
                                 $.bigBox({
                                     title: "Informações sobre parâmetros",

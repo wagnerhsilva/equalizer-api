@@ -1,7 +1,7 @@
 var sqlite3 = require('sqlite3').verbose();
 var bCrypt = require('bcrypt-nodejs');
 
-var createStatusModulo = function (string, bateria, temperatura, impedancia, tensao, equalizacao, min_temp, max_temp, min_imp, max_imp, min_tensao, max_tensao) {
+var createStatusModulo = function (string, bateria, temperatura, impedancia, tensao, equalizacao, min_temp, max_temp, min_imp, max_imp, min_tensao, max_tensao, min_target, max_target) {
     return {
         string: string,
         bateria: bateria,
@@ -15,6 +15,8 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
         max_imp: max_imp,
         min_tensao: min_tensao,
         max_tensao: max_tensao,
+        min_target: min_target,
+        max_target: max_target,
         percentualTensao: 100 - (((parseFloat((tensao / 1000)) / parseFloat(16)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(16)) * 100.00)),
         precentualMinTensao: (((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00)),
         percentualEqualizacao: equalizacao / 60000 * 100
@@ -81,7 +83,7 @@ var get = function (data) {
     db.all(strSql, function (err, rows) {
         var statusModulos = [];
         rows.forEach(function row(row) {
-            statusModulos.push(new createStatusModulo(row.STRING, row.BATERIA, row.temperatura, row.impedancia, row.tensao, row.equalizacao, row.alarme_nivel_temp_min, row.alarme_nivel_temp_max, row.alarme_nivel_imped_min, row.alarme_nivel_imped_max, row.alarme_nivel_tensao_min, row.alarme_nivel_tensao_max));
+            statusModulos.push(new createStatusModulo(row.STRING, row.BATERIA, row.temperatura, row.impedancia, row.tensao, row.equalizacao, row.alarme_nivel_temp_min, row.alarme_nivel_temp_max, row.alarme_nivel_imped_min, row.alarme_nivel_imped_max, row.alarme_nivel_tensao_min, row.alarme_nivel_tensao_max, row.alarme_nivel_target_min, row.alarme_nivel_target_max));
         });
         data(err, statusModulos);
     });
