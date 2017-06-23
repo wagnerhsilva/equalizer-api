@@ -81,8 +81,26 @@ var update = function (parameter) {
         });
     db.close();
 }
+var zerarDutyMax = function(){
+    console.log("Zerando duty max...");
+    var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 60000;');
+    db.run('PRAGMA journal_mode=WAL;');
+    db.run("UPDATE Parameters SET duty_max = 0;");
+    db.close();
+}
+var voltarDutyMax = function(){
+    console.log("Zerando duty max...");
+    var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 60000;');
+    db.run('PRAGMA journal_mode=WAL;');
+    db.run("UPDATE Parameters SET duty_max = '" + global.lastDutyMax + "';");
+    db.close();
+}
 
 module.exports.save = save;
 module.exports.createParameters = createParameters;
 module.exports.getLast = getLast;
 module.exports.update = update;
+module.exports.zerarDutyMax = zerarDutyMax;
+module.exports.voltarDutyMax = voltarDutyMax;

@@ -80,18 +80,6 @@
                                                 <input type="text" name="duty_max" placeholder="Duty máx." ng-model="parameter.duty_max" ng-disabled="acessoUsuario != 'administrador'">
                                                 <b class="tooltip tooltip-bottom-right">Duty máx.</b> </label>
                                             </section>
-                                            <section ng-if="parameter.duty_max == 0">
-                                                <label class="checkbox">
-                                                    <input type="checkbox" id="chkDesligarEqualizacao" checked="checked">
-                                                    <i></i>Desligar equalização
-                                                </label>
-                                            </section>
-                                            <section ng-if="parameter.duty_max != 0">
-                                                <label class="checkbox">
-                                                    <input type="checkbox" id="chkDesligarEqualizacao">
-                                                    <i></i>Desligar equalização
-                                                </label>
-                                            </section>
                                             <section>
                                                 <label class="label">Delay para leitura de sensor</label>
                                                 <label class="input">
@@ -211,8 +199,6 @@
                             $scope.parameter = Parameter.get();
                             $scope.saveParameter = function () {
                                 var parameter  = $scope.parameter;
-                                if($("#chkDesligarEqualizacao").is(":checked"))
-                                    parameter.duty_max = 0;
                                 Parameter.update(parameter);
                                 $.bigBox({
                                     title: "Informações sobre parâmetros",

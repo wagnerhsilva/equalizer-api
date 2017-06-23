@@ -3,6 +3,7 @@ var router = express.Router();
 var child_process = require('child_process');
 var path = require('path');
 var rotuloString = require('../models/RotuloString');
+var parameters = require('../models/Parameters');
 
 var isAuthenticated = function (req, res, next) {
     // if user is authenticated in the session, call the next() to call the next request handler
@@ -15,7 +16,7 @@ var isAuthenticated = function (req, res, next) {
 }
 /* GET home page. */
 router.get('/', isAuthenticated, function (req, res, next) {
-    res.render('moduloview', { title: 'Configuração de módulo e alarme', pageName: 'moduloview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email, showHeaderData: global.showHeaderInfo, headerInfoCDec: global.headerInfoCDec });
+    res.render('moduloview', { title: 'Configuração de módulo e alarme', pageName: 'moduloview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email, showHeaderData: global.showHeaderInfo, headerInfoCDec: global.headerInfoCDecm, lastDutyMax: global.lastDutyMax });
 });
 router.get('/showHideHeaderInfo', function (req, res, next) {
     if (global.showHeaderInfo)
@@ -92,5 +93,17 @@ router.get('/changeCasasDecHeader/:casas', isAuthenticated, function (req, res) 
     var casas = req.params.casas;
     global.headerInfoCDec = parseInt(casas);
     res.send("Casas decimais redefinidas.");
+});
+router.get('/zerarDutyMax', isAuthenticated, function (req, res) {
+    parameters.getLast(function (err, parameter) {
+        global.lastDutyMax = parameter.duty_max;
+    });
+    setTimeout(function () { parameters.zerarDutyMax(); }, 2000);
+    res.send("Equalização desligada.");
+});
+router.get('/voltarDutyMax', isAuthenticated, function (req, res) {
+    parameters.voltarDutyMax();
+    global.lastDutyMax = 0;
+    res.send("Equalização reconfigurada.");
 });
 module.exports = router;

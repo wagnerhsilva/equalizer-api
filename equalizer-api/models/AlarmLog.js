@@ -10,6 +10,12 @@ var createAlarmLog = function (id, dataHora, descricao, nOcorrencias) {
         nOcorrencias: nOcorrencias
     }
 }
+var createAlarmLogCalendar = function (Data, Ocorrencias) {
+    return {
+        Data: Data,
+        Ocorrencias: Ocorrencias
+    }
+}
 var save = function (alarmLog, err) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
@@ -35,6 +41,20 @@ var getAll = function (data) {
         });
         data(err, alarmLogs);
     });
+    db.close();
+}
+var getForCalendar = function (data) {
+    var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 60000;');
+    db.run('PRAGMA journal_mode=WAL;');
+    db.all("SELECT STRFTIME('%Y-%m-%d', dataHora) Data, SUM(n_ocorrencias) Ocorrencias FROM ALARMLOG GROUP BY STRFTIME('%Y-%m-%d', dataHora)", function (err, rows) {
+            var alarmLogs = [];
+            rows.forEach(function row(row) {
+                console.log(row);
+                alarmLogs.push(new createAlarmLogCalendar(row.Data, row.Ocorrencias));
+            });
+            data(err, alarmLogs);
+        });
     db.close();
 }
 var getLast = function (id, data) {
@@ -78,3 +98,4 @@ module.exports.getAll = getAll;
 module.exports.getLast = getLast;
 module.exports.getEnviaEmail = getEnviaEmail;
 module.exports.updateEnviaEmail = updateEnviaEmail;
+module.exports.getForCalendar = getForCalendar;

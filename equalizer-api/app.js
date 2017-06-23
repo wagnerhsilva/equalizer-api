@@ -157,3 +157,4 @@ setInterval(function(){ emailServerModel.sendEmail(); }, 30000);
 module.exports = app;
 global.showHeaderInfo = true;
 global.headerInfoCDec = 3;
+global.lastDutyMax = 0;

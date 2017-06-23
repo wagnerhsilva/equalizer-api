@@ -38,8 +38,9 @@
             </span>
         </div>
     </div>
-    
-        <div id="divInfoHeader" class="pull-right" <%if (!showHeaderData) {%> style="display: none;"<%}%>>
+
+    <div id="divInfoHeader" class="pull-right" <%if (!showHeaderData) {%> style="display: none;"
+        <%}%>>
             <div style="margin-top: 3%;">
                 <span>Target - </span>
                 <b><span id="txtTarget">0</span></b> &nbsp&nbsp&nbsp
@@ -48,17 +49,17 @@
                 <span>Capacidade do banco de dados - </span>
                 <b><span id="txtCapBanco">0%</span></b>
             </div>
-        </div>
-        
+    </div>
 
-            <!-- end pulled right: nav area -->
+
+    <!-- end pulled right: nav area -->
 
 </header>
 <!-- END HEADER -->
 <!-- Left panel : Navigation area -->
 <!-- Note: This width of the aside area can be adjusted through LESS variables -->
 <aside id="left-panel">
-    <img src="smartadmin/img/logo_branco.png" alt="Equalizer" style="width: 80%; margin-left:9%; margin-top: 20%;">
+    <img src="smartadmin/img/cm_logo_white.png" alt="Equalizer" style="margin-left:4%; margin-top: 20%;">
     <br/>
     <br/>
     <br/>
@@ -120,10 +121,12 @@
                         <%}%>>
                             <a href="redesegurancaview" title="Rede & Segurança"><span class="menu-item-parent">Rede & Segurança</span></a>
                     </li>
-                    <li <%if (pageName=='parameterview' ) {%> class='active'
-                        <%}%>>
-                            <a href="parameterview" title="Parâmetros"><span class="menu-item-parent">Parâmetros</span></a>
-                    </li>
+                    <% if (userAccess =='administrador') {%>
+                        <li <%if (pageName=='parameterview' ) {%> class='active'
+                            <%}%>>
+                                <a href="parameterview" title="Parâmetros"><span class="menu-item-parent">Parâmetros</span></a>
+                        </li>
+                        <%}%>
                 </ul>
             </li>
             <br />

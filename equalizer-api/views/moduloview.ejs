@@ -248,6 +248,13 @@
                                                         <i></i>
                                                     </label>
                                                 </label>
+                                                <br />
+                                                <section>
+                                                    <label class="checkbox">
+                                                    <input type="checkbox" id="chkDesligarEqualizacao" onchange="zerarDutyMax();" <% if (lastDutyMax != 0) { %> checked='checked' <% } %>>
+                                                    <i></i>Desligar equalização
+                                                </label>
+                                                </section>
                                             </div>
                                         </fieldset>
                                     </section>
@@ -602,6 +609,29 @@
                     });
                     setTimeout(function () { location.reload() }, 1000);
                 });
+            }
+            function zerarDutyMax() {
+                if ($("#chkDesligarEqualizacao").is(":checked")) {
+                    $.get("/moduloview/zerarDutyMax", null, function (data) {
+                        $.bigBox({
+                            title: "Equalização",
+                            content: data,
+                            color: "#659265",
+                            timeout: 1000,
+                            icon: "fa fa-check fadeInLeft animated"
+                        });
+                    });
+                }else{
+                    $.get("/moduloview/voltarDutyMax", null, function (data) {
+                        $.bigBox({
+                            title: "Equalização",
+                            content: data,
+                            color: "#659265",
+                            timeout: 1000,
+                            icon: "fa fa-check fadeInLeft animated"
+                        });
+                    });
+                }
             }
         </script>
         <% include partials/footer %>

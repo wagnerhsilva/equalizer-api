@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
+
 <head>
     <meta charset="utf-8">
     <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
@@ -51,27 +52,15 @@
 
 <body class="">
 
-<!-- HEADER -->
-<header id="header">
-    <div id="logo-group">
+    <!-- RIBBON -->
+    <div id="ribbon">
 
-        <!-- PLACE YOUR LOGO HERE -->
-        <span id="logo">
-                <img src="smartadmin/img/logoCM.png" alt="Equalizer" style="height: 25px; width: 80px;">
-            </span>
-        <!-- END LOGO PLACEHOLDER -->
-    </div>
-</header>
-<!-- END HEADER -->
-<!-- RIBBON -->
-<div id="ribbon">
-
-    <!-- breadcrumb -->
-    <ol class="breadcrumb">
-        <li>Login</li>
-    </ol>
-    <!-- end breadcrumb -->
-    <!-- You can also add more buttons to the
+        <!-- breadcrumb -->
+        <ol class="breadcrumb">
+            <li>Login</li>
+        </ol>
+        <!-- end breadcrumb -->
+        <!-- You can also add more buttons to the
     ribbon for further usability
 
     Example below:
@@ -82,83 +71,88 @@
     <span id="search" class="btn btn-ribbon" data-title="search"><i class="fa-search"></i> <span class="hidden-mobile">Search</span></span>
     </span> -->
 
-</div>
-<div id="content" class="container">
-
-    <br />
-    <br />
-    <br />
-    <br />
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    </div>
+    <div id="content" class="container">
+        <img src="smartadmin/img/cm_logo_blue.png" style="position:absolute; left:50%; margin-left:-13%;" />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <% if ( message.length > 0 ) { %>
-                <div id="divAlert" class="alert alert-warning fade in">
-                    <button class="close" data-dismiss="alert" onclick="fadeOut('divAlert')">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <% if ( message.length > 0 ) { %>
+                        <div id="divAlert" class="alert alert-warning fade in">
+                            <button class="close" data-dismiss="alert" onclick="fadeOut('divAlert')">
                         ×
                     </button>
-                    <i class="fa-fw fa fa-warning"></i>
-                    <strong>Warning</strong> <%= message %>
-                </div>
-                <% } %>
-                <div class="well no-padding">
-                    <form action="/login" method="POST" id="login-form" class="smart-form client-form">
-                        <header>
-                            Login
-                        </header>
+                            <i class="fa-fw fa fa-warning"></i>
+                            <strong>Warning</strong>
+                            <%= message %>
+                        </div>
+                        <% } %>
+                            <div class="well no-padding">
+                                <form action="/login" method="POST" id="login-form" class="smart-form client-form">
+                                    <header>
+                                        Login
+                                    </header>
 
-                        <fieldset>
+                                    <fieldset>
 
-                            <section>
-                                <label class="label">E-mail</label>
-                                <label class="input"> <i class="icon-append fa fa-envelope"></i>
+                                        <section>
+                                            <label class="label">E-mail</label>
+                                            <label class="input"> <i class="icon-append fa fa-envelope"></i>
                                     <input type="email" name="username" required>
                                     <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Por favor, entre com seu email</b></label>
-                            </section>
+                                        </section>
 
-                            <section>
-                                <label class="label">Password</label>
-                                <label class="input"> <i class="icon-append fa fa-lock"></i>
+                                        <section>
+                                            <label class="label">Password</label>
+                                            <label class="input"> <i class="icon-append fa fa-lock"></i>
                                     <input type="password" name="password" required>
                                     <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Entre com sua senha</b> </label>
-                                <div class="note">
-                                    <a href="/signup">Primeira vez? Registre-se.</a>
-                                </div>
-                            </section>
-                        </fieldset>
-                        <footer>
-                            <button type="submit" class="btn btn-primary">
+                                            <div class="note">
+                                                <a href="/signup">Primeira vez? Registre-se.</a>
+                                            </div>
+                                        </section>
+                                    </fieldset>
+                                    <footer>
+                                        <button type="submit" class="btn btn-primary">
                                 Entrar
                             </button>
-                        </footer>
-                    </form>
+                                    </footer>
+                                </form>
 
+                            </div>
                 </div>
+
             </div>
 
         </div>
-
     </div>
-</div>
-<!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script>
-    if (!window.jQuery) {
-        document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-    }
-</script>
+    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        if (!window.jQuery) {
+            document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
+        }
+    </script>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-<script>
-    if (!window.jQuery.ui) {
-        document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-    }
-</script>
-<script type="text/javascript">
-    function fadeOut(object) {
-        $("#"+object).fadeOut();
-    }
-</script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script>
+        if (!window.jQuery.ui) {
+            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
+        }
+    </script>
+    <script type="text/javascript">
+        function fadeOut(object) {
+            $("#" + object).fadeOut();
+        }
+    </script>
 </body>
 
 </html>

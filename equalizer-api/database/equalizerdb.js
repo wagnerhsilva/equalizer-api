@@ -29,6 +29,8 @@ var init = function () {
         db.run("CREATE INDEX IF NOT EXISTS idx_alarmlog_ata ON AlarmLog (dataHora)");
         db.run("CREATE INDEX IF NOT EXISTS idx_alarmlog_descricao ON AlarmLog (descricao)");
 
+        //Valor Default para Duty Max, caso reinicie a aplicação
+        db.run("UPDATE Parameters SET duty_max = '45000';");
     });
     db.close();
 };

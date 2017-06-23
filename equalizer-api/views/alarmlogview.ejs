@@ -125,7 +125,9 @@
                                 $scope.alarmlogs = res;
                             });
                             $scope.showCalendar = function (index) {
-                                setCalendar($scope.alarmlogs);
+                                $.get("/alarmlogview/getForCalendar", null, function (data) {
+                                    setCalendar(data);
+                                });
                             }
                             $scope.showGrid = function (index) {
                                 setGrid();
@@ -235,10 +237,10 @@
                 var eventos = [];
                 data.forEach(function (element) {
                     eventos.push({
-                        title: 'Evento de Alerta (' + element.nOcorrencias.toString() + ' ocorrência(s))',
+                        title: 'Evento de Alerta',
                         allDay: false,
-                        start: element.dataHora,
-                        description: element.descricao,
+                        start: element.Data,
+                        description: element.Ocorrencias.toString() + ' ocorrência(s) registrada(s) no total.',
                         className: ["event", "bg-color-greenLight"],
                         icon: 'fa-check'
                     });
