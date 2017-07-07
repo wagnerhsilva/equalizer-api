@@ -81,23 +81,25 @@
                                                 <b class="tooltip tooltip-bottom-right">Duty máx.</b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Delay para leitura de sensor</label>
+                                                <label class="label">Delay entre Leituras do Banco (ms)</label>
                                                 <label class="input">
-                                                <input type="text" name="Delay" placeholder="Delay para leitura de sensor" ng-model="parameter.delay" ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Delay para leitura de sensor</b> </label>
+                                                <input type="text" name="Delay" placeholder="Delay entre Leituras do banco (ms)" ng-model="parameter.delay" ng-disabled="acessoUsuario != 
+'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Delay entre Leituras do banco (ms)</b> </label>
                                             </section>
                                         </fieldset>
                                     </section>
                                     <section class="col-sm-6 col-md-6 col-lg-6">
                                         <fieldset>
                                             <section>
-                                                <label class="label">Intervalo para leitura de impedância</label>
+                                                <label class="label">Quantidade de Leitura Impedancia</label>
                                                 <label class="input">
-                                                <input type="text" name="num_cycles_var_read" placeholder="Intervalo para leitura de impedância" ng-model="parameter.num_cycles_var_read" ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Intervalo para leitura de impedância</b> </label>
+                                                <input type="text" name="num_cycles_var_read" placeholder="Quantidade de Leitura Impedancia " ng-model="parameter.num_cycles_var_read" 
+ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right">Quantidade de Leitura de impedância</b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Intervalo para escrita em gráfico</label>
+                                                <label class="label">Quantidade de Escrita em Gráfico</label>
                                                 <label class="input">
                                                 <input type="text" name="save_log_time" placeholder="Intervalo para escrita em gráfico" ng-model="parameter.save_log_time" ng-disabled="acessoUsuario != 'administrador'">
                                                 <b class="tooltip tooltip-bottom-right">Intervalo para escrita em gráfico</b> </label>
@@ -109,19 +111,19 @@
                                     <section class="col-sm-6 col-md-6 col-lg-6">
                                         <fieldset>
                                             <section>
-                                                <label class="label">Param. 1</label>
+                                                <label class="label">Delay entre Leitura de Baterias (ms)</label>
                                                 <label class="input">
                                                 <input type="text" name="param1" placeholder="Param. 1" ng-model="parameter.param1" ng-disabled="acessoUsuario != 'administrador'">
                                                 <b class="tooltip tooltip-bottom-right">Param. 1</b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Param. 2</label>
+                                                <label class="label">Timeout de Erro Leituras (seg)</label>
                                                 <label class="input">
                                                 <input type="text" name="param2" placeholder="Param. 2" ng-model="parameter.param2" ng-disabled="acessoUsuario != 'administrador'">
                                                 <b class="tooltip tooltip-bottom-right">Param. 2</b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Param. 3</label>
+                                                <label class="label">Quantidade de Tentativas de Timeout</label>
                                                 <label class="input">
                                                 <input type="text" name="param3" placeholder="Param. 3" ng-model="parameter.param3" ng-disabled="acessoUsuario != 'administrador'">
                                                 <b class="tooltip tooltip-bottom-right">Param. 3</b> </label>
