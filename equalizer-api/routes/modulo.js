@@ -37,6 +37,17 @@ router.post('/', function (req, res, next) {
 /* PUT /modulo/:id */
 router.put('/', function (req, res, next) {
     console.log(req.body);
-    Modulo.update(req.body);
-    res.json(req.body);
+    var moduloAnterior = Modulo.getById(req.body.id, function (err, modulo) {
+        if ((modulo.n_strings != req.body.n_strings) || (modulo.n_baterias_por_strings != req.body.n_baterias_por_strings)) {
+            var sqlite3 = require('sqlite3').verbose();
+            var db = new sqlite3.Database('equalizerdb');
+            db.run('PRAGMA busy_timeout = 60000;');
+            db.run('PRAGMA journal_mode=WAL;');
+            db.run('DELETE FROM DataLog;');
+            console.log("DataLog cleared");
+        }
+        Modulo.update(req.body);
+        res.json(req.body);
+    });
+
 });
