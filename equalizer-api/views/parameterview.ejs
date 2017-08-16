@@ -179,6 +179,12 @@ ng-disabled="acessoUsuario != 'administrador'">
                                     </div>
                                     <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="saveParameter();"
                                         style="float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;">Aplicar</button>
+                                    <button id="btnReiniciar" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" onclick="reboot();"
+                                        style="float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;">Reiniciar</button>
+                                    <button id="btnDesigarSNMP" class="btn btn-danger" ng-disabled="acessoUsuario != 'administrador'" onclick="offSNMP();"
+                                        style="float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;">Desligar SNMP</button>
+                                    <button id="btnLigarSNMP" class="btn btn-success" ng-disabled="acessoUsuario != 'administrador'" onclick="onSNMP();"
+                                        style="float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;">Ligar SNMP</button>
                             </form>
                         </div>
                     </section>
@@ -231,7 +237,39 @@ ng-disabled="acessoUsuario != 'administrador'">
 
         </div>
         <script>
-            
+            function reboot(){
+                $.get("/parameterview/reboot", null, function (data) {
+                        $.bigBox({
+                            title: "Parâmetros",
+                            content: data,
+                            color: "#659265",
+                            timeout: 1000,
+                            icon: "fa fa-check fadeInLeft animated"
+                        });
+                    });
+            }
+            function onSNMP(){
+                $.get("/parameterview/onSNMP", null, function (data) {
+                        $.bigBox({
+                            title: "Parâmetros",
+                            content: data,
+                            color: "#659265",
+                            timeout: 1000,
+                            icon: "fa fa-check fadeInLeft animated"
+                        });
+                    });
+            }
+            function offSNMP(){
+                $.get("/parameterview/offSNMP", null, function (data) {
+                        $.bigBox({
+                            title: "Parâmetros",
+                            content: data,
+                            color: "#659265",
+                            timeout: 1000,
+                            icon: "fa fa-check fadeInLeft animated"
+                        });
+                    });
+            }
         </script>
         <% include partials/footer %>
 </body>
