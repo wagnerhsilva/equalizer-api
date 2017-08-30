@@ -30,7 +30,7 @@ router.get('/', isAuthenticated, function (req, res, next) {
         */
 	if (obj == null || obj == undefined) {
             obj =  { mac_address: "", ip_address: "", gateway_ip: "", netmask: "" }
-        ;}'
+        ;}
         RedeSeguranca.getAll(function (err, redeSeguranca) {
             console.log(redeSeguranca.length);
             Usuario.getAll(function (err, usuarios) {
