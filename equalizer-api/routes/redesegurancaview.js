@@ -28,6 +28,9 @@ router.get('/', isAuthenticated, function (req, res, next) {
           gateway_ip: '10.0.1.1' }
        
         */
+	if (obj == null || obj == undefined) {
+            obj =  { mac_address: "", ip_address: "", gateway_ip: "", netmask: "" }
+        ;}'
         RedeSeguranca.getAll(function (err, redeSeguranca) {
             console.log(redeSeguranca.length);
             Usuario.getAll(function (err, usuarios) {
