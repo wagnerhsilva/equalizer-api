@@ -52,7 +52,8 @@ router.post('/', function (req, res, next) {
                         address: req.body.localAddress,
                         netmask: req.body.mascara,
                         gateway: req.body.gateway,
-                        dns: req.body.servidorDNS
+                        dns: req.body.servidorDNS,
+                        mac_address: req.body.mac
                     }
                 }
             });
