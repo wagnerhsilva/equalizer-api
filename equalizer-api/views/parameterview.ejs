@@ -129,13 +129,13 @@ ng-disabled="acessoUsuario != 'administrador'">
                                                 <b class="tooltip tooltip-bottom-right">Param. 3</b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Param. 4</label>
+                                                <label class="label">Destino (Trap)</label>
                                                 <label class="input">
                                                 <input type="text" name="param1" placeholder="Param. 4" ng-model="parameter.param4" ng-disabled="acessoUsuario != 'administrador'">
                                                 <b class="tooltip tooltip-bottom-right">Param. 4</b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Param. 5</label>
+                                                <label class="label">Porta (Trap)</label>
                                                 <label class="input">
                                                 <input type="text" name="param5" placeholder="Param. 5" ng-model="parameter.param5" ng-disabled="acessoUsuario != 'administrador'">
                                                 <b class="tooltip tooltip-bottom-right">Param. 5</b> </label>
@@ -145,13 +145,13 @@ ng-disabled="acessoUsuario != 'administrador'">
                                     <section class="col-sm-6 col-md-6 col-lg-6">
                                         <fieldset>
                                             <section>
-                                                <label class="label">Param. 6</label>
+                                                <label class="label">Periodo de Envio (Trap)</label>
                                                 <label class="input">
                                                 <input type="text" name="param6" placeholder="Param. 6" ng-model="parameter.param6" ng-disabled="acessoUsuario != 'administrador'">
                                                 <b class="tooltip tooltip-bottom-right">Param. 6</b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Param. 7</label>
+                                                <label class="label">Periodo de Atualizacao (Trap)</label>
                                                 <label class="input">
                                                 <input type="text" name="param7" placeholder="Param. 7" ng-model="parameter.param7" ng-disabled="acessoUsuario != 'administrador'">
                                                 <b class="tooltip tooltip-bottom-right">Param. 7</b> </label>
@@ -182,9 +182,9 @@ ng-disabled="acessoUsuario != 'administrador'">
                                     <button id="btnReiniciar" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" onclick="reboot();"
                                         style="float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;">Reiniciar</button>
                                     <button id="btnDesigarSNMP" class="btn btn-danger" ng-disabled="acessoUsuario != 'administrador'" onclick="offSNMP();"
-                                        style="float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;">Desligar SNMP</button>
+                                        style="display:none; float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;">Desligar SNMP</button>
                                     <button id="btnLigarSNMP" class="btn btn-success" ng-disabled="acessoUsuario != 'administrador'" onclick="onSNMP();"
-                                        style="float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;">Ligar SNMP</button>
+                                        style="display:none; float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;">Ligar SNMP</button>
                             </form>
                         </div>
                     </section>
