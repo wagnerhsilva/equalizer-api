@@ -34,7 +34,7 @@ var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
-    db.all("SELECT id, dataHora, descricao, n_ocorrencias FROM AlarmLog ORDER BY dataHora desc limit 500", function (err, rows) {
+    db.all("SELECT id, dataHora, descricao, n_ocorrencias FROM AlarmLog ORDER BY date(dataHora) desc limit 500", function (err, rows) {
         var alarmLogs = [];
         rows.forEach(function row(row) {
             alarmLogs.push(new createAlarmLog(row.id, new Date(row.dataHora), row.descricao, row.n_ocorrencias));
