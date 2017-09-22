@@ -14,11 +14,7 @@ var init = function () {
         db.run("CREATE TABLE IF NOT EXISTS TimeServer (id INTEGER PRIMARY KEY AUTOINCREMENT, timeServerAddress1 TEXT, timeServerAddress1_complemento TEXT, timeServerAddress2 TEXT, timeServerAddress2_complemento TEXT, timeServerAddress3 TEXT, timeServerAddress3_complemento TEXT, connectionRetries INTEGER, timeZone TEXT, automAdjustTimeDaylightSavingChanges INTEGER)");
         db.run("CREATE TABLE IF NOT EXISTS Usuario (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, sobreNome TEXT, telefone TEXT, email TEXT, senha TEXT, acesso TEXT)");
         db.run("CREATE TABLE IF NOT EXISTS ApelidoString ( String TEXT, Apelido TEXT )");
-
-        //Triggers
-        db.run("CREATE TRIGGER IF NOT EXISTS alertOcurrences AFTER UPDATE ON DataLogRT BEGIN UPDATE ALARMLOG SET N_OCORRENCIAS = N_OCORRENCIAS + 1 WHERE DATE(DATAHORA) = DATE(datetime('now','localtime')) AND DESCRICAO LIKE '%' || NEW.string || '-' || NEW .bateria ||'%'; END");
-        db.run("CREATE TRIGGER IF NOT EXISTS alertOcurrencesParam AFTER UPDATE ON Parameters BEGIN UPDATE ALARMLOG SET N_OCORRENCIAS = N_OCORRENCIAS + 1 WHERE DATE(DATAHORA) = DATE(datetime('now','localtime')) AND (DESCRICAO LIKE '%Barramento%' OR DESCRICAO LIKE '%Target%'); END");
-        
+      
         //INDEXES
         db.run("CREATE INDEX IF NOT EXISTS idx_alarmlog_ata ON AlarmLog (dataHora)");
         db.run("CREATE INDEX IF NOT EXISTS idx_alarmlog_descricao ON AlarmLog (descricao)");
