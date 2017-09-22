@@ -21,6 +21,7 @@ var init = function () {
         db.run("CREATE TRIGGER IF NOT EXISTS raisealertparamdiskcapacity after  UPDATE  ON parameters WHEN (  SELECT count(*)  FROM alarmlog  WHERE  ID = (SELECT MAX(ID)  FROM Alarmlog  WHERE  param = 'disk')   AND val = new.disk_capacity ) <= 0  BEGIN  INSERT INTO alarmlog  (  datahora,  descricao,  emailenviado,  n_ocorrencias,     param,     val  )  SELECT datetime('now','localtime') ,'Alerta de Disco, utilização em ' || new.disk_capacity || '%',0,1,   'disk',   new.disk_capacity WHERE  new.disk_capacity > 95  UNION  SELECT datetime('now','localtime'),'Registro de capacidade do banco dentro do limite',0 ,1,  'disk',   new.disk_capacity FROM alarmeconfig  WHERE new.disk_capacity <= 95; END"); 
 
 		
+		
         //INDEXES
         db.run("CREATE INDEX IF NOT EXISTS idx_alarmlog_ata ON AlarmLog (dataHora)");
         db.run("CREATE INDEX IF NOT EXISTS idx_alarmlog_descricao ON AlarmLog (descricao)");
