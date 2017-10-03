@@ -26,14 +26,21 @@ router.get('/showHideHeaderInfo', function (req, res, next) {
     console.log("ShowHideHeaderInfo = " + global.showHeaderInfo);
 });
 router.get('/clearDb', function (req, res, next) {
-    var sqlite3 = require('sqlite3').verbose();
-    var db = new sqlite3.Database('equalizerdb');
-    db.run('PRAGMA busy_timeout = 60000;');
-    db.run('PRAGMA journal_mode=WAL;');
-    db.run('DELETE FROM DataLog;');
-    db.run('DELETE FROM AlarmLog;');
-    db.run('VACUUM;');
-    console.log("DB cleared");
+      child_process.exec('sh /var/www/equalizer-api/delete_logs.sh', (err, stdou
+          if (err) {                                                            
+              console.error(err);                                               
+              return;                                                           
+          }                                                                     
+          console.log("Script delecao de logs executado");                      
+      });
+//    var sqlite3 = require('sqlite3').verbose();
+//    var db = new sqlite3.Database('equalizerdb');
+//    db.run('PRAGMA busy_timeout = 60000;');
+//    db.run('PRAGMA journal_mode=WAL;');
+//    db.run('DELETE FROM DataLog;');
+//    db.run('DELETE FROM AlarmLog;');
+//    db.run('VACUUM;');
+//    console.log("DB cleared");
 });
 router.get('/clearLog', function (req, res, next) {
     child_process.exec('rm -r /var/www/serial_service/debug.txt; rm -r /var/www/equalizer-api/equalizer-api/debug_web.txt;', (err, stdout, stderr) => {
