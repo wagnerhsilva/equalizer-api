@@ -265,7 +265,7 @@
                                     <button id="btnResetarPadroes" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="resetarPadroes();">Resetar Padrões</button>
                                     <button id="btnShowHideHeaderInfo" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="showHideHeaderInfo();">Mostrar/Esconder Tensão de Target e Barramento</button>
                                     <button id="btnClearDbData" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" onclick="clearDbData();">Apagar Dados BD</button>
-                                    <button id="btnClearLog" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" onclick="clearLog();">Apagar Log</button>
+                                    <button id="btnClearLog" style="display:none" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" onclick="clearLog();" visible="false">Apagar Log</button>
                                     <button id="btnDownloadDB" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" onclick="downloadDB();">Download DB</button>
                                 </footer>
                             </form>
