@@ -26,8 +26,8 @@ router.get('/showHideHeaderInfo', function (req, res, next) {
     console.log("ShowHideHeaderInfo = " + global.showHeaderInfo);
 });
 router.get('/clearDb', function (req, res, next) {
-      child_process.exec('sh /var/www/equalizer-api/delete_logs.sh', (err, stdou
-          if (err) {                                                            
+      child_process.exec('sh /var/www/equalizer-api/delete_logs.sh', (err, stdout, stderr) => {
+          if (err) { 
               console.error(err);                                               
               return;                                                           
           }                                                                     
