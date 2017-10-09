@@ -99,18 +99,18 @@
                                 </section>
                                 <section class="col-sm-12 col-md-12 col-lg-12">
                                     <section class="col-sm-3 col-md-3 col-lg-2" style="margin-top: 5px;">
-                                        <label class="label">Endereço 1 Time Server</label>
+                                        <label class="label">Endereço Time Server</label>
                                     </section>
                                     <section class="col-sm-4 col-md-4 col-lg-3">
                                         <label class="input">
-         <input type="text" ng-model="timeserver[0].timeServerAddress1" id="txtServer1" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço 1 Time Server" style="margin-right: 5px;">
-         <b class="tooltip tooltip-bottom-right">Endereço 1 Time Server</b>
+         <input type="text" ng-model="timeserver[0].timeServerAddress1" id="txtServer1" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço Time Server" style="margin-right: 5px;">
+         <b class="tooltip tooltip-bottom-right">Endereço Time Server</b>
         </label>
                                     </section>
                                     <section class="col-sm-4 col-md-4 col-lg-2">
                                         <label class="input">
-         <input type="text" ng-model="timeserver[0].timeServerAddress1_complemento" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço 1 Time Server"  style="margin-left: 5px;">
-         <b class="tooltip tooltip-bottom-right">Endereço 1 Time Server</b>
+         <input type="text" ng-model="timeserver[0].timeServerAddress1_complemento" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço Time Server"  style="margin-left: 5px;display:none;">
+         <b class="tooltip tooltip-bottom-right">Endereço Time Server</b>
         </label>
                                     </section>
                                     <section class="col-sm-4 col-md-3 col-lg-2">
@@ -118,62 +118,6 @@
                                             style="margin-left: 20px;width: 100px; height: 32px;" />
                                     </section>
                                 </section>
-                                <section class="col-sm-12 col-md-12 col-lg-12">
-                                    <section class="col-sm-3 col-md-3 col-lg-2" style="margin-top: 5px;">
-                                        <label class="label">Endereço 2 Time Server</label>
-                                    </section>
-                                    <section class="col-sm-4 col-md-4 col-lg-3">
-                                        <label class="input">
-         <input type="text" ng-model="timeserver[0].timeServerAddress2"  id="txtServer2" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço 2 Time Server" style="margin-right: 5px;">
-         <b class="tooltip tooltip-bottom-right">Endereço 2 Time Server</b>
-        </label>
-                                    </section>
-                                    <section class="col-sm-4 col-md-4 col-lg-2">
-                                        <label class="input">
-         <input type="text"  ng-model="timeserver[0].timeServerAddress2_complemento" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço 2 Time Server"  style="margin-left: 5px;">
-         <b class="tooltip tooltip-bottom-right">Endereço 2 Time Server</b>
-        </label>
-                                    </section>
-                                    <section class="col-sm-4 col-md-3 col-lg-2">
-                                        <input type="button" value="Testar" onclick="testServer(2);" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'"
-                                            style="margin-left: 20px;width: 100px; height: 32px;" />
-                                    </section>
-                                </section>
-                                <section class="col-sm-12 col-md-12 col-lg-12">
-                                    <section class="col-sm-3 col-md-3 col-lg-2" style="margin-top: 5px;">
-                                        <label class="label">Endereço 3 Time Server</label>
-                                    </section>
-                                    <section class="col-sm-4 col-md-4 col-lg-3">
-                                        <label class="input">
-         <input type="text" ng-model="timeserver[0].timeServerAddress3"  id="txtServer3" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço 3 Time Server" style="margin-right: 5px;">
-         <b class="tooltip tooltip-bottom-right">Endereço 3 Time Server</b>
-        </label>
-                                    </section>
-                                    <section class="col-sm-4 col-md-4 col-lg-2">
-                                        <label class="input">
-         <input type="text"ng-model="timeserver[0].timeServerAddress3_complemento" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço 3 Time Server"  style="margin-left: 5px;">
-         <b class="tooltip tooltip-bottom-right">Endereço 3 Time Server</b>
-        </label>
-                                    </section>
-                                    <section class="col-sm-4 col-md-3 col-lg-2">
-                                        <input type="button" value="Testar" onclick="testServer(3);" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'"
-                                            style="margin-left: 20px;width: 100px; height: 32px;" />
-                                    </section>
-                                </section>
-                                <section class="col-sm-12 col-md-12 col-lg-12">
-                                    <section class="col-sm-3 col-md-3 col-lg-2" style="margin-top: 5px;">
-                                        <label class="label">Tentativas de conexão</label>
-                                    </section>
-                                    <section class="col-sm-4 col-md-4 col-lg-3">
-                                        <label class="input">
-         <input type="number" ng-model="timeserver[0].connectionRetries" ng-disabled="acessoUsuario != 'administrador'" placeholder="Tentativas de conexão" style="margin-right: 5px;">
-         <b class="tooltip tooltip-bottom-right">Tentativas de conexão</b>
-        </label>
-                                    </section>
-                                </section>
-                            </fieldset>
-                        </section>
-                        <section>
                             <button ng-click="update()" class="btn btn-primary pull-right" ng-disabled="acessoUsuario != 'administrador'" style="width: 100px; height: 30px;">
       Salvar
      </button>
@@ -208,7 +152,7 @@
                                     icon: "fa fa-check fadeInLeft animated",
                                     number: timeserver._id
                                 });
-                                setTime();
+                                //setTime(); A hora do servido SNTP nao e feita aqui, mas no boot
                             }
                             $scope.nomeUsuario = '<%= username %>';
                             $scope.acessoUsuario = '<%= userAccess %>';
