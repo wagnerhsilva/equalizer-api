@@ -1,12 +1,17 @@
 var sqlite3 = require('sqlite3').verbose();
 var bCrypt = require('bcrypt-nodejs');
 
-var createStatusModulo = function (string, bateria, temperatura, impedancia, tensao, equalizacao, min_temp, max_temp, min_imp, max_imp, min_tensao, max_tensao, min_target, max_target) {
+var createStatusModulo = function (string, bateria, temperatura, impedancia, tensao, equalizacao, min_temp, max_temp, min_imp, max_imp, min_tensao, max_tensao, min_target, max_target, tensao_nominal_str) {
+    var impedancial_width = 1;
+    if(tensao_nominal_str == '2v'){
+        impedancial_width = 3;
+    }
+    
     return {
         string: string,
         bateria: bateria,
         temperatura: (temperatura / 10).toFixed(1),
-        impedancia: (impedancia / 100).toFixed(1),
+        impedancia: (impedancia / 100).toFixed(impedancial_width),
         tensao: (tensao / 1000).toFixed(3),
         equalizacao: equalizacao,
         min_temp: min_temp,
@@ -61,6 +66,7 @@ var get = function (data) {
     strSql = strSql + "		    DLOG.IMPEDANCIA, ";
     strSql = strSql + "		    DLOG.TENSAO, ";
     strSql = strSql + "		    DLOG.EQUALIZACAO, ";
+    strSql = strSql + "         MODL.tensao_nominal, ";
     strSql = strSql + "		    ALAR.* ";
     strSql = strSql + "FROM ( ";
     strSql = strSql + "		    SELECT DISTINCT STRING, ";
@@ -74,7 +80,8 @@ var get = function (data) {
     strSql = strSql + "				        BATERIA ";
     strSql = strSql + "		  ";
     strSql = strSql + "     ) AS 						RVAL, ";
-    strSql = strSql + "			        ALARMECONFIG 	ALAR ";
+    strSql = strSql + "			        ALARMECONFIG 	ALAR, ";
+    strSql = strSql + "                 MODULO    MODL ";
     strSql = strSql + "INNER JOIN 	    DATALOGRT 		DLOG ON (RVAL.ID        = DLOG.ID) ";
     strSql = strSql + "LEFT  JOIN 	    APELIDOSTRING	APEL ON (APEL.STRING    = RVAL.STRING) ";
     strSql = strSql + "ORDER BY 	CAST(SUBSTR(RVAL.STRING, 2, length(RVAL.STRING)) as integer), ";
@@ -83,7 +90,10 @@ var get = function (data) {
     db.all(strSql, function (err, rows) {
         var statusModulos = [];
         rows.forEach(function row(row) {
-            statusModulos.push(new createStatusModulo(row.STRING, row.BATERIA, row.temperatura, row.impedancia, row.tensao, row.equalizacao, row.alarme_nivel_temp_min, row.alarme_nivel_temp_max, row.alarme_nivel_imped_min, row.alarme_nivel_imped_max, row.alarme_nivel_tensao_min, row.alarme_nivel_tensao_max, row.alarme_nivel_target_min, row.alarme_nivel_target_max));
+            statusModulos.push(new createStatusModulo(row.STRING, row.BATERIA, row.temperatura,
+            row.impedancia, row.tensao, row.equalizacao, row.alarme_nivel_temp_min, row.alarme_nivel_temp_max,
+            row.alarme_nivel_imped_min, row.alarme_nivel_imped_max, row.alarme_nivel_tensao_min,
+            row.alarme_nivel_tensao_max, row.alarme_nivel_target_min, row.alarme_nivel_target_max, row.tensao_nominal));
         });
         data(err, statusModulos);
     });

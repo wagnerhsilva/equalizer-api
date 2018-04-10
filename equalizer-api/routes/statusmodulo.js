@@ -7,7 +7,7 @@ router.get('/', function (req, res, next) {
     StatusModulo.get(function (err, statusModulos) {
         console.log("getStatusModulo");
         if (err) return next(err);
-        console.log(statusModulos);
+        // console.log(statusModulos);
         res.json(statusModulos);
     });
 });

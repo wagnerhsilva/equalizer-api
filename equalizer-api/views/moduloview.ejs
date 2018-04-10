@@ -72,7 +72,7 @@
                                                 <label class="label">Tensão nominal da bateria</label>
                                                 <label class="select">
                                             <select name="multipleSelect" id="multipleSelect"  ng-disabled="acessoUsuario != 'administrador'" ng-model="modulos[0].tensao_nominal" >
-                                                <option value="6v">6v</option>
+                                                <option value="2v">2v</option>
                                                 <option value="12v">12v</option>
                                             </select>
                                             <i></i>
@@ -251,7 +251,7 @@
                                                 <br />
                                                 <section>
                                                     <label class="checkbox">
-                                                    <input type="checkbox" id="chkDesligarEqualizacao" onchange="zerarDutyMax();" <% if (lastDutyMax != 0) { %> checked='checked' <% } %>>
+                                                    <input type="checkbox" id="chkDesligarEqualizacao" onchange="zerarDutyMax();" ng-disabled="acessoUsuario != 'administrador'" <% if (lastDutyMax != 0) { %> checked='checked' <% } %>>
                                                     <i></i>Desligar equalização
                                                 </label>
                                                 </section>
