@@ -64,6 +64,19 @@
                                                         <b class="tooltip tooltip-bottom-right">Servidor DNS</b>
                                                         </label>
                                                     </section>
+
+                                                    <section>
+                                                        <label class="label">Periodo de Envio (Trap)</label>
+                                                        <label class="input">
+                                                        <input type="text" name="param6" placeholder="Param. 6" value="<%= trap.param6 %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                        <b class="tooltip tooltip-bottom-right">Param. 6</b> </label>
+                                                    </section>
+                                                    <section>
+                                                        <label class="label">Periodo de Atualizacao (Trap)</label>
+                                                        <label class="input">
+                                                        <input type="text" name="param7" placeholder="Param. 7" value="<%= trap.param7 %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                        <b class="tooltip tooltip-bottom-right">Param. 7</b> </label>
+                                                    </section>
                                                 </fieldset>
                                             </section>
                                             <section class="col-sm-6 col-md-6 col-lg-6">
@@ -112,6 +125,18 @@
                                                             </select>
                                                             <i></i>
                                                         </label>
+                                                    </section>
+                                                     <section>
+                                                        <label class="label">Destino (Trap)</label>
+                                                        <label class="input">
+                                                        <input type="text" name="param4" placeholder="Param. 4" value="<%= trap.param4 %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                        <b class="tooltip tooltip-bottom-right">Param. 4</b> </label>
+                                                    </section>
+                                                    <section>
+                                                        <label class="label">Porta (Trap)</label>
+                                                        <label class="input">
+                                                        <input type="text" name="param5" placeholder="Param. 5" value="<%= trap.param5 %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                        <b class="tooltip tooltip-bottom-right">Param. 5</b> </label>
                                                     </section>
                                                     <section>
                                                         <button type="submit" class="btn btn-primary pull-right" style="width: 100px; height: 30px;" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>

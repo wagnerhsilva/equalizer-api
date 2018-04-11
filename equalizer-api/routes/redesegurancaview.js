@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Usuario = require('../models/Usuario');
 var RedeSeguranca = require('../models/RedeSeguranca');
+var Parameter = require('../models/Parameters');
 var getMac = require('getmac');
 var ip = require('ip');
 var network = require('network');
@@ -33,9 +34,11 @@ router.get('/', isAuthenticated, function (req, res, next) {
         ;}
         RedeSeguranca.getAll(function (err, redeSeguranca) {
             console.log(redeSeguranca.length);
-            Usuario.getAll(function (err, usuarios) {
-                if (err) return next(err);
-                res.render('redesegurancaview', { title: 'Rede & Segurança', pageName: 'redesegurancaview', username: req.user.nome, userAccess: req.user.acesso, usuarios: usuarios, network: obj, redeSeguranca: redeSeguranca, showHeaderData: global.showHeaderInfo });
+            Parameter.getTrap(function(err, trap){
+                Usuario.getAll(function (err, usuarios) {
+                    if (err) return next(err);
+                    res.render('redesegurancaview', { title: 'Rede & Segurança', pageName: 'redesegurancaview', username: req.user.nome, userAccess: req.user.acesso, usuarios: usuarios, network: obj, redeSeguranca: redeSeguranca, trap: trap, showHeaderData: global.showHeaderInfo });
+                });
             });
         });
     })
@@ -64,6 +67,7 @@ router.post('/', function (req, res, next) {
             console.log("Erro ao definir dados rede");
             console.log(ex);
         }
+
     RedeSeguranca.getAll(function (err, redeSeguranca) {
         if (redeSeguranca.length > 0) {
             RedeSeguranca.update(req.body);
@@ -73,6 +77,18 @@ router.post('/', function (req, res, next) {
             res.redirect("redesegurancaview");
         }
     });
+    try{
+        parameter = {
+        param4: req.body.param4,
+        param5: req.body.param5,
+        param6: req.body.param6,
+        param7: req.body.param7
+        };
+        Parameter.updateTrap(parameter);
+    } catch(ex){
+        console.log("Erro configurando trap");
+        console.log(ex);
+    }
 });
 
 module.exports = router;

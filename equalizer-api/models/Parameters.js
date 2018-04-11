@@ -37,6 +37,41 @@ var save = function (parameter, err) {
     stmt.finalize();
     db.close();
 }
+
+var updateTrap = function(parameter){
+    console.log("Update Trap");
+    console.log(parameter);
+    var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 60000;');
+    db.run('PRAGMA journal_mode=WAL;');
+    db.run("UPDATE Parameters SET param4 = $param4, param5 = $param5, param6 = $param6, param7 = $param7"
+        , {
+            $param4: parameter.param4,
+            $param5: parameter.param5,
+            $param6: parameter.param6,
+            $param7: parameter.param7
+        });
+    db.close();
+}
+
+var getTrap = function(data){
+    var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 60000;');
+    db.run('PRAGMA journal_mode=WAL;');
+    db.get("SELECT param4, param5, param6, param7 FROM Parameters LIMIT 1", function (err, row) {
+        if (row) {
+            var parameter = { param4: row.param4, 
+                            param5: row.param5, 
+                            param6: row.param6, 
+                            param7: row.param7};
+            data(err, parameter);
+        }
+        else
+            data(err, null);
+    });
+    db.close();
+}
+
 var getLast = function (data) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
@@ -60,8 +95,8 @@ var update = function (parameter) {
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
     db.run("UPDATE Parameters SET duty_min = $duty_min, duty_max = $duty_max, delay = $delay, num_cycles_var_read = $num_cycles_var_read," 
-                                    +" save_log_time = $save_log_time, param1 = $param1, param2 = $param2, param3 = $param3, param4 = $param4,"
-                                    +" param5 = $param5, param6 = $param6, param7 = $param7, param8 = $param8, param9 = $param9, param10 = $param10"
+                                    +" save_log_time = $save_log_time, param1 = $param1, param2 = $param2, param3 = $param3,"
+                                    +" param8 = $param8, param9 = $param9, param10 = $param10"
         , {
             $duty_min: parameter.duty_min,
             $duty_max: parameter.duty_max,
@@ -71,10 +106,6 @@ var update = function (parameter) {
             $param1: parameter.param1,
             $param2: parameter.param2,
             $param3: parameter.param3,
-            $param4: parameter.param4,
-            $param5: parameter.param5,
-            $param6: parameter.param6,
-            $param7: parameter.param7,
             $param8: parameter.param8,
             $param9: parameter.param9,
             $param10: parameter.param10
@@ -102,5 +133,7 @@ module.exports.save = save;
 module.exports.createParameters = createParameters;
 module.exports.getLast = getLast;
 module.exports.update = update;
+module.exports.updateTrap = updateTrap;
+module.exports.getTrap = getTrap;
 module.exports.zerarDutyMax = zerarDutyMax;
 module.exports.voltarDutyMax = voltarDutyMax;
