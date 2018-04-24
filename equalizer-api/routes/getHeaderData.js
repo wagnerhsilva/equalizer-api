@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
 });
 /* GET /timeserver/id */
 router.get('/:id', function (req, res, next) {
-
+ 
 });
 module.exports = router;
 /* POST */

@@ -1,12 +1,27 @@
 var sqlite3 = require('sqlite3').verbose();
 var bCrypt = require('bcrypt-nodejs');
 
-var createStatusModulo = function (string, bateria, temperatura, impedancia, tensao, equalizacao, min_temp, max_temp, min_imp, max_imp, min_tensao, max_tensao, min_target, max_target, tensao_nominal_str) {
+function toUnique(arr){
+    o={}
+    arr.forEach(function(e){
+        o[e]=true
+    })
+    return Object.keys(o)
+}
+
+var createStatusModulo = function (string, bateria, temperatura, impedancia, tensao, equalizacao,
+ min_temp, max_temp, min_imp, max_imp, min_tensao, max_tensao,
+  min_target, max_target, tensao_nominal_str, baterias_por_hr) 
+{
     var impedancial_width = 1;
+    var total = 0;
+    var target = 0;
+    var max_t = 12;
     if(tensao_nominal_str == '2v'){
         impedancial_width = 3;
+        max_t = 2;
     }
-    
+
     return {
         string: string,
         bateria: bateria,
@@ -22,9 +37,10 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
         max_tensao: max_tensao,
         min_target: min_target,
         max_target: max_target,
-        percentualTensao: 100 - (((parseFloat((tensao / 1000)) / parseFloat(16)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(16)) * 100.00)),
+        percentualTensao: 100 - (((parseFloat((tensao / 1000)) / parseFloat(max_t)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(max_t)) * 100.00)),
         precentualMinTensao: (((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00)),
-        percentualEqualizacao: equalizacao / 60000 * 100
+        percentualEqualizacao: equalizacao / 60000 * 100,
+        baterias_por_hr: baterias_por_hr
     }
 }
 var createChart = function (data, max_temperatura, max_impedancia, max_tensao, min_temperatura, min_impedancia, min_tensao, avg_temperatura, avg_impedancia, avg_tensao,
@@ -67,38 +83,77 @@ var get = function (data) {
     strSql = strSql + "		    DLOG.TENSAO, ";
     strSql = strSql + "		    DLOG.EQUALIZACAO, ";
     strSql = strSql + "         MODL.tensao_nominal, ";
+    strSql = strSql + "         RVAL.baterias_por_hr, ";
+    strSql = strSql + "         RVAL.STRING as string_name, ";
     strSql = strSql + "		    ALAR.* ";
     strSql = strSql + "FROM ( ";
     strSql = strSql + "		    SELECT DISTINCT STRING, ";
     strSql = strSql + "						    BATERIA, ";
+    strSql = strSql + "                         baterias_por_hr, ";
     strSql = strSql + "						    MAX(DATALOGRT.ID) ID ";
-    strSql = strSql + " ";
+
     strSql = strSql + "		    FROM        DATALOGRT, MODULO ";
     strSql = strSql + "		    WHERE 	CAST(SUBSTR(DATALOGRT.BATERIA, 2, length(DATALOGRT.BATERIA)) as integer) <= MODULO.N_BATERIAS_POR_STRINGS ";
     strSql = strSql + "		    AND		CAST(SUBSTR(DATALOGRT.STRING, 2, length(DATALOGRT.STRING)) as integer) <= MODULO.N_STRINGS ";
     strSql = strSql + "		    GROUP BY    STRING, ";
     strSql = strSql + "				        BATERIA ";
-    strSql = strSql + "		  ";
+    
     strSql = strSql + "     ) AS 						RVAL, ";
     strSql = strSql + "			        ALARMECONFIG 	ALAR, ";
-    strSql = strSql + "                 MODULO    MODL ";
+    strSql = strSql + "                 MODULO          MODL ";
     strSql = strSql + "INNER JOIN 	    DATALOGRT 		DLOG ON (RVAL.ID        = DLOG.ID) ";
     strSql = strSql + "LEFT  JOIN 	    APELIDOSTRING	APEL ON (APEL.STRING    = RVAL.STRING) ";
     strSql = strSql + "ORDER BY 	CAST(SUBSTR(RVAL.STRING, 2, length(RVAL.STRING)) as integer), ";
-    strSql = strSql + "CAST(SUBSTR(RVAL.BATERIA, 2, length(RVAL.BATERIA)) as integer)";
+    strSql = strSql + "CAST(SUBSTR(RVAL.BATERIA, 2, length(RVAL.BATERIA)) as integer);";
+
 
     db.all(strSql, function (err, rows) {
         var statusModulos = [];
+        var strings = [];
         rows.forEach(function row(row) {
             statusModulos.push(new createStatusModulo(row.STRING, row.BATERIA, row.temperatura,
-            row.impedancia, row.tensao, row.equalizacao, row.alarme_nivel_temp_min, row.alarme_nivel_temp_max,
-            row.alarme_nivel_imped_min, row.alarme_nivel_imped_max, row.alarme_nivel_tensao_min,
-            row.alarme_nivel_tensao_max, row.alarme_nivel_target_min, row.alarme_nivel_target_max, row.tensao_nominal));
+                        row.impedancia, row.tensao, row.equalizacao, row.alarme_nivel_temp_min, row.alarme_nivel_temp_max,
+                        row.alarme_nivel_imped_min, row.alarme_nivel_imped_max, row.alarme_nivel_tensao_min,
+                        row.alarme_nivel_tensao_max, row.alarme_nivel_target_min, row.alarme_nivel_target_max, row.tensao_nominal,
+                        row.baterias_por_hr));
+            strings.push(row.string_name);
         });
-        data(err, statusModulos);
+
+        var uniques = toUnique(strings);
+        sql = "SELECT tensao, target FROM Medias WHERE id IN ( ";
+        uniques.forEach(function el(e){
+            var name = e.substr(1);
+            iname = parseInt(name) - 1;
+            name = iname.toString();
+            sql += name + ", ";
+        });
+        sql = sql.slice(0, -2);
+        sql += " ) ORDER BY id ASC;";
+        db.all(sql, function(qerr, qrows){
+            /*
+             * Sorry, can't work with the Angular controller
+             * implemented in statusmoduloview, I can't make it
+             * receive complex object and correctly select 
+             * fields
+            */
+            var c = 0, k = 0;
+            for(c = 0; c < statusModulos.length; c += 1){
+                var string = strings[c];
+                var name = string.substr(1);
+                iname = parseInt(name) - 1;
+                for(k = 0; k < qrows.length; k += 1){
+                    if(k === iname){
+                        statusModulos[c].target = qrows[k].target;
+                        statusModulos[c].str_tensao = qrows[k].tensao;
+                    }
+                }
+            } 
+            data(err, statusModulos);
+        });
     });
     db.close();
 }
+
 var getChartDay = function (data) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');

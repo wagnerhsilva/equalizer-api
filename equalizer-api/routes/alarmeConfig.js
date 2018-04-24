@@ -34,7 +34,6 @@ router.post('/', function (req, res, next) {
 });
 /* PUT /alarmeConfig/:id */
 router.put('/', function (req, res, next) {
-    console.log(req.body);
     AlarmeConfig.update(req.body);
     res.json(req.body);
 });

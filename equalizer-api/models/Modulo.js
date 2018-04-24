@@ -1,7 +1,9 @@
 var sqlite3 = require('sqlite3').verbose();
 var bCrypt = require('bcrypt-nodejs');
 
-var createModulo = function (id, descricao, tensao_nominal, capacidade_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, tipo, data_instalacao, conf_alarme_id) {
+var createModulo = function (id, descricao, tensao_nominal, capacidade_nominal, n_strings, n_baterias_por_strings, contato,
+                         localizacao, fabricante, tipo, data_instalacao, conf_alarme_id, baterias_por_hr) 
+{
     return {
         id: id,
         descricao: descricao,
@@ -14,7 +16,8 @@ var createModulo = function (id, descricao, tensao_nominal, capacidade_nominal, 
         fabricante: fabricante,
         tipo: tipo,
         data_instalacao: data_instalacao,
-        conf_alarme_id: conf_alarme_id
+        conf_alarme_id: conf_alarme_id,
+        baterias_por_hr: baterias_por_hr
     }
 }
 var save = function (modulo) {
@@ -22,9 +25,9 @@ var save = function (modulo) {
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
     var stmt = db.prepare("INSERT INTO Modulo(descricao, tensao_nominal, capacidade_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, " +
-                            "tipo, data_instalacao, conf_alarme_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+                            "tipo, data_instalacao, conf_alarme_id, baterias_por_hr) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
     stmt.run(modulo.descricao, modulo.tensao_nominal, modulo.capacidade_nominal, modulo.n_strings, modulo.n_baterias_por_strings, modulo.contato, modulo.localizacao, modulo.fabricante, 
-                modulo.tipo, modulo.data_instalacao, modulo.conf_alarme_id);
+                modulo.tipo, modulo.data_instalacao, modulo.conf_alarme_id, modulo.baterias_por_hr);
     stmt.finalize();
     db.close();
 }
@@ -32,12 +35,12 @@ var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
-    db.all("SELECT id, descricao, tensao_nominal, capacidade_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, tipo, data_instalacao, conf_alarme_id " +
+    db.all("SELECT id, descricao, tensao_nominal, capacidade_nominal, n_strings, n_baterias_por_strings, baterias_por_hr, contato, localizacao, fabricante, tipo, data_instalacao, conf_alarme_id " +
             "FROM Modulo", function (err, rows) {
         var modulos = [];
         rows.forEach(function row(row) {
             modulos.push(new createModulo(row.id, row.descricao, row.tensao_nominal, row.capacidade_nominal, row.n_strings, row.n_baterias_por_strings, row.contato, row.localizacao, 
-                                            row.fabricante, row.tipo, row.data_instalacao, row.conf_alarme_id));
+                                            row.fabricante, row.tipo, row.data_instalacao, row.conf_alarme_id, row.baterias_por_hr));
         });
         data(err, modulos);
     });
@@ -47,11 +50,11 @@ var getById = function (id, data) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
-    db.get("SELECT id, descricao, tensao_nominal, capacidade_nominal, n_strings, n_baterias_por_strings, contato, localizacao, fabricante, tipo, data_instalacao, conf_alarme_id " +
+    db.get("SELECT id, descricao, tensao_nominal, capacidade_nominal, n_strings, baterias_por_hr, n_baterias_por_strings, contato, localizacao, fabricante, tipo, data_instalacao, conf_alarme_id " +
             "FROM Modulo WHERE id = $id", { $id: id }, function (err, row) {
         if (row) {
             var modulo = new createModulo(row.id, row.descricao, row.tensao_nominal, row.capacidade_nominal, row.n_strings, row.n_baterias_por_strings, row.contato, row.localizacao, 
-                                            row.fabricante, row.tipo, row.data_instalacao, row.conf_alarme_id);
+                                            row.fabricante, row.tipo, row.data_instalacao, row.conf_alarme_id, row.baterias_por_hr);
             console.log(modulo);
             data(err, modulo);
         }
@@ -73,7 +76,7 @@ var update = function (modulo) {
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
     db.run("UPDATE Modulo SET descricao = $descricao, tensao_nominal = $tensao_nominal, capacidade_nominal = $capacidade_nominal, n_strings = $n_strings, n_baterias_por_strings = $n_baterias_por_strings "+
-            ", contato = $contato, localizacao = $localizacao, fabricante = $fabricante, tipo = $tipo, data_instalacao = $data_instalacao, conf_alarme_id = $conf_alarme_id " +
+            ", contato = $contato, localizacao = $localizacao, fabricante = $fabricante, tipo = $tipo, data_instalacao = $data_instalacao, conf_alarme_id = $conf_alarme_id, baterias_por_hr = $baterias_por_hr " +
                 "WHERE id = $id", { $id: modulo.id,
                                     $descricao: modulo.descricao,
                                     $tensao_nominal: modulo.tensao_nominal,
@@ -85,7 +88,8 @@ var update = function (modulo) {
                                     $fabricante: modulo.fabricante,
                                     $tipo: modulo.tipo,
                                     $data_instalacao: modulo.data_instalacao,
-                                    $conf_alarme_id: modulo.conf_alarme_id });
+                                    $conf_alarme_id: modulo.conf_alarme_id,
+                                    $baterias_por_hr: modulo.baterias_por_hr });
     db.close();
 }
 module.exports.save = save;

@@ -23,7 +23,7 @@ module.exports = router;
 router.post('/', function (req, res, next) {
     var moduloPost = req.body;
     var newModulo = new Modulo.createModulo('', moduloPost.descricao, moduloPost.tensao_nominal, modulo.capacidade_nominal, moduloPost.n_strings, moduloPost.n_baterias_por_strings, moduloPost.contato,
-        moduloPost.localizacao, moduloPost.fabricante, moduloPost.tipo, moduloPost.data_instalacao, moduloPost.conf_alarme_id);
+        moduloPost.localizacao, moduloPost.fabricante, moduloPost.tipo, moduloPost.data_instalacao, moduloPost.conf_alarme_id, modulo.baterias_por_hr);
     // save the user
     Modulo.save(newModulo, function (err) {
         if (err) {
@@ -36,7 +36,6 @@ router.post('/', function (req, res, next) {
 });
 /* PUT /modulo/:id */
 router.put('/', function (req, res, next) {
-    console.log(req.body);
     var moduloAnterior = Modulo.getById(req.body.id, function (err, modulo) {
         if ((modulo.n_strings != req.body.n_strings) || (modulo.n_baterias_por_strings != req.body.n_baterias_por_strings)) {
             var sqlite3 = require('sqlite3').verbose();
