@@ -87,15 +87,14 @@
                                 <br />
                                 <div>
                                     <label>Escala Y mín.:</label>
-                                    <input id="txtEscalaYMin" type="number" style="width: 60px;" />
+                                    <input id="txtEscalaYMin" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
                                     <label>Escala Y máx.:</label>
-                                    <input id="txtEscalaYMax" type="number" style="width: 60px;" />
-                                    <button type="button" class="btn btn-primary" onclick="aplicarEscalaY();">Aplicar</button>
+                                    <input id="txtEscalaYMax" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
                                     <div style="float:right;">
                                         <label>Escala Y sec. mín.:</label>
-                                        <input id="txtEscalaYSecMin" type="number" style="width: 60px;" />
+                                        <input id="txtEscalaYSecMin" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
                                         <label>Escala Y sec. máx.:</label>
-                                        <input id="txtEscalaYSecMax" type="number" style="width: 60px;" />
+                                        <input id="txtEscalaYSecMax" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
                                         <button type="button" class="btn btn-primary" onclick="aplicarEscalaYSec();">Aplicar</button>
                                     </div>
                                 </div>
@@ -541,24 +540,46 @@
                     });
                 }, 200);
             }
+
+            function toCeil(name){
+                var v = $(name).val().toString();
+                v = v.replace(",", ".");
+                v = parseFloat(v);
+                return Math.ceil(v);
+            }
+
+            function toFloor(name){
+                var v = $(name).val();
+                v = v.replace(",", ".");
+                v = parseFloat(v);
+                return Math.floor(v);
+            }
+
             function aplicarEscalaY() {
+
                 if (visao == 1) {
-                    escalaYImpedancia[0] = parseInt($("#txtEscalaYMin").val());
-                    escalaYImpedancia[1] = parseInt($("#txtEscalaYMax").val());
+                    escalaYImpedancia[0] = parseInt(toFloor("#txtEscalaYMin"));
+                    escalaYImpedancia[1] = parseInt(toCeil("#txtEscalaYMax"));
+
                 }
                 else if (visao == 2) {
-                    escalaYTemperatura[0] = parseInt($("#txtEscalaYMin").val());
-                    escalaYTemperatura[1] = parseInt($("#txtEscalaYMax").val());
+                    escalaYTemperatura[0] = parseInt(toFloor("#txtEscalaYMin"));
+                    escalaYTemperatura[1] = parseInt(toCeil("#txtEscalaYMax"));
+
                 }
                 else if (visao == 3) {
-                    escalaYTensao[0] = parseInt($("#txtEscalaYMin").val());
-                    escalaYTensao[1] = parseInt($("#txtEscalaYMax").val());
+                    escalaYTensao[0] = parseInt(toFloor("#txtEscalaYMin"));
+                    escalaYTensao[1] = parseInt(toCeil("#txtEscalaYMax"));
                 }
-                pesquisar();
+
             }
             function aplicarEscalaYSec() {
-                escalaYSec[0] = parseInt($("#txtEscalaYSecMin").val());
-                escalaYSec[1] = parseInt($("#txtEscalaYSecMax").val());
+                
+                aplicarEscalaY();
+                
+                escalaYSec[0] = parseInt(toFloor("#txtEscalaYSecMin"));
+                escalaYSec[1] = parseInt(toCeil("#txtEscalaYSecMax"));
+
                 pesquisar();
             }
             function getUrlVars() {
