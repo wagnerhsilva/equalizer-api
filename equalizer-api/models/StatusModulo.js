@@ -11,7 +11,7 @@ function toUnique(arr){
 
 var createStatusModulo = function (string, bateria, temperatura, impedancia, tensao, equalizacao,
  min_temp, max_temp, min_imp, max_imp, min_tensao, max_tensao,
-  min_target, max_target, tensao_nominal_str, baterias_por_hr) 
+  min_target, max_target, tensao_nominal_str, baterias_por_hr, batstatus) 
 {
     var impedancial_width = 1;
     var total = 0;
@@ -40,7 +40,8 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
         percentualTensao: 100 - (((parseFloat((tensao / 1000)) / parseFloat(max_t)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(max_t)) * 100.00)),
         precentualMinTensao: (((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00)),
         percentualEqualizacao: equalizacao / 60000 * 100,
-        baterias_por_hr: baterias_por_hr
+        baterias_por_hr: baterias_por_hr,
+        batstatus: batstatus
     }
 }
 var createChart = function (data, max_temperatura, max_impedancia, max_tensao, min_temperatura, min_impedancia, min_tensao, avg_temperatura, avg_impedancia, avg_tensao,
@@ -84,6 +85,7 @@ var get = function (data) {
     strSql = strSql + "		    DLOG.EQUALIZACAO, ";
     strSql = strSql + "         MODL.tensao_nominal, ";
     strSql = strSql + "         RVAL.baterias_por_hr, ";
+    strSql = strSql + "         DLOG.BATSTATUS, ";
     strSql = strSql + "         RVAL.STRING as string_name, ";
     strSql = strSql + "		    ALAR.* ";
     strSql = strSql + "FROM ( ";
@@ -115,7 +117,7 @@ var get = function (data) {
                         row.impedancia, row.tensao, row.equalizacao, row.alarme_nivel_temp_min, row.alarme_nivel_temp_max,
                         row.alarme_nivel_imped_min, row.alarme_nivel_imped_max, row.alarme_nivel_tensao_min,
                         row.alarme_nivel_tensao_max, row.alarme_nivel_target_min, row.alarme_nivel_target_max, row.tensao_nominal,
-                        row.baterias_por_hr));
+                        row.baterias_por_hr, row.batstatus));
             strings.push(row.string_name);
         });
 

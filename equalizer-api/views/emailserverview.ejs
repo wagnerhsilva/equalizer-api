@@ -95,7 +95,7 @@
                                     <section class="col-sm-5 col-md-5 col-lg-5">
                                         <label class="label">Servidor de email</label>
                                         <label class="input">
-                                        <input type="text" ng-model="emailserver[0].server" ng-disabled="acessoUsuario != 'administrador'" placeholder="Servidor de email" />
+                                        <input type="text" ng-model="emailserver[0].server" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Servidor de email" />
                                         <b class="tooltip tooltip-bottom-right">Servidor de email</b>
                                         </label>
                                     </section>
@@ -103,7 +103,7 @@
                                     </section>
                                     <section class="col-sm-5 col-md-5 col-lg-5">
                                         <label class="checkbox">
-                                        <input type="checkbox" ng-model="emailserver[0].usarAutenticacao" ng-disabled="acessoUsuario != 'administrador'" />
+                                        <input type="checkbox" ng-model="emailserver[0].usarAutenticacao" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" />
                                         <i></i>Secure Password Authentication (SPA)</label>
                                     </section>
                                 </section>
@@ -111,7 +111,7 @@
                                     <section class="col-sm-5 col-md-5 col-lg-5">
                                         <label class="label">Porta SMTP</label>
                                         <label class="input">
-                                        <input type="number" ng-model="emailserver[0].portaSMTP" ng-disabled="acessoUsuario != 'administrador'" placeholder="Porta SMTP" />
+                                        <input type="number" ng-model="emailserver[0].portaSMTP" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Porta SMTP" />
                                         <b class="tooltip tooltip-bottom-right">Porta SMTP</b>
                                         </label>
                                     </section>
@@ -120,7 +120,7 @@
                                     <section class="col-sm-5 col-md-5 col-lg-5">
                                         <label class="label">Login</label>
                                         <label class="input">
-                                        <input type="text" ng-model="emailserver[0].login" ng-disabled="acessoUsuario != 'administrador'" placeholder="Login" />
+                                        <input type="text" ng-model="emailserver[0].login" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Login" />
                                         <b class="tooltip tooltip-bottom-right">Login</b>
                                         </label>
                                     </section>
@@ -129,7 +129,7 @@
                                     <section class="col-sm-5 col-md-5 col-lg-5">
                                         <label class="label">Usar Criptografica TLS</label>
                                         <label class="select">
-                                        <select name="criptoTLS" id="criptoTLS" ng-model="emailserver[0].usarCriptografiaTLS" ng-disabled="acessoUsuario != 'administrador'" >
+                                        <select name="criptoTLS" id="criptoTLS" ng-model="emailserver[0].usarCriptografiaTLS" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" >
                                             <option value="0" ng-selected="selected">Nenhum</option>
                                             <option value="1">TLS</option>
                                             <option value="2">SSL</option>
@@ -142,7 +142,7 @@
                                     <section class="col-sm-5 col-md-5 col-lg-5">
                                         <label class="label">Senha</label>
                                         <label class="input">
-                                        <input type="password" name="password" id="password" ng-model="emailserver[0].senha" ng-disabled="acessoUsuario != 'administrador'" placeholder="Senha" />
+                                        <input type="password" name="password" id="password" ng-model="emailserver[0].senha" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Senha" />
                                         <b class="tooltip tooltip-bottom-right">Senha</b>
                                         </label>
                                     </section>
@@ -151,7 +151,7 @@
                                     <section class="col-sm-5 col-md-5 col-lg-5">
                                         <label class="label">Email</label>
                                         <label class="input">
-                                        <input type="email" name="email" id="email" ng-model="emailserver[0].email" ng-disabled="acessoUsuario != 'administrador'" placeholder="Email" />
+                                        <input type="email" name="email" id="email" ng-model="emailserver[0].email" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Email" />
                                         <b class="tooltip tooltip-bottom-right">Email</b>
                                         </label>
                                     </section>
@@ -160,7 +160,7 @@
                                     <section class="col-sm-5 col-md-5 col-lg-5">
                                         <label class="label">Confirmar Senha</label>
                                         <label class="input">
-                                        <input type="password" name="passwordConfirm" id="passwordConfirm" ng-disabled="acessoUsuario != 'administrador'" placeholder="Confirmar Senha" />
+                                        <input type="password" name="passwordConfirm" id="passwordConfirm" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Confirmar Senha" />
                                         <b class="tooltip tooltip-bottom-right">Confirmar Senha</b>
                                         </label>
                                     </section>
@@ -168,14 +168,14 @@
                                 <section class="col-sm-5 col-md-5 col-lg-5">
                                     <label class="label">Assunto</label>
                                     <label class="input">
-                                        <input type="text" ng-model="emailserver[0].assunto" ng-disabled="acessoUsuario != 'administrador'" placeholder="Assunto" />
+                                        <input type="text" ng-model="emailserver[0].assunto" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Assunto" />
                                         <b class="tooltip tooltip-bottom-right">Assunto</b>
                                         </label>
                                 </section>
                             </fieldset>
                         </section>
                         <section>
-                            <button ng-click="update()" class="btn btn-primary pull-right" ng-disabled="acessoUsuario != 'administrador'" style="width: 100px; height: 30px;">Salvar</button>
+                            <button ng-click="update()" class="btn btn-primary pull-right" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" style="width: 100px; height: 30px;">Salvar</button>
                         </section>
                     </fieldset>
 
