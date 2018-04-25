@@ -3,6 +3,11 @@
 
 <head>
     <% include partials/head %>
+    <style>
+        /*input[type=checkbox] {
+            margin: 0px 0 0 !important;
+        } */
+    </style>
 </head>
 
 <body class="">
@@ -42,7 +47,13 @@
                 </div>
                 <script type="text/ng-template" id="/statusModulo.html">
                     <section id="visao1">
+
+                    <div class="input-group-text">
+                        <input type="checkbox" id="refreshButton" ng-click="swapStaticState();"><p>Refresh Automático</p>
                         <button id="btn" class="btn btn-primary pull-right" onclick="alterarVisao();">Alterar Visão</button>
+                    </div>
+                            
+                           
                         <!-- <div ng-repeat="string in stringsDistintas"> -->
                         <div ng-repeat="f in range(stringsDistintas.length) track by $index">
                             <h3>{{ stringsDistintas[$index] }} - Tensão: {{ moduleMap[$index][0].str_tensao / 1000 }} Target: {{ moduleMap[$index][0].target / 1000  }}</h3>
@@ -237,9 +248,10 @@
                             $scope.acessoUsuario = '<%= userAccess %>';
                             $scope.emailUsuario = '<%= userEmail %>';
 
-                            setInterval(function () {
+                            $scope.refresFunction = function () {
                                 StatusModulos.query(function (res) {
                                     $scope.statusModulos = res;
+                                    $scope.static = !$scope.static;
                                     var separated = [];
                                     var indexes = [];
                                     var flags = [], output = [], l = $scope.statusModulos.length, i;
@@ -277,7 +289,22 @@
                                 }, function (error) {
                                     // Error handler code
                                 });
-                            }, 1500);
+                            };
+
+                            $scope.swapStaticState = function(){
+                                var st = $("#refreshButton:checked").length;
+                                clearInterval($scope.timerControl);
+                                if(st > 0){
+                                    $(".datatabletemplate").DataTable().clear().destroy();
+                                    $scope.refresFunction();
+                                    $scope.timerControl = setInterval($scope.refresFunction, 1500);
+                                }else{
+                                    $(".datatabletemplate").DataTable();
+                                }
+                            };
+
+                            $scope.timerControl = setInterval($scope.refresFunction, 1500);
+                            $("#refreshButton").prop('checked', true);
                         }])
                         .directive('dynamicbar1', function () {
                             return {
