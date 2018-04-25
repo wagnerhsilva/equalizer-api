@@ -41,14 +41,14 @@
 
     <div id="divInfoHeader" class="pull-right" <%if (!showHeaderData) {%> style="display: none;"
         <%}%>>
-<!--             <div style="margin-top: 3%;">
-                <span>Target - </span>
+            <div style="margin-top: 3%;">
+                <!-- <span>Target - </span>
                 <b><span id="txtTarget">0</span></b> &nbsp&nbsp&nbsp
                 <span>Tensão de barramento - </span>
-                <b><span id="txtTensaoBarramento">0</span></b> &nbsp&nbsp&nbsp
+                <b><span id="txtTensaoBarramento">0</span></b> &nbsp&nbsp&nbsp -->
                 <span>Capacidade do banco de dados - </span>
                 <b><span id="txtCapBanco">0%</span></b>
-            </div> -->
+            </div>
     </div>
 
 
@@ -149,15 +149,15 @@
 <script>
     function getSomatoria() {
         // var casasDecimais = <%- headerInfoCDec %>;
-        // $.get("/getheaderdata", "", function (data, status) {
-        //     $("#txtTensaoBarramento").text((data.somaTensao / 1000).toFixed(parseInt(casasDecimais)));
-        //     $("#txtTarget").text((data.avg / 1000).toFixed(parseInt(casasDecimais)));
-        //     $("#txtCapBanco").text(data.capBanco.toString() + '%');
-        // });
+        $.get("/getheaderdata", "", function (data, status) {
+            // $("#txtTensaoBarramento").text((data.somaTensao / 1000).toFixed(parseInt(casasDecimais)));
+            // $("#txtTarget").text((data.avg / 1000).toFixed(parseInt(casasDecimais)));
+            $("#txtCapBanco").text(data.capBanco.toString() + '%');
+        });
     }
     $(document).ready(function () {
-        // getSomatoria();
-        // setInterval(function () { getSomatoria(); }, 3000);
+         getSomatoria();
+         setInterval(function () { getSomatoria(); }, 3000);
     });
 
 </script>

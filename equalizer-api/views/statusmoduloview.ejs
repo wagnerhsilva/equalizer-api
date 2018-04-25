@@ -193,7 +193,6 @@
                         //---------------
                         .controller('StatusModuloController', ['$scope', 'StatusModulos', function ($scope, StatusModulos) {
                             StatusModulos.query(function (res) {
-                                $(".datatabletemplate").DataTable().destroy();
                                 $scope.statusModulos = res;
                                 var flags = [], output = [], l = $scope.statusModulos.length, i;
                                 var separated = [];
