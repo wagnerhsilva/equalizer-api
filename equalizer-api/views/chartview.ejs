@@ -12,17 +12,9 @@
                 transform: translate(-50%, -50%)
             }
 
-            .few .dygraph-legend>span.highlight {
-                border: 1px solid grey;
-            }
+            .few .dygraph-legend > span { display: none !important; }
 
-            .many .dygraph-legend>span {
-                display: none;
-            }
-
-            .many .dygraph-legend>span.highlight {
-                display: inline;
-            }
+            .few .dygraph-legend > span.highlight { display: inline !important; }
 
             .modal {
                 display: none;
@@ -217,7 +209,7 @@
                                 title: 'Impedância',
                                 ylabel: 'Impedância',
                                 legend: 'always',
-                                labelsDiv: document.getElementById("labels"),
+                                // labelsDiv: document.getElementById("labels"),
                                 highlightCircleSize: 2,
                                 strokeWidth: 1,
                                 strokeBorderWidth: 1,
@@ -284,7 +276,7 @@
                                 title: 'Temperatura',
                                 ylabel: 'Temperatura',
                                 legend: 'always',
-                                labelsDiv: document.getElementById("labels"),
+                                // labelsDiv: document.getElementById("labels"),
                                 highlightCircleSize: 2,
                                 strokeWidth: 1,
                                 strokeBorderWidth: 1,
@@ -375,7 +367,7 @@
                                 highlightCircleSize: 2,
                                 strokeWidth: 1,
                                 strokeBorderWidth: 1,
-                                labelsDiv: document.getElementById("labels"),
+                                // labelsDiv: document.getElementById("labels"),
                                 highlightSeriesOpts: {
                                     strokeWidth: 3,
                                     strokeBorderWidth: 1,
@@ -397,6 +389,7 @@
                     });
                 }
             }
+
             function legendFormatter(data) {
                 if (data.x == null) {
                     // This happens when there's no selection and {legend: 'always'} is set.
