@@ -125,16 +125,44 @@
             </div>
         </div>
         <div class="modal"><img src="/equalizer-api/public/smartadmin/img/loader.gif" /></div>
+
         <script type="text/javascript">
             $body = $("body");
             // Flavio Alves: a visao padrao dos graficos e a de tensao
             var visao = 3;
             var nBaterias = 0;
             var csvData = "";
+            var min = 0;
+            var max = 0;
             var escalaYTensao = [0, 18];
             var escalaYImpedancia = [0, 50];
             var escalaYTemperatura = [0, 70];
             var escalaYSec = [];
+
+            min = app_get_cookie("Chart_TxtEscalaYSecMin");
+            max = app_get_cookie("Chart_TxtEscalaYSecMax");
+            if(min != "" && max != ""){
+                escalaYSec = [min, max];
+            }
+
+            min = app_get_cookie("Chart_TxtEscalaYMinTensao");
+            max = app_get_cookie("Chart_TxtEscalaYMaxTensao");
+            if(min != "" && max != ""){
+                escalaYTensao = [min, max];
+            }
+
+            min = app_get_cookie("Chart_TxtEscalaYMinImpedancia");
+            max = app_get_cookie("Chart_TxtEscalaYMaxImpedancia");
+            if(min != "" && max != ""){
+                escalaYImpedancia = [min, max];
+            }
+
+            min = app_get_cookie("Chart_TxtEscalaYMinTemperatura");
+            max = app_get_cookie("Chart_TxtEscalaYMaxTemperatura");
+            if(min != "" && max != ""){
+                escalaYTemperatura = [min, max];
+            }
+            
             var g1 = null;
             $('#ddlSeries').change(function () {
                 var allOptions = [];
@@ -553,25 +581,35 @@
                 if (visao == 1) {
                     escalaYImpedancia[0] = parseInt(toFloor("#txtEscalaYMin"));
                     escalaYImpedancia[1] = parseInt(toCeil("#txtEscalaYMax"));
+                    app_set_cookie("Chart_TxtEscalaYMinImpedancia", escalaYImpedancia[0], 24);
+                    app_set_cookie("Chart_TxtEscalaYMaxImpedancia", escalaYImpedancia[1], 24);
 
                 }
                 else if (visao == 2) {
                     escalaYTemperatura[0] = parseInt(toFloor("#txtEscalaYMin"));
                     escalaYTemperatura[1] = parseInt(toCeil("#txtEscalaYMax"));
+                    app_set_cookie("Chart_TxtEscalaYMinTemperatura", escalaYTemperatura[0], 24);
+                    app_set_cookie("Chart_TxtEscalaYMaxTemperatura", escalaYTemperatura[1], 24);
 
                 }
                 else if (visao == 3) {
                     escalaYTensao[0] = parseInt(toFloor("#txtEscalaYMin"));
                     escalaYTensao[1] = parseInt(toCeil("#txtEscalaYMax"));
+                    app_set_cookie("Chart_TxtEscalaYMinTensao", escalaYTensao[0], 24);
+                    app_set_cookie("Chart_TxtEscalaYMaxTensao", escalaYTensao[1], 24);
                 }
 
             }
+
             function aplicarEscalaYSec() {
                 
                 aplicarEscalaY();
                 
                 escalaYSec[0] = parseInt(toFloor("#txtEscalaYSecMin"));
                 escalaYSec[1] = parseInt(toCeil("#txtEscalaYSecMax"));
+
+                app_set_cookie("Chart_TxtEscalaYSecMin", escalaYSec[0], 24);
+                app_set_cookie("Chart_TxtEscalaYSecMax", escalaYSec[1], 24);
 
                 pesquisar();
             }

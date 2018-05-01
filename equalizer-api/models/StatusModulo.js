@@ -233,9 +233,10 @@ var getChartDefault = function (params, data) {
         for (var i = 1; i <= params.totalBaterias; i++) {
             strSql = strSql + " ||\",\"|| IFNULL(AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TENSAO / 1000.0000 ELSE NULL END), \"\")";
         }
-        strSql = strSql + " ||\",\"|| (SELECT AVG(AVG_LAST / 1000.0000) FROM PARAMETERS)";
+        strSql = strSql + " ||\",\"|| IFNULL(AVG(CASE WHEN BATERIA = 'M1' THEN TARGET / 1000.0000 ELSE NULL END), \"\")";
         strSql = strSql + " ||\",\"|| IFNULL(SUM(TENSAO / 1000), \"\")";
     }
+    console.log(params.totalBaterias);
     strSql = strSql + " as \"data\"";
     strSql = strSql + " FROM DATALOG, MODULO ";
     strSql = strSql + "WHERE DATAHORA BETWEEN '" + anoInicial + "-" + mesInicial + "-" + diaInicial + " " + dtInicialSegundaPart + "' AND '" + anoFinal + "-" + mesFinal + "-" + diaFinal + " " + dtFinalSegundaPart + ":59' ";
@@ -260,7 +261,9 @@ var getChartDefault = function (params, data) {
         }
         strSql = strSql + " AVG(CASE WHEN BATERIA = 'M" + params.totalBaterias.toString() + "' THEN TENSAO / 1000.0000 ELSE NULL END)";
     }
-    console.log(strSql);
+    // console.log("------------------------------------");
+    // console.log(strSql);
+    // console.log("------------------------------------");
     db.all(strSql, function (err, rows) {
         var strResult = "dataHora";
         for (var i = 1; i <= params.totalBaterias; i++) {
@@ -273,7 +276,7 @@ var getChartDefault = function (params, data) {
         rows.forEach(function row(row) {
             strResult = strResult + "\n" + row.data;
         });
-        console.log(strResult);
+        // console.log(strResult);
         data(err, strResult);
     });
     db.close();

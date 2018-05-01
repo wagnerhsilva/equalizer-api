@@ -28,7 +28,6 @@ router.get('/:nbat/:string/:dataInicial/:dataFinal/:visao', function (req, res, 
     StatusModulo.getChartDefault(params, function (err, chartDay) {
         console.log("getChart novo");
         if (err) return next(err);
-        console.log(chartDay);
         res.json(chartDay);
     });
 });
