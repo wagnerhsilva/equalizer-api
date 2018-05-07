@@ -562,41 +562,44 @@
                 }, 200);
             }
 
-            function toCeil(name){
-                var v = $(name).val().toString();
-                v = v.replace(",", ".");
-                v = parseFloat(v);
-                return Math.ceil(v);
-            }
-
-            function toFloor(name){
+            /*
+            * Converts the string given to a valid float
+            * for now only swaps ',' to '.'
+            */
+            function uniformalize(name){
                 var v = $(name).val();
                 v = v.replace(",", ".");
                 v = parseFloat(v);
-                return Math.floor(v);
+                return v;
             }
 
             function aplicarEscalaY() {
 
                 if (visao == 1) {
-                    escalaYImpedancia[0] = parseInt(toFloor("#txtEscalaYMin"));
-                    escalaYImpedancia[1] = parseInt(toCeil("#txtEscalaYMax"));
+                    escalaYImpedancia[0] = uniformalize("#txtEscalaYMin");
+                    escalaYImpedancia[1] = uniformalize("#txtEscalaYMax");
                     app_set_cookie("Chart_TxtEscalaYMinImpedancia", escalaYImpedancia[0], 24);
                     app_set_cookie("Chart_TxtEscalaYMaxImpedancia", escalaYImpedancia[1], 24);
 
+                    console.log(escalaYImpedancia);
+
                 }
                 else if (visao == 2) {
-                    escalaYTemperatura[0] = parseInt(toFloor("#txtEscalaYMin"));
-                    escalaYTemperatura[1] = parseInt(toCeil("#txtEscalaYMax"));
+                    escalaYTemperatura[0] = uniformalize("#txtEscalaYMin");
+                    escalaYTemperatura[1] = uniformalize("#txtEscalaYMax");
                     app_set_cookie("Chart_TxtEscalaYMinTemperatura", escalaYTemperatura[0], 24);
                     app_set_cookie("Chart_TxtEscalaYMaxTemperatura", escalaYTemperatura[1], 24);
 
+                    console.log(escalaYTemperatura);
+
                 }
                 else if (visao == 3) {
-                    escalaYTensao[0] = parseInt(toFloor("#txtEscalaYMin"));
-                    escalaYTensao[1] = parseInt(toCeil("#txtEscalaYMax"));
+                    escalaYTensao[0] = uniformalize("#txtEscalaYMin");
+                    escalaYTensao[1] = uniformalize("#txtEscalaYMax");
                     app_set_cookie("Chart_TxtEscalaYMinTensao", escalaYTensao[0], 24);
                     app_set_cookie("Chart_TxtEscalaYMaxTensao", escalaYTensao[1], 24);
+
+                    console.log(escalaYTensao);
                 }
 
             }
@@ -605,8 +608,8 @@
                 
                 aplicarEscalaY();
                 
-                escalaYSec[0] = parseInt(toFloor("#txtEscalaYSecMin"));
-                escalaYSec[1] = parseInt(toCeil("#txtEscalaYSecMax"));
+                escalaYSec[0] = uniformalize("#txtEscalaYSecMin");
+                escalaYSec[1] = uniformalize("#txtEscalaYSecMax");
 
                 app_set_cookie("Chart_TxtEscalaYSecMin", escalaYSec[0], 24);
                 app_set_cookie("Chart_TxtEscalaYSecMax", escalaYSec[1], 24);

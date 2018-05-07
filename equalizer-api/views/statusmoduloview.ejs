@@ -4,9 +4,8 @@
 <head>
     <% include partials/head %>
     <style>
-        /*input[type=checkbox] {
-            margin: 0px 0 0 !important;
-        } */
+        .no-sort::after { display: none!important; }
+        .no-sort { pointer-events: none!important; cursor: default!important; }
     </style>
 </head>
 
@@ -596,6 +595,7 @@
         </script>
         <script>
             $(document).ready(function () {
+                $("#visao2").hide();
                 setTimeout(function () { $("#visao2").hide() }, 1000);
             });
             function alterarVisao() {
