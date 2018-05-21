@@ -48,7 +48,7 @@
                     <section id="visao1">
 
                     <div class="input-group-text">
-                        <input type="checkbox" id="refreshButton" ng-click="swapStaticState();"><p>Refresh Automático</p>
+                        <input type="checkbox" id="refreshButton" ng-click="swapStaticState();"><p>Ordenar</p>
                         <button id="btn" class="btn btn-primary pull-right" onclick="alterarVisao();">Alterar Visão</button>
                     </div>
                             
@@ -294,16 +294,33 @@
                                 var st = $("#refreshButton:checked").length;
                                 clearInterval($scope.timerControl);
                                 if(st > 0){
+                                    $(".datatabletemplate").DataTable({
+                                        language: {
+                                            processing: "Processando...",
+                                            //emptyTable: "Nenhum dado disponível"
+                                            search: "Procurar",
+                                            lengthMenu: "Mostrar _MENU_ itens",
+                                            info: "Mostrando _START_ até _END_ de _TOTAL_ itens",
+                                            //infoEmpty: "Mostrando 0 até 0 de 0 itens",
+                                            infoFiltered: "(filtrado de _MAX_ itens)",
+                                            zeroRecords: "Nenhum item encontrado",
+                                            paginate: {
+                                                first: "Primeiro",
+                                                last: "Último",
+                                                next: "Próximo",
+                                                previous: "Anterior"
+                                            }
+                                        }
+                                    });
+                                }else{
                                     $(".datatabletemplate").DataTable().clear().destroy();
                                     $scope.refresFunction();
                                     $scope.timerControl = setInterval($scope.refresFunction, 1500);
-                                }else{
-                                    $(".datatabletemplate").DataTable();
                                 }
                             };
 
                             $scope.timerControl = setInterval($scope.refresFunction, 1500);
-                            $("#refreshButton").prop('checked', true);
+                            $("#refreshButton").prop('checked', false);
                         }])
                         .directive('dynamicbar1', function () {
                             return {

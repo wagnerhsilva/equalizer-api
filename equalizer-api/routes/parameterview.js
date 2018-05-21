@@ -1,12 +1,19 @@
 var express = require('express');
 var setup = require('setup')();
 var router = express.Router();
+
+function user_match(req, user){
+    return req.user.acesso === user;
+}
+
 var isAuthenticated = function (req, res, next) {
     // if user is authenticated in the session, call the next() to call the next request handler
     // Passport adds this method to request object. A middleware is allowed to add properties to
     // request and response objects
-    if (req.isAuthenticated())
+    if (req.isAuthenticated() && user_match(req, "administrador"))
         return next();
+    if (req.isAuthenticated() && !user_match(req, "administrador"))
+        res.redirect('/statusmoduloview');
     // if the user is not authenticated then redirect him to the login page
     res.redirect('/');
 }
