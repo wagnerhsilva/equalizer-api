@@ -6,6 +6,7 @@
     <style>
         .no-sort::after { display: none!important; }
         .no-sort { pointer-events: none!important; cursor: default!important; }
+        .boldClass {font-weight: bold !important;}
     </style>
 </head>
 
@@ -30,7 +31,7 @@
                         <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                             <header>
                                 <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                                <h2>Status dos Módulo </h2>
+                                <h2>Status dos Módulos</h2>
 
                             </header>
                             <div>
@@ -70,13 +71,13 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="status in statusModulos | filter: { string: stringsDistintas[$index] }" ng-class="rowClass(status)">
-                                            <td align="center">{{status.bateria}}</td>
-                                            <td align="center">{{status.tensao | number: <%- headerInfoCDec %>}}
+                                            <td align="center" ng-class="{boldClass: status.batstatus != 0}">{{status.bateria}}</td>
+                                            <td align="center" ng-class="{boldClass: status.batstatus != 0}">{{status.tensao | number: <%- headerInfoCDec %>}}
                                                 <input type="hidden" ng-value="status.min_target" />
                                                 <input type="hidden" ng-value="status.max_target" />
                                             </td>
-                                            <td align="center">{{status.temperatura}}</td>
-                                            <td align="center">{{status.impedancia}}</td>
+                                            <td align="center" ng-class="{boldClass: status.batstatus != 0}">{{status.temperatura}}</td>
+                                            <td align="center" ng-class="{boldClass: status.batstatus != 0}">{{status.impedancia}}</td>
                                             <td align="center">
                                                 <span ng-if="status.percentualEqualizacao <= 20" title="Equalização: {{status.percentualEqualizacao.toFixed(2)}}%" dynamicbar1
                                                     data="x.bars">20,30,40,50,60</span>
