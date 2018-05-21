@@ -62,10 +62,10 @@
                                     <thead>
                                         <tr>
                                             <td class="no-sort" align="center">Bateria</td>
-                                            <td align="center">Tensão</td>
-                                            <td align="center">Temperatura</td>
-                                            <td align="center">Impedância</td>
-                                            <td align="center">Equalização</td>
+                                            <td align="center">Tensão [V]</td>
+                                            <td align="center">Temperatura [°C]</td>
+                                            <td align="center">Impedância [m&Omega;]</td>
+                                            <td align="center">Equalização [%]</td>
                                             <td align="center">Status</td>
                                         </tr>
                                     </thead>
@@ -130,7 +130,7 @@
                                                  <thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td style="width:100px;">Tensão</td>
+                                                            <td style="width:100px;">Tensão [V]</td>
                                                             <td align="center" style="width:50px;" ng-repeat="t in range(baterias_por_hr) track by $index">
                                                                 {{moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].tensao | number: <%- headerInfoCDec %>}}
                                                                 <input type="hidden" ng-value="moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].min_tensao" />
@@ -138,19 +138,19 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="width:100px;">Temperatura</td>
+                                                            <td style="width:100px;">Temperatura [°C]</td>
                                                             <td align="center" style="width:50px;" ng-repeat="t in range(baterias_por_hr) track by $index">
                                                                 {{moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].temperatura}}
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="width:100px;">Impedância</td>
+                                                            <td style="width:100px;">Impedância [m&Omega;]</td>
                                                             <td align="center" style="width:50px;" ng-repeat="t in range(baterias_por_hr) track by $index">
                                                                 {{moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].impedancia}}
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="width:100px;">Equalização</td>
+                                                            <td style="width:100px;">Equalização [%]</td>
                                                             <td align="center" style="width:50px;" ng-repeat="t in range(baterias_por_hr) track by $index">
                                                                 <input type="hidden" ng-value="moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].min_target" />
                                                                 <input type="hidden" ng-value="moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].max_target" />
@@ -168,7 +168,7 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="width:100px;">Número</td>
+                                                            <td style="width:100px;">Bateria</td>
                                                             <td align="center" style="width:50px;" ng-repeat="t in range(baterias_por_hr) track by $index">
                                                                 {{moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].bateria}}
                                                             </td>
