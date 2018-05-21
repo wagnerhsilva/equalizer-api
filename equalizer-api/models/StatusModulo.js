@@ -1,5 +1,6 @@
 var sqlite3 = require('sqlite3').verbose();
 var bCrypt = require('bcrypt-nodejs');
+var fs      = require('fs');
 
 function toUnique(arr){
     o={}
@@ -9,10 +10,15 @@ function toUnique(arr){
     return Object.keys(o)
 }
 
+var check_file = function(filepath){
+    return fs.existsSync(filepath);
+}
+
 var createStatusModulo = function (string, bateria, temperatura, impedancia, tensao, equalizacao,
  min_temp, max_temp, min_imp, max_imp, min_tensao, max_tensao,
   min_target, max_target, tensao_nominal_str, baterias_por_hr, batstatus) 
 {
+    var up_exists = check_file("updated.txt");
     var impedancial_width = 1;
     var total = 0;
     var target = 0;
@@ -25,23 +31,23 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
     return {
         string: string,
         bateria: bateria,
-        temperatura: (temperatura / 10).toFixed(1),
-        impedancia: (impedancia / 100).toFixed(impedancial_width),
-        tensao: (tensao / 1000).toFixed(3),
-        equalizacao: equalizacao,
-        min_temp: min_temp,
-        max_temp: max_temp,
-        min_imp: min_imp,
-        max_imp: max_imp,
-        min_tensao: min_tensao,
-        max_tensao: max_tensao,
-        min_target: min_target,
-        max_target: max_target,
-        percentualTensao: 100 - (((parseFloat((tensao / 1000)) / parseFloat(max_t)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(max_t)) * 100.00)),
-        precentualMinTensao: (((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00)),
-        percentualEqualizacao: equalizacao / 60000 * 100,
+        temperatura: up_exists ? 0.0 : (temperatura / 10).toFixed(1),
+        impedancia: up_exists ? 0.0 : (impedancia / 100).toFixed(impedancial_width),
+        tensao: up_exists ? 0.0 : (tensao / 1000).toFixed(3),
+        equalizacao: up_exists ? 0.0 : equalizacao,
+        min_temp: up_exists ? 0.0 : min_temp,
+        max_temp: up_exists ? 0.0 : max_temp,
+        min_imp: up_exists ? 0.0 : min_imp,
+        max_imp: up_exists ? 0.0 : max_imp,
+        min_tensao: up_exists ? 0.0 : min_tensao,
+        max_tensao: up_exists ? 0.0 : max_tensao,
+        min_target: up_exists ? 0.0 : min_target,
+        max_target: up_exists ? 0.0 : max_target,
+        percentualTensao: up_exists ? 0.0 : 100 - (((parseFloat((tensao / 1000)) / parseFloat(max_t)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(max_t)) * 100.00)),
+        precentualMinTensao: up_exists ? 0.0 : (((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00)),
+        percentualEqualizacao: up_exists ? 0.0 : equalizacao / 60000 * 100,
         baterias_por_hr: baterias_por_hr,
-        batstatus: batstatus
+        batstatus: up_exists ? 1 : batstatus
     }
 }
 var createChart = function (data, max_temperatura, max_impedancia, max_tensao, min_temperatura, min_impedancia, min_tensao, avg_temperatura, avg_impedancia, avg_tensao,

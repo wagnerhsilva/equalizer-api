@@ -458,7 +458,7 @@
                                             disableTooltips: true,
                                             height: 15,
                                             barWidth: 3,
-                                            colorMap: ["yellow", "yellow", "yellow", "green", "gray", "gray"]
+                                            colorMap: ["yellow", "yellow", "yellow", "yellow", "gray", "gray"]
                                         });
                                     } else {
                                         element.sparkline(scope.data, {
@@ -613,16 +613,21 @@
         </script>
         <script>
             $(document).ready(function () {
-                $("#visao2").hide();
-                setTimeout(function () { $("#visao2").hide() }, 1000);
+                // $("#visao2").hide();
+                $("#visao2").css('visibility', 'hidden');
+                // setTimeout(function () { $("#visao2").hide() }, 1000);
             });
             function alterarVisao() {
                 if ($("#visao1").is(":visible")) {
                     $("#visao1").fadeOut();
-                    $("#visao2").fadeIn();
+                    $("#visao2").fadeIn("slow", function(){
+                        $("#visao2").css('visibility', 'visible');
+                    });
                 } else {
                     $("#visao2").fadeOut();
-                    $("#visao1").fadeIn();
+                    $("#visao1").fadeIn("slow", function(){
+                        $("#visao1").hide().show(0);
+                    });
                 }
                 setTimeout(setChart(), 0);
             }

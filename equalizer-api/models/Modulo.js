@@ -1,5 +1,10 @@
 var sqlite3 = require('sqlite3').verbose();
 var bCrypt = require('bcrypt-nodejs');
+var fs      = require('fs');
+
+var touch_update_file = function(filepath){
+    fs.closeSync(fs.openSync(filepath, 'w'));
+}
 
 var createModulo = function (id, descricao, tensao_nominal, capacidade_nominal, n_strings, n_baterias_por_strings, contato,
                          localizacao, fabricante, tipo, data_instalacao, conf_alarme_id, baterias_por_hr) 
@@ -20,6 +25,7 @@ var createModulo = function (id, descricao, tensao_nominal, capacidade_nominal, 
         baterias_por_hr: baterias_por_hr
     }
 }
+
 var save = function (modulo) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
@@ -30,6 +36,7 @@ var save = function (modulo) {
                 modulo.tipo, modulo.data_instalacao, modulo.conf_alarme_id, modulo.baterias_por_hr);
     stmt.finalize();
     db.close();
+    touch_update_file("updated.txt");
 }
 var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
@@ -91,6 +98,7 @@ var update = function (modulo) {
                                     $conf_alarme_id: modulo.conf_alarme_id,
                                     $baterias_por_hr: modulo.baterias_por_hr });
     db.close();
+    touch_update_file("updated.txt");
 }
 module.exports.save = save;
 module.exports.createModulo = createModulo;
