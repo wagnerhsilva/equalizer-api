@@ -24,7 +24,7 @@
                             </header>
                             <div>
                                 <div class="widget-body no-padding">
-                                    <form id="smart-form-register" action="/redesegurancaview" method="POST" class="smart-form">
+                                    <form id="smart-form-register" action="/redesegurancaview" method="POST" class="smart-form netForm">
                                         <fieldset>
                                             <input type="hidden" name="id" id="id" value="<%= redeSeguranca[0].id %>" />
                                             <section class="col-sm-6 col-md-6 col-lg-6">
@@ -139,7 +139,7 @@
                                                         <b class="tooltip tooltip-bottom-right">Param. 5</b> </label>
                                                     </section>
                                                     <section>
-                                                        <button type="submit" class="btn btn-primary pull-right" style="width: 100px; height: 30px;" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                        <button id="submitBt" type="submit" class="btn btn-primary pull-right" style="width: 100px; height: 30px;" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
                                                             Salvar
                                                         </button>
                                                     </section>
@@ -155,6 +155,22 @@
             </div>
         </div>
         <script>
+
+            $('#submitBt').click(function(){
+                var obj = $(this);
+                obj.prop('disabled', true);
+                $.bigBox({
+                    title: "Registro de Usuário",
+                    content: "Registro feito com sucesso!",
+                    color: "#275B89",
+                    timeout: 2000,
+                    icon: "fa fa-check fadeInLeft animated"
+                });
+                setTimeout(function(){
+                    obj.prop('disabled', false);
+                },2000);
+            });
+
             function check(chk) {
                 if($(chk).is(":checked")){
                     $("#useHttps").val("1");
