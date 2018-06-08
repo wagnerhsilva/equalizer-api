@@ -160,20 +160,32 @@
                             $scope.usuarios = Usuarios.query();
                             $scope.save = function () {
                                 var usuario = $scope.usuarioSelecionado;
-                                if (usuario == null)
+                                var fails = ((usuario == null) || (usuario.sobreNome == null || usuario.sobreNome.trim() == "")
+                                            || (usuario.senha == null || usuario.senha.trim() == ""));
+                                if(fails){
+                                    $.bigBox({
+                                        title: "Registro de Usuário",
+                                        content: "Registro Invalido",
+                                        color: "#FF6666",
+                                        timeout: 5000,
+                                        icon: "fa fa-check fadeInLeft animated"
+                                    });
                                     return;
-                                if (usuario.sobreNome == null || usuario.sobreNome.trim() == "")
-                                    return;
-                                if (usuario.email == null || usuario.email.trim() == "")
-                                    return;
-                                if (usuario.senha == null || usuario.senha.trim() == "")
-                                    return;
-                                if ($scope.isEditing) {
-                                    $scope.update();
-                                } else {
-                                    Usuarios.save(usuario);
-                                    $scope.usuarioSelecionado = null;
-                                    setTimeout(function () { $scope.usuarios = Usuarios.query(); }, 500);
+                                }else{
+                                    if($scope.isEditing){ //I'm not sure what is this but I'll let it live here...
+                                        $scope.update();
+                                    }else{
+                                        $.bigBox({
+                                        title: "Registro de Usuário",
+                                        content: "Registro feito com sucesso!",
+                                        color: "#275B89",
+                                        timeout: 5000,
+                                        icon: "fa fa-check fadeInLeft animated"
+                                        });
+                                        Usuarios.save(usuario);
+                                        // $scope.usuarioSelecionado = null; //this will clean the form and trigger the incorrect field validation...
+                                        setTimeout(function () { $scope.usuarios = Usuarios.query(); }, 500);
+                                    }
                                 }
                             }
                             $scope.remove = function (index) {
