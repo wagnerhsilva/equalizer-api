@@ -22,7 +22,7 @@ var createModulo = function (id, descricao, tensao_nominal, capacidade_nominal, 
         tipo: tipo,
         data_instalacao: data_instalacao,
         conf_alarme_id: conf_alarme_id,
-        baterias_por_hr: baterias_por_hr
+        baterias_por_hr: baterias_por_hr,
     }
 }
 
@@ -71,14 +71,21 @@ var getById = function (id, data) {
     db.close();
 }
 var update = function (modulo) {
-    console.log("update");
     getAll(function(err, modulos){
         if(modulos.length <= 0){
             save(modulo);
             return;
+        }else{
+            var curr_config = modulos[0];
+            var touchFile = (curr_config.n_strings != modulo.n_strings);
+            touchFile |= (curr_config.n_baterias_por_strings != modulo.n_baterias_por_strings);
+            if(touchFile){
+                touch_update_file("updated.txt");
+            }
         }
     });
     console.log(modulo);
+    
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
@@ -98,7 +105,6 @@ var update = function (modulo) {
                                     $conf_alarme_id: modulo.conf_alarme_id,
                                     $baterias_por_hr: modulo.baterias_por_hr });
     db.close();
-    touch_update_file("updated.txt");
 }
 module.exports.save = save;
 module.exports.createModulo = createModulo;

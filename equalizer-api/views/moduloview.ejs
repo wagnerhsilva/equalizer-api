@@ -324,7 +324,9 @@
                                 }
                                 modulo.baterias_por_hr = value.toString();
                                 if(ok != 0){
+
                                     Modulos.update(modulo);
+                                    
                                     $.bigBox({
                                         title: "Informações sobre string e bateria",
                                         content: "Dados salvos com sucesso!",
