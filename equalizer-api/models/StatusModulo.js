@@ -14,6 +14,35 @@ var check_file = function(filepath){
     return fs.existsSync(filepath);
 }
 
+var getIconName = function(pequa, tensao, min_val, max_val){
+    var barCount = -1;
+    if(pequa <= 20){
+        barCount = 1;
+    }else if(pequa > 20 && pequa <= 40){
+        barCount = 2;
+    }else if(pequa > 40 && pequa <= 60){
+        barCount = 3;
+    }else if(pequa > 60 && pequa <= 80){
+        barCount = 4;
+    }else  if(pequa > 80 && pequa <= 100){
+        barCount = 5;
+    }
+
+    if(barCount == -1) return "g".repeat(5);
+    var color;
+    if(tensao > max_val){
+        color = "r";
+    }else if(tensao < min_val){
+        color = "y";
+    }else{
+        color = "v";
+    }
+
+    var name = color.repeat(barCount);
+    name += "g".repeat(5-barCount);
+    return name;
+}
+
 var createStatusModulo = function (string, bateria, temperatura, impedancia, tensao, equalizacao,
  min_temp, max_temp, min_imp, max_imp, min_tensao, max_tensao,
   min_target, max_target, tensao_nominal_str, baterias_por_hr, batstatus) 
@@ -23,17 +52,31 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
     var total = 0;
     var target = 0;
     var max_t = 12;
+    var p_tens = up_exists ? 0.0 : 100 - (((parseFloat((tensao / 1000)) /
+               parseFloat(max_t)) * 100.00) > 100.00 ? 100.00 :
+                ((parseFloat((tensao / 1000)) / parseFloat(max_t)) * 100.00));
+    var p_eq = up_exists ? 0.0 : equalizacao / 60000 * 100;
+
+    var tens = up_exists ? 0.0 : (tensao / 1000).toFixed(3);
+    var iconName = "g".repeat(5);
     if(tensao_nominal_str == '2v'){
         impedancial_width = 3;
         max_t = 2;
     }
-
+    
+    if(!up_exists && batstatus != 1){
+        iconName = getIconName(p_eq, tens, min_target, max_target);
+    }
+    
+    
+    iconName += ".png";
+    iconName = "smartadmin/img/" + iconName;
     return {
         string: string,
         bateria: bateria,
         temperatura: up_exists ? 0.0 : (temperatura / 10).toFixed(1),
         impedancia: up_exists ? 0.0 : (impedancia / 100).toFixed(impedancial_width),
-        tensao: up_exists ? 0.0 : (tensao / 1000).toFixed(3),
+        tensao: tens,
         equalizacao: up_exists ? 0.0 : equalizacao,
         min_temp: up_exists ? 0.0 : min_temp,
         max_temp: up_exists ? 0.0 : max_temp,
@@ -43,11 +86,12 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
         max_tensao: up_exists ? 0.0 : max_tensao,
         min_target: up_exists ? 0.0 : min_target,
         max_target: up_exists ? 0.0 : max_target,
-        percentualTensao: up_exists ? 0.0 : 100 - (((parseFloat((tensao / 1000)) / parseFloat(max_t)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(max_t)) * 100.00)),
+        percentualTensao: p_tens,
         precentualMinTensao: up_exists ? 0.0 : (((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00)),
-        percentualEqualizacao: up_exists ? 0.0 : equalizacao / 60000 * 100,
+        percentualEqualizacao: p_eq,
         baterias_por_hr: baterias_por_hr,
-        batstatus: up_exists ? 1 : batstatus
+        batstatus: up_exists ? 1 : batstatus,
+        equalizacaoIcon: iconName
     }
 }
 var createChart = function (data, max_temperatura, max_impedancia, max_tensao, min_temperatura, min_impedancia, min_tensao, avg_temperatura, avg_impedancia, avg_tensao,
