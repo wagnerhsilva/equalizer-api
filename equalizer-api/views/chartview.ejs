@@ -137,29 +137,29 @@
             var escalaYTensao = [0, 18];
             var escalaYImpedancia = [0, 50];
             var escalaYTemperatura = [0, 70];
-            var escalaYSec = [];
+            var escalaYSec = [0, 18];
 
-            min = app_get_cookie("Chart_TxtEscalaYSecMin");
-            max = app_get_cookie("Chart_TxtEscalaYSecMax");
-            if(min != "" && max != ""){
+            min = parseFloat(app_get_cookie("Chart_TxtEscalaYSecMin"));
+            max = parseFloat(app_get_cookie("Chart_TxtEscalaYSecMax"));
+            if(min != "" && max != "" && min < max){
                 escalaYSec = [min, max];
             }
 
-            min = app_get_cookie("Chart_TxtEscalaYMinTensao");
-            max = app_get_cookie("Chart_TxtEscalaYMaxTensao");
-            if(min != "" && max != ""){
+            min = parseFloat(app_get_cookie("Chart_TxtEscalaYMinTensao"));
+            max = parseFloat(app_get_cookie("Chart_TxtEscalaYMaxTensao"));
+            if(min != "" && max != "" && min < max){
                 escalaYTensao = [min, max];
             }
 
-            min = app_get_cookie("Chart_TxtEscalaYMinImpedancia");
-            max = app_get_cookie("Chart_TxtEscalaYMaxImpedancia");
-            if(min != "" && max != ""){
+            min = parseFloat(app_get_cookie("Chart_TxtEscalaYMinImpedancia"));
+            max = parseFloat(app_get_cookie("Chart_TxtEscalaYMaxImpedancia"));
+            if(min != "" && max != "" && min < max){
                 escalaYImpedancia = [min, max];
             }
 
-            min = app_get_cookie("Chart_TxtEscalaYMinTemperatura");
-            max = app_get_cookie("Chart_TxtEscalaYMaxTemperatura");
-            if(min != "" && max != ""){
+            min = parseFloat(app_get_cookie("Chart_TxtEscalaYMinTemperatura"));
+            max = parseFloat(app_get_cookie("Chart_TxtEscalaYMaxTemperatura"));
+            if(min != "" && max != "" && min < max){
                 escalaYTemperatura = [min, max];
             }
             
