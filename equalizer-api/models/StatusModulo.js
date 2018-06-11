@@ -88,7 +88,7 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
         max_target: up_exists ? 0.0 : max_target,
         percentualTensao: p_tens,
         precentualMinTensao: up_exists ? 0.0 : (((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00) > 100.00 ? 100.00 : ((parseFloat((tensao / 1000)) / parseFloat(8)) * 100.00)),
-        percentualEqualizacao: p_eq,
+        percentualEqualizacao: parseFloat(Math.round(p_eq * 100) / 100).toFixed(2),
         baterias_por_hr: baterias_por_hr,
         batstatus: up_exists ? 1 : batstatus,
         equalizacaoIcon: iconName
