@@ -154,31 +154,6 @@
                 </div>
             </div>
         </div>
-        <script>
-
-            $('#submitBt').click(function(){
-                var obj = $(this);
-                obj.prop('disabled', true);
-                $.bigBox({
-                    title: "Atualização",
-                    content: "Atualização feita com sucesso!",
-                    color: "#275B89",
-                    timeout: 2000,
-                    icon: "fa fa-check fadeInLeft animated"
-                });
-                setTimeout(function(){
-                    obj.prop('disabled', false);
-                },2000);
-            });
-
-            function check(chk) {
-                if($(chk).is(":checked")){
-                    $("#useHttps").val("1");
-                }else{
-                    $("#useHttps").val("0");
-                }
-            }
-        </script>
         <% include partials/footer %>
 </body>
 
