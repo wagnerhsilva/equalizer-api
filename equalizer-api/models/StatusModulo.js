@@ -52,6 +52,10 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
     var total = 0;
     var target = 0;
     var max_t = 12;
+    if(tensao_nominal_str == '2v'){
+        impedancial_width = 3;
+        max_t = 2;
+    }
     var p_tens = up_exists ? 0.0 : 100 - (((parseFloat((tensao / 1000)) /
                parseFloat(max_t)) * 100.00) > 100.00 ? 100.00 :
                 ((parseFloat((tensao / 1000)) / parseFloat(max_t)) * 100.00));
@@ -59,10 +63,6 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
 
     var tens = up_exists ? 0.0 : (tensao / 1000).toFixed(3);
     var iconName = "g".repeat(5);
-    if(tensao_nominal_str == '2v'){
-        impedancial_width = 3;
-        max_t = 2;
-    }
     
     if(!up_exists && batstatus != 1){
         iconName = getIconName(p_eq, tens, min_target, max_target);
