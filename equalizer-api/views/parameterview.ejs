@@ -3,6 +3,20 @@
 
 <head>
     <% include partials/head %>
+    <style>
+        .checkboxes label {
+                display: block;
+                float: left;
+                padding-right: 10px;
+                white-space: nowrap;
+            }
+            .checkboxes input {
+                vertical-align: middle;
+            }
+            .checkboxes label span {
+                vertical-align: middle;
+            }
+    </style>
 </head>
 
 <body class="">
@@ -81,12 +95,12 @@
                                                 <b class="tooltip tooltip-bottom-right">Duty máx.</b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Delay entre Leituras do Banco (ms)</label>
-                                                <label class="input">
-                                                <input type="text" name="Delay" placeholder="Delay entre Leituras do banco (ms)" ng-model="parameter.delay" ng-disabled="acessoUsuario != 
-'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Delay entre Leituras do banco (ms)</b> </label>
-                                            </section>
+                                                    <label class="label">Delay entre Leituras do Banco (ms)</label>
+                                                    <label class="input">
+                                                    <input type="text" name="Delay" placeholder="Delay entre Leituras do banco (ms)" ng-model="parameter.delay" ng-disabled="acessoUsuario != 
+    'administrador'">
+                                                    <b class="tooltip tooltip-bottom-right">Delay entre Leituras do banco (ms)</b> </label>
+                                                </section>
                                         </fieldset>
                                     </section>
                                     <section class="col-sm-6 col-md-6 col-lg-6">
@@ -104,6 +118,14 @@ ng-disabled="acessoUsuario != 'administrador'">
                                                 <input type="text" name="save_log_time" placeholder="Intervalo para escrita em gráfico" ng-model="parameter.save_log_time" ng-disabled="acessoUsuario != 'administrador'">
                                                 <b class="tooltip tooltip-bottom-right">Intervalo para escrita em gráfico</b> </label>
                                             </section>
+                                            <section>
+                                                    <label class="label">Secure Shell (SSH)</label>
+                                                    <div>
+                                                        <div class="checkboxes">
+                                                            <label for="x"><input type="checkbox" id="x" ng-model="parameter.ssh_enabled" ng-click="checkboxpressed();"/> <span id="ssh_title">{{ parameter.ssh_title }}</span></label>
+                                                        </div>
+                                                    </div>
+                                                </section>
                                         </fieldset>
                                     </section>
                                 </div>
@@ -149,13 +171,13 @@ ng-disabled="acessoUsuario != 'administrador'">
                                                 <label class="input">
                                                 <input type="text" name="param6" placeholder="Param. 6" ng-model="parameter.param6" ng-disabled="acessoUsuario != 'administrador'">
                                                 <b class="tooltip tooltip-bottom-right">Param. 6</b> </label>
-                                            </section>
-                                            <section>
-                                                <label class="label">Periodo de Atualizacao (Trap)</label>
+                                            </section> -->
+                                            <!-- <section> -->
+                                                <!-- <label class="label">Periodo de Atualizacao (Trap)</label>
                                                 <label class="input">
                                                 <input type="text" name="param7" placeholder="Param. 7" ng-model="parameter.param7" ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Param. 7</b> </label>
-                                            </section> -->
+                                                <b class="tooltip tooltip-bottom-right">Param. 7</b> </label> -->
+                                            <!-- </section> -->
                                             <section>
                                                 <label class="label">Param. 8</label>
                                                 <label class="input">
@@ -205,6 +227,14 @@ ng-disabled="acessoUsuario != 'administrador'">
                         //---------------
                         .controller('ParameterController', ['$scope', 'Parameter', function ($scope,Parameter) {
                             $scope.parameter = Parameter.get();
+                            $scope.checkboxpressed = function(){
+                                //it is about to swap
+                                if(!$scope.parameter.ssh_enabled){
+                                    $scope.parameter.ssh_title = "Ativado";
+                                }else{
+                                    $scope.parameter.ssh_title = "Desativado";
+                                }
+                            }
                             $scope.saveParameter = function () {
                                 var parameter  = $scope.parameter;
                                 Parameter.update(parameter);

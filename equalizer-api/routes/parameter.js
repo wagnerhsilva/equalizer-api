@@ -23,10 +23,10 @@ router.post('/', function (req, res, next) {
     Parameter.get(function (err, parameter) {
         if (err) return next(err);
         if (parameter != null) {
-            var newParameter = new Parameter.createParameters(parameterPost.duty_min, parameterPost.duty_max, parameterPost.delay, parameterPost.num_cycles_var_read, parameterPost.save_log_time);
+            var newParameter = new Parameter.createParameters(parameterPost.duty_min, parameterPost.duty_max, parameterPost.delay, parameterPost.num_cycles_var_read, parameterPost.save_log_time, !parameter.ssh_enabled);
             Parameter.update(newParameter);
         } else {
-            var newParameter = new Parameter.createParameters(parameterPost.duty_min, parameterPost.duty_max, parameterPost.delay, parameterPost.num_cycles_var_read, parameterPost.save_log_time);
+            var newParameter = new Parameter.createParameters(parameterPost.duty_min, parameterPost.duty_max, parameterPost.delay, parameterPost.num_cycles_var_read, parameterPost.save_log_time, !parameter.ssh_enabled);
             Parameter.save(newParameter, function (err) {
                 if (err)
                     console.log(err);

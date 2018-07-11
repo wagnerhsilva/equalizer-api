@@ -1,7 +1,39 @@
 var sqlite3 = require('sqlite3').verbose();
 var bCrypt = require('bcrypt-nodejs');
+var fs = require('fs');
 
-var createParameters = function (duty_min, duty_max, delay, num_cycles_var_read, save_log_time, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) {
+var SSH_DISABLED = "ssh.disabled"
+
+var touch_file = function(filepath){
+    fs.closeSync(fs.openSync(filepath, 'w'));
+}
+
+var remove_file = function(filepath){
+    fs.unlinkSync(filepath);
+}
+
+var file_exists = function(filepath){
+    return fs.existsSync(filepath);
+}
+
+var SSH_handle = function(ssh_enabled){
+    cmd = ""
+    if(!ssh_enabled){
+        touch_file(SSH_DISABLED);
+        cmd = "/etc/init.d/sshd stop && update-rc.d -f -v sshd remove";
+    }else{
+        remove_file(SSH_DISABLED);
+        cmd = "update-rc.d -f -v sshd defaults && /etc/init.d/sshd start";
+    }
+
+    require('child_process').exec(cmd, (err, stdout, stderr) => {
+        if(err){
+            console.log(err);
+        }
+    });
+}
+
+var createParameters = function (duty_min, duty_max, delay, num_cycles_var_read, save_log_time, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10, SshDisabled) {
     return {
         duty_min: duty_min,
         duty_max: duty_max,
@@ -17,11 +49,14 @@ var createParameters = function (duty_min, duty_max, delay, num_cycles_var_read,
         param7: param7, 
         param8: param8, 
         param9: param9, 
-        param10: param10
+        param10: param10,
+        ssh_enabled: !SshDisabled,
+        ssh_title: SshDisabled ? "Desativado" : "Ativado"
     }
 }
 var save = function (parameter, err) {
     var db = new sqlite3.Database('equalizerdb');
+    SSH_handle(parameter.ssh_enabled);
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
     var stmt = db.prepare("INSERT INTO Parameters(duty_min, duty_max, delay, num_cycles_var_read, save_log_time, param1, param2, param3, param4, param5,"
@@ -79,8 +114,9 @@ var getLast = function (data) {
     db.get("SELECT duty_min, duty_max, delay, num_cycles_var_read, save_log_time, param1, param2, param3, param4, param5,"
                             +" param6, param7, param8, param9, param10 FROM Parameters LIMIT 1", function (err, row) {
         if (row) {
+            var IsFilePresent = file_exists(SSH_DISABLED);
             var parameter = new createParameters(row.duty_min, row.duty_max, row.delay, row.num_cycles_var_read, row.save_log_time, row.param1, row.param2, 
-                                                    row.param3, row.param4, row.param5, row.param6, row.param7, row.param8, row.param9, row.param10);
+                                                    row.param3, row.param4, row.param5, row.param6, row.param7, row.param8, row.param9, row.param10, IsFilePresent);
             console.log(parameter);
             data(err, parameter);
         }
@@ -91,6 +127,7 @@ var getLast = function (data) {
 }
 var update = function (parameter) {
     console.log("Update parameter");
+    SSH_handle(parameter.ssh_enabled);
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
