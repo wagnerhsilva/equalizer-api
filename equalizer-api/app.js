@@ -13,7 +13,10 @@ var home = require('./routes/home');
 var horaservidor = require('./routes/horaservidor');
 var usuarios = require('./routes/usuarios');
 var modulo = require('./routes/modulo');
+var tendence = require('./routes/tendence');
 var parameter = require('./routes/parameter');
+var tendencias = require('./routes/tendencias');
+var tendanalitics = require('./routes/tendanalitics');
 var statusmodulo = require('./routes/statusmodulo');
 var chart = require('./routes/chart');
 var chart2 = require('./routes/chart2');
@@ -32,6 +35,8 @@ var headerData = require('./routes/getHeaderData');
 var usuarioview = require('./routes/usuarioview');
 var moduloview = require('./routes/moduloview');
 var parameterview = require('./routes/parameterview');
+var tendenciasview = require('./routes/tendenciasview');
+var tendanaliticsview = require('./routes/tendanaliticsview');
 var dataLogView = require('./routes/dataLogView');
 var bacsstatusview = require('./routes/bacsstatusview');
 var redesegurancaview = require('./routes/redesegurancaview');
@@ -52,7 +57,7 @@ process.env.TZ = 'America/Sao_Paulo';
 
 var Sntp = require('sntp-node');
 var TimeServer = require('./models/TimeServer');
-setInterval(updateDate, 1000 * 60 * 60); // atualizar uma vez por hora
+// setInterval(updateDate, 1000 * 60 * 60); // atualizar uma vez por hora
 function updateDate() {
     TimeServer.getAll(function (err, timeServer) {
         // Tenta um servidor NTP por vez. Em caso de erro, parte para o proximo
@@ -126,7 +131,7 @@ function updateDate() {
             //}
     });
 };
-updateDate();
+// updateDate();
 
 
 
@@ -184,7 +189,11 @@ app.use('/home', home);
 app.use('/horaservidor', horaservidor);
 app.use('/usuarios', usuarios);
 app.use('/modulo', modulo);
+app.use('/tendence', tendence);
 app.use('/parameter', parameter);
+app.use('/tendencias', tendencias);
+app.use('/tendanalitics', tendanalitics);
+app.use('/tendanaliticsview', tendanaliticsview);
 app.use('/statusmodulo', statusmodulo);
 app.use('/dataLog', dataLog);
 app.use('/alarmeConfig', alarmeConfig);
@@ -202,6 +211,7 @@ app.use('/chart2', chart2);
 app.use('/usuarioview', usuarioview);
 app.use('/moduloview', moduloview);
 app.use('/parameterview', parameterview);
+app.use('/tendenciasview', tendenciasview);
 app.use('/dataLogView', dataLogView);
 app.use('/bacsstatusview', bacsstatusview);
 app.use('/redesegurancaview', redesegurancaview);
