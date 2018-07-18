@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var Sntp = require('sntp-node');
 var TimeServer = require('../models/TimeServer');
 var setup = require('setup')();
 var isAuthenticated = function (req, res, next) {
@@ -73,46 +72,13 @@ router.get('/', isAuthenticated, function (req, res, next) {
                 };
                 try {
                     console.log('Acionando servidor');
-                    Sntp.time(options, function (err, time) {
-                        if (err) {
-                            console.log("Erro ao executar modulo SNTP:" + err);
-                            if (i >= 2) {
-                                return;
-                            } else {
-                                i++;
-                            }
-                        } else if (time == null) {
-                            console.log("Data e hora captura invalida");
-                            if (i >= 2) {
-                                return;
-                            } else {
-                                i++;
-                            }
-                        } else {
-                            try {
-                                console.log('Chamando funcao local.');
-                                require('child_process').exec('date -s "' + new Date(time.referenceTimestamp) + '" ; TZ="America/SaoPaulo" hwclock --systz; hwclock --systohc;', (err, stdout, stderr) => {
-                                    if (err) {
-                                        console.error(err);
-                                        return;
-                                    }
-                                    console.log("SNTP Atualizado com sucesso");
-                                    console.log(stdout);
-                                    console.log('Nova data/hora: ' + new Date(time.referenceTimestamp));
-                                    i = 3; // forca a sair do for, caso haja sucesso com um intermediario
-                                    return;
-                                });
-                            } catch (ex) {
-                                res.json("Erro ao atualizar a hora");
-                                console.log("Erro ao atualizar a hora.");
-                                console.log(ex);
-                                if (i >= 2) {
-                                    return;
-                                } else {
-                                    i++;
-                                }
-                            }
+                    require('child_process').exec('ntpdate ' + nome_host, (err, stdout, stderr) => {
+                        if(err){
+                            console.error(err);
+                            return;
                         }
+                        console.log("SNTP Atualizado com sucesso");
+                        console.log(stdout);
                     }); 
                 } catch (ex) {
                     res.json("Erro ao comunicar com servidor NTP");
@@ -137,18 +103,12 @@ router.get('/test/:server', function (req, res, next) {
         timeout: 1000                   // Defaults to zero (no timeout) 
     };
     try {
-        Sntp.time(options, function (err, time) {
+        require('child_process').exec('ntpdate ' + server, (err, stdout, stderr) =>{
             if (err) {
                 res.json("Erro ao recuperar data/hora.");
                 return;
-            }
-            if (time == null) {
-                res.json("Erro ao recuperar data/hora.");
-                return;
-            } else {
-                console.log('Resultado:' + time);
-                res.json(new Date(time.referenceTimestamp));
-                console.log('Local clock is off by: ' + time.t + ' milliseconds');
+            }else{
+                res.json(stdout);
                 return;
             }
         });

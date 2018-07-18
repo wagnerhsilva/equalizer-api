@@ -50,7 +50,6 @@ var emailServerModel = require('./models/EmailServer.js');
 // do sistema
 process.env.TZ = 'America/Sao_Paulo';
 
-var Sntp = require('sntp-node');
 var TimeServer = require('./models/TimeServer');
 setInterval(updateDate, 1000 * 60 * 60); // atualizar uma vez por hora
 function updateDate() {
@@ -77,46 +76,15 @@ function updateDate() {
             };
             try {
                 console.log('Acionando servidor');
-                Sntp.time(options, function (err, time) {
-                    if (err) {
-                        console.log("Erro ao executar modulo SNTP:" + err);
-                        if (i >= 2) {
-                            return;
-                        } else {
-                            i++;
-                        }
-                    } else if (time == null) {
-                        console.log("Data e hora captura invalida");
-                        if (i >= 2) {
-                            return;
-                        } else {
-                            i++;
-                        }
-                    } else {
-                        try {
-                           console.log('Chamando funcao local.');
-                           require('child_process').exec('date -s "' + new Date(time.referenceTimestamp) + '" ; TZ="America/SaoPaulo" hwclock --systz; hwclock --systohc;', (err, stdout, stderr) => {
-                                    if (err) {
-                                        console.error(err);
-                                        return;
-                                    }
-                                    console.log("SNTP Atualizado com sucesso");
-                                    console.log(stdout);
-                                    console.log('Nova data/hora: ' + new Date(time.referenceTimestamp));
-                                    i = 3; // forca a sair do for, caso haja sucesso com um intermediario
-                                    return;
-                                });
-                            } catch (ex) {
-                                console.log("Erro ao atualizar a hora.");
-                                console.log(ex);
-                                if (i >= 2) {
-                                    return;
-                                } else {
-                                    i++;
-                                }
-                            }
-                        }
-                    }); 
+                require('child_process').exec('ntpdate ' + nome_host, (err, stdout, stderr) => {
+                    if(err){
+                        console.error(err);
+                        return;
+                    }
+                    console.log("SNTP Atualizado com sucesso");
+                    console.log(stdout);
+                });
+                
                 } catch (ex) {
                     console.log(ex);
                     console.log("Erro ao comunicar com servidor NTP");
