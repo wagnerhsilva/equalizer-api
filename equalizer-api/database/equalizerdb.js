@@ -14,7 +14,9 @@ var init = function () {
         db.run("CREATE TABLE IF NOT EXISTS TimeServer (id INTEGER PRIMARY KEY AUTOINCREMENT, timeServerAddress1 TEXT, timeServerAddress1_complemento TEXT, timeServerAddress2 TEXT, timeServerAddress2_complemento TEXT, timeServerAddress3 TEXT, timeServerAddress3_complemento TEXT, connectionRetries INTEGER, timeZone TEXT, automAdjustTimeDaylightSavingChanges INTEGER)");
         db.run("CREATE TABLE IF NOT EXISTS Usuario (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, sobreNome TEXT, telefone TEXT, email TEXT, senha TEXT, acesso TEXT)");
         db.run("CREATE TABLE IF NOT EXISTS ApelidoString ( String TEXT, Apelido TEXT )");
-		db.run("CREATE TABLE IF NOT EXISTS Medias ( id INTEGER PRIMARY KEY, tensao REAL, target REAL )");
+        db.run("CREATE TABLE IF NOT EXISTS Medias ( id INTEGER PRIMARY KEY, tensao REAL, target REAL )");
+        db.run("CREATE TABLE IF NOT EXISTS TendenciasConfig (id INTEGER PRIMARY KEY, dataInstalacao TEXT, lastData TEXT, dataZero REAL, period REAL, impMin REAL, impMax REAL, tempMin REAL, tempMax REAL, zeroFilled REAL, isOn REAL, lastIteration INTEGER )");
+        db.run("CREATE TABLE IF NOT EXISTS Tendencias ( id INTEGER PRIMARY KEY, dataHora TEXT, string TEXT, bateria TEXT, impedancia REAL, temperatura REAL, iteration INTEGER )");
 		//TRIGGERS
 		
 		

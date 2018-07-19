@@ -88,6 +88,10 @@
                         <%}%>>
                             <a href="statusmoduloview" title="Módulos"><span class="menu-item-parent">Módulos</span></a>
                     </li>
+                    <li <%if (pageName=='tendenciasview' ) {%> class='active'
+                            <%}%>>
+                                <a href="tendenciasview" title="Tendências"><span class="menu-item-parent">Tendências</span></a>
+                        </li>
                     <li <%if (pageName=='chartview' ) {%> class='active'
                         <%}%>>
                             <a href="chartview" title="Gráficos"><span class="menu-item-parent">Gráficos</span></a>
@@ -129,6 +133,12 @@
                                 <a href="parameterview" title="Parâmetros"><span class="menu-item-parent">Parâmetros</span></a>
                         </li>
                         <%}%>
+                    <% if (userAccess =='administrador') {%>
+                        <li <%if (pageName=='Análise de Tendência' ) {%> class='active'
+                            <%}%>>
+                                <a href="tendanaliticsview" title="Análise de Tendência"><span class="menu-item-parent">Análise de Tendência</span></a>
+                        </li>
+                    <%}%>
                 </ul>
             </li>
             <br />
