@@ -83,10 +83,12 @@
                                                 <img ng-src="{{ status.equalizacaoIcon }}" title="Equalização: {{ status.percentualEqualizacao }}%" />
                                             </td>
                                             <td align="center">
-                                                <img ng-if="status.temperatura < status.min_temp || status.temperatura > status.max_temp || status.impedancia < status.min_imp || status.impedancia > status.max_imp || status.tensao < status.min_tensao || status.tensao > status.max_tensao || status.batstatus != 0"
+                                                <img ng-if="status.alarmStatus == 1"
                                                     src="/smartadmin/img/red_bullet.png" width="20" />
-                                                <img ng-if="status.temperatura >= status.min_temp && status.temperatura <= status.max_temp && status.impedancia >= status.min_imp && status.impedancia <= status.max_imp && status.tensao >= status.min_tensao && status.tensao <= status.max_tensao && status.batstatus == 0"
+                                                <img ng-if="status.alarmStatus == -1"
                                                     src="/smartadmin/img/green_bullet.png" width="20" />
+                                                <img ng-if="status.alarmStatus == 2"
+                                                    src="/smartadmin/img/yellow_bullet.png" width="20" />
                                             </td>
                                         </tr>
                                     </tbody>
@@ -106,15 +108,15 @@
                                                 <tr>
                                                     <td style="width:100px;"></td>
                                                     <td align="center" style="width:50px;" ng-repeat="t in range(baterias_por_hr) track by $index">
-                                                        <div ng-if="moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].tensao > moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].max_tensao" style="background-color:red; height:100px; width:100%;">
+                                                        <div ng-if="moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].alarmStatus == 1" style="background-color:red; height:100px; width:100%;">
                                                             <div style="background-color: gray; height:{{moduleMap[$parent.$parent.$parent.$index][$parent.$parent.$index * baterias_por_hr + $index].percentualTensao}}%; width:100%;">
                                                             </div>
                                                         </div>
-                                                        <div ng-if="moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].tensao >= moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].min_tensao && moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].tensao<= moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].max_tensao" style="background-color: green; height:100px; width:100%;">
+                                                        <div ng-if="moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].alarmStatus == 2" style="background-color: yellow; height:100px; width:100%;">
                                                             <div style="background-color: gray; height:{{moduleMap[$parent.$parent.$parent.$index][$parent.$parent.$index * baterias_por_hr + $index].percentualTensao}}%; width:100%;">
                                                             </div>
                                                         </div>
-                                                        <div ng-if="moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].tensao < moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].min_tensao" style="background-color: red; height:100px; width:100%;">
+                                                        <div ng-if="moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].alarmStatus == -1" style="background-color: green; height:100px; width:100%;">
                                                             <div style="background-color: gray; height:{{moduleMap[$parent.$parent.$parent.$index][$parent.$parent.$index * baterias_por_hr + $index].percentualTensao}}%; width:100%;">
                                                             </div>
                                                         </div>

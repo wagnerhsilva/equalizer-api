@@ -45,7 +45,8 @@ var getIconName = function(pequa, tensao, min_val, max_val){
 
 var createStatusModulo = function (string, bateria, temperatura, impedancia, tensao, equalizacao,
  min_temp, max_temp, min_imp, max_imp, min_tensao, max_tensao,
-  min_target, max_target, tensao_nominal_str, baterias_por_hr, batstatus) 
+  min_target, max_target, tensao_nominal_str, baterias_por_hr, batstatus, alarme_nivel_tens_pre, alarme_nivel_imped_pre,
+  alarme_nivel_temp_pre, alarme_pre_enabled) 
 {
     var up_exists = check_file("updated.txt");
     var impedancial_width = 1;
@@ -68,10 +69,9 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
         iconName = getIconName(p_eq, tens, min_target, max_target);
     }
     
-    
     iconName += ".png";
     iconName = "smartadmin/img/" + iconName;
-    return {
+    var obj = {
         string: string,
         bateria: bateria,
         temperatura: up_exists ? 0.0 : (temperatura / 10).toFixed(1),
@@ -80,10 +80,13 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
         equalizacao: up_exists ? 0.0 : equalizacao,
         min_temp: up_exists ? 0.0 : min_temp,
         max_temp: up_exists ? 0.0 : max_temp,
+        pre_temp: up_exists ? 0.0 : alarme_nivel_temp_pre,
         min_imp: up_exists ? 0.0 : min_imp,
         max_imp: up_exists ? 0.0 : max_imp,
+        pre_imp: up_exists ? 0.0 : alarme_nivel_imped_pre,
         min_tensao: up_exists ? 0.0 : min_tensao,
         max_tensao: up_exists ? 0.0 : max_tensao,
+        pre_tensao: up_exists ? 0.0 : alarme_nivel_tens_pre,
         min_target: up_exists ? 0.0 : min_target,
         max_target: up_exists ? 0.0 : max_target,
         percentualTensao: p_tens,
@@ -93,6 +96,20 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
         batstatus: up_exists ? 1 : batstatus,
         equalizacaoIcon: iconName
     }
+
+    var alarmStatus = -1; //no alarm
+    if(obj.temperatura < obj.min_temp || obj.temperatura > obj.max_temp || obj.impedancia < obj.min_imp || obj.impedancia > obj.max_imp || obj.tensao < obj.min_tensao || obj.tensao > obj.max_tensao || obj.batstatus != 0)
+    {
+        alarmStatus = 1; //red error
+    }else if((obj.temperatura > obj.pre_temp && obj.temperatura < obj.max_temp) || 
+             (obj.tensao > obj.pre_tensao && obj.tensao < obj.max_tensao) || 
+             (obj.impedancia > obj.pre_imp && obj.impedancia < obj.max_imp))
+    {
+        alarmStatus = 2; //pre error
+    }
+
+    obj["alarmStatus"] = alarmStatus;
+    return obj;
 }
 var createChart = function (data, max_temperatura, max_impedancia, max_tensao, min_temperatura, min_impedancia, min_tensao, avg_temperatura, avg_impedancia, avg_tensao,
     temperatura_atual, impedancia_atual, tensao_atual) {
@@ -167,7 +184,8 @@ var get = function (data) {
                         row.impedancia, row.tensao, row.equalizacao, row.alarme_nivel_temp_min, row.alarme_nivel_temp_max,
                         row.alarme_nivel_imped_min, row.alarme_nivel_imped_max, row.alarme_nivel_tensao_min,
                         row.alarme_nivel_tensao_max, row.alarme_nivel_target_min, row.alarme_nivel_target_max, row.tensao_nominal,
-                        row.baterias_por_hr, row.batstatus));
+                        row.baterias_por_hr, row.batstatus, row.alarme_nivel_tens_pre, row.alarme_nivel_imped_pre,
+                        row.alarme_nivel_temp_pre, row.alarme_pre_enabled));
             strings.push(row.string_name);
         });
 
@@ -182,12 +200,6 @@ var get = function (data) {
         sql = sql.slice(0, -2);
         sql += " ) ORDER BY id ASC;";
         db.all(sql, function(qerr, qrows){
-            /*
-             * Sorry, can't work with the Angular controller
-             * implemented in statusmoduloview, I can't make it
-             * receive complex object and correctly select 
-             * fields
-            */
             var c = 0, k = 0;
             for(c = 0; c < statusModulos.length; c += 1){
                 var string = strings[c];

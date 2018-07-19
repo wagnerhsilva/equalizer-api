@@ -19,6 +19,7 @@ router.get('/:id', function (req, res, next) {
 module.exports = router;
 /* POST */
 router.post('/', function (req, res, next) {
+    console.log("POST!");
     var alarmeConfigPost = req.body;
     var newAlarmeConfig = new AlarmeConfig.createAlarmeConfig('',  moduloPost.descricao, moduloPost.tensao_nominal, moduloPost.n_strings, moduloPost.n_baterias_por_strings, moduloPost.contato, 
                                             moduloPost.localizacao, moduloPost.fabricante, moduloPost.tipo, moduloPost.data_instalacao, moduloPost.conf_alarme_id);
@@ -34,6 +35,7 @@ router.post('/', function (req, res, next) {
 });
 /* PUT /alarmeConfig/:id */
 router.put('/', function (req, res, next) {
+    console.log("PUT!");
     AlarmeConfig.update(req.body);
     res.json(req.body);
 });

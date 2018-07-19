@@ -3,6 +3,21 @@
 
 <head>
     <% include partials/head %>
+    <style>
+        .displayNone{display: none !important;}
+        .checkboxes label {
+            display: block;
+            float: left;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+        .checkboxes input {
+            vertical-align: middle;
+        }
+        .checkboxes label span {
+            vertical-align: middle;
+        }
+    </style>
 </head>
 
 <body class="">
@@ -159,12 +174,14 @@
                                             </section>
                                             <section>
                                                 <label class="label">Níveis de Alerta</label>
+                                                <label for="x"><input type="checkbox" id="x" ng-model="alarmes[0].alarme_pre_enabled" ng-click="onPreSelectionChanged();"/> <span>Habilitar Pré-Alarme</span></label>
                                                 <table class="table table-striped table-bordered table-hover">
                                                     <thead>
                                                         <tr>
                                                             <td></td>
                                                             <td>Min.</td>
                                                             <td>Máx.</td>
+                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}">Pré</td>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -179,8 +196,14 @@
                                                             <td>
                                                                 <label class="input">
                                                             <input type="text" name="alarme_tensMax" id="alarme_tensMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Tensão Máx." ng-model="alarmes[0].alarme_nivel_tensao_max">
-                                                            <b class="tooltip tooltip-bottom-right">Tensão Máx.</b> 
+                                                            <b class="tooltip tooltip-bottom-right">Tensão Máx.</b>
                                                         </label>
+                                                            </td>
+                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}">
+                                                                <label class="input">
+                                                                    <input type="text" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Tensão Pré." ng-model="alarmes[0].alarme_nivel_tens_pre" name="alarme_tensPre" id="alarme_tensPre">
+                                                                    <b class="tooltip tooltip-bottom-right">Tensão Pré.</b>
+                                                                </label>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -197,6 +220,12 @@
                                                             <b class="tooltip tooltip-bottom-right">Temp. Máx.</b> 
                                                         </label>
                                                             </td>
+                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}">
+                                                                <label class="input">
+                                                                    <input type="text" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Temp Pré." ng-model="alarmes[0].alarme_nivel_temp_pre" name="alarme_tempPre" id="alarme_tempPre">
+                                                                    <b class="tooltip tooltip-bottom-right">Temp Pré.</b>
+                                                                </label>
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Impedância:</td>
@@ -208,9 +237,15 @@
                                                             </td>
                                                             <td>
                                                                 <label class="input">
-                                                            <input type="text" name="alarme_impMax" id="alarme_impMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Imped. Máx." ng-model="alarmes[0].alarme_nivel_imped_max">
+                                                            <input type="text" name="alarme_impMax" id="alarme_impMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Imped. Máx." ng-model="alarmes[0].alarme_nivel_imped_max" >
                                                             <b class="tooltip tooltip-bottom-right">Imped. Máx.</b> 
                                                         </label>
+                                                            </td>
+                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}">
+                                                                <label class="input">
+                                                                    <input type="text" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Imped Pré." ng-model="alarmes[0].alarme_nivel_imped_pre" name="alarme_impPre" id="alarme_impPre">
+                                                                    <b class="tooltip tooltip-bottom-right">Imped Pré.</b>
+                                                                </label>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -227,6 +262,7 @@
                                                             <b class="tooltip tooltip-bottom-right">Tensão Barr. Máx.</b> 
                                                         </label>
                                                             </td>
+                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Target:</td>
@@ -242,6 +278,7 @@
                                                             <b class="tooltip tooltip-bottom-right">Target Máx.</b> 
                                                         </label>
                                                             </td>
+                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -303,8 +340,10 @@
                         // Controllers
                         //---------------
                         .controller('ModuloController', ['$scope', 'Modulos', 'AlarmesConfig', function ($scope, Modulos, AlarmesConfig) {
+                            $scope.enablePreAlarme = true;
                             $scope.alarmes = AlarmesConfig.query();
                             $scope.modulos = Modulos.query();
+                            console.log($scope.alarmes);
                             $scope.saveModulo = function () {
                                 var modulo = $scope.modulos[0];
                                 var value = modulo.baterias_por_hr;
@@ -344,28 +383,84 @@
                                     });
                                 }
                             }
-                            $scope.saveAlarmeConfig = function () {
-                                var alarmeConfig = $scope.alarmes[0];
-                                AlarmesConfig.update(alarmeConfig);
-                                $.bigBox({
-                                    title: "Configurações do módulo e alarme",
-                                    content: "Dados salvos com sucesso!",
-                                    color: "#275B89",
-                                    timeout: 5000,
-                                    icon: "fa fa-check fadeInLeft animated"
-                                });
+
+                            $scope.isOK = function(min, pre, max){
+                                var mmin = parseFloat(min);
+                                var mpre = parseFloat(pre);
+                                var mmax = parseFloat(max);
+                                return (mmin <= mpre && mpre <= mmax);
                             }
+
+                            $scope.saveAlarmeConfig = function () {
+                                var min = $scope.alarmes[0].alarme_nivel_tensao_min;
+                                var pre = $scope.alarmes[0].alarme_nivel_tens_pre;
+                                var max = $scope.alarmes[0].alarme_nivel_tensao_max;
+                                var isTensOk = $scope.isOK(min, pre, max);
+                                var isOk = isTensOk;
+                                min = $scope.alarmes[0].alarme_nivel_imped_min;
+                                pre = $scope.alarmes[0].alarme_nivel_imped_pre;
+                                max = $scope.alarmes[0].alarme_nivel_imped_max;
+
+                                var isImpedOk = $scope.isOK(min, pre, max);
+                                isOk &= isImpedOk;
+
+                                min = $scope.alarmes[0].alarme_nivel_temp_min;
+                                pre = $scope.alarmes[0].alarme_nivel_temp_pre;
+                                max = $scope.alarmes[0].alarme_nivel_temp_max;
+
+                                var isTempOk = $scope.isOK(min, pre, max);
+                                isOk &= isTempOk;
+
+                                if(isOk){
+                                    var alarmeConfig = $scope.alarmes[0];
+                                    AlarmesConfig.update(alarmeConfig);
+                                    $.bigBox({
+                                        title: "Configurações do módulo e alarme",
+                                        content: "Dados salvos com sucesso!",
+                                        color: "#275B89",
+                                        timeout: 5000,
+                                        icon: "fa fa-check fadeInLeft animated"
+                                    });
+                                }else{
+                                    var message = "Configuração ";
+                                    if(!isTensOk){
+                                        message += "de tensão inválida";
+                                    }else if(!isTempOk){
+                                        message += "de temperatura inválida";
+                                    }else if(!isImpedOk){
+                                        message += "de impedância inválida";
+                                    }else{
+                                        message += "inválida";
+                                    }
+                                    $.bigBox({
+                                        title: "Configuração de módulo e alarme",
+                                        content: message,
+                                        color: "#FF6666",
+                                        timeout: 5000,
+                                        icon: "fa fa-check fadeInLeft animated"
+                                    }); 
+                                }
+                            }
+                            $scope.onPreSelectionChanged = function(){
+                                // $scope.enablePreAlarme = $scope.alarmes[0].alarme_pre_enabled == 0;
+                            };
                             $scope.resetarPadroes = function () {
                                 $("#alarme_tensMin").val("10.500");
                                 $scope.alarmes[0].alarme_nivel_tensao_min = "10.500";
+                                $("#alarme_tensPre").val("12.000");
+                                $scope.alarmes[0].alarme_nivel_tens_pre = "13.100";
                                 $("#alarme_tensMax").val("13.500");
                                 $scope.alarmes[0].alarme_nivel_tensao_max = "13.500";
                                 $("#alarme_tempMin").val("-10.0");
                                 $scope.alarmes[0].alarme_nivel_temp_min = "-10.0";
+                                $("#alarme_tempPre").val("30.0");
+                                $scope.alarmes[0].alarme_nivel_temp_pre = "30.0";
                                 $("#alarme_tempMax").val("50.0");
                                 $scope.alarmes[0].alarme_nivel_temp_max = "50.0";
                                 $("#alarme_impMin").val("1.0");
                                 $scope.alarmes[0].alarme_nivel_imped_min = "1.0";
+                                $("#alarme_impPre").val("70.0");
+                                $scope.alarmes[0].alarme_nivel_imped_pre = "70.0";
                                 $("#alarme_impMax").val("100.0");
                                 $scope.alarmes[0].alarme_nivel_imped_max = "100.0";
                             }
@@ -379,6 +474,7 @@
 
                                 });
                             }
+                            
                             $scope.nomeUsuario = '<%= username %>';
                             $scope.acessoUsuario = '<%= userAccess %>';
                             $scope.emailUsuario = '<%= userEmail %>';
