@@ -44,10 +44,10 @@ router.put('/', function (req, res, next) {
        req.body.install_date,
        req.body.zero_date_months,
        req.body.period_date_months,
-       req.body.impe_min,
-       req.body.impe_max,
-       req.body.temp_min,
-       req.body.temp_max
+       parseFloat(req.body.impe_min),
+       parseFloat(req.body.impe_max),
+       parseFloat(req.body.temp_min),
+       parseFloat(req.body.temp_max)
    );
    Tendence.persist(tendenceObj, function(err){
        console.log("Error trying to persist information");
