@@ -56,7 +56,7 @@ var emailServerModel = require('./models/EmailServer.js');
 process.env.TZ = 'America/Sao_Paulo';
 
 var TimeServer = require('./models/TimeServer');
-// setInterval(updateDate, 1000 * 60 * 60); // atualizar uma vez por hora
+setInterval(updateDate, 1000 * 60 * 60); // atualizar uma vez por hora
 function updateDate() {
     TimeServer.getAll(function (err, timeServer) {
         // Tenta um servidor NTP por vez. Em caso de erro, parte para o proximo
@@ -99,7 +99,7 @@ function updateDate() {
             //}
     });
 };
-// updateDate();
+updateDate();
 
 
 
