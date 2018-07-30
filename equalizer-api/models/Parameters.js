@@ -18,19 +18,25 @@ var file_exists = function(filepath){
 
 var SSH_handle = function(ssh_enabled){
     cmd = ""
-    if(!ssh_enabled){
+    should_run = true;
+    fileExists = file_exists(SSH_DISABLED);
+    if(!ssh_enabled && !fileExists){
         touch_file(SSH_DISABLED);
         cmd = "/etc/init.d/sshd stop && update-rc.d -f -v sshd remove";
-    }else{
+    }else if(ssh_enabled && fileExists){
         remove_file(SSH_DISABLED);
         cmd = "update-rc.d -f -v sshd defaults && /etc/init.d/sshd start";
+    }else{
+        should_run = false;
     }
-
-    require('child_process').exec(cmd, (err, stdout, stderr) => {
-        if(err){
-            console.log(err);
-        }
-    });
+    
+    if(should_run){
+        require('child_process').exec(cmd, (err, stdout, stderr) => {
+            if(err){
+                console.log(err);
+            }
+        });
+    }
 }
 
 var createParameters = function (duty_min, duty_max, delay, num_cycles_var_read, save_log_time, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10, SshDisabled) {
@@ -56,7 +62,6 @@ var createParameters = function (duty_min, duty_max, delay, num_cycles_var_read,
 }
 var save = function (parameter, err) {
     var db = new sqlite3.Database('equalizerdb');
-    SSH_handle(parameter.ssh_enabled);
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
     var stmt = db.prepare("INSERT INTO Parameters(duty_min, duty_max, delay, num_cycles_var_read, save_log_time, param1, param2, param3, param4, param5,"
@@ -71,6 +76,7 @@ var save = function (parameter, err) {
     });
     stmt.finalize();
     db.close();
+    SSH_handle(parameter.ssh_enabled);
 }
 
 var updateTrap = function(parameter){
@@ -127,7 +133,6 @@ var getLast = function (data) {
 }
 var update = function (parameter) {
     console.log("Update parameter");
-    SSH_handle(parameter.ssh_enabled);
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
@@ -148,6 +153,7 @@ var update = function (parameter) {
             $param10: parameter.param10
         });
     db.close();
+    SSH_handle(parameter.ssh_enabled);
 }
 var zerarDutyMax = function(){
     console.log("Zerando duty max...");
