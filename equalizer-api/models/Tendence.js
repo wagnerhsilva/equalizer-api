@@ -58,13 +58,25 @@ var get = function(parameters, errCallback){
 
 function linearize_get(data, iteration, batcount){
     var response = [];
+    var initial = [];
     for(var i = 0; i < batcount; i += 1){
         for(var j = 0; j < iteration; j += 1){
             var index = i + j * batcount;
             var batdata = data[index];
+            if(j == 0){
+                initial.push(batdata);
+            }else{
+                var fval = parseFloat(initial[i].impedancia);
+                var cval = parseFloat(batdata.impedancia);
+                batdata.deltaImpedancia = (cval - fval) / fval;
+                fval = parseFloat(initial[i].temperatura);
+                cval = parseFloat(batdata.temperatura);
+                batdata.deltaTemperatura = (cval - fval) / fval;
+            }
             response.push(batdata);
         }
     }
+    
     response = {data: response, iterations: iteration, batterycount: batcount};
     return response;
 }

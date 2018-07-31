@@ -178,22 +178,22 @@
                                         }else if(index % 4 === 1){
                                             return TargetBaterry.temperatura.toString();
                                         }else if(index % 4 === 2){
-                                            return "Impedância &Delta;%";
+                                            return (TargetBaterry.deltaImpedancia.toString() + " %");
                                         }else{
-                                            return "Temperatura &Delta;%";
+                                            return (TargetBaterry.deltaTemperatura.toString() + " %");
                                         }
                                     }else{
                                         if(hasImpedance){
                                             if(index % 2 === 0){
                                                 return TargetBaterry.impedancia.toString();
                                             }else{
-                                                return "Impedância &Delta;%";
+                                                return (TargetBaterry.deltaImpedancia.toString() + " %");
                                             }
                                         }else if(hasTemperature){
                                             if(index % 2 === 0){
                                                 return TargetBaterry.temperatura.toString();
                                             }else{
-                                                return "Temperatura &Delta;%";
+                                                return (TargetBaterry.deltaTemperatura.toString() + " %");
                                             }
                                         }else{
                                             return "";
