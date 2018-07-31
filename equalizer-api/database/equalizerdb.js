@@ -17,7 +17,10 @@ var init = function () {
         db.run("CREATE TABLE IF NOT EXISTS Medias ( id INTEGER PRIMARY KEY, tensao REAL, target REAL )");
         db.run("CREATE TABLE IF NOT EXISTS TendenciasConfig (id INTEGER PRIMARY KEY, dataInstalacao TEXT, lastData TEXT, dataZero REAL, period REAL, impMin REAL, impMax REAL, tempMin REAL, tempMax REAL, zeroFilled REAL, isOn REAL, lastIteration INTEGER )");
         db.run("CREATE TABLE IF NOT EXISTS Tendencias ( id INTEGER PRIMARY KEY, dataHora TEXT, string TEXT, bateria TEXT, impedancia REAL, temperatura REAL, iteration INTEGER )");
-		//TRIGGERS
+        db.run("CREATE TABLE IF NOT EXISTS SnmpCommunities ( id INTEGER PRIMARY KEY AUTOINCREMENT, Address TEXT, Community TEXT, Permission INTEGER )");
+        db.run("CREATE TABLE IF NOT EXISTS SnmpTraps( id INTEGER PRIMARY KEY AUTOINCREMENT, Address TEXT, Community TEXT )");
+        db.run("CREATE TABLE IF NOT EXISTS SnmpCfgs ( id INTEGER PRIMARY KEY AUTOINCREMENT, Running INTEGER, Version INTEGER, Security INTEGER, User TEXT, Pass TEXT )");
+        //TRIGGERS
 		
 		
         //INDEXES

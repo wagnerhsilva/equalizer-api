@@ -139,6 +139,13 @@
                                 <a href="tendanaliticsview" title="Análise de Tendência"><span class="menu-item-parent">Análise de Tendência</span></a>
                         </li>
                     <%}%>
+
+                    <% if (userAccess =='administrador') {%>
+                        <li <%if (pageName=='SNMP' ) {%> class='active'
+                            <%}%>>
+                                <a href="snmpconfigview" title="SNMP"><span class="menu-item-parent">SNMP</span></a>
+                        </li>
+                    <%}%>
                 </ul>
             </li>
             <br />

@@ -10,6 +10,8 @@ var expressSession = require('express-session');
 
 var index = require('./routes/index')(passport);
 var home = require('./routes/home');
+var snmpconfig = require('./routes/snmpconfig');
+var snmpconfigview = require('./routes/snmpconfigview');
 var horaservidor = require('./routes/horaservidor');
 var usuarios = require('./routes/usuarios');
 var modulo = require('./routes/modulo');
@@ -23,6 +25,7 @@ var chart2 = require('./routes/chart2');
 var alarmeConfig = require('./routes/alarmeConfig');
 var dataLog = require('./routes/dataLog');
 var dataLogDB = require('./models/DataLog');
+var snmpmodel = require('./models/SnmpConfig');
 var ntpconfig = require('./routes/ntpconfig');
 var enviaEmail = require('./routes/enviarEmail');
 var bacsstatus = require('./routes/bacsstatus');
@@ -105,6 +108,8 @@ updateDate();
 
 //init sqlite database
 equalizerdb.init();
+console.log("Initing SNMP");
+snmpmodel.init_snmp();
 
 /*
 var usuarioModel = new usuario.createUser('Rodrigo', 'Bueno', '19999999999', 'rsb.bueno@gmail.com', '123', 'usuario');
@@ -164,6 +169,8 @@ app.use('/tendanalitics', tendanalitics);
 app.use('/tendanaliticsview', tendanaliticsview);
 app.use('/statusmodulo', statusmodulo);
 app.use('/dataLog', dataLog);
+app.use('/snmpconfig', snmpconfig);
+app.use('/snmpconfigview', snmpconfigview);
 app.use('/alarmeConfig', alarmeConfig);
 app.use('/livefeed', livefeeds);
 app.use('/getheaderdata', headerData);
