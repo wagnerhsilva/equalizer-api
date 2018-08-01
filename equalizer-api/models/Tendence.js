@@ -68,10 +68,10 @@ function linearize_get(data, iteration, batcount){
             }else{
                 var fval = parseFloat(initial[i].impedancia);
                 var cval = parseFloat(batdata.impedancia);
-                batdata.deltaImpedancia = (cval - fval) / fval;
+                batdata.deltaImpedancia = ((cval - fval) / fval)*100.0;
                 fval = parseFloat(initial[i].temperatura);
                 cval = parseFloat(batdata.temperatura);
-                batdata.deltaTemperatura = (cval - fval) / fval;
+                batdata.deltaTemperatura = ((cval - fval) / fval)*100.0;
             }
             response.push(batdata);
         }
