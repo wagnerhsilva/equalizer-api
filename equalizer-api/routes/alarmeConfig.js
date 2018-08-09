@@ -6,6 +6,7 @@ var bCrypt = require('bcrypt-nodejs');
 router.get('/', function (req, res, next) {
     AlarmeConfig.getAll(function (err, alarmesConfig) {
         if (err) return next(err);
+        console.log(alarmesConfig);
         res.json(alarmesConfig);
     });
 });

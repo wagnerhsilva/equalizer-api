@@ -46,7 +46,7 @@ var getIconName = function(pequa, tensao, min_val, max_val){
 var createStatusModulo = function (string, bateria, temperatura, impedancia, tensao, equalizacao,
  min_temp, max_temp, min_imp, max_imp, min_tensao, max_tensao,
   min_target, max_target, tensao_nominal_str, baterias_por_hr, batstatus, alarme_nivel_tens_pre, alarme_nivel_imped_pre,
-  alarme_nivel_temp_pre, alarme_pre_enabled) 
+  alarme_nivel_temp_pre, alarme_nivel_imped_pre_max, alarme_nivel_temp_pre_max, alarme_nivel_tens_pre_max, alarme_pre_enabled) 
 {
     var up_exists = check_file("updated.txt");
     var impedancial_width = 1;
@@ -81,12 +81,15 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
         min_temp: up_exists ? 0.0 : min_temp,
         max_temp: up_exists ? 0.0 : max_temp,
         pre_temp: up_exists ? 0.0 : alarme_nivel_temp_pre,
+        pre_temp_max: up_exists ? 0.0 : alarme_nivel_temp_pre_max,
         min_imp: up_exists ? 0.0 : min_imp,
         max_imp: up_exists ? 0.0 : max_imp,
         pre_imp: up_exists ? 0.0 : alarme_nivel_imped_pre,
+        pre_imp_max: up_exists ? 0.0 : alarme_nivel_imped_pre_max,
         min_tensao: up_exists ? 0.0 : min_tensao,
         max_tensao: up_exists ? 0.0 : max_tensao,
         pre_tensao: up_exists ? 0.0 : alarme_nivel_tens_pre,
+        pre_tensao_max: up_exists ? 0.0 : alarme_nivel_tens_pre_max,
         min_target: up_exists ? 0.0 : min_target,
         max_target: up_exists ? 0.0 : max_target,
         percentualTensao: p_tens,
@@ -101,9 +104,9 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
     if(obj.temperatura < obj.min_temp || obj.temperatura > obj.max_temp || obj.impedancia < obj.min_imp || obj.impedancia > obj.max_imp || obj.tensao < obj.min_tensao || obj.tensao > obj.max_tensao || obj.batstatus != 0)
     {
         alarmStatus = 1; //red error
-    }else if((obj.temperatura > obj.pre_temp && obj.temperatura < obj.max_temp) || 
-             (obj.tensao > obj.pre_tensao && obj.tensao < obj.max_tensao) || 
-             (obj.impedancia > obj.pre_imp && obj.impedancia < obj.max_imp))
+    }else if((obj.temperatura > obj.pre_temp && obj.temperatura < obj.pre_temp_max) || 
+             (obj.tensao > obj.pre_tensao && obj.tensao < obj.pre_tensao_max) || 
+             (obj.impedancia > obj.pre_imp && obj.impedancia < obj.pre_imp_max))
     {
         alarmStatus = 2; //pre error
     }
@@ -185,7 +188,8 @@ var get = function (data) {
                         row.alarme_nivel_imped_min, row.alarme_nivel_imped_max, row.alarme_nivel_tensao_min,
                         row.alarme_nivel_tensao_max, row.alarme_nivel_target_min, row.alarme_nivel_target_max, row.tensao_nominal,
                         row.baterias_por_hr, row.batstatus, row.alarme_nivel_tens_pre, row.alarme_nivel_imped_pre,
-                        row.alarme_nivel_temp_pre, row.alarme_pre_enabled));
+                        row.alarme_nivel_temp_pre, row.alarme_nivel_imped_pre_max, row.alarme_nivel_temp_pre_max,
+                        row.alarme_nivel_tens_pre_max, row.alarme_pre_enabled));
             strings.push(row.string_name);
         });
 
