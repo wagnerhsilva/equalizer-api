@@ -2,7 +2,7 @@ var sqlite3 = require('sqlite3').verbose();
 var bCrypt = require('bcrypt-nodejs');
 
 var createTendence = function (is_on, install_date, zero_date_months,
-     period_date_months, impe_min, impe_max, temp_min, temp_max) 
+     period_date_months, impe_min, impe_max, temp_min, temp_max, testMode) 
 {
     return {
         is_on: is_on != 0 ? true : false,
@@ -12,7 +12,8 @@ var createTendence = function (is_on, install_date, zero_date_months,
         impe_min: impe_min,
         impe_max: impe_max,
         temp_min: temp_min,
-        temp_max: temp_max
+        temp_max: temp_max,
+        testMode: testMode
     }
 }
 
@@ -141,15 +142,15 @@ var persist = function(parameters, errCallback){
             var statement;
             if(value > 0){
                 console.log("Updating configuration");
-                statement = db.prepare("UPDATE TendenciasConfig SET dataInstalacao = ?, dataZero = ?, period = ?, impMin = ?, impMax = ?, tempMin = ?, tempMax = ?, isOn = ?;");
+                statement = db.prepare("UPDATE TendenciasConfig SET dataInstalacao = ?, dataZero = ?, period = ?, impMin = ?, impMax = ?, tempMin = ?, tempMax = ?, isOn = ?, testMode = ?;");
             }else{
                 console.log("First configuration running");
-                statement = db.prepare("INSERT INTO TendenciasConfig (dataInstalacao, dataZero, period, impMin, impMax, tempMin, tempMax, isOn, lastIteration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0);");
+                statement = db.prepare("INSERT INTO TendenciasConfig (dataInstalacao, dataZero, period, impMin, impMax, tempMin, tempMax, isOn, lastIteration, testMode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, ?);");
             }
 
             statement.run(parameters.install_date, parameters.zero_date_months, 
             parameters.period_date_months, parameters.impe_min,
-            parameters.impe_max, parameters.temp_min, parameters.temp_max, parameters.is_on);
+            parameters.impe_max, parameters.temp_min, parameters.temp_max, parameters.is_on, parameters.testMode);
         }
     });
 }

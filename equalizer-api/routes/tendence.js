@@ -47,7 +47,8 @@ router.put('/', function (req, res, next) {
        parseFloat(req.body.impe_min),
        parseFloat(req.body.impe_max),
        parseFloat(req.body.temp_min),
-       parseFloat(req.body.temp_max)
+       parseFloat(req.body.temp_max),
+       req.body.testMode ? 1 : 0,
    );
    Tendence.persist(tendenceObj, function(err){
        console.log("Error trying to persist information");
