@@ -13,7 +13,7 @@ var createTendence = function (is_on, install_date, zero_date_months,
         impe_max: impe_max,
         temp_min: temp_min,
         temp_max: temp_max,
-        testMode: testMode
+        testMode: testMode != 0 ? true : false,
     }
 }
 
@@ -34,7 +34,7 @@ var get = function(parameters, errCallback){
             if(value === 0){
                 parameters(createZeroTendence());
             }else{
-                strSql = "SELECT dataInstalacao, dataZero, period, impMax, impMin, tempMin, tempMax, isOn FROM TendenciasConfig LIMIT 1;"
+                strSql = "SELECT dataInstalacao, dataZero, period, impMax, impMin, tempMin, tempMax, isOn, testMode FROM TendenciasConfig LIMIT 1;"
                 db.all(strSql, function(err, data){
                     if(err){
                         errCallback(err);
@@ -48,7 +48,8 @@ var get = function(parameters, errCallback){
                             data[0].impMin,
                             data[0].impMax,
                             data[0].tempMin,
-                            data[0].tempMax
+                            data[0].tempMax,
+                            data[0].testMode
                         ));
                     }
                 });
