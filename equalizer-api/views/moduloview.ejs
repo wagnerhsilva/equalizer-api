@@ -179,92 +179,104 @@
                                                     <thead>
                                                         <tr>
                                                             <td></td>
-                                                            <td>Min.</td>
-                                                            <td>Máx.</td>
-                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}">Pré Min</td>
-                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}">Pré Max</td>
+                                                            <td align="center">Min.</td>
+                                                            <td align="center" ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}">Pré Min</td>
+                                                            <td align="center" ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}">Pré Max</td>
+                                                            <td align="center">Máx.</td>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
                                                             <td>Tensão:</td>
+                                                            <!-- Min -->
                                                             <td>
                                                                 <label class="input">
-                                                            <input type="text" name="alarme_tensMin" id="alarme_tensMin" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Tensão Mín." ng-model="alarmes[0].alarme_nivel_tensao_min">
-                                                            <b class="tooltip tooltip-bottom-right">Tensão Mín.</b> 
-                                                        </label>
+                                                                    <input type="text" name="alarme_tensMin" id="alarme_tensMin" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Tensão Mín." ng-model="alarmes[0].alarme_nivel_tensao_min">
+                                                                    <b class="tooltip tooltip-bottom-right">Tensão Mín.</b> 
+                                                                </label>
                                                             </td>
-                                                            <td>
-                                                                <label class="input">
-                                                            <input type="text" name="alarme_tensMax" id="alarme_tensMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Tensão Máx." ng-model="alarmes[0].alarme_nivel_tensao_max">
-                                                            <b class="tooltip tooltip-bottom-right">Tensão Máx.</b>
-                                                        </label>
-                                                            </td>
+                                                            <!-- Pre Min -->
                                                             <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}">
                                                                 <label class="input">
                                                                     <input type="text" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Tensão Pré. Min" ng-model="alarmes[0].alarme_nivel_tens_pre" name="alarme_tensPre" id="alarme_tensPre">
                                                                     <b class="tooltip tooltip-bottom-right">Tensão Pré. Min</b>
                                                                 </label>
                                                             </td>
+                                                            <!-- Pre Max -->
                                                             <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}">
                                                                 <label class="input">
                                                                     <input type="text" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Tensão Pré. Max" ng-model="alarmes[0].alarme_nivel_tens_pre_max" name="alarme_tensPreMax" id="alarme_tensPreMax">
                                                                     <b class="tooltip tooltip-bottom-right">Tensão Pré. Max</b>
                                                                 </label>
                                                             </td>
+                                                            <!-- Max -->
+                                                            <td>
+                                                                <label class="input">
+                                                                    <input type="text" name="alarme_tensMax" id="alarme_tensMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Tensão Máx." ng-model="alarmes[0].alarme_nivel_tensao_max">
+                                                                    <b class="tooltip tooltip-bottom-right">Tensão Máx.</b>
+                                                                </label>
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Temperatura:</td>
+                                                            <!-- Min -->
                                                             <td>
                                                                 <label class="input">
                                                             <input type="text" name="alarme_tempMin" id="alarme_tempMin" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Temp. Mín." ng-model="alarmes[0].alarme_nivel_temp_min">
                                                             <b class="tooltip tooltip-bottom-right">Temp. Mín.</b> 
                                                         </label>
                                                             </td>
-                                                            <td>
-                                                                <label class="input">
-                                                            <input type="text" name="alarme_tempMax" id="alarme_tempMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Temp. Máx." ng-model="alarmes[0].alarme_nivel_temp_max">
-                                                            <b class="tooltip tooltip-bottom-right">Temp. Máx.</b> 
-                                                        </label>
-                                                            </td>
+                                                            <!-- Pre Min -->
                                                             <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}">
                                                                 <label class="input">
                                                                     <input type="text" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Temp Pré. Min" ng-model="alarmes[0].alarme_nivel_temp_pre" name="alarme_tempPre" id="alarme_tempPre">
                                                                     <b class="tooltip tooltip-bottom-right">Temp Pré. Min</b>
                                                                 </label>
                                                             </td>
+                                                            <!-- Pre Max -->
                                                             <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}">
                                                                 <label class="input">
                                                                     <input type="text" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Temp Pré. Max" ng-model="alarmes[0].alarme_nivel_temp_pre_max" name="alarme_tempPreMax" id="alarme_tempPreMax">
                                                                     <b class="tooltip tooltip-bottom-right">Temp Pré. Max</b>
                                                                 </label>
                                                             </td>
+                                                            <!-- Max -->
+                                                            <td>
+                                                                <label class="input">
+                                                            <input type="text" name="alarme_tempMax" id="alarme_tempMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Temp. Máx." ng-model="alarmes[0].alarme_nivel_temp_max">
+                                                            <b class="tooltip tooltip-bottom-right">Temp. Máx.</b> 
+                                                        </label>
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Impedância:</td>
+                                                            <!-- Min -->
                                                             <td>
                                                                 <label class="input">
                                                             <input type="text" name="alarme_impMin" id="alarme_impMin" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Imped. Mín." ng-model="alarmes[0].alarme_nivel_imped_min">
                                                             <b class="tooltip tooltip-bottom-right">Imped. Mín.</b> 
                                                         </label>
                                                             </td>
-                                                            <td>
-                                                                <label class="input">
-                                                            <input type="text" name="alarme_impMax" id="alarme_impMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Imped. Máx." ng-model="alarmes[0].alarme_nivel_imped_max" >
-                                                            <b class="tooltip tooltip-bottom-right">Imped. Máx.</b> 
-                                                        </label>
-                                                            </td>
+                                                            <!-- Pre Min -->
                                                             <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}">
                                                                 <label class="input">
                                                                     <input type="text" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Imped Pré. Min" ng-model="alarmes[0].alarme_nivel_imped_pre" name="alarme_impPre" id="alarme_impPre">
                                                                     <b class="tooltip tooltip-bottom-right">Imped Pré. Min</b>
                                                                 </label>
                                                             </td>
+                                                            <!-- Pre Max -->
                                                             <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}">
                                                                 <label class="input">
                                                                     <input type="text" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Imped Pré. Max" ng-model="alarmes[0].alarme_nivel_imped_pre_max" name="alarme_impPreMax" id="alarme_impPreMax">
                                                                     <b class="tooltip tooltip-bottom-right">Imped Pré. Max</b>
                                                                 </label>
+                                                            </td>
+                                                            <!-- Max -->
+                                                            <td>
+                                                                <label class="input">
+                                                            <input type="text" name="alarme_impMax" id="alarme_impMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Imped. Máx." ng-model="alarmes[0].alarme_nivel_imped_max" >
+                                                            <b class="tooltip tooltip-bottom-right">Imped. Máx.</b> 
+                                                        </label>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -305,7 +317,7 @@
                                                 </table>
                                             </section>
                                             <div style="width:350px;">
-                                                <label>Casas decimais para Target e Tensão de Barramento</label>
+                                                <label>Casas decimais para tensão</label>
                                                 <label class="select">
                                                         <select id="ddlCasasDecimaisHeader" onchange="alterarCasasDecimaisGlobal();" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'">
                                                             <option value="2" <%if (headerInfoCDec == 2) {%> selected<%}%>>2</option>
@@ -470,6 +482,7 @@
                                 // $scope.enablePreAlarme = $scope.alarmes[0].alarme_pre_enabled == 0;
                             };
                             $scope.resetarPadroes = function () {
+                                // Tensao
                                 $("#alarme_tensPreMax").val("13.200");
                                 $scope.alarmes[0].alarme_nivel_tens_pre_max = "13.200";
                                 $("#alarme_tensMin").val("10.500");
@@ -478,6 +491,7 @@
                                 $scope.alarmes[0].alarme_nivel_tens_pre = "13.100";
                                 $("#alarme_tensMax").val("13.500");
                                 $scope.alarmes[0].alarme_nivel_tensao_max = "13.500";
+                                // Temperatura
                                 $("#alarme_tempPreMax").val("40.0");
                                 $scope.alarmes[0].alarme_nivel_temp_pre_max = "40.0";
                                 $("#alarme_tempMin").val("-10.0");
@@ -486,6 +500,7 @@
                                 $scope.alarmes[0].alarme_nivel_temp_pre = "30.0";
                                 $("#alarme_tempMax").val("50.0");
                                 $scope.alarmes[0].alarme_nivel_temp_max = "50.0";
+                                // Impedancia
                                 $("#alarme_impMin").val("1.0");
                                 $scope.alarmes[0].alarme_nivel_imped_min = "1.0";
                                 $("#alarme_impPreMax").val("80");
@@ -580,11 +595,20 @@
                 $("#alerta_tempMax").maskMoney({ decimal: ".", thousands: "", precision: 1 });
                 $("#alerta_impMin").maskMoney({ decimal: ".", thousands: "", precision: 1 });
                 $("#alerta_impMax").maskMoney({ decimal: ".", thousands: "", precision: 1 });
+                // Alarmes tensao                
                 $("#alarme_tensMin").maskMoney({ decimal: ".", thousands: "", precision: 3 });
+                $("#alarme_tensPre").maskMoney({ decimal: ".", thousands: "", precision: 3 });
+                $("#alarme_tensPreMax").maskMoney({ decimal: ".", thousands: "", precision: 3 });
                 $("#alarme_tensMax").maskMoney({ decimal: ".", thousands: "", precision: 3 });
+                // Alarmes Temperatura
                 $("#alarme_tempMin").maskMoney({ allowNegative: true, decimal: ".", thousands: "", precision: 1 });
+                $("#alarme_tempPre").maskMoney({ allowNegative: true, decimal: ".", thousands: "", precision: 1 });
+                $("#alarme_tempPreMax").maskMoney({ allowNegative: true, decimal: ".", thousands: "", precision: 1 });
                 $("#alarme_tempMax").maskMoney({ allowNegative: true, decimal: ".", thousands: "", precision: 1 });
+                // Alarmes Impedancia
                 $("#alarme_impMin").maskMoney({ decimal: ".", thousands: "", precision: 1 });
+                $("#alarme_impPre").maskMoney({ decimal: ".", thousands: "", precision: 1 });
+                $("#alarme_impPreMax").maskMoney({ decimal: ".", thousands: "", precision: 1 });
                 $("#alarme_impMax").maskMoney({ decimal: ".", thousands: "", precision: 1 });
 
                 $("#alarme_tensaoBarrMin").maskMoney({ decimal: ".", thousands: "", precision: 3 });

@@ -65,9 +65,11 @@
                     <div class="input-group-text">
                         <input type="checkbox" id="refreshButton" ng-model="tendenceConfigs.is_on" ng-click=""><p>Habilitar Análise de Tendência</p>
                     </div>
+                    <!--
                     <div class="input-group-text">
                         <input type="checkbox" id="refreshButton" ng-model="tendenceConfigs.testMode" ng-click=""><p>Modo Teste</p>
                     </div>
+                    -->
                     <section>
                         <div class="widget-body no-padding">
                             <form name="form2">
@@ -82,10 +84,12 @@
                                                     <label class="label"> Data Referência Zero</label>
                                                     <input type="number" min="0" max="99" ng-model="tendenceConfigs.zero_date_months" 
                                                      name="zeroRefMounths" placeholder="Meses" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" required>
+                                                    <label class="label"> Meses </label>
                                                 </section>
                                                 <section>
                                                     <label class="label">Periodicidade</label>
                                                     <input type="number" min="0" max="99" ng-model="tendenceConfigs.period_date_months" name="Periodicidade" placeholder="Periodicidade" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" required>
+                                                    <label class="label"> Meses </label>
                                                 </section>
                                         </fieldset>
                                     </section>
@@ -95,14 +99,14 @@
                                                 <table class="table table-striped table-bordered table-hover">
                                                     <thead>
                                                         <tr>
-                                                            <td>Paramêtro</td>
-                                                            <td>Mínimo</td>
-                                                            <td>Máximo</td>
+                                                            <td align="center">Paramêtro</td>
+                                                            <td align="center">Mínimo</td>
+                                                            <td align="center">Máximo</td>
                                                         </tr>
                                                         </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td>Impedância</td>
+                                                            <td>Impedância [m&Omega;]</td>
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="alarmeImpeMin" id="alarmeImpeMin" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-model="tendenceConfigs.impe_min" placeholder="Impedância Min.">
@@ -119,7 +123,7 @@
                                                         </tr>
 
                                                         <tr>
-                                                            <td>Temperatura</td>
+                                                            <td>Temperatura [°C]</td>
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="alarmeTempMin" id="alarmeTempMin" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-model="tendenceConfigs.temp_min" placeholder="Temperatura Min.">
@@ -171,6 +175,8 @@
                             $scope.emailUsuario = '<%= userEmail %>';
                             
                             $scope.applyConfiguration = function(){
+                                // testMode sempre desligado
+                                $scope.tendenceConfigs.testMode = 0;
                                 var args = $scope.tendenceConfigs;
                                 TendenceConfig.update(args);
                                 $.bigBox({
