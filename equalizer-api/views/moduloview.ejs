@@ -287,14 +287,14 @@
                                                             <b class="tooltip tooltip-bottom-right">Tensão Barr. Mín.</b> 
                                                         </label>
                                                             </td>
+                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}"></td>
+                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}"></td>
                                                             <td>
                                                                 <label class="input">
                                                             <input type="text" name="alarme_tensaoBarrMax" id="alarme_tensaoBarrMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Tensão Barr. Máx." ng-model="alarmes[0].alarme_nivel_tensao_barr_max">
                                                             <b class="tooltip tooltip-bottom-right">Tensão Barr. Máx.</b> 
                                                         </label>
                                                             </td>
-                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}"></td>
-                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Target:</td>
@@ -304,14 +304,15 @@
                                                             <b class="tooltip tooltip-bottom-right">Target Mín.</b> 
                                                         </label>
                                                             </td>
+                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}"></td>
+                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}"></td>
                                                             <td>
                                                                 <label class="input">
                                                             <input type="text" name="alarme_targetMax" id="alarme_targetMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Target Máx." ng-model="alarmes[0].alarme_nivel_target_max">
                                                             <b class="tooltip tooltip-bottom-right">Target Máx.</b> 
                                                         </label>
                                                             </td>
-                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}"></td>
-                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}"></td>
+                                                    
                                                         </tr>
                                                     </tbody>
                                                 </table>
