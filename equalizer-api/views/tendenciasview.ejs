@@ -82,15 +82,15 @@
                                             <td></td>
                                             <td align="center" ng-class="{displayNone: hasImpedance == 0}">Impedância Ohms</td>
                                             <td align="center" ng-class="{displayNone: hasTemperature == 0}">Temperatura ºC</td>
-                                            <td ng-repeat="f in range(dataLength*readsCount) track by $index" >
+                                            <td align="center" ng-repeat="f in range(dataLength*readsCount) track by $index" >
                                                 <div ng-bind-html=" getInnerText($index, dataLength, hasImpedance, hasTemperature) | trust"></div>
                                             </td>
                                         </tr>
                                         <tr ng-repeat= "f in range(tendenceStatus.batterycount) track by $index">
                                             <td align="center">{{tendenceStatus.data[$index * tendenceStatus.iterations].bateria}}</td>
-                                            <td align="center" ng-class="{displayNone: hasImpedance == 0}">{{tendenceStatus.data[$index * tendenceStatus.iterations].impedancia}}</td>
-                                            <td align="center" ng-class="{displayNone: hasTemperature == 0}">{{tendenceStatus.data[$index * tendenceStatus.iterations].temperatura}}</td>
-                                            <td ng-repeat="s in range(dataLength*readsCount) track by $index">
+                                            <td align="center" ng-class="{displayNone: hasImpedance == 0}">{{(tendenceStatus.data[$index * tendenceStatus.iterations].impedancia)/100}}</td>
+                                            <td align="center" ng-class="{displayNone: hasTemperature == 0}">{{(tendenceStatus.data[$index * tendenceStatus.iterations].temperatura)/10}}</td>
+                                            <td align="center" ng-repeat="s in range(dataLength*readsCount) track by $index">
                                                 <div ng-bind-html=" getInnerContent($index, $parent.$index, tendenceStatus.data, dataLength, hasImpedance, hasTemperature, tendenceStatus.iterations) | trust"></div>
                                             </td>
                                         </tr>
@@ -166,6 +166,10 @@
                             $scope.zeroWidth = $scope.hasImpedance + $scope.hasTemperature;
                             $scope.dataLength = 2 * $scope.zeroWidth;
 
+                            $scope.round = function(value, decimals) {
+                                return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+                            }
+
                             $scope.getInnerContent = function(index, parentIndex, data, dataLength, hasImpedance, hasTemperature, iterations){
                                 if(data){
                                     var cellLoc = index;
@@ -174,26 +178,26 @@
                                     var TargetBaterry = data[cindex];
                                     if(dataLength === 4){
                                         if(index % 4 === 0){
-                                            return TargetBaterry.impedancia.toString();
+                                            return (TargetBaterry.impedancia/100).toString();
                                         }else if(index % 4 === 1){
-                                            return TargetBaterry.temperatura.toString();
+                                            return (TargetBaterry.temperatura/10).toString();
                                         }else if(index % 4 === 2){
-                                            return (TargetBaterry.deltaImpedancia.toString() + " %");
+                                            return ((Math.round(TargetBaterry.deltaImpedancia.toString()*100)/100) + " %");
                                         }else{
-                                            return (TargetBaterry.deltaTemperatura.toString() + " %");
+                                            return ((Math.round(TargetBaterry.deltaTemperatura*100)/100).toString() + " %");
                                         }
                                     }else{
                                         if(hasImpedance){
                                             if(index % 2 === 0){
-                                                return TargetBaterry.impedancia.toString();
+                                                return (TargetBaterry.impedancia/100).toString();
                                             }else{
-                                                return (TargetBaterry.deltaImpedancia.toString() + " %");
+                                                return ((Math.round(TargetBaterry.deltaImpedancia*100)/100).toString() + " %");
                                             }
                                         }else if(hasTemperature){
                                             if(index % 2 === 0){
-                                                return TargetBaterry.temperatura.toString();
+                                                return (TargetBaterry.temperatura/10).toString();
                                             }else{
-                                                return (TargetBaterry.deltaTemperatura.toString() + " %");
+                                                return ((Math.round(TargetBaterry.deltaTemperatura*100)/100).toString() + " %");
                                             }
                                         }else{
                                             return "";
