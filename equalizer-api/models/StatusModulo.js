@@ -100,17 +100,30 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
         equalizacaoIcon: iconName
     }
 
-    var alarmStatus = -1; //no alarm
-    if(obj.temperatura < obj.min_temp || obj.temperatura > obj.max_temp || obj.impedancia < obj.min_imp || obj.impedancia > obj.max_imp || obj.tensao < obj.min_tensao || obj.tensao > obj.max_tensao || obj.batstatus != 0)
+    /* Flavio Alves: Revisao da Implementação da logica
+     * alarmStatus = 1 (vermelho) abaixo do minimo ou acima do máximo
+     *                            ou dado invalido
+     * alarmStatus = 2 (amarelo) entre o minimo e o pre-minimo ou
+     *                           entre o pre-maximo e o maximo
+     * alarmStatus = -1 (verde) entre o pre-minimo e o pre-maximo
+     */
+    var alarmStatus = -1; // A condição padrão é a verde (tudo certo)
+    if(obj.temperatura <= obj.min_temp || obj.temperatura >= obj.max_temp || 
+        obj.impedancia <= obj.min_imp || obj.impedancia >= obj.max_imp || 
+        obj.tensao <= obj.min_tensao || obj.tensao >= obj.max_tensao || 
+        obj.batstatus != 0)
     {
-        alarmStatus = 1; //red error
-    }else if((obj.temperatura > obj.pre_temp && obj.temperatura < obj.pre_temp_max) || 
-             (obj.tensao > obj.pre_tensao && obj.tensao < obj.pre_tensao_max) || 
-             (obj.impedancia > obj.pre_imp && obj.impedancia < obj.pre_imp_max))
+        alarmStatus = 1; // VERMELHO: maximo atingido
+    } else if (((obj.temperatura > obj.min_temp) && (obj.temperatura <= obj.pre_temp)) ||
+        ((obj.temperatura >= obj.pre_temp_max) && (obj.temperatura < obj.max_temp)) ||
+        ((obj.tensao > obj.min_tensao) && (obj.tensao <= obj.pre_tensao)) ||    
+        ((obj.tensao >= obj.pre_tensao_max) && (obj.tensao < obj.max_tensao)) ||
+        ((obj.impedancia > obj.min_imp) && (obj.impedancia <= obj.pre_imp)) ||
+        ((obj.impedancia >= obj.pre_imp_max) && (obj.impedancia < obj.max_imp)))
     {
-        alarmStatus = 2; //pre error
+        alarmStatus = 2 // AMARELO: faixa de alarmes
     }
-
+ 
     obj["alarmStatus"] = alarmStatus;
     return obj;
 }
