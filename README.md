@@ -72,3 +72,8 @@ Essa ferramenta é capaz de abrir o projeto que se encontra dentro do WSL. Para 
 
 Este [link](https://code.visualstudio.com/docs/cpp/config-wsl) mostra como este recurso funciona no software.
 
+# Execução
+
+O software pode ser acessado através de um browser na própria máquina.
+
+O link a ser executado é o seguinte: http://localhost:3000
