@@ -1,0 +1,11 @@
+{
+    "statusmodulo": {
+        "title": "Estado dos módulos",
+        "bread_status": "Status",
+        "bread_modules": "Módulos",
+        "btn_status_ordering": "Ordenamento manual",
+        "btn_change_view": "Alterar visão",
+        "bold": "Negrito",
+        "no_read_batteries": "Baterias sem leitura"
+    }
+}

@@ -52,6 +52,7 @@ var chartview = require('./routes/chartview');
 var chart2view = require('./routes/chart2view');
 var equalizerdb = require('./database/equalizerdb');
 var emailServerModel = require('./models/EmailServer.js');
+var i18n = require('./i18n');
 
 // Flavio Alves: configurando o timezone do projeto para o Brasil,
 // com o intuito de evitar divergencias na coleta de data e hora
@@ -106,31 +107,26 @@ updateDate();
 
 
 
-//init sqlite database
+/*
+ * Inicializando Banco de Dados
+ */
 equalizerdb.init();
+
+/*
+ * Inicializando serviço SNMP
+ */
 console.log("Initing SNMP");
 snmpmodel.init_snmp();
 
 /*
-var usuarioModel = new usuario.createUser('Rodrigo', 'Bueno', '19999999999', 'rsb.bueno@gmail.com', '123', 'usuario');
-usuario.save(usuarioModel);
-usuario.getAll(function (data) {
-  //console.log(data);
-});
-console.log(usuario.getById(25, function (data) {
-  console.log(data);
-}));
-*/
-// load mongoose package
-/*var mongoose = require('mongoose');
-// Use native Node promises
-mongoose.Promise = global.Promise;
-// connect to MongoDB
-mongoose.connect('mongodb://localhost/equalizer')
-    .then(() => console.log('connection succesful'))
-    .catch((err) => console.error(err));
-*/
+ * Inicializando framework express
+ */
 var app = express();
+
+/*
+ * Inicializando a localização
+ */
+app.use(i18n);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -216,9 +212,12 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-//iteração envio email
+/*
+ * Configurando intervalo para envio de email
+ */
 setInterval(function(){ emailServerModel.sendEmail(); }, 30000);
-//setInterval(function(){ dataLogDB.logInsert(); }, 2000);
+
+
 module.exports = app;
 global.showHeaderInfo = true;
 global.headerInfoCDec = 3;
