@@ -37,7 +37,7 @@ router.get('/', isAuthenticated, function (req, res, next) {
             Parameter.getTrap(function(err, trap){
                 Usuario.getAll(function (err, usuarios) {
                     if (err) return next(err);
-                    res.render('redesegurancaview', { title: 'Rede & Segurança', pageName: 'redesegurancaview', username: req.user.nome, userAccess: req.user.acesso, usuarios: usuarios, network: obj, redeSeguranca: redeSeguranca, trap: trap, showHeaderData: global.showHeaderInfo });
+                    res.render('redesegurancaview', { title: 'Rede & Segurança', pageName: 'redesegurancaview', username: req.user.nome, userAccess: req.user.acesso, usuarios: usuarios, network: obj, redeSeguranca: redeSeguranca, trap: trap, showHeaderData: global.showHeaderInfo, translate: res.__('redeseguranca'), translate_header: res.__('header') });
                 });
             });
         });

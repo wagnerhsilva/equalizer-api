@@ -11,7 +11,7 @@ var isAuthenticated = function (req, res, next) {
 }
 /* GET home page. */
 router.get('/', isAuthenticated, function (req, res, next) {
-    res.render('emailserverview', { title: 'EmailServer Config', pageName: 'emailserverview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email, showHeaderData: global.showHeaderInfo });
+    res.render('emailserverview', { title: 'EmailServer Config', pageName: 'emailserverview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email, showHeaderData: global.showHeaderInfo, translate: res.__('emailserver'), translate_header: res.__('header') });
 });
 
 module.exports = router;

@@ -46,7 +46,7 @@
                 <b><span id="txtTarget">0</span></b> &nbsp&nbsp&nbsp
                 <span>Tensão de barramento - </span>
                 <b><span id="txtTensaoBarramento">0</span></b> &nbsp&nbsp&nbsp -->
-                <span>Capacidade do banco de dados - </span>
+                <span><%= translate_header.database_capacity %> - </span>
                 <b><span id="txtCapBanco">0%</span></b>
             </div>
     </div>
@@ -82,68 +82,68 @@
         <br />
         <ul>
             <li style="border: 1px solid white; margin-left: 5%; margin-right: 5%;" class="top-menu-invisible">
-                <a href="#" title="Status"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Status</span></a>
+                <a href="#" title="Status"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent"><%= translate_header.status %></span></a>
                 <ul>
                     <li <%if (pageName=='statusmoduloview' ) {%> class='active'
                         <%}%>>
-                            <a href="statusmoduloview" title="Módulos"><span class="menu-item-parent">Módulos</span></a>
+                            <a href="statusmoduloview" title="Módulos"><span class="menu-item-parent"><%= translate_header.modules %></span></a>
                     </li>
                     <li <%if (pageName=='tendenciasview' ) {%> class='active'
                             <%}%>>
-                                <a href="tendenciasview" title="Tendências"><span class="menu-item-parent">Tendências</span></a>
+                                <a href="tendenciasview" title="Tendências"><span class="menu-item-parent"><%= translate_header.tendencies %></span></a>
                         </li>
                     <li <%if (pageName=='chartview' ) {%> class='active'
                         <%}%>>
-                            <a href="chartview" title="Gráficos"><span class="menu-item-parent">Gráficos</span></a>
+                            <a href="chartview" title="Gráficos"><span class="menu-item-parent"><%= translate_header.plots %></span></a>
                     </li>
                     <li <%if (pageName=='chart2view' ) {%> class='active'
                         <%}%>>
-                            <a href="chart2view" title="Limites"><span class="menu-item-parent">Limites</span></a>
+                            <a href="chart2view" title="Limites"><span class="menu-item-parent"><%= translate_header.limits %></span></a>
                     </li>
                 </ul>
             </li>
             <br />
             <br />
             <li style="border: 1px solid white; margin-left: 5%; margin-right: 5%;" class="top-menu-invisible">
-                <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Configuração</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent"><%= translate_header.configurations %></span></a>
                 <ul>
                     <li <%if (pageName=='usuarioview' ) {%> class='active'
                         <%}%>>
-                            <a href="usuarioview" title="Gerenciamento de usuários"><span class="menu-item-parent">Gerenciamento de usuários</span></a>
+                            <a href="usuarioview" title="Gerenciamento de usuários"><span class="menu-item-parent"><%= translate_header.users %></span></a>
                     </li>
                     <li <%if (pageName=='moduloview' ) {%> class='active'
                         <%}%>>
-                            <a href="moduloview" title="Módulos, alarme e bateria"><span class="menu-item-parent">Módulos, alarme e bateria</span></a>
+                            <a href="moduloview" title="Módulos, alarme e bateria"><span class="menu-item-parent"></span><%= translate_header.modules_config %></a>
                     </li>
                     <li <%if (pageName=='emailserverview' ) {%> class='active'
                         <%}%>>
-                            <a href="emailserverview" title="Configuração de email server"><span class="menu-item-parent">Configuração de email server</span></a>
+                            <a href="emailserverview" title="Configuração de email server"><span class="menu-item-parent"><%= translate_header.email_config %></span></a>
                     </li>
                     <li <%if (pageName=='timeserverview' ) {%> class='active'
                         <%}%>>
-                            <a href="timeserverview" title="Configuração de timeserver"><span class="menu-item-parent">Configuração de timeserver</span></a>
+                            <a href="timeserverview" title="Configuração de timeserver"><span class="menu-item-parent"><%= translate_header.timeserver_config %></span></a>
                     </li>
                     <li <%if (pageName=='redesegurancaview' ) {%> class='active'
                         <%}%>>
-                            <a href="redesegurancaview" title="Rede & Segurança"><span class="menu-item-parent">Rede & Segurança</span></a>
+                            <a href="redesegurancaview" title="Rede & Segurança"><span class="menu-item-parent"><%= translate_header.network_config %></span></a>
                     </li>
                     <% if (userAccess =='administrador') {%>
                         <li <%if (pageName=='parameterview' ) {%> class='active'
                             <%}%>>
-                                <a href="parameterview" title="Parâmetros"><span class="menu-item-parent">Parâmetros</span></a>
+                                <a href="parameterview" title="Parâmetros"><span class="menu-item-parent"><%= translate_header.params %></span></a>
                         </li>
                         <%}%>
                     <% if (userAccess =='administrador') {%>
                         <li <%if (pageName=='Análise de Tendência' ) {%> class='active'
                             <%}%>>
-                                <a href="tendanaliticsview" title="Análise de Tendência"><span class="menu-item-parent">Análise de Tendência</span></a>
+                                <a href="tendanaliticsview" title="Análise de Tendência"><span class="menu-item-parent"><%= translate_header.tendencies_config %></span></a>
                         </li>
                     <%}%>
 
                     <% if (userAccess =='administrador') {%>
                         <li <%if (pageName=='SNMP' ) {%> class='active'
                             <%}%>>
-                                <a href="snmpconfigview" title="SNMP"><span class="menu-item-parent">SNMP</span></a>
+                                <a href="snmpconfigview" title="SNMP"><span class="menu-item-parent"><%= translate_header.snmp %></span></a>
                         </li>
                     <%}%>
                 </ul>
@@ -151,11 +151,11 @@
             <br />
             <br />
             <li style="border: 1px solid white; margin-left: 5%; margin-right: 5%;">
-                <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent">Logfiles</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i><span class="menu-item-parent"><%= translate_header.log %></span></a>
                 <ul>
                     <li <%if (pageName=='alarmlogview' ) {%> class='active'
                         <%}%>>
-                            <a href="alarmlogview" title="Alarme de eventos"><span class="menu-item-parent">Alarme de eventos</span></a>
+                            <a href="alarmlogview" title="Alarme de eventos"><span class="menu-item-parent"><%= translate_header.alarm_events %></span></a>
                     </li>
                 </ul>
             </li>

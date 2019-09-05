@@ -1,12 +1,31 @@
 {
+    "header": {
+        "database_capacity": "Database capacity",
+        "modules": "Modules",
+        "tendencies": "Tendencies",
+        "plots": "Graphics",
+        "limits": "Limits",
+        "configurations": "Configurations",
+        "users": "User management",
+        "modules_config": "Modules, alarm e battery",
+        "email_config": "Email server configuration",
+        "timeserver_config": "Timeserver configuration",
+        "network_config": "Network and Security",
+        "params": "Parameters",
+        "tendencies_config": "Tendencies analysis",
+        "snmp": "SNMP",
+        "log": "LogFiles",
+        "alarm_events": "Alarm events",
+        "status":"Status"
+    },
     "statusmodulo": {
-        "title": "Modules Status",
+        "title": "Modules status",
         "bread_status": "Status",
         "bread_modules": "Modules",
         "btn_status_ordering": "Manual ordering",
         "btn_change_view": "Change view",
         "bold": "Bold",
-        "no_read_batteries": "Batteries without reading",
+        "no_read_batteries": "Unread batteries",
         "voltage": "Voltage",
         "temperature": "Temperature",
         "impedance": "Impedance",
@@ -14,5 +33,29 @@
         "status": "Status",
         "battery": "Battery",
         "target": "Target"
+    },
+    "tendencias": {
+    },
+    "chart": {
+    },
+    "chart2": {
+    },
+    "usuario": {
+    },
+    "modulo": {
+    },
+    "emailserver": {
+    },
+    "timeserver": {
+    },
+    "redeseguranca": {
+    },
+    "parameter": {
+    },
+    "tendanalitics": {
+    },
+    "snmpconfig": {
+    },
+    "alarmlog": {
     }
 }
