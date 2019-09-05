@@ -6,6 +6,13 @@
         "btn_status_ordering": "Manual ordering",
         "btn_change_view": "Change view",
         "bold": "Bold",
-        "no_read_batteries": "Batteries without reading"
+        "no_read_batteries": "Batteries without reading",
+        "voltage": "Voltage",
+        "temperature": "Temperature",
+        "impedance": "Impedance",
+        "equalization": "Equalization",
+        "status": "Status",
+        "battery": "Battery",
+        "target": "Target"
     }
 }

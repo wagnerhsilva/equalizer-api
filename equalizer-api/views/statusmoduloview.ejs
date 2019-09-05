@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us" ng-app="app">
+<html ng-app="app">
 
 <head>
     <% include partials/head %>
@@ -19,8 +19,8 @@
 
                 <!-- breadcrumb -->
                 <ol class="breadcrumb">
-                    <li>Status</li>
-                    <li>Módulos</li>
+                    <li><%= translate.bread_status %></li>
+                    <li><%= translate.bread_modules %></li>
                 </ol>
             </div>
             <div id="content">
@@ -31,7 +31,7 @@
                         <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                             <header>
                                 <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                                <h2>Status dos Módulos</h2>
+                                <h2><%= translate.title %></h2>
 
                             </header>
                             <div>
@@ -49,25 +49,25 @@
                     <section id="visao1">
 
                     <div class="input-group-text">
-                        <input type="checkbox" id="refreshButton" ng-click="swapStaticState();"><p>Ordenamento Manual</p>
-                        <button id="btn" class="btn btn-primary pull-right" onclick="alterarVisao();">Alterar Visão</button>
+                        <input type="checkbox" id="refreshButton" ng-click="swapStaticState();"><p><%= translate.btn_status_ordering %></p>
+                        <button id="btn" class="btn btn-primary pull-right" onclick="alterarVisao();"><%= translate.btn_change_view %></button>
                     </div>
                             
                            
                         <!-- <div ng-repeat="string in stringsDistintas"> -->
                         <div ng-repeat="f in range(stringsDistintas.length) track by $index">
-                            <h3>{{ stringsDistintas[$index] }} - Tensão: {{ moduleMap[$index][0].str_tensao / 1000 }} Target: {{ moduleMap[$index][0].target / 1000  }}</h3>
+                            <h3>{{ stringsDistintas[$index] }} - <%= translate.voltage %>: {{ moduleMap[$index][0].str_tensao / 1000 }} <%= translate.target %>: {{ moduleMap[$index][0].target / 1000  }}</h3>
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover datatabletemplate">
-                                    <caption style="caption-side: bottom"><b>Em Negrito</b>: Baterias sem leitura</caption>
+                                    <caption style="caption-side: bottom"><b><%= translate.bold %></b>: <%= translate.no_read_batteries %></caption>
                                     <thead>
                                         <tr>
-                                            <td class="no-sort" align="center">Bateria</td>
-                                            <td align="center">Tensão [V]</td>
-                                            <td align="center">Temperatura [°C]</td>
-                                            <td align="center">Impedância [m&Omega;]</td>
-                                            <td align="center">Equalização [%]</td>
-                                            <td align="center">Status</td>
+                                            <td class="no-sort" align="center"><%= translate.battery %></td>
+                                            <td align="center"><%= translate.voltage %> [V]</td>
+                                            <td align="center"><%= translate.temperature %> [°C]</td>
+                                            <td align="center"><%= translate.impedance %> [m&Omega;]</td>
+                                            <td align="center"><%= translate.equalization %> [%]</td>
+                                            <td align="center"><%= translate.status %></td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -97,13 +97,13 @@
                         </div>
                     </section>
                     <section id="visao2" style="display: none">
-                        <button id="btn" class="btn btn-primary pull-right" onclick="alterarVisao();">Alterar Visão</button>
+                        <button id="btn" class="btn btn-primary pull-right" onclick="alterarVisao();"><%= translate.btn_change_view %></button>
                         <div ng-repeat=" i in range(stringsMap.length) track by $index">
-                            <h3>{{ stringsMap[$index] }} - Tensão: {{ moduleMap[$index][0].str_tensao / 1000 }} Target: {{ moduleMap[$index][0].target / 1000  }}</h3>
+                            <h3>{{ stringsMap[$index] }} - <%= translate.voltage %>: {{ moduleMap[$index][0].str_tensao / 1000 }} <%= translate.target %>: {{ moduleMap[$index][0].target / 1000  }}</h3>
                                 <div ng-repeat="k in range(moduleMap[$index].length / baterias_por_hr) track by $index">
                                     <div class="table-responsive">
                                         <table class="table table-striped table-bordered table-hover" style="table-layout: fixed; width:100%;">
-                                            <caption style="caption-side: bottom"><b>Em Negrito</b>: Baterias sem leitura</caption>
+                                            <caption style="caption-side: bottom"><b><%= translate.bold %></b>: <%= translate.no_read_batteries %></caption>
                                             <thead>
                                                 <tr>
                                                     <td style="width:100px;"></td>
@@ -125,7 +125,7 @@
                                                  <thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td style="width:100px;">Tensão [V]</td>
+                                                            <td style="width:100px;"><%= translate.voltage %> [V]</td>
                                                             <td align="center" style="width:50px;" ng-class="{boldClass: moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].batstatus != 0}" ng-repeat="t in range(baterias_por_hr) track by $index">
                                                                 {{moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].tensao | number: <%- headerInfoCDec %>}}
                                                                 <input type="hidden" ng-value="moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].min_tensao" />
@@ -133,19 +133,19 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="width:100px;">Temperatura [°C]</td>
+                                                            <td style="width:100px;"><%= translate.temperature %> [°C]</td>
                                                             <td align="center" style="width:50px;" ng-class="{boldClass: moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].batstatus != 0}" ng-repeat="t in range(baterias_por_hr) track by $index">
                                                                 {{moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].temperatura}}
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="width:100px;">Impedância [m&Omega;]</td>
+                                                            <td style="width:100px;"><%= translate.impedance %> [m&Omega;]</td>
                                                             <td align="center" style="width:50px;" ng-class="{boldClass: moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].batstatus != 0}" ng-repeat="t in range(baterias_por_hr) track by $index">
                                                                 {{moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].impedancia}}
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="width:100px;">Equalização [%]</td>
+                                                            <td style="width:100px;"><%= translate.equalization %> [%]</td>
                                                             <td align="center" style="width:50px;" ng-repeat="t in range(baterias_por_hr) track by $index">
                                                                 <input type="hidden" ng-value="moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].min_target" />
                                                                 <input type="hidden" ng-value="moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].max_target" />
@@ -154,7 +154,7 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="width:100px;">Bateria</td>
+                                                            <td style="width:100px;"><%= translate.battery %></td>
                                                             <td align="center" style="width:50px;" ng-class="{boldClass: moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].batstatus != 0}" ng-repeat="t in range(baterias_por_hr) track by $index">
                                                                 {{moduleMap[$parent.$parent.$index][$parent.$index * baterias_por_hr + $index].bateria}}
                                                             </td>
