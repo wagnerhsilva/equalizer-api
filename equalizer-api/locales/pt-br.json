@@ -58,7 +58,8 @@
         "y2_scale_min": "Escala Y sec. mín.",
         "y2_scale_max": "Escala Y sec. máx.",
         "apply": "Aplicar",
-        "choose_batteries": "Selecione as baterias (Series)"
+        "choose_batteries": "Selecione as baterias (Series)",
+        "bus_voltage": "Tensão de Barramento"
     },
     "chart2": {
         "status": "Status",

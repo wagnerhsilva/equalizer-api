@@ -300,8 +300,8 @@
                         if (lstObj.length > 0) {
                             $("#frmSeries").show();
                             g1 = new Dygraph(document.getElementById("noroll"), data, {
-                                title: 'Temperatura',
-                                ylabel: 'Temperatura',
+                                title: '<%= translate.temperarure %>',
+                                ylabel: '<%= translate.temperarure %>',
                                 legend: 'always',
                                 // labelsDiv: document.getElementById("labels"),
                                 highlightCircleSize: 2,
@@ -366,13 +366,13 @@
                         if (lstObj.length > 0) {
                             $("#frmSeries").show();
                             g1 = new Dygraph(document.getElementById("noroll"), lstObj, {
-                                title: 'Tensão',
-                                ylabel: 'Tensão(V)',
+                                title: '<%= translate.voltage %>',
+                                ylabel: '<%= translate.voltage %> (V)',
                                 legend: 'always',
                                 labels: rotulos,
                                 visibility: seriesVisibility,
                                 series: {
-                                    'Tensão de Barramento': {
+                                    '<%= translate.bus_voltage %>': {
                                         axis: 'y2'
                                     },
                                 },
@@ -437,8 +437,8 @@
                     getData();
                 } else {
                     g1 = new Dygraph(document.getElementById("noroll"), null, {
-                        title: 'Tensão',
-                        ylabel: 'Tensão(V)',
+                        title: '<%= translate.voltage %>',
+                        ylabel: '<%= translate.voltage %> (V)',
                         legend: 'always',
                         labelsDivStyles: {
                             'textAlign': 'right'
