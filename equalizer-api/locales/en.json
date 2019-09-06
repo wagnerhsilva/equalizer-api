@@ -285,6 +285,29 @@
         "success": "Success!"
     },
     "snmpconfig": {
+        "config": "Configuration",
+        "snmp": "SNMP",
+        "snmp_config": "SNMP Configuration",
+        "enable": "Enable agent",
+        "version": "SNMP Version",
+        "user": "User",
+        "v3user": "SNMP v3 user",
+        "passwd": "Password",
+        "v3password": "SNMP v3 password",
+        "v3aut": "SNMP v3 autentication",
+        "period": "Send periodicity (Trap)",
+        "update": "Update periodicity (Trap)",
+        "port": "Port (Trap)",
+        "communities": "SNMP Communities",
+        "traps": "SNMP Traps",
+        "address": "Address",
+        "community": "Community",
+        "permission": "Permission",
+        "perm_ro": "Read Only",
+        "perm_rw": "Read/Write",
+        "info": "SNMP Information",
+        "success": "Success!",
+        "apply": "Apply"
     },
     "alarmlog": {
     }

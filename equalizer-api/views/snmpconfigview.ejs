@@ -14,8 +14,8 @@
 
                 <!-- breadcrumb -->
                 <ol class="breadcrumb">
-                    <li>Configuração</li>
-                    <li>SNMP</li>
+                    <li><%= translate.config %></li>
+                    <li><%= translate.snmp %></li>
                 </ol>
             </div>
             <div id="content">
@@ -60,10 +60,10 @@
                 </div>
                 <script type="text/ng-template" id="/snmpconfig.html">
                     <header>
-                        Configurações de SNMP
+                            <%= translate.snmp_config %>
                     </header>
                     <div class="input-group-text">
-                        <input type="checkbox" id="refreshButton" ng-model="snmpconfig.is_on" ng-click=""><p>Habilitar Agente</p>
+                        <input type="checkbox" id="refreshButton" ng-model="snmpconfig.is_on" ng-click=""><p><%= translate.enable %></p>
                     </div>
 
                     <section>
@@ -73,7 +73,7 @@
                                     <section class="col-sm-3 col-md-3 col-lg-3">
                                         <fieldset>
                                             <section>
-                                                <label class="label"> Versão SNMP</label>
+                                                <label class="label"> <%= translate.version %></label>
                                                 <label class="select">
                                                         <select name="version" id="version" ng-model="snmpconfig.version" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" >
                                                                 <option value="0" ng-selected="selected">v1/v2</option>
@@ -83,16 +83,16 @@
                                                 </label>
                                             </section>
                                             <section>
-                                                <label class="label"> SNMP v3: Usuário</label>
+                                                <label class="label"> <%= translate.v3user %></label>
                                                 <input type="text" ng-model="snmpconfig.user" 
-                                                    name="user" placeholder="Usuário" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version != 1" required>
+                                                    name="user" placeholder="<%= translate.user %>" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version != 1" required>
                                             </section>
                                             <section>
-                                                <label class="label">SNMP v3: Senha</label>
-                                                <input type="password" ng-model="snmpconfig.pass" name="Password" placeholder="Senha" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version != 1" required>
+                                                <label class="label"><%= translate.v3password %></label>
+                                                <input type="password" ng-model="snmpconfig.pass" name="Password" placeholder="<%= translate.passwd %>" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version != 1" required>
                                             </section>
                                             <section>
-                                                <label class="label">SNMP v3: Autenticação</label>
+                                                <label class="label"><%= translate.v3aut %></label>
                                                 <select name="auth" id="auth" ng-model="snmpconfig.auth" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version != 1" required>
                                                     <option value="0" ng-selected="selected">NoAuth NoPriv</option>
                                                     <option value="1">Auth NoPriv</option>
@@ -101,36 +101,36 @@
                                                 <i></i>
                                             </section>
                                             <section>
-                                                <label class="label">Periodo de Envio (Trap)</label>
+                                                <label class="label"><%= translate.period %></label>
                                                 <label class="input">
                                                 <input type="text" name="param6" placeholder="Timeout" ng-model="snmpconfig.param6" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                <b class="tooltip tooltip-bottom-right">Param. 6</b> </label>
+                                                <b class="tooltip tooltip-bottom-right"><%= translate.config %></b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Periodo de Atualização (Trap)</label>
+                                                <label class="label"><%= translate.update %></label>
                                                 <label class="input">
                                                 <input type="text" name="param7" placeholder="Timeout" ng-model="snmpconfig.param7" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                <b class="tooltip tooltip-bottom-right">Param. 7</b> </label>
+                                                <b class="tooltip tooltip-bottom-right"><%= translate.update %></b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Porta (Trap)</label>
+                                                <label class="label"><%= translate.port %></label>
                                                 <label class="input">
-                                                <input type="text" name="param5" placeholder="Param. 5" ng-model="snmpconfig.param5" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                <b class="tooltip tooltip-bottom-right">Porta</b> </label>
+                                                <input type="text" name="param5" placeholder="<%= translate.port %>" ng-model="snmpconfig.param5" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                <b class="tooltip tooltip-bottom-right"><%= translate.port %></b> </label>
                                             </section>
                                         </fieldset>
                                     </section>
                                     <section class="col-sm-4 col-md-4 col-lg-4">
                                         <fieldset>
                                             <section>
-                                                <label class="label">SNMP Communities</label>
+                                                <label class="label"><%= translate.communities %></label>
                                                 <table class="table table-striped table-bordered table-hover">
                                                     <thead>
                                                         <tr>
                                                             <td></td>
-                                                            <td>Endereço</td>
-                                                            <td>Community</td>
-                                                            <td>Permissão</td>
+                                                            <td><%= translate.address %></td>
+                                                            <td><%= translate.community %></td>
+                                                            <td><%= translate.permission %></td>
                                                         </tr>
                                                         </thead>
                                                     <tbody>
@@ -139,21 +139,21 @@
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm0addr" id="comm0addr" ng-model="snmpconfig.comm[0].addr" placeholder="0.0.0.0" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right">Address</b>
+                                                                    <b class="tooltip tooltip-bottom-right"><%= translate.address %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm0comm" id="comm0comm" ng-model="snmpconfig.comm[0].comm" placeholder="" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right"> Community</b>
+                                                                    <b class="tooltip tooltip-bottom-right"> <%= translate.community %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <select name="perm0" id="perm0" ng-model="snmpconfig.comm[0].perm" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <option value="0" ng-selected="selected">Read Only</option>
-                                                                    <option value="1">Read/Write</option>
+                                                                    <option value="0" ng-selected="selected"><%= translate.perm_ro %></option>
+                                                                    <option value="1"><%= translate.perm_rw %></option>
                                                                 </select>
                                                             </td>
                                                         </tr>
@@ -163,21 +163,21 @@
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm1addr" id="comm1addr" ng-model="snmpconfig.comm[1].addr" placeholder="0.0.0.0" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right">Address</b>
+                                                                    <b class="tooltip tooltip-bottom-right"><%= translate.address %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm1comm" id="comm1comm" ng-model="snmpconfig.comm[1].comm" placeholder="" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right"> Community</b>
+                                                                    <b class="tooltip tooltip-bottom-right"> <%= translate.community %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <select name="perm1" id="perm1" ng-model="snmpconfig.comm[1].perm" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <option value="0" ng-selected="selected">Read Only</option>
-                                                                    <option value="1">Read/Write</option>
+                                                                    <option value="0" ng-selected="selected"><%= translate.perm_ro %></option>
+                                                                    <option value="1"><%= translate.perm_rw %></option>
                                                                 </select>
                                                             </td>
                                                         </tr>
@@ -187,21 +187,21 @@
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm2addr" id="comm2addr" ng-model="snmpconfig.comm[2].addr" placeholder="0.0.0.0" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right">Address</b>
+                                                                    <b class="tooltip tooltip-bottom-right"><%= translate.address %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm2comm" id="comm2comm" ng-model="snmpconfig.comm[2].comm" placeholder="" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right"> Community</b>
+                                                                    <b class="tooltip tooltip-bottom-right"> <%= translate.community %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <select name="perm2" id="perm2" ng-model="snmpconfig.comm[2].perm" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <option value="0" ng-selected="selected">Read Only</option>
-                                                                    <option value="1">Read/Write</option>
+                                                                    <option value="0" ng-selected="selected"><%= translate.perm_ro %></option>
+                                                                    <option value="1"><%= translate.perm_rw %></option>
                                                                 </select>
                                                             </td>
                                                         </tr>
@@ -211,21 +211,21 @@
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm3addr" id="comm3addr" ng-model="snmpconfig.comm[3].addr" placeholder="0.0.0.0" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right">Address</b>
+                                                                    <b class="tooltip tooltip-bottom-right"><%= translate.address %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm3comm" id="comm3comm" ng-model="snmpconfig.comm[3].comm" placeholder="" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right"> Community</b>
+                                                                    <b class="tooltip tooltip-bottom-right"> <%= translate.community %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <select name="perm3" id="perm3" ng-model="snmpconfig.comm[3].perm" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <option value="0" ng-selected="selected">Read Only</option>
-                                                                    <option value="1">Read/Write</option>
+                                                                    <option value="0" ng-selected="selected"><%= translate.perm_ro %></option>
+                                                                    <option value="1"><%= translate.perm_rw %></option>
                                                                 </select>
                                                             </td>
                                                         </tr>
@@ -235,21 +235,21 @@
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm4addr" id="comm4addr" ng-model="snmpconfig.comm[4].addr" placeholder="0.0.0.0" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right">Address</b>
+                                                                    <b class="tooltip tooltip-bottom-right"><%= translate.address %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm4comm" id="comm4comm" ng-model="snmpconfig.comm[4].comm" placeholder="" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right"> Community</b>
+                                                                    <b class="tooltip tooltip-bottom-right"> <%= translate.community %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <select name="perm4" id="perm4" ng-model="snmpconfig.comm[4].perm" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <option value="0" ng-selected="selected">Read Only</option>
-                                                                    <option value="1">Read/Write</option>
+                                                                    <option value="0" ng-selected="selected"><%= translate.perm_ro %></option>
+                                                                    <option value="1"><%= translate.perm_rw %></option>
                                                                 </select>
                                                             </td>
                                                         </tr>
@@ -262,13 +262,13 @@
                                     <section class="col-sm-4 col-md-4 col-lg-4">
                                         <fieldset>
                                             <section>
-                                                <label class="label">SNMP Traps</label>
+                                                <label class="label"><%= translate.traps %></label>
                                                 <table class="table table-striped table-bordered table-hover">
                                                     <thead>
                                                         <tr>
                                                             <td></td>
-                                                            <td>Endereço</td>
-                                                            <td>Community</td>
+                                                            <td><%= translate.address %></td>
+                                                            <td><%= translate.community %></td>
                                                         </tr>
                                                         </thead>
                                                     <tbody>
@@ -277,14 +277,14 @@
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm0addr" id="comm0addr" ng-model="snmpconfig.traps[0].addr" placeholder="0.0.0.0" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right">Address</b>
+                                                                    <b class="tooltip tooltip-bottom-right"><%= translate.address %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm0comm" id="comm0comm" ng-model="snmpconfig.traps[0].comm" placeholder="" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right"> Community</b>
+                                                                    <b class="tooltip tooltip-bottom-right"> <%= translate.community %></b>
                                                                 </label>
                                                             </td>
                                                         </tr>
@@ -294,14 +294,14 @@
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm1addr" id="comm1addr" ng-model="snmpconfig.traps[1].addr" placeholder="0.0.0.0" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right">Address</b>
+                                                                    <b class="tooltip tooltip-bottom-right"><%= translate.address %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm1comm" id="comm1comm"  ng-model="snmpconfig.traps[1].comm" placeholder="" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right"> Community</b>
+                                                                    <b class="tooltip tooltip-bottom-right"> <%= translate.community %></b>
                                                                 </label>
                                                             </td>
                                                         </tr>
@@ -311,14 +311,14 @@
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm2addr" id="comm2addr" ng-model="snmpconfig.traps[2].addr" placeholder="0.0.0.0" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right">Address</b>
+                                                                    <b class="tooltip tooltip-bottom-right"><%= translate.address %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm2comm" id="comm2comm" ng-model="snmpconfig.traps[2].comm" placeholder="" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right"> Community</b>
+                                                                    <b class="tooltip tooltip-bottom-right"> <%= translate.community %></b>
                                                                 </label>
                                                             </td>
                                                         </tr>
@@ -328,14 +328,14 @@
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm3addr" id="comm3addr" ng-model="snmpconfig.traps[3].addr" placeholder="0.0.0.0" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right">Address</b>
+                                                                    <b class="tooltip tooltip-bottom-right"><%= translate.address %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm3comm" id="comm3comm" ng-model="snmpconfig.traps[3].comm" placeholder="" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right"> Community</b>
+                                                                    <b class="tooltip tooltip-bottom-right"> <%= translate.community %></b>
                                                                 </label>
                                                             </td>
                                                         </tr>
@@ -345,14 +345,14 @@
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm4addr" id="comm4addr" ng-model="snmpconfig.traps[4].addr" placeholder="0.0.0.0" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right">Address</b>
+                                                                    <b class="tooltip tooltip-bottom-right"><%= translate.address %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <label class="input">
                                                                     <input type="text" name="comm4comm" id="comm4comm" ng-model="snmpconfig.traps[4].comm" placeholder="" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local' || snmpconfig.version == 1">
-                                                                    <b class="tooltip tooltip-bottom-right"> Community</b>
+                                                                    <b class="tooltip tooltip-bottom-right"> <%= translate.community %></b>
                                                                 </label>
                                                             </td>
                                                         </tr>
@@ -364,7 +364,7 @@
 
                                 </div>
                                 <footer>
-                                    <button id="btnApply" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-click="applyConfiguration();">Aplicar</button>
+                                    <button id="btnApply" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-click="applyConfiguration();"><%= translate.apply %></button>
                                 </footer>
                             </form>
                         </div>
@@ -399,8 +399,8 @@
                                 data = [args, old];
                                 SnmpConfig.update(data);
                                 $.bigBox({
-                                    title: "Informações SNMP",
-                                    content: "Dados salvos com sucesso!",
+                                    title: "<%= translate.info %>",
+                                    content: "<%= translate.success %>",
                                     color: "#275B89",
                                     timeout: 5000,
                                     icon: "fa fa-check fadeInLeft animated"

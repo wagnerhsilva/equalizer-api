@@ -286,6 +286,29 @@
         "success": "Dados salvos com sucesso!"
     },
     "snmpconfig": {
+        "config": "Configuração",
+        "snmp": "SNMP",
+        "snmp_config": "Configuração SNMP",
+        "enable": "Habilitar agente",
+        "version": "Versão SNMP",
+        "user": "Usuário",
+        "v3user": "Usuário SNMP v3",
+        "passwd": "Senha",
+        "v3password": "Senha SNMP v3",
+        "v3aut": "Autenticação SNMP v3",
+        "period": "Período de envio (Trap)",
+        "update": "Período de atualização (Trap)",
+        "port": "Porta (Trap)",
+        "communities": "Comunidades SNMP",
+        "traps": "Traps SNMP",
+        "address": "Endereço",
+        "community": "Comunidade",
+        "permission": "Permissão",
+        "perm_ro": "Somente Leitura",
+        "perm_rw": "Leitura/Escrita",
+        "info": "Informações SNMP",
+        "success": "Dados salvos com sucesso!",
+        "apply": "Aplicar"
     },
     "alarmlog": {
     }
