@@ -198,6 +198,17 @@
         "err4": "Confirmation password must be the same"
     },
     "timeserver": {
+        "config": "Configurarion",
+        "time_server": "Time server",
+        "time_server_config": "Time server configuration",
+        "current_datetime": "System date/time",
+        "timeserver": "Time Server address",
+        "datetime": "Date/Time",
+        "sel_date": "Select date",
+        "sel_time": "Select time",
+        "test": "Test",
+        "save": "Save",
+        "define": "Define"
     },
     "redeseguranca": {
         "config": "Configuration",

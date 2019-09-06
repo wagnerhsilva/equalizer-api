@@ -11,8 +11,8 @@
 
             <div id="ribbon">
                 <ol class="breadcrumb">
-                    <li>Configuração</li>
-                    <li>TimeServer</li>
+                    <li><%= translate.config %></li>
+                    <li><%= translate.time_server %></li>
                 </ol>
             </div>
             <div id="content">
@@ -22,7 +22,7 @@
                         <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                             <header>
                                 <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                                <h2>Configuração de TimeServer </h2>
+                                <h2><%= translate.time_server_config %></h2>
                             </header>
                             <div>
                                 <div class="jarviswidget-editbox">
@@ -44,7 +44,7 @@
                         <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                             <header>
                                 <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                                <h2>Configuração de TimeServer </h2>
+                                <h2><%= translate.time_server_config %></h2>
                             </header>
                             <div>
                                 <div class="jarviswidget-editbox">
@@ -55,17 +55,17 @@
                                         <fieldset>
                                             <section class="col-sm-12 col-md-12 col-lg-12">
                                                 <section class="col-sm-3 col-md-3 col-lg-2" style="margin-top: 5px;">
-                                                    <label class="label">Data/Hora</label>
+                                                    <label class="label"><%= translate.datetime %></label>
                                                 </section>
                                                 <section class="col-sm-3 col-md-3 col-lg-3">
                                                     <label class="input"> <i class="icon-append fa fa-calendar"></i>
-            <input type="text" name="request" id="txtDate" readonly placeholder="Selecione a data" required class="datepicker" data-dateformat='dd/mm/yy'<%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+            <input type="text" name="request" id="txtDate" readonly placeholder="<%= translate.sel_date %>" required class="datepicker" data-dateformat='dd/mm/yy'<%if (userAccess != 'administrador') {%>  disabled  <%}%>>
            </label>
                                                 </section>
                                                 <section class="col-sm-3 col-md-3 col-lg-3">
                                                     <div class="form-group" style="margin-left:20px;">
                                                         <div class="input-group">
-                                                            <input readonly class="form-control" required id="clockpicker" type="text" placeholder="Hora" data-autoclose="true">
+                                                            <input readonly class="form-control" required id="clockpicker" type="text" placeholder="<%= translate.sel_time %>" data-autoclose="true">
                                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                                         </div>
                                                     </div>
@@ -73,7 +73,7 @@
                                             </section>
                                             <button id="btnSetDateTimeManually" onclick="setManualTime();" class="btn btn-primary pull-right" style="width: 100px; height: 30px;"
                                                 <%if (userAccess !='administrador') {%>  disabled  <%}%>>
-          Definir
+                                                <%= translate.define %>
          </button>
                                         </fieldset>
                                     </form>
@@ -90,36 +90,36 @@
                                 <section>
                                     <section class="col-sm-7 col-md-7 col-lg-7">
                                         <label class="input">
-         <label class="label">Data/hora atual do sistema</label>
-                                        <input type="text" id="txtSystemTime" value="{{serverDate | date:'dd/MM/yyyy HH:mm:ss'}}" placeholder="Data/hora atual do sistema"
+         <label class="label"><%= translate.current_datetime %></label>
+                                        <input type="text" id="txtSystemTime" value="{{serverDate | date:'dd/MM/yyyy HH:mm:ss'}}" placeholder="<%= translate.current_datetime %>"
                                             readonly>
-                                        <b class="tooltip tooltip-bottom-right">Data/hora atual do sistema</b>
+                                        <b class="tooltip tooltip-bottom-right"><%= translate.current_datetime %></b>
                                         </label>
                                     </section>
                                 </section>
                                 <section class="col-sm-12 col-md-12 col-lg-12">
                                     <section class="col-sm-3 col-md-3 col-lg-2" style="margin-top: 5px;">
-                                        <label class="label">Endereço Time Server</label>
+                                        <label class="label"><%= translate.timeserver %></label>
                                     </section>
                                     <section class="col-sm-4 col-md-4 col-lg-3">
                                         <label class="input">
-         <input type="text" ng-model="timeserver[0].timeServerAddress1" id="txtServer1" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço Time Server" style="margin-right: 5px;">
-         <b class="tooltip tooltip-bottom-right">Endereço Time Server</b>
+         <input type="text" ng-model="timeserver[0].timeServerAddress1" id="txtServer1" ng-disabled="acessoUsuario != 'administrador'" placeholder="<%= translate.timeserver %>" style="margin-right: 5px;">
+         <b class="tooltip tooltip-bottom-right"><%= translate.timeserver %></b>
         </label>
                                     </section>
                                     <section class="col-sm-4 col-md-4 col-lg-2">
                                         <label class="input">
-         <input type="text" ng-model="timeserver[0].timeServerAddress1_complemento" ng-disabled="acessoUsuario != 'administrador'" placeholder="Endereço Time Server"  style="margin-left: 5px;display:none;">
-         <b class="tooltip tooltip-bottom-right">Endereço Time Server</b>
+         <input type="text" ng-model="timeserver[0].timeServerAddress1_complemento" ng-disabled="acessoUsuario != 'administrador'" placeholder="<%= translate.timeserver %>"  style="margin-left: 5px;display:none;">
+         <b class="tooltip tooltip-bottom-right"><%= translate.timeserver %></b>
         </label>
                                     </section>
                                     <section class="col-sm-4 col-md-3 col-lg-2">
-                                        <input type="button" value="Testar" class="btn btn-primary" onclick="testServer(1);" ng-disabled="acessoUsuario != 'administrador'"
+                                        <input type="button" value="<%= translate.test %>" class="btn btn-primary" onclick="testServer(1);" ng-disabled="acessoUsuario != 'administrador'"
                                             style="margin-left: 20px;width: 100px; height: 32px;" />
                                     </section>
                                 </section>
                             <button ng-click="update()" class="btn btn-primary pull-right" ng-disabled="acessoUsuario != 'administrador'" style="width: 100px; height: 30px;">
-      Salvar
+                                <%= translate.save %>
      </button>
                         </section>
                     </fieldset>

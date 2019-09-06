@@ -198,6 +198,19 @@
         "err4": "A confirmação deve ser igual a senha"
     },
     "timeserver": {
+        "config": "Configuração",
+        "time_server": "Servidor de tempo",
+        "time_server_config": "Configuração de TimeServer",
+        "current_datetime": "Data/hora atual do sistema",
+        "timeserver": "Endereço Time Server",
+        "datetime": "Data/Hora",
+        "sel_date": "Selecione a data",
+        "sel_time": "Selecione a hora",
+        "test": "Testar",
+        "save": "Salvar",
+        "define": "Definir"
+
+        
     },
     "redeseguranca": {
         "config": "Configuração",
