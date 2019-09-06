@@ -14,8 +14,8 @@
 
                 <!-- breadcrumb -->
                 <ol class="breadcrumb">
-                    <li>Status</li>
-                    <li>Gráfico</li>
+                    <li><%= translate.status %></li>
+                    <li><%= translate.graphics %></li>
                 </ol>
             </div>
             <div id="content">
@@ -32,11 +32,11 @@
                     </article>
                 </div>
                 <script type="text/ng-template" id="/chart2.html">
-                    <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="chart(3)">Tensão</button>
-                    <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="chart(2)">Temperatura</button>
-                    <button type="submit" class="btn btn-primary pull-right" ng-click="chart(1)">Impedância</button>
+                    <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="chart(3)"><%= translate.voltage %></button>
+                    <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="chart(2)"><%= translate.temperature %></button>
+                    <button type="submit" class="btn btn-primary pull-right" ng-click="chart(1)"><%= translate.impedance %></button>
                     <header>
-                        <h3 id="headerVisao">Impedância</h3>
+                        <h3 id="headerVisao"><%= translate.impedance %></h3>
 
                     </header>
                     <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" ng-repeat="string in stringsDistintas2">
@@ -140,7 +140,7 @@
             function chart(data, index, strings) {
                 var visao = index;
                 if (visao == 1) {
-                    $("#headerVisao").text("Impedância");
+                    $("#headerVisao").text("<%= translate.impedance %>");
                     strings.forEach(function (string) {
                         if ($("#bar-chart_" + string.replace(" ", "_")).length) {
                             $("#headerGrafico_" + string.replace(" ", "_")).text("String: " + string);
@@ -173,7 +173,7 @@
                                 legend: true,
                                 tooltip: true,
                                 tooltipOpts: {
-                                    content: "<b>Impedância</b> = <span>%y.1</span>",
+                                    content: "<b><%= translate.impedance %></b> = <span>%y.1</span>",
                                     defaultTheme: false
                                 }
                             };
@@ -183,7 +183,7 @@
 
                 }
                 else if (visao == 2) {
-                    $("#headerVisao").text("Temperatura");
+                    $("#headerVisao").text("<%= translate.temperature %>");
                     strings.forEach(function (string) {
                         if ($("#bar-chart_" + string.replace(" ", "_")).length) {
                             $("#headerGrafico_" + string.replace(" ", "_")).text("String: " + string);
@@ -216,7 +216,7 @@
                                 legend: true,
                                 tooltip: true,
                                 tooltipOpts: {
-                                    content: "<b>Temperatura</b> = <span>%y.1</span>",
+                                    content: "<b><%= translate.temperature %></b> = <span>%y.1</span>",
                                     defaultTheme: false
                                 }
                             };
@@ -224,7 +224,7 @@
                         }
                     }, this);
                 } else if (visao == 3) {
-                    $("#headerVisao").text("Tensão");
+                    $("#headerVisao").text("<%= translate.voltage %>");
                     strings.forEach(function (string) {
                         if ($("#bar-chart_" + string.replace(" ", "_")).length) {
                             $("#headerGrafico_" + string.replace(" ", "_")).text("String: " + string);
@@ -257,7 +257,7 @@
                                 legend: true,
                                 tooltip: true,
                                 tooltipOpts: {
-                                    content: "<b>Tensão</b> = <span>%y.3</span>",
+                                    content: "<b><%= translate.voltage %></b> = <span>%y.3</span>",
                                     defaultTheme: false
                                 }
                             };

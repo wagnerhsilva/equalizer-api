@@ -61,6 +61,11 @@
         "choose_batteries": "Selecione as baterias (Series)"
     },
     "chart2": {
+        "status": "Status",
+        "graphics": "Gráfico",
+        "voltage": "Tensão",
+        "temperature": "Temperatura",
+        "impedance": "Impedância"
     },
     "usuario": {
     },
