@@ -43,6 +43,22 @@
         "battery": "Bateria"
     },
     "chart": {
+        "status": "Status",
+        "graphics": "Gráfico",
+        "voltage": "Tensão",
+        "temperature": "Temperatura",
+        "impedance": "Impedância",
+        "string": "String",
+        "period": "Período",
+        "to": "a",
+        "search": "Pesquisar",
+        "csv": "CSV",
+        "y_scale_min": "Escala Y mín.",
+        "y_scale_max": "Escala Y máx.",
+        "y2_scale_min": "Escala Y sec. mín.",
+        "y2_scale_max": "Escala Y sec. máx.",
+        "apply": "Aplicar",
+        "choose_batteries": "Selecione as baterias (Series)"
     },
     "chart2": {
     },

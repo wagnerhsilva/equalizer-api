@@ -46,8 +46,8 @@
 
                 <!-- breadcrumb -->
                 <ol class="breadcrumb">
-                    <li>Status</li>
-                    <li>Gráfico</li>
+                    <li><%= translate.status %></li>
+                    <li><%= translate.graphics %></li>
                 </ol>
             </div>
             <div id="content">
@@ -58,36 +58,36 @@
                             <div class="jarviswidget-editbox">
                             </div>
                             <div class="widget-body">
-                                <button type="button" class="btn btn-primary pull-right" style="margin-left:5px;" onclick="setVisao(3);">Tensão</button>
-                                <button type="button" class="btn btn-primary pull-right" style="margin-left:5px;" onclick="setVisao(2);">Temperatura</button>
-                                <button type="button" class="btn btn-primary pull-right" onclick="setVisao(1);">Impedância</button>
-                                <label>String:</label>
+                                <button type="button" class="btn btn-primary pull-right" style="margin-left:5px;" onclick="setVisao(3);"><%= translate.voltage %></button>
+                                <button type="button" class="btn btn-primary pull-right" style="margin-left:5px;" onclick="setVisao(2);"><%= translate.temperature %></button>
+                                <button type="button" class="btn btn-primary pull-right" onclick="setVisao(1);"><%= translate.impedance %></button>
+                                <label><%= translate.string %>:</label>
                                 <select id="ddlStrings">
                                 </select> &nbsp&nbsp&nbsp&nbsp&nbsp
-                                <label>Período:</label>
+                                <label><%= translate.period %>:</label>
                                 <input type="text" name="txtDateStart" style="width: 100px;" id="txtDateStart" readonly placeholder="Data Início" required
                                     class="datepicker" data-dateformat='dd/mm/yy'>
                                 <input type="text" name="txtHourStart" style="width: 80px;" value="00:00" id="txtHourStart" readonly placeholder="Hora Início"
                                     required>
-                                <label> a </label>
+                                <label> <%= translate.to %> </label>
                                 <input type="text" name="txtDateEnd" style="width: 100px;" id="txtDateEnd" readonly placeholder="Data Fim" required class="datepicker"
                                     data-dateformat='dd/mm/yy'>
                                 <input type="text" name="txtHourEnd" style="width: 80px;" value="23:59" id="txtHourEnd" readonly placeholder="Hora Fim" required>                                &nbsp
-                                <button type="button" class="btn btn-primary" onclick="pesquisar();">Pesquisar</button>
-                                <button type="button" class="btn btn-primary" onclick="gerarCSV();">CSV</button>
+                                <button type="button" class="btn btn-primary" onclick="pesquisar();"><%= translate.search %></button>
+                                <button type="button" class="btn btn-primary" onclick="gerarCSV();"><%= translate.csv %></button>
                                 <br />
                                 <br />
                                 <div>
-                                    <label>Escala Y mín.:</label>
+                                    <label><%= translate.y_scale_min %>:</label>
                                     <input id="txtEscalaYMin" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
-                                    <label>Escala Y máx.:</label>
+                                    <label><%= translate.y_scale_max %>:</label>
                                     <input id="txtEscalaYMax" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
                                     <div style="float:right;">
-                                        <label>Escala Y sec. mín.:</label>
+                                        <label><%= translate.y2_scale_min %>:</label>
                                         <input id="txtEscalaYSecMin" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
-                                        <label>Escala Y sec. máx.:</label>
+                                        <label><%= translate.y2_scale_max %>:</label>
                                         <input id="txtEscalaYSecMax" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
-                                        <button type="button" class="btn btn-primary" onclick="aplicarEscalaYSec();">Aplicar</button>
+                                        <button type="button" class="btn btn-primary" onclick="aplicarEscalaYSec();"><%= translate.apply %></button>
                                     </div>
                                 </div>
                                 <br />
@@ -108,7 +108,7 @@
                                 <br />
                                 <form class="smart-form" id="frmSeries" style="display: none;">
                                     <section>
-                                        <label class="label">Selecione as baterias (Series)</label>
+                                        <label class="label"><%= translate.choose_batteries %></label>
                                         <label class="select select-multiple">
 														<select id="ddlSeries" multiple="" class="custom-scroll">
 															
@@ -454,16 +454,16 @@
                 var filename = "";
                 switch (visao) {
                     case 1:
-                        filename = "relatorio_impedancia.csv";
+                        filename = "report_impedance.csv";
                         break;
                     case 2:
-                        filename = "relatorio_temperatura.csv";
+                        filename = "report_temperature.csv";
                         break;
                     case 3:
-                        filename = "relatorio_tensao.csv";
+                        filename = "report_voltage.csv";
                         break;
                     default:
-                        filename = "relatorio.csv";
+                        filename = "report.csv";
                         break;
                 }
                 var a = document.createElement('a');
