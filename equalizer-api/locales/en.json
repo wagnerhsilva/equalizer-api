@@ -263,6 +263,26 @@
         "inactive": "Inactive"
     },
     "tendanalitics": {
+        "config": "Configuration",
+        "tend_analitics": "Tendencies Analysis",
+        "tend_analitics_config": "Tendencies Analysis Configuration",
+        "enable": "Enable tendencies analysis",
+        "instalation_date": "Installation Date",
+        "zero": "Zero Reference Date",
+        "months": "months",
+        "periodicity": "Periodicity",
+        "parameter": "Parameter",
+        "min": "Minimum",
+        "max": "Maximum",
+        "impedance": "Impedance",
+        "imp_min": "Impedance Min.",
+        "imp_max": "Impedance Max.",
+        "temperature": "Temperature",
+        "temp_min": "Temperature Min.",
+        "temp_max": "Temperature Max.",
+        "apply": "Apply",
+        "info" : "Tendencies information",
+        "success": "Success!"
     },
     "snmpconfig": {
     },

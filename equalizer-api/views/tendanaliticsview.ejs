@@ -14,8 +14,8 @@
 
                 <!-- breadcrumb -->
                 <ol class="breadcrumb">
-                    <li>Configuração</li>
-                    <li>Análise de Tendências</li>
+                    <li><%= translate.config %></li>
+                    <li><%= translate.tend_analitics %></li>
                 </ol>
             </div>
             <div id="content">
@@ -26,7 +26,7 @@
                         <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                             <header>
                                 <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                                <h2>Análise de Tendências</h2>
+                                <h2><%= translate.tend_analitics %></h2>
 
                             </header>
 
@@ -60,10 +60,10 @@
                 </div>
                 <script type="text/ng-template" id="/tendanalitics.html">
                     <header>
-                        Configurações de Análise de Tendência
+                            <%= translate.tend_analitics_config %>
                     </header>
                     <div class="input-group-text">
-                        <input type="checkbox" id="refreshButton" ng-model="tendenceConfigs.is_on" ng-click=""><p>Habilitar Análise de Tendência</p>
+                        <input type="checkbox" id="refreshButton" ng-model="tendenceConfigs.is_on" ng-click=""><p><%= translate.enable %></p>
                     </div>
                     <!--
                     <div class="input-group-text">
@@ -77,19 +77,19 @@
                                     <section class="col-sm-3 col-md-3 col-lg-3">
                                         <fieldset>
                                             <section>
-                                                <label class="label"> Data de Instalação Banco</label>
-                                                <input type="text" name="request" id="txtDate" readonly ng-model="tendenceConfigs.install_date" placeholder="Selecione a data" required class="datepicker" data-dateformat='dd/mm/yy'<%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                <label class="label"> <%= translate.instalation_date %></label>
+                                                <input type="text" name="request" id="txtDate" readonly ng-model="tendenceConfigs.install_date" placeholder="<%= translate.select_date %>" required class="datepicker" data-dateformat='dd/mm/yy'<%if (userAccess != 'administrador') {%>  disabled  <%}%>>
                                             </section>
                                             <section>
-                                                    <label class="label"> Data Referência Zero</label>
+                                                    <label class="label"> <%= translate.zero %></label>
                                                     <input type="number" min="0" max="99" ng-model="tendenceConfigs.zero_date_months" 
-                                                     name="zeroRefMounths" placeholder="Meses" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" required>
-                                                    <label class="label"> Meses </label>
+                                                     name="zeroRefMounths" placeholder="<%= translate.months %>" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" required>
+                                                    <label class="label"> <%= translate.months %> </label>
                                                 </section>
                                                 <section>
-                                                    <label class="label">Periodicidade</label>
-                                                    <input type="number" min="0" max="99" ng-model="tendenceConfigs.period_date_months" name="Periodicidade" placeholder="Periodicidade" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" required>
-                                                    <label class="label"> Meses </label>
+                                                    <label class="label"><%= translate.periodicity %></label>
+                                                    <input type="number" min="0" max="99" ng-model="tendenceConfigs.period_date_months" name="Periodicidade" placeholder="<%= translate.periodicity %>" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" required>
+                                                    <label class="label"> <%= translate.months %> </label>
                                                 </section>
                                         </fieldset>
                                     </section>
@@ -99,42 +99,42 @@
                                                 <table class="table table-striped table-bordered table-hover">
                                                     <thead>
                                                         <tr>
-                                                            <td align="center">Paramêtro</td>
-                                                            <td align="center">Mínimo</td>
-                                                            <td align="center">Máximo</td>
+                                                            <td align="center"><%= translate.parameter %></td>
+                                                            <td align="center"><%= translate.min %></td>
+                                                            <td align="center"><%= translate.max %></td>
                                                         </tr>
                                                         </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td>Impedância [m&Omega;]</td>
+                                                            <td><%= translate.impedance %> [m&Omega;]</td>
                                                             <td>
                                                                 <label class="input">
-                                                                    <input type="text" name="alarmeImpeMin" id="alarmeImpeMin" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-model="tendenceConfigs.impe_min" placeholder="Impedância Min.">
-                                                                    <b class="tooltip tooltip-bottom-right"> Impedância Min.</b>
+                                                                    <input type="text" name="alarmeImpeMin" id="alarmeImpeMin" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-model="tendenceConfigs.impe_min" placeholder="<%= translate.impedance_min %>">
+                                                                    <b class="tooltip tooltip-bottom-right"> <%= translate.impedance_min %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <label class="input">
-                                                                    <input type="text" name="alarmeImpeMax" id="alarmeImpeMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-model="tendenceConfigs.impe_max"placeholder="Impedância Max.">
-                                                                    <b class="tooltip tooltip-bottom-right"> Impedância Max.</b>
+                                                                    <input type="text" name="alarmeImpeMax" id="alarmeImpeMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-model="tendenceConfigs.impe_max"placeholder="<%= translate.impedance_max %>">
+                                                                    <b class="tooltip tooltip-bottom-right"> <%= translate.impedance_max %></b>
                                                                 </label>
                                                             </td>
                                                         </tr>
 
                                                         <tr>
-                                                            <td>Temperatura [°C]</td>
+                                                            <td><%= translate.temperature %> [°C]</td>
                                                             <td>
                                                                 <label class="input">
-                                                                    <input type="text" name="alarmeTempMin" id="alarmeTempMin" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-model="tendenceConfigs.temp_min" placeholder="Temperatura Min.">
-                                                                    <b class="tooltip tooltip-bottom-right"> Temperatura Min.</b>
+                                                                    <input type="text" name="alarmeTempMin" id="alarmeTempMin" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-model="tendenceConfigs.temp_min" placeholder="<%= translate.temperature_min %>">
+                                                                    <b class="tooltip tooltip-bottom-right"> <%= translate.temperaturemin %></b>
                                                                 </label>
                                                             </td>
 
                                                             <td>
                                                                 <label class="input">
-                                                                    <input type="text" name="alarmeTempMax" id="alarmeTempMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-model="tendenceConfigs.temp_max" placeholder="Temperatura Max.">
-                                                                    <b class="tooltip tooltip-bottom-right"> Temperatura Max.</b>
+                                                                    <input type="text" name="alarmeTempMax" id="alarmeTempMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-model="tendenceConfigs.temp_max" placeholder="<%= translate.temperature_max %>">
+                                                                    <b class="tooltip tooltip-bottom-right"> <%= translate.temperature_max %></b>
                                                                 </label>
                                                             </td>
                                                         </tr>
@@ -145,7 +145,7 @@
                                     </section>
                                 </div>
                                 <footer>
-                                    <button id="btnApply" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-click="applyConfiguration();">Aplicar</button>
+                                    <button id="btnApply" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-click="applyConfiguration();"><%= translate.apply %></button>
                                 </footer>
                             </form>
                         </div>
@@ -180,8 +180,8 @@
                                 var args = $scope.tendenceConfigs;
                                 TendenceConfig.update(args);
                                 $.bigBox({
-                                    title: "Informações sobre tendências",
-                                    content: "Dados salvos com sucesso!",
+                                    title: "<%= translate.info %>",
+                                    content: "<%= translate.success %>",
                                     color: "#275B89",
                                     timeout: 5000,
                                     icon: "fa fa-check fadeInLeft animated"
