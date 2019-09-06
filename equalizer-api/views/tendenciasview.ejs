@@ -29,8 +29,8 @@
 
                 <!-- breadcrumb -->
                 <ol class="breadcrumb">
-                    <li>Status</li>
-                    <li>Tendências</li>
+                    <li><%= translate.status %></li>
+                    <li><%= translate.tendencies %></li>
                 </ol>
             </div>
             <div id="content">
@@ -41,7 +41,7 @@
                         <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                             <header>
                                 <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                                <h2>Tendências</h2>
+                                <h2><%= translate.tendencies %></h2>
 
                             </header>
                             <div>
@@ -61,8 +61,8 @@
                             <div class="row" style="padding-left: 20px;padding-right: 20px;padding-top: 20px;">
                                 <div>
                                     <div class="checkboxes">
-                                        <label for="x"><input type="checkbox" id="x" ng-model="chkImpedance" ng-click="onImpedanceChanged();"/> <span>Impedância</span></label>
-                                        <label for="y"><input type="checkbox" id="y" ng-model="chkTemperature" ng-click="onTemperatureChanged();"/> <span>Temperatura</span></label>
+                                        <label for="x"><input type="checkbox" id="x" ng-model="chkImpedance" ng-click="onImpedanceChanged();"/> <span><%= translate.impedance %></span></label>
+                                        <label for="y"><input type="checkbox" id="y" ng-model="chkTemperature" ng-click="onTemperatureChanged();"/> <span><%= translate.temperature %></span></label>
                                     </div>
                                 </div>
                             </div>
@@ -70,8 +70,8 @@
                                 <table class="table table-striped table-bordered table-hover datatabletemplate">
                                     <thead>
                                         <tr>
-                                            <td class="no-sort" align="center">Bateria</td>
-                                            <td align="center" colspan="{{ zeroWidth }}">Referência Data Zero</td>
+                                            <td class="no-sort" align="center"><%= translate.battery %></td>
+                                            <td align="center" colspan="{{ zeroWidth }}"><%= translate.ref_zero %></td>
                                             <td align="center" ng-repeat="f in range(readsCount) track by $index" colspan="{{ dataLength }}">
                                                 {{ ($index + 1) }}º Medição
                                             </td>
@@ -80,8 +80,8 @@
                                     <tbody>
                                         <tr>
                                             <td></td>
-                                            <td align="center" ng-class="{displayNone: hasImpedance == 0}">Impedância Ohms</td>
-                                            <td align="center" ng-class="{displayNone: hasTemperature == 0}">Temperatura ºC</td>
+                                            <td align="center" ng-class="{displayNone: hasImpedance == 0}"><%= translate.impedance %> Ohms</td>
+                                            <td align="center" ng-class="{displayNone: hasTemperature == 0}"><%= translate.temperature %> ºC</td>
                                             <td align="center" ng-repeat="f in range(dataLength*readsCount) track by $index" >
                                                 <div ng-bind-html=" getInnerText($index, dataLength, hasImpedance, hasTemperature) | trust"></div>
                                             </td>

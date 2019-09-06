@@ -35,6 +35,12 @@
         "target": "Target"
     },
     "tendencias": {
+        "status": "Status",
+        "tendencies": "Tendencies",
+        "impedance": "Impedance",
+        "temperature": "Temperature",
+        "ref_zero": "Reference date zero",
+        "battery": "Battery"
     },
     "chart": {
     },
