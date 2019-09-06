@@ -208,7 +208,9 @@
         "sel_time": "Selecione a hora",
         "test": "Testar",
         "save": "Salvar",
-        "define": "Definir"
+        "define": "Definir",
+        "success": "Dados salvos com sucesso!",
+        "err1": "Preencha os valores de data e hora"
 
         
     },

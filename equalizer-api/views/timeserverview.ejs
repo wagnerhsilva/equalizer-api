@@ -178,7 +178,7 @@
             function testServer(sequencia) {
                 $.get("/ntpconfig/test/" + $("#txtServer" + sequencia).val(), null, function (data, status) {
                     $.bigBox({
-                        title: "TimeServer",
+                        title: "<%= translate.time_server %>",
                         content: data,
                         color: "#275B89",
                         timeout: 5000,
@@ -189,7 +189,7 @@
             function setTime() {
                 $.get("/ntpconfig/", null, function (data, status) {
                     $.bigBox({
-                        title: "TimeServer",
+                        title: "<%= translate.time_server %>",
                         content: data,
                         color: "#275B89",
                         timeout: 5000,
@@ -200,8 +200,8 @@
             function setManualTime() {
                 if ($("#txtDate").val().trim() == "" || $("#clockpicker").val().trim() == "") {
                     $.bigBox({
-                        title: "TimeServer",
-                        content: "Preencha os valores de data e hora",
+                        title: "<%= translate.time_server %>",
+                        content: "<%= translate.err1 %>",
                         color: "#275B89",
                         timeout: 5000,
                         icon: "fa fa-check fadeInLeft animated"
@@ -210,7 +210,7 @@
                 }
                 $.get("/ntpconfig/manual/" + $("#txtDate").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#clockpicker").val(), null, function (data, status) {
                     $.bigBox({
-                        title: "TimeServer",
+                        title: "<%= translate.time_server %>",
                         content: data,
                         color: "#275B89",
                         timeout: 5000,

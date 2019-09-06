@@ -208,7 +208,9 @@
         "sel_time": "Select time",
         "test": "Test",
         "save": "Save",
-        "define": "Define"
+        "define": "Define",
+        "success": "Success!",
+        "err1": "Fill date and time values"
     },
     "redeseguranca": {
         "config": "Configuration",
