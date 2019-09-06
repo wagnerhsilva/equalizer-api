@@ -28,8 +28,8 @@
 
                 <!-- breadcrumb -->
                 <ol class="breadcrumb">
-                    <li>Configuração</li>
-                    <li>Parâmetros</li>
+                    <li><%= translate.config %></li>
+                    <li><%= translate.parameters %></li>
                 </ol>
             </div>
             <div id="content">
@@ -40,7 +40,7 @@
                         <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                             <header>
                                 <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                                <h2>Parâmetros </h2>
+                                <h2><%= translate.parameters %></h2>
 
                             </header>
 
@@ -77,52 +77,53 @@
                         <div class="widget-body no-padding">
                             <form name="form1" ng-disabled="acessoUsuario != 'administrador'">
                                 <header>
-                                    Cadastro de parâmetros
+                                    <%= translate.parameter_register %>
                                 </header>
                                 <div class="row" style="padding-left: 20px;padding-right: 20px;padding-top: 20px;">
                                     <section class="col-sm-6 col-md-6 col-lg-6">
                                         <fieldset>
                                             <section>
-                                                <label class="label">Duty mín.</label>
+                                                <label class="label"><%= translate.duty_min %></label>
                                                 <label class="input">
-                                                <input type="text" name="duty_min" placeholder="Duty mín." ng-model="parameter.duty_min" ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Duty mín.</b> </label>
+                                                <input type="text" name="duty_min" placeholder="<%= translate.duty_min %>" ng-model="parameter.duty_min" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right"><%= translate.duty_min %></b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Duty máx.</label>
+                                                <label class="label"><%= translate.duty_max %></label>
                                                 <label class="input">
-                                                <input type="text" name="duty_max" placeholder="Duty máx." ng-model="parameter.duty_max" ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Duty máx.</b> </label>
+                                                <input type="text" name="duty_max" placeholder="<%= translate.duty_max %>" ng-model="parameter.duty_max" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right"><%= translate.duty_max %></b> </label>
                                             </section>
                                             <section>
-                                                    <label class="label">Delay entre Leituras do Banco (ms)</label>
+                                                    <label class="label"><%= translate.delay_between_read %></label>
                                                     <label class="input">
-                                                    <input type="text" name="Delay" placeholder="Delay entre Leituras do banco (ms)" ng-model="parameter.delay" ng-disabled="acessoUsuario != 
+                                                    <input type="text" name="Delay" placeholder="<%= translate.delay_between_read %>" ng-model="parameter.delay" ng-disabled="acessoUsuario != 
     'administrador'">
-                                                    <b class="tooltip tooltip-bottom-right">Delay entre Leituras do banco (ms)</b> </label>
+                                                    <b class="tooltip tooltip-bottom-right"><%= translate.delay_between_read %></b> </label>
                                                 </section>
                                         </fieldset>
                                     </section>
                                     <section class="col-sm-6 col-md-6 col-lg-6">
                                         <fieldset>
                                             <section>
-                                                <label class="label">Quantidade de Leitura Impedancia</label>
+                                                <label class="label"><%= translate.nb_read_impedance %></label>
                                                 <label class="input">
-                                                <input type="text" name="num_cycles_var_read" placeholder="Quantidade de Leitura Impedancia " ng-model="parameter.num_cycles_var_read" 
+                                                <input type="text" name="num_cycles_var_read" placeholder="<%= translate.nb_read_impedance %>" ng-model="parameter.num_cycles_var_read" 
 ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Quantidade de Leitura de impedância</b> </label>
+                                                <b class="tooltip tooltip-bottom-right"><%= translate.nb_read_impedance %></b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Quantidade de Escrita em Gráfico</label>
+                                                <label class="label"><%= translate.nb_write_chart %></label>
                                                 <label class="input">
-                                                <input type="text" name="save_log_time" placeholder="Intervalo para escrita em gráfico" ng-model="parameter.save_log_time" ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Intervalo para escrita em gráfico</b> </label>
+                                                <input type="text" name="save_log_time" placeholder="<%= translate.nb_write_chart_desc %>" ng-model="parameter.save_log_time" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right"><%= translate.nb_write_chart_desc %></b> </label>
                                             </section>
                                             <section>
-                                                    <label class="label">Secure Shell (SSH)</label>
+                                                    <label class="label"><%= translate.ssh %></label>
                                                     <div>
                                                         <div class="checkboxes">
-                                                            <label for="x"><input type="checkbox" id="x" ng-model="parameter.ssh_enabled" ng-click="checkboxpressed();"/> <span id="ssh_title">{{ parameter.ssh_title }}</span></label>
+                                                            <label for="x"><input type="checkbox" id="x" ng-model="parameter.ssh_enabled" ng-click="checkboxpressed();"/> 
+                                                                </label>
                                                         </div>
                                                     </div>
                                                 </section>
@@ -133,22 +134,22 @@ ng-disabled="acessoUsuario != 'administrador'">
                                     <section class="col-sm-6 col-md-6 col-lg-6">
                                         <fieldset>
                                             <section>
-                                                <label class="label">Delay entre Leitura de Baterias (ms)</label>
+                                                <label class="label"><%= translate.delay_between_batteries %></label>
                                                 <label class="input">
-                                                <input type="text" name="param1" placeholder="Param. 1" ng-model="parameter.param1" ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Param. 1</b> </label>
+                                                <input type="text" name="param1" placeholder="<%= translate.param1 %>" ng-model="parameter.param1" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right"><%= translate.param1 %></b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Timeout de Erro Leituras (seg)</label>
+                                                <label class="label"><%= translate.timeout_err_read %></label>
                                                 <label class="input">
-                                                <input type="text" name="param2" placeholder="Param. 2" ng-model="parameter.param2" ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Param. 2</b> </label>
+                                                <input type="text" name="param2" placeholder="<%= translate.param2 %>" ng-model="parameter.param2" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right"><%= translate.param2 %></b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Quantidade de Tentativas de Timeout</label>
+                                                <label class="label"><%= translate.nb_tries_timeout %></label>
                                                 <label class="input">
-                                                <input type="text" name="param3" placeholder="Param. 3" ng-model="parameter.param3" ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Param. 3</b> </label>
+                                                <input type="text" name="param3" placeholder="<%= translate.param3 %>" ng-model="parameter.param3" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right"><%= translate.param3 %></b> </label>
                                             </section>
 <!--                                             <section>
                                                 <label class="label">Destino (Trap)</label>
@@ -179,34 +180,34 @@ ng-disabled="acessoUsuario != 'administrador'">
                                                 <b class="tooltip tooltip-bottom-right">Param. 7</b> </label> -->
                                             <!-- </section> -->
                                             <section>
-                                                <label class="label">Param. 8</label>
+                                                <label class="label"><%= translate.param8 %></label>
                                                 <label class="input">
-                                                <input type="text" name="param8" placeholder="Param. 8" ng-model="parameter.param8" ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Param. 8</b> </label>
+                                                <input type="text" name="param8" placeholder="<%= translate.param8 %>" ng-model="parameter.param8" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right"><%= translate.param8 %></b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Param. 9</label>
+                                                <label class="label"><%= translate.param9 %></label>
                                                 <label class="input">
-                                                <input type="text" name="param9" placeholder="Param. 9" ng-model="parameter.param9" ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Param. 9</b> </label>
+                                                <input type="text" name="param9" placeholder="<%= translate.param9 %>" ng-model="parameter.param9" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right"><%= translate.param9 %></b> </label>
                                             </section>
                                             <section>
-                                                <label class="label">Param. 10</label>
+                                                <label class="label"><%= translate.param10 %></label>
                                                 <label class="input">
-                                                <input type="text" name="param10" placeholder="Param. 10" ng-model="parameter.param10" ng-disabled="acessoUsuario != 'administrador'">
-                                                <b class="tooltip tooltip-bottom-right">Param. 10</b> </label>
+                                                <input type="text" name="param10" placeholder="<%= translate.param10 %>" ng-model="parameter.param10" ng-disabled="acessoUsuario != 'administrador'">
+                                                <b class="tooltip tooltip-bottom-right"><%= translate.param10 %></b> </label>
                                             </section>
                                         </fieldset>
                                     </section>
                                     </div>
                                     <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="saveParameter();"
-                                        style="float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;">Aplicar</button>
+                                        style="float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;"><%= translate.apply %></button>
                                     <button id="btnReiniciar" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" onclick="reboot();"
-                                        style="float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;">Reiniciar</button>
+                                        style="float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;"><%= translate.restart %></button>
                                     <button id="btnDesigarSNMP" class="btn btn-danger" ng-disabled="acessoUsuario != 'administrador'" onclick="offSNMP();"
-                                        style="display:none; float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;">Desligar SNMP</button>
+                                        style="display:none; float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;"><%= translate.off_snmp %></button>
                                     <button id="btnLigarSNMP" class="btn btn-success" ng-disabled="acessoUsuario != 'administrador'" onclick="onSNMP();"
-                                        style="display:none; float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;">Ligar SNMP</button>
+                                        style="display:none; float: right; width:100px; height:30px; margin-right:15px; margin-bottom: 15px;"><%= translate.on_snmp %></button>
                             </form>
                         </div>
                     </section>
@@ -227,20 +228,25 @@ ng-disabled="acessoUsuario != 'administrador'">
                         //---------------
                         .controller('ParameterController', ['$scope', 'Parameter', function ($scope,Parameter) {
                             $scope.parameter = Parameter.get();
+                            if ($scope.parameter.ssh_enabled) {
+                                $scope.parameter.ssh_title = "<%= translate.active %>";
+                            } else {
+                                $scope.parameter.ssh_title = "<%= translate.inactive %>";
+                            }
                             $scope.checkboxpressed = function(){
                                 //it is about to swap
                                 if(!$scope.parameter.ssh_enabled){
-                                    $scope.parameter.ssh_title = "Ativado";
+                                    $scope.parameter.ssh_title = "<%= translate.active %>";
                                 }else{
-                                    $scope.parameter.ssh_title = "Desativado";
+                                    $scope.parameter.ssh_title = "<%= translate.inactive %>";
                                 }
                             }
                             $scope.saveParameter = function () {
                                 var parameter  = $scope.parameter;
                                 Parameter.update(parameter);
                                 $.bigBox({
-                                    title: "Informações sobre parâmetros",
-                                    content: "Dados salvos com sucesso!",
+                                    title: "<%= translate.parameter_info %>",
+                                    content: "<%= translate.success %>",
                                     color: "#275B89",
                                     timeout: 5000,
                                     icon: "fa fa-check fadeInLeft animated"
@@ -270,7 +276,7 @@ ng-disabled="acessoUsuario != 'administrador'">
             function reboot(){
                 $.get("/parameterview/reboot", null, function (data) {
                         $.bigBox({
-                            title: "Parâmetros",
+                            title: "<%= translate.parameters %>",
                             content: data,
                             color: "#659265",
                             timeout: 1000,
@@ -281,7 +287,7 @@ ng-disabled="acessoUsuario != 'administrador'">
             function onSNMP(){
                 $.get("/parameterview/onSNMP", null, function (data) {
                         $.bigBox({
-                            title: "Parâmetros",
+                            title: "<%= translate.parameters %>",
                             content: data,
                             color: "#659265",
                             timeout: 1000,
@@ -292,7 +298,7 @@ ng-disabled="acessoUsuario != 'administrador'">
             function offSNMP(){
                 $.get("/parameterview/offSNMP", null, function (data) {
                         $.bigBox({
-                            title: "Parâmetros",
+                            title: "<%= translate.parameters %>",
                             content: data,
                             color: "#659265",
                             timeout: 1000,

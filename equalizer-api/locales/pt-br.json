@@ -211,8 +211,6 @@
         "define": "Definir",
         "success": "Dados salvos com sucesso!",
         "err1": "Preencha os valores de data e hora"
-
-        
     },
     "redeseguranca": {
         "config": "Configuração",
@@ -236,6 +234,33 @@
         "save": "Salvar"
     },
     "parameter": {
+        "config": "Configuração",
+        "parameter": "Parâmetros",
+        "parameter_register": "Cadastro de parâmetros",
+        "duty_min": "Duty mín.",
+        "duty_max": "Duty máx.",
+        "delay_between_read": "Delay entre Leituras do Banco (ms)",
+        "nb_read_impedance": "Quantidade de Leitura Impedancia",
+        "nb_write_chart": "Quantidade de Escrita em Gráfico",
+        "nb_write_chart_desc": "Intervalo para escrita em gráfico",
+        "ssh": "Secure Shell (SSH)",
+        "delay_between_batteries": "Delay entre Leitura de Baterias (ms)",
+        "param1": "Param. 1",
+        "timeout_err_read": "Timeout de Erro Leituras (seg)",
+        "param2": "Param. 2",
+        "nb_tries_timeout": "Quantidade de Tentativas de Timeout",
+        "param3": "Param. 3",
+        "param8": "Param. 8",
+        "param9": "Param. 9",
+        "param10": "Param. 10",
+        "apply": "Aplicar",
+        "restart": "Reiniciar",
+        "off_snmp": "Desligar SNMP",
+        "on_snmp": "Ligar SNMP",
+        "parameter_info": "Informações sobre parâmetros",
+        "success": "Dados salvos com sucesso!",
+        "active": "Ativado",
+        "inactive": "Desativado"
     },
     "tendanalitics": {
     },
