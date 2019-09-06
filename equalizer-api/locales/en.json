@@ -310,5 +310,17 @@
         "apply": "Apply"
     },
     "alarmlog": {
+        "locale": "us",
+        "logfiles": "LogFiles",
+        "alarmlog": "AlarmLog",
+        "calendar": "Calendar",
+        "grid": "Grid",
+        "date": "Date",
+        "alarm_event": "Alarm Event",
+        "graphic": "Graphic",
+        "vision": "Vision",
+        "month": "Month",
+        "agenda": "Agenda",
+        "today": "Today"
     }
 }

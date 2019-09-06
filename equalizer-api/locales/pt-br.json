@@ -311,5 +311,17 @@
         "apply": "Aplicar"
     },
     "alarmlog": {
+        "locale": "pt-br",
+        "logfiles": "LogFiles",
+        "alarmlog": "AlarmLog",
+        "calendar": "Calendário",
+        "grid": "Grid",
+        "date": "Data",
+        "alarm_event": "Evento de alarme",
+        "graphic": "Gráfico",
+        "vision": "Visão",
+        "month": "Mês",
+        "agenda": "Agenda",
+        "today": "Hoje"
     }
 }
