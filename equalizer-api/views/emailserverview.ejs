@@ -11,8 +11,8 @@
 
             <div id="ribbon">
                 <ol class="breadcrumb">
-                    <li>Configuração</li>
-                    <li>EmailServer</li>
+                    <li><%= translate.config %></li>
+                    <li><%= translate.mail_server %></li>
                 </ol>
             </div>
             <div id="content">
@@ -22,7 +22,7 @@
                         <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                             <header>
                                 <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                                <h2>Configuração de EmailServer </h2>
+                                <h2><%= translate.mail_server_config %></h2>
                             </header>
                             <div>
                                 <div class="jarviswidget-editbox">
@@ -44,7 +44,7 @@
                         <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                             <header>
                                 <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                                <h2>Teste de envio de email </h2>
+                                <h2><%= translate.mail_server_test %></h2>
                             </header>
                             <div>
                                 <div class="jarviswidget-editbox">
@@ -54,28 +54,28 @@
                                         <section class="col-sm-12 col-md-12 col-lg-12">
                                             <fieldset>
                                                 <section class="col-sm-12 col-md-12 col-lg-12">
-                                                    <label class="label">Destinatários(Se houver mais de um, separe por ";")</label>
+                                                    <label class="label"><%= translate.test_destination %></label>
                                                     <label class="input">
-                                                        <input type="text" id="txtDest" placeholder="Emails dos destinatários" required />
-                                                        <b class="tooltip tooltip-bottom-right">Emails dos destinatários</b>
+                                                        <input type="text" id="txtDest" placeholder="<%= translate.test_email %>" required />
+                                                        <b class="tooltip tooltip-bottom-right"><%= translate.test_email %></b>
                                                         </label>
                                                 </section>
                                                 <section class="col-sm-12 col-md-12 col-lg-12">
-                                                    <label class="label">Assunto</label>
+                                                    <label class="label"><%= translate.test_subject %></label>
                                                     <label class="input">
-                                                        <input type="text" id="txtAssunto" placeholder="Assunto" required />
-                                                        <b class="tooltip tooltip-bottom-right">Assunto</b>
+                                                        <input type="text" id="txtAssunto" placeholder="<%= translate.test_subject %>" required />
+                                                        <b class="tooltip tooltip-bottom-right"><%= translate.test_subject %></b>
                                                         </label>
                                                 </section>
                                                 <section class="col-sm-12 col-md-12 col-lg-12">
-                                                    <label class="label">Mensagem</label>
+                                                    <label class="label"><%= translate.test_message %></label>
                                                     <label class="input">
-                                                        <input type="text" id="txtMensagem" placeholder="Mensagem" required  />
-                                                        <b class="tooltip tooltip-bottom-right">Mensagem</b>
+                                                        <input type="text" id="txtMensagem" placeholder="<%= translate.test_message %>" required  />
+                                                        <b class="tooltip tooltip-bottom-right"><%= translate.test_message %></b>
                                                         </label>
                                                 </section>
                                                 <section>
-                                                    <button class="btn btn-primary pull-right" style="width: 100px; height: 30px;" onclick="sendMailTest();">Enviar</button>
+                                                    <button class="btn btn-primary pull-right" style="width: 100px; height: 30px;" onclick="sendMailTest();"><%= translate.send %></button>
                                                 </section>
                                         </section>
                                         </fieldset>
@@ -93,10 +93,10 @@
                             <fieldset>
                                 <section class="col-sm-12 col-md-12 col-lg-12">
                                     <section class="col-sm-5 col-md-5 col-lg-5">
-                                        <label class="label">Servidor de email</label>
+                                        <label class="label"><%= translate.mail_server %></label>
                                         <label class="input">
-                                        <input type="text" ng-model="emailserver[0].server" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Servidor de email" />
-                                        <b class="tooltip tooltip-bottom-right">Servidor de email</b>
+                                        <input type="text" ng-model="emailserver[0].server" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="><%= translate.mail_server %>" />
+                                        <b class="tooltip tooltip-bottom-right">><%= translate.mail_server %></b>
                                         </label>
                                     </section>
                                     <section class="col-sm-2 col-md-2 col-lg-2">
@@ -104,35 +104,35 @@
                                     <section class="col-sm-5 col-md-5 col-lg-5">
                                         <label class="checkbox">
                                         <input type="checkbox" ng-model="emailserver[0].usarAutenticacao" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" />
-                                        <i></i>Secure Password Authentication (SPA)</label>
+                                        <i></i><%= translate.spa %></label>
                                     </section>
                                 </section>
                                 <section class="col-sm-12 col-md-12 col-lg-12">
                                     <section class="col-sm-5 col-md-5 col-lg-5">
-                                        <label class="label">Porta SMTP</label>
+                                        <label class="label"><%= translate.smtp_port %></label>
                                         <label class="input">
-                                        <input type="number" ng-model="emailserver[0].portaSMTP" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Porta SMTP" />
-                                        <b class="tooltip tooltip-bottom-right">Porta SMTP</b>
+                                        <input type="number" ng-model="emailserver[0].portaSMTP" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="<%= translate.smtp_port %>" />
+                                        <b class="tooltip tooltip-bottom-right"><%= translate.smtp_port %></b>
                                         </label>
                                     </section>
                                     <section class="col-sm-2 col-md-2 col-lg-2">
                                     </section>
                                     <section class="col-sm-5 col-md-5 col-lg-5">
-                                        <label class="label">Login</label>
+                                        <label class="label"><%= translate.login %></label>
                                         <label class="input">
-                                        <input type="text" ng-model="emailserver[0].login" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Login" />
-                                        <b class="tooltip tooltip-bottom-right">Login</b>
+                                        <input type="text" ng-model="emailserver[0].login" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="<%= translate.login %>" />
+                                        <b class="tooltip tooltip-bottom-right"><%= translate.login %></b>
                                         </label>
                                     </section>
                                 </section>
                                 <section class="col-sm-12 col-md-12 col-lg-12">
                                     <section class="col-sm-5 col-md-5 col-lg-5">
-                                        <label class="label">Usar Criptografica TLS</label>
+                                        <label class="label"><%= translate.key %></label>
                                         <label class="select">
                                         <select name="criptoTLS" id="criptoTLS" ng-model="emailserver[0].usarCriptografiaTLS" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" >
                                             <option value="0" ng-selected="selected">Nenhum</option>
-                                            <option value="1">TLS</option>
-                                            <option value="2">SSL</option>
+                                            <option value="1"><%= translate.key_tls %></option>
+                                            <option value="2"><%= translate.key_ssl %></option>
                                         </select>
                                         <i></i>
                                     </label>
@@ -140,42 +140,42 @@
                                     <section class="col-sm-2 col-md-2 col-lg-2">
                                     </section>
                                     <section class="col-sm-5 col-md-5 col-lg-5">
-                                        <label class="label">Senha</label>
+                                        <label class="label"><%= translate.password %></label>
                                         <label class="input">
-                                        <input type="password" name="password" id="password" ng-model="emailserver[0].senha" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Senha" />
-                                        <b class="tooltip tooltip-bottom-right">Senha</b>
+                                        <input type="password" name="password" id="password" ng-model="emailserver[0].senha" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="<%= translate.password %>" />
+                                        <b class="tooltip tooltip-bottom-right"><%= translate.password %></b>
                                         </label>
                                     </section>
                                 </section>
                                 <section class="col-sm-12 col-md-12 col-lg-12">
                                     <section class="col-sm-5 col-md-5 col-lg-5">
-                                        <label class="label">Email</label>
+                                        <label class="label"><%= translate.email %></label>
                                         <label class="input">
-                                        <input type="email" name="email" id="email" ng-model="emailserver[0].email" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Email" />
-                                        <b class="tooltip tooltip-bottom-right">Email</b>
+                                        <input type="email" name="email" id="email" ng-model="emailserver[0].email" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="<%= translate.email %>" />
+                                        <b class="tooltip tooltip-bottom-right"><%= translate.email %></b>
                                         </label>
                                     </section>
                                     <section class="col-sm-2 col-md-2 col-lg-2">
                                     </section>
                                     <section class="col-sm-5 col-md-5 col-lg-5">
-                                        <label class="label">Confirmar Senha</label>
+                                        <label class="label"><%= translate.password_confirm %></label>
                                         <label class="input">
-                                        <input type="password" name="passwordConfirm" id="passwordConfirm" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Confirmar Senha" />
-                                        <b class="tooltip tooltip-bottom-right">Confirmar Senha</b>
+                                        <input type="password" name="passwordConfirm" id="passwordConfirm" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="<%= translate.password_confirm %>" />
+                                        <b class="tooltip tooltip-bottom-right"><%= translate.password_confirm %></b>
                                         </label>
                                     </section>
                                 </section>
                                 <section class="col-sm-5 col-md-5 col-lg-5">
-                                    <label class="label">Assunto</label>
+                                    <label class="label"><%= translate.test_subject %></label>
                                     <label class="input">
-                                        <input type="text" ng-model="emailserver[0].assunto" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="Assunto" />
-                                        <b class="tooltip tooltip-bottom-right">Assunto</b>
+                                        <input type="text" ng-model="emailserver[0].assunto" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="<%= translate.test_subject %>" />
+                                        <b class="tooltip tooltip-bottom-right"><%= translate.test_subject %></b>
                                         </label>
                                 </section>
                             </fieldset>
                         </section>
                         <section>
-                            <button ng-click="update()" class="btn btn-primary pull-right" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" style="width: 100px; height: 30px;">Salvar</button>
+                            <button ng-click="update()" class="btn btn-primary pull-right" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" style="width: 100px; height: 30px;"><%= translate.save %></button>
                         </section>
                     </fieldset>
 
@@ -202,8 +202,8 @@
                                 var emailserver = $scope.emailserver[0];
                                 EmailServer.update(emailserver);
                                 $.bigBox({
-                                    title: "EmailServer",
-                                    content: "Dados salvos com sucesso!",
+                                    title: "<%= translate.mail_server %>",
+                                    content: "<%= translate.success %>",
                                     color: "#275B89",
                                     timeout: 5000,
                                     icon: "fa fa-check fadeInLeft animated",
@@ -242,8 +242,8 @@
                    
                 });
                  $.bigBox({
-                        title: "EmailServer",
-                        content: "Email enviado!",
+                        title: "<%= translate.mail_server %>",
+                        content: "<%= translate.email_sent %>",
                         color: "#275B89",
                         timeout: 5000,
                         icon: "fa fa-check fadeInLeft animated"
@@ -285,12 +285,12 @@
                     // Messages for form validation
                     messages: {
                         email: {
-                            required: 'Preencha com um e-mail válido',
-                            email: 'Preencha com um e-mail válido'
+                            required: '<%= translate.err1 %>',
+                            email: '<%= translate.err2 %>'
                         },
                         passwordConfirm: {
-                            required: 'Confirme a senha',
-                            equalTo: 'A confirmação deve ser igual a senha'
+                            required: '<%= translate.err3 %>',
+                            equalTo: '<%= translate.err4 %>'
                         }
                     },
 
