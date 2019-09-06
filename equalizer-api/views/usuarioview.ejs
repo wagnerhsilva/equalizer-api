@@ -14,8 +14,8 @@
 
                 <!-- breadcrumb -->
                 <ol class="breadcrumb">
-                    <li>Configuração</li>
-                    <li>Usuário</li>
+                    <li><%= translate.config %></li>
+                    <li><%= translate.user %></li>
                 </ol>
             </div>
             <div id="content">
@@ -26,7 +26,7 @@
                         <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                             <header>
                                 <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                                <h2>Gerenciamento de Usuários </h2>
+                                <h2><%= translate.user_management %></h2>
 
                             </header>
 
@@ -63,39 +63,39 @@
                         <div class="widget-body no-padding">
                             <form name="formRegister">
                                 <header>
-                                    Formulário de registro
+                                    <%= translate.register_form %>
                                 </header>
 
                                 <fieldset>
                                     <section>
                                         <label class="input"> <i class="icon-append fa fa-user"></i>
-										<input type="text" name="nome" placeholder="Nome" ng-model="usuarioSelecionado.nome" required />
-										<b class="tooltip tooltip-bottom-right">Informe o nome do usuário</b> </label>
+										<input type="text" name="nome" placeholder="<%= translate.first_name %>" ng-model="usuarioSelecionado.nome" required />
+										<b class="tooltip tooltip-bottom-right"><%= translate.first_name %></b> </label>
                                     </section>
                                     <section>
                                         <label class="input"> <i class="icon-append fa fa-user"></i>
-										<input type="text" name="sobrenome" placeholder="Sobrenome" ng-model="usuarioSelecionado.sobreNome" required>
-										<b class="tooltip tooltip-bottom-right">Informe o sobrenome do usuário</b> </label>
+										<input type="text" name="sobrenome" placeholder="<%= translate.last_name %>" ng-model="usuarioSelecionado.sobreNome" required>
+										<b class="tooltip tooltip-bottom-right"><%= translate.last_name %></b> </label>
                                     </section>
                                     <section>
                                         <label class="input"> <i class="icon-append fa fa-envelope"></i>
-										<input type="email" name="email" placeholder="E-mail"  ng-model="usuarioSelecionado.email" required>
-										<b class="tooltip tooltip-bottom-right">Informe o e-mail</b> </label>
+										<input type="email" name="email" placeholder="<%= translate.email %>" ng-model="usuarioSelecionado.email" required>
+										<b class="tooltip tooltip-bottom-right"><%= translate.email %></b> </label>
                                     </section>
                                     <section>
                                         <label class="input"> <i class="icon-append fa fa-phone"></i>
-										<input type="text" name="telefone" placeholder="Telefone (99) 9999-9999" ng-model="usuarioSelecionado.telefone">
-										<b class="tooltip tooltip-bottom-right">Informe o telefone</b> </label>
+										<input type="text" name="telefone" placeholder="<%= translate.phone %>" ng-model="usuarioSelecionado.telefone">
+										<b class="tooltip tooltip-bottom-right"><%= translate.phone %></b> </label>
                                     </section>
                                     <section>
                                         <label class="input"> <i class="icon-append fa fa-lock"></i>
-										<input type="password" name="senha" placeholder="Senha" id="senha" ng-model="usuarioSelecionado.senha" required>
-										<b class="tooltip tooltip-bottom-right">Informe a senha padrão</b> </label>
+										<input type="password" name="senha" placeholder="<%= translate.password %>" id="senha" ng-model="usuarioSelecionado.senha" required>
+										<b class="tooltip tooltip-bottom-right"><%= translate.password %></b> </label>
                                     </section>
                                 </fieldset>
                                 <footer>
-                                    <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="save();">Salvar</button>
-                                    <input type="button" id="btnCancelarEdicao" class="btn btn-primary" value="Cancelar" style="display:none;" ng-click="cancelarEdicao();"
+                                    <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador'" ng-click="save();"><%= translate.save %></button>
+                                    <input type="button" id="btnCancelarEdicao" class="btn btn-primary" value="<%= translate.cancel %>" style="display:none;" ng-click="cancelarEdicao();"
                                     />
                                 </footer>
                             </form>
@@ -104,11 +104,11 @@
                             <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <td>Nome</td>
-                                        <td>Sobrenome</td>
-                                        <td>Email</td>
-                                        <td>Telefone</td>
-                                        <td>Acesso</td>
+                                        <td><%= translate.first_name %></td>
+                                        <td><%= translate.last_name %></td>
+                                        <td><%= translate.email %></td>
+                                        <td><%= translate.phone %></td>
+                                        <td><%= translate.access %></td>
                                         <td></td>
                                     </tr>
                                 </thead>
@@ -121,16 +121,16 @@
                                         <td>
                                             <label ng-if="acessoUsuario == 'administrador'" class="select">
                                                 <select name="ddlAcesso" id="ddlAcesso" ng-model="usuario.acesso" ng-change="updateAcesso($index)">
-                                                    <option value="usuario">Usuário</option>
-                                                    <option value="administrador">Administrador</option>
-                                                    <option value="local">Técnico</option>
+                                                    <option value="usuario"><%= translate.user %></option>
+                                                    <option value="administrador"><%= translate.admin %></option>
+                                                    <option value="local"><%= translate.technician %></option>
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </td>
-                                        <td align="center"><span class="glyphicon glyphicon-pencil" style="cursor:pointer;" title="Editar" ng-click="editar($index);"
+                                        <td align="center"><span class="glyphicon glyphicon-pencil" style="cursor:pointer;" title="<%= translate.edit %>" ng-click="editar($index);"
                                                 ng-if="acessoUsuario == 'administrador' || emailUsuario == usuario.email"></span>&nbsp&nbsp
-                                            <span class="glyphicon glyphicon-trash" style="cursor:pointer;" title="Excluir" ng-if="acessoUsuario == 'administrador' && emailUsuario != usuario.email"
+                                            <span class="glyphicon glyphicon-trash" style="cursor:pointer;" title="<%= translate.remove %>" ng-if="acessoUsuario == 'administrador' && emailUsuario != usuario.email"
                                                 ng-click="remove($index);"></span>
                                         </td>
                                     </tr>
@@ -164,8 +164,8 @@
                                             || (usuario.senha == null || usuario.senha.trim() == ""));
                                 if(fails){
                                     $.bigBox({
-                                        title: "Registro de Usuário",
-                                        content: "Registro Invalido",
+                                        title: "<%= translate.user_register %>",
+                                        content: "<%= translate.invalid_register %>",
                                         color: "#FF6666",
                                         timeout: 5000,
                                         icon: "fa fa-check fadeInLeft animated"
@@ -176,8 +176,8 @@
                                         $scope.update();
                                     }else{
                                         $.bigBox({
-                                        title: "Registro de Usuário",
-                                        content: "Registro feito com sucesso!",
+                                        title: "<%= translate.user_register %>",
+                                        content: "<%= translate.register_success %>",
                                         color: "#275B89",
                                         timeout: 5000,
                                         icon: "fa fa-check fadeInLeft animated"

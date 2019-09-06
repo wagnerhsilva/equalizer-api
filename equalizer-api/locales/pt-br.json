@@ -69,6 +69,25 @@
         "impedance": "Impedância"
     },
     "usuario": {
+        "config": "Configuração",
+        "user": "Usuário",
+        "user_management": "Gerenciamento de Usuários",
+        "register_form": "Formulário de registro",
+        "first_name": "Informe o nome do usuário",
+        "last_name": "Informe o sobrenome do usuário",
+        "email": "Informe o email",
+        "phone": "Informe o telefone",
+        "password": "Informa a senha padrão",
+        "save": "Salvar",
+        "access": "Acesso",
+        "admin": "Administrador",
+        "technician": "Técnico",
+        "cancel": "Cancelar",
+        "edit": "Editar",
+        "remove": "Excluir",
+        "user_register": "Registro de Usuário",
+        "invalid_register": "Registro Inválido",
+        "register_success": "Registro feito com sucesso!"
     },
     "modulo": {
     },
