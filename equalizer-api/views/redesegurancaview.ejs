@@ -10,8 +10,8 @@
         <div id="main" role="main">
             <div id="ribbon">
                 <ol class="breadcrumb">
-                    <li>Configuração</li>
-                    <li>Rede & Segurança</li>
+                    <li><%= translate.config %></li>
+                    <li><%= translate.network_security %></li>
                 </ol>
             </div>
             <div id="content">
@@ -20,7 +20,7 @@
                         <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                             <header>
                                 <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                                <h2>Rede & Segurança</h2>
+                                <h2><%= translate.network_security %></h2>
                             </header>
                             <div>
                                 <div class="widget-body no-padding">
@@ -31,37 +31,37 @@
                                                 <fieldset>
                                                     <section>
                                                         <label class="input">
-                                                            <label class="label">Endereço MAC</label>
-                                                        <input type="text" name="mac" id="mac" placeholder="Endereço MAC" value="<%= network.mac_address %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                        <b class="tooltip tooltip-bottom-right">Endereço MAC</b>
+                                                            <label class="label"><%= translate.mac_address %></label>
+                                                        <input type="text" name="mac" id="mac" placeholder="<%= translate.mac_address %>" value="<%= network.mac_address %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                        <b class="tooltip tooltip-bottom-right"><%= translate.mac_address %></b>
                                                         </label>
                                                     </section>
                                                     <section>
                                                         <label class="input">
-                                                            <label class="label">Endereço Local</label>
-                                                        <input type="text" name="localAddress" id="localAddress" placeholder="Endereço Local" value="<%= network.ip_address %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                        <b class="tooltip tooltip-bottom-right">Endereço Local</b>
+                                                            <label class="label"><%= translate.local_ip %></label>
+                                                        <input type="text" name="localAddress" id="localAddress" placeholder="<%= translate.local_ip %>" value="<%= network.ip_address %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                        <b class="tooltip tooltip-bottom-right"><%= translate.local_ip %></b>
                                                         </label>
                                                     </section>
                                                     <section>
                                                         <label class="input">
-                                                            <label class="label">Gateway Endereço</label>
-                                                        <input type="text" name="gateway" id="gateway" placeholder="Gateway Endereço" value="<%= network.gateway_ip %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                        <b class="tooltip tooltip-bottom-right">Gateway Endereço</b>
+                                                            <label class="label"><%= translate.gateway %></label>
+                                                        <input type="text" name="gateway" id="gateway" placeholder="<%= translate.gateway %>" value="<%= network.gateway_ip %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                        <b class="tooltip tooltip-bottom-right"><%= translate.gateway %></b>
                                                         </label>
                                                     </section>
                                                     <section>
                                                         <label class="input">
-                                                            <label class="label">Máscara</label>
-                                                        <input type="text" name="mascara" id="mascara" placeholder="Máscara" value="<%= network.netmask %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                        <b class="tooltip tooltip-bottom-right">Máscara</b>
+                                                            <label class="label"><%= translate.netmask %></label>
+                                                        <input type="text" name="mascara" id="mascara" placeholder="<%= translate.netmask %>" value="<%= network.netmask %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                        <b class="tooltip tooltip-bottom-right"><%= translate.netmask %></b>
                                                         </label>
                                                     </section>
                                                     <section>
                                                         <label class="input">
-                                                            <label class="label">Servidor DNS</label>
-                                                        <input type="text" name="servidorDNS" id="servidorDNS" placeholder="Servidor DNS" value="<%= redeSeguranca[0].servidorDNS %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                        <b class="tooltip tooltip-bottom-right">Servidor DNS</b>
+                                                            <label class="label"><%= translate.dns %></label>
+                                                        <input type="text" name="servidorDNS" id="servidorDNS" placeholder="<%= translate.dns %>" value="<%= redeSeguranca[0].servidorDNS %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                        <b class="tooltip tooltip-bottom-right"><%= translate.dns %></b>
                                                         </label>
                                                     </section>
                                                 </fieldset>
@@ -70,20 +70,20 @@
                                                 <fieldset>
                                                     <section>
                                                         <label class="input">
-                                                            <label class="label">Nome do Sistema</label>
-                                                        <input type="text" name="nomeDoSistema" id="nomeDoSistema" placeholder="Nome do Sistema" value="<%= redeSeguranca[0].nomeDoSistema %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                        <b class="tooltip tooltip-bottom-right">Nome do Sistema</b>
+                                                            <label class="label"><%= translate.system_name %></label>
+                                                        <input type="text" name="nomeDoSistema" id="nomeDoSistema" placeholder="<%= translate.system_name %>" value="<%= redeSeguranca[0].nomeDoSistema %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                        <b class="tooltip tooltip-bottom-right"><%= translate.system_name %></b>
                                                         </label>
                                                     </section>
                                                     <section>
                                                         <label class="input">
-                                                            <label class="label">Local do Sistema</label>
-                                                        <input type="text" name="localDoSistema" id="localDoSistema" placeholder="Local do Sistema" value="<%= redeSeguranca[0].localDoSistema %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                        <b class="tooltip tooltip-bottom-right">Local do Sistema</b>
+                                                            <label class="label"><%= translate.system_location %></label>
+                                                        <input type="text" name="localDoSistema" id="localDoSistema" placeholder="<%= translate.system_location %>" value="<%= redeSeguranca[0].localDoSistema %>" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                        <b class="tooltip tooltip-bottom-right"><%= translate.system_location %></b>
                                                         </label>
                                                     </section>
                                                     <section>
-                                                        <label class="label">Contato do Sistema</label>
+                                                        <label class="label"><%= translate.system_contact %></label>
                                                         <label class="select">
                                                             <select name="contatoDoSistema" name="contatoDoSistema" id="contatoDoSistema"  <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
                                                                 <% for(var i=0; i < usuarios.length; i++) { %>
@@ -98,24 +98,24 @@
                                                         </label>
                                                     </section>
                                                     <section>
-                                                        <label class="label">Página padrão HTTP</label>
+                                                        <label class="label"><%= translate.http_page %></label>
                                                         <label class="select">
                                                             <select name="paginaPadraoHttp" id="paginaPadraoHttp" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                                <option value="statusmoduloview" <%if (redeSeguranca[0].paginaPadraoHttp=='statusmoduloview') {%>  selected  <%}%>>Status Módulos</option>
-                                                                <option value="usuarioview" <%if (redeSeguranca[0].paginaPadraoHttp=='usuarioview') {%>  selected  <%}%>>Gerenciamento de usuários</option>
-                                                                <option value="" <%if (redeSeguranca[0].paginaPadraoHttp=='') {%>  selected  <%}%>>Cadastro de e-mail</option>
-                                                                <option value="moduloview" <%if (redeSeguranca[0].paginaPadraoHttp=='moduloview') {%>  selected  <%}%>>Módulo, alarme e bateria</option>
-                                                                <option value="timeserverview" <%if (redeSeguranca[0].paginaPadraoHttp=='timeserverview') {%>  selected  <%}%>>Configuração de timeserver</option>
-                                                                <option value="redesegurancaview" <%if (redeSeguranca[0].paginaPadraoHttp=='redesegurancaview') {%>  selected  <%}%>>Rede & Segurança</option>
-                                                                <option value="alarmlogview" <%if (redeSeguranca[0].paginaPadraoHttp=='alarmlogview') {%>  selected  <%}%>>Alarme de eventos</option>
-                                                                <option value="datalogview" <%if (redeSeguranca[0].paginaPadraoHttp=='datalogview') {%>  selected  <%}%>>DataLogger</option>
+                                                                <option value="statusmoduloview" <%if (redeSeguranca[0].paginaPadraoHttp=='statusmoduloview') {%>  selected  <%}%>><%= translate.status_module %></option>
+                                                                <option value="usuarioview" <%if (redeSeguranca[0].paginaPadraoHttp=='usuarioview') {%>  selected  <%}%>><%= translate.user_management %></option>
+                                                                <option value="" <%if (redeSeguranca[0].paginaPadraoHttp=='') {%>  selected  <%}%>><%= translate.email_register %></option>
+                                                                <option value="moduloview" <%if (redeSeguranca[0].paginaPadraoHttp=='moduloview') {%>  selected  <%}%>><%= translate.module %></option>
+                                                                <option value="timeserverview" <%if (redeSeguranca[0].paginaPadraoHttp=='timeserverview') {%>  selected  <%}%>><%= translate.timeserver %></option>
+                                                                <option value="redesegurancaview" <%if (redeSeguranca[0].paginaPadraoHttp=='redesegurancaview') {%>  selected  <%}%>><%= translate.network_security %></option>
+                                                                <option value="alarmlogview" <%if (redeSeguranca[0].paginaPadraoHttp=='alarmlogview') {%>  selected  <%}%>><%= translate.events_alarm %></option>
+                                                                <option value="datalogview" <%if (redeSeguranca[0].paginaPadraoHttp=='datalogview') {%>  selected  <%}%>><%= translate.datalogger %></option>
                                                             </select>
                                                             <i></i>
                                                         </label>
                                                     </section>
                                                     <section>
                                                         <button id="submitBt" type="submit" class="btn btn-primary pull-right" style="width: 100px; height: 30px;" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                            Salvar
+                                                            <%= translate.save %>
                                                         </button>
                                                     </section>
                                                 </fieldset>
