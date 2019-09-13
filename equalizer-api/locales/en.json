@@ -339,5 +339,16 @@
         "fill_passwd": "Fill the password",
         "back": "Back",
         "do_register": "Register"
+    },
+    "login": {
+        "title": "Equalizer - Login",
+        "login": "Login",
+        "alert": "Warning",
+        "email": "E-mail",
+        "email_msg": "Please, enter with you e-mail",
+        "password": "Password",
+        "password_msg": "Enter with your password",
+        "first_time": "First time? Register.",
+        "enter": "Enter"
     }
 }

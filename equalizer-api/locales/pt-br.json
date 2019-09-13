@@ -340,5 +340,14 @@
         "fill_passwd": "Preencha a senha",
         "back": "Voltar",
         "do_register": "Registrar"
+    },
+    "login": {
+        "title": "Equalizer - Login",
+        "login": "Login",
+        "alert": "Alerta",
+        "email": "E-mail",
+        "password": "Senha",
+        "first_time": "Primeira vez? Registre-se.",
+        "enter": "Entrar"
     }
 }

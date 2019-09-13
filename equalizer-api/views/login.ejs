@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
 
-    <title> Equalizer - Login </title>
+    <title> <%= translate.title %> </title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -57,7 +57,7 @@
 
         <!-- breadcrumb -->
         <ol class="breadcrumb">
-            <li>Login</li>
+            <li><%= translate.login %></li>
         </ol>
         <!-- end breadcrumb -->
         <!-- You can also add more buttons to the
@@ -91,38 +91,38 @@
                         ×
                     </button>
                             <i class="fa-fw fa fa-warning"></i>
-                            <strong>Warning</strong>
+                            <strong><%= translate.alert %></strong>
                             <%= message %>
                         </div>
                         <% } %>
                             <div class="well no-padding">
                                 <form action="/login" method="POST" id="login-form" class="smart-form client-form">
                                     <header>
-                                        Login
+                                        <%= translate.login %>
                                     </header>
 
                                     <fieldset>
 
                                         <section>
-                                            <label class="label">E-mail</label>
+                                            <label class="label"><%= translate.email %></label>
                                             <label class="input"> <i class="icon-append fa fa-envelope"></i>
                                     <input type="email" name="username" required>
-                                    <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Por favor, entre com seu email</b></label>
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <%= translate.email_msg %></b></label>
                                         </section>
 
                                         <section>
-                                            <label class="label">Password</label>
+                                            <label class="label"><%= translate.password %></label>
                                             <label class="input"> <i class="icon-append fa fa-lock"></i>
                                     <input type="password" name="password" required>
-                                    <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Entre com sua senha</b> </label>
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> <%= translate.password_msg %></b> </label>
                                             <div class="note">
-                                                <a href="/signup">Primeira vez? Registre-se.</a>
+                                                <a href="/signup"><%= translate.first_time %></a>
                                             </div>
                                         </section>
                                     </fieldset>
                                     <footer>
                                         <button type="submit" class="btn btn-primary">
-                                Entrar
+                                <%= translate.enter %>
                             </button>
                                     </footer>
                                 </form>
