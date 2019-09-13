@@ -17,10 +17,10 @@
         "log": "LogFiles",
         "alarm_events": "Alarm events",
         "status":"Status",
-        "logout-msg":"You will end your session",
-        "full-screen": "Full screen",
+        "logout_msg":"You will end your session",
+        "full_screen": "Full screen",
         "exit": "Signout",
-        "hide-menu": "Hide Menu"
+        "hide_menu": "Hide Menu"
     },
     "statusmodulo": {
         "title": "Modules status",
@@ -326,5 +326,18 @@
         "month": "Month",
         "agenda": "Agenda",
         "today": "Today"
+    },
+    "signup": {
+        "register": "Register",
+        "alerta": "Alert",
+        "user": "User",
+        "register_form": "Register form",
+        "fill_firstuser": "Fill the first name",
+        "fill_lastname": "Fill the last name",
+        "fill_email": "Fill the e-mail",
+        "fill_phone": "Fill the phone number",
+        "fill_passwd": "Fill the password",
+        "back": "Back",
+        "do_register": "Register"
     }
 }

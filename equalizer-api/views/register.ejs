@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
 
-    <title>SmartAdmin </title>
+    <title><%= translate.register %> </title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -114,7 +114,7 @@ Use search to find needed section.
 
         <!-- breadcrumb -->
         <ol class="breadcrumb">
-            <li>Registro</li>
+            <li><%= translate.register %></li>
         </ol>
         <!-- end breadcrumb -->
         <!-- You can also add more buttons to the
@@ -140,14 +140,14 @@ Use search to find needed section.
                         ×
                     </button>
                     <i class="fa-fw fa fa-warning"></i>
-                    <strong>Warning</strong> <%= message %>
+                    <strong><%= translate.alert %></strong> <%= message %>
                 </div>
                 <% } %>
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header>
                         <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                        <h2>Usuário </h2>
+                        <h2><%= translate.user %> </h2>
 
                     </header>
 
@@ -166,50 +166,50 @@ Use search to find needed section.
 
                             <form id="smart-form-register" class="smart-form" action='/signup' method='POST'>
                                 <header>
-                                    Formulário de registro
+                                    <%= translate.register_form %>
                                 </header>
 
                                 <fieldset>
                                     <section>
                                         <label class="input">
                                             <i class="icon-append fa fa-user"></i>
-                                            <input type="text" name="nomeUsuario" id="nomeUsuario" placeholder="Nome" required>
-                                            <b class="tooltip tooltip-bottom-right">Preencha o nome do usuário</b>
+                                            <input type="text" name="nomeUsuario" id="nomeUsuario" placeholder="<%= translate.fill_firstname %>" required>
+                                            <b class="tooltip tooltip-bottom-right"><%= translate.fill_firstname %></b>
                                         </label>
                                     </section>
                                     <section>
                                         <label class="input">
                                             <i class="icon-append fa fa-user"></i>
-                                            <input type="text" name="sobrenomeUsuario" id="sobrenomeUsuario" placeholder="Sobrenome" required>
-                                            <b class="tooltip tooltip-bottom-right">Preencha o sobrenome do usuário</b>
+                                            <input type="text" name="sobrenomeUsuario" id="sobrenomeUsuario" placeholder="<%= translate.fill_lastname %>" required>
+                                            <b class="tooltip tooltip-bottom-right"><%= translate.fill_lastname %></b>
                                         </label>
                                     </section>
                                     <section>
                                         <label class="input">
                                             <i class="icon-append fa fa-envelope-o"></i>
-                                            <input type="text" type="email" name="username" id="username" placeholder="Email" required>
-                                            <b class="tooltip tooltip-bottom-right">Preencha o email do usuário</b>
+                                            <input type="text" type="email" name="username" id="username" placeholder="<%= translate.fill_email %>" required>
+                                            <b class="tooltip tooltip-bottom-right"><%= translate.fill_email %></b>
                                         </label>
                                     </section>
                                     <section>
                                         <label class="input">
                                             <i class="icon-append fa fa-phone"></i>
-                                            <input type="text" name="telefoneUsuario" id="telefoneUsuario" placeholder="Telefone" data-mask="(99) 99999-9999">
-                                            <b class="tooltip tooltip-bottom-right">Preencha o telefone do usuário</b>
+                                            <input type="text" name="telefoneUsuario" id="telefoneUsuario" placeholder="<%= translate.fill_phone %>" data-mask="(99) 99999-9999">
+                                            <b class="tooltip tooltip-bottom-right"><%= translate.fill_phone %></b>
                                         </label>
                                     </section>
                                     <section>
                                         <label class="input">
                                             <i class="icon-append fa fa-lock"></i>
-                                            <input type="password" name="password" id="password" placeholder="Senha" required>
-                                            <b class="tooltip tooltip-bottom-right">Preencha a senha</b>
+                                            <input type="password" name="password" id="password" placeholder="<%= translate.fill_password %>" required>
+                                            <b class="tooltip tooltip-bottom-right"><%= translate.fill_password %></b>
                                         </label>
                                     </section>
                                     <button type="submit" class="btn btn-primary pull-right" style="width: 100px; height: 30px">
-                                        Registrar
+                                        <%= translate.do_register %>
                                     </button>
                                     <button type="button" class="btn btn-primary pull-right" onclick="javascript: window.history.back();" style="margin-right: 8px; width: 100px; height: 30px">
-                                        Voltar
+                                        <%= translate.back %>
                                     </button>
                                     <br />
                                     <br />
@@ -236,7 +236,7 @@ Use search to find needed section.
 <div class="page-footer">
     <div class="row">
         <div class="col-xs-12 col-sm-6">
-            <span class="txt-color-white">Softsharp beta version 1.0 <span class="hidden-xs">- Web Application Framework</span> © 2017</span>
+            <span class="txt-color-white">Phi Innovations <span class="hidden-xs">- Web Application Framework</span> © 2017</span>
         </div>
     </div>
 </div>

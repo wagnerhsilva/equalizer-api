@@ -17,10 +17,10 @@
         "log": "LogFiles",
         "alarm_events": "Alarme de eventos",
         "status": "Status",
-        "logout-msg": "Você irá encerrar sua sessão.",
-        "full-screen": "Tela cheia",
+        "logout_msg": "Você irá encerrar sua sessão.",
+        "full_screen": "Tela cheia",
         "exit": "Sair",
-        "hide-menu": "Ocultar Menu"
+        "hide_menu": "Ocultar Menu"
     },
     "statusmodulo": {
         "title": "Estado dos módulos",
@@ -327,5 +327,18 @@
         "month": "Mês",
         "agenda": "Agenda",
         "today": "Hoje"
+    },
+    "signup": {
+        "register": "Registro",
+        "alert": "Alerta",
+        "user": "Usuário",
+        "register_form": "Formulário de registro",
+        "fill_firstname": "Preencha o nome do usuário",
+        "fill_lastname": "Preencha o sobrenome do usuário",
+        "fill_email": "Preencha o email do usuário",
+        "fill_phone": "Preencha o telefone do usuário",
+        "fill_passwd": "Preencha a senha",
+        "back": "Voltar",
+        "do_register": "Registrar"
     }
 }

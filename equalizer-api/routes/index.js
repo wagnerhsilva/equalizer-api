@@ -18,14 +18,14 @@ module.exports = function(passport){
 
     /* GET Registration Page */
     router.get('/signup', function(req, res){
-        res.render('register',{message: req.flash('message')});
+        res.render('register',{message: req.flash('message'), translate: res.__('signup'), translate_header: res.__('header')});
     });
 
     /* Handle Registration POST */
     router.post('/signup', passport.authenticate('signup', {
         successRedirect: '/signout',
         failureRedirect: '/signup',
-        failureFlash : true
+        failureFlash : true,
     }));
 
     /* Handle Logout */
