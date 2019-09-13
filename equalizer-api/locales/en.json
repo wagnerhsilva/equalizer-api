@@ -16,7 +16,11 @@
         "snmp": "SNMP",
         "log": "LogFiles",
         "alarm_events": "Alarm events",
-        "status":"Status"
+        "status":"Status",
+        "logout-msg":"You will end your session",
+        "full-screen": "Full screen",
+        "exit": "Signout",
+        "hide-menu": "Hide Menu"
     },
     "statusmodulo": {
         "title": "Modules status",

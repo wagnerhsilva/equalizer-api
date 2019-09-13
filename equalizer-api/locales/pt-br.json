@@ -16,7 +16,11 @@
         "snmp": "SNMP",
         "log": "LogFiles",
         "alarm_events": "Alarme de eventos",
-        "status":"Status"
+        "status": "Status",
+        "logout-msg": "Você irá encerrar sua sessão.",
+        "full-screen": "Tela cheia",
+        "exit": "Sair",
+        "hide-menu": "Ocultar Menu"
     },
     "statusmodulo": {
         "title": "Estado dos módulos",
