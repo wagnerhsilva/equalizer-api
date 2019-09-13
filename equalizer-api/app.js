@@ -53,6 +53,8 @@ var chart2view = require('./routes/chart2view');
 var equalizerdb = require('./database/equalizerdb');
 var emailServerModel = require('./models/EmailServer.js');
 var i18n = require('./i18n');
+var idiomaview = require('./routes/idiomaview');
+var idioma = require('./routes/idioma');
 
 // Flavio Alves: configurando o timezone do projeto para o Brasil,
 // com o intuito de evitar divergencias na coleta de data e hora
@@ -127,6 +129,10 @@ var app = express();
  * Inicializando a localização
  */
 app.use(i18n);
+var Idioma = require('./models/Idioma');
+var lang = Idioma.getLast();
+i18n.configure
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -193,6 +199,8 @@ app.use('/statusmoduloview', statusmoduloview);
 app.use('/livefeedview', livefeedsview);
 app.use('/chartview', chartview);
 app.use('/chart2view', chart2view);
+app.use('/idioma', idioma);
+app.use('/idiomaview', idiomaview);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

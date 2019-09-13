@@ -20,6 +20,7 @@ var init = function () {
         db.run("CREATE TABLE IF NOT EXISTS SnmpCommunities ( id INTEGER PRIMARY KEY AUTOINCREMENT, Address TEXT, Community TEXT, Permission INTEGER )");
         db.run("CREATE TABLE IF NOT EXISTS SnmpTraps( id INTEGER PRIMARY KEY AUTOINCREMENT, Address TEXT, Community TEXT )");
         db.run("CREATE TABLE IF NOT EXISTS SnmpCfgs ( id INTEGER PRIMARY KEY AUTOINCREMENT, Running INTEGER, Version INTEGER, Security INTEGER, User TEXT, Pass TEXT )");
+        db.run("CREATE TABLE IF NOT EXISTS Idioma ( id INTEGER PRIMARY KEY AUTOINCREMENT, idioma TEXT )");
         //TRIGGERS
 		
 		
@@ -29,6 +30,7 @@ var init = function () {
 
         //Valor Default para Duty Max, caso reinicie a aplicação
         db.run("UPDATE Parameters SET duty_max = '45000';");
+        // db.run("INSERT INTO Idioma VALUES(1,'pt-br');");
     });
     db.close();
 };

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <% include partials/head %>
+    <style>
+        .displayNone{display: none !important;}
+        .checkboxes label {
+            display: block;
+            float: left;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+        .checkboxes input {
+            vertical-align: middle;
+        }
+        .checkboxes label span {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body class="">
+    <% include partials/header %>
+        <div id="main" role="main">
+
+            <!-- RIBBON -->
+            <div id="ribbon">
+
+                <!-- breadcrumb -->
+                <ol class="breadcrumb">
+                    <li><%= translate.config %></li>
+                    <li><%= translate.idioma %></li>
+                </ol>
+            </div>
+            <div id="content">
+                <div class="row">
+                    <article class="col-sm-12 col-md-12 col-lg-12">
+                        <!-- Widget ID (each widget will need unique ID)-->
+                        <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                            <header>
+                                <span class="widget-icon"><i class="fa fa-edit"></i></span>
+                                <h2><%= translate.idioma_msg %></h2>
+                            </header>
+                            <!-- widget div-->
+                            <div>
+                                <!-- widget edit box -->
+                                <div class="jarviswidget-editbox">
+                                    <!-- This area used as dropdown edit box -->
+                                </div>
+                                <!-- end widget edit box -->
+                                <!-- widget content -->
+                                <div class="widget-body">
+                                    <form id="smart-form-register" class="smart-form">
+                                        <ng-view></ng-view>
+                                    </form>
+                                </div>
+                                <!-- end widget content -->
+                            </div>
+                            <!-- end widget div -->
+                        </div>
+                        <!-- end widget -->
+                    </article>
+                </div>
+                <script type="text/ng-template" id="/modulo.html">
+                    <section>
+                        <div class="widget-body no-padding">
+                            <form name="form1" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'">
+                                
+                                <div class="row" style="padding: 20px;">
+                                    <section class="col-sm-6 col-md-6 col-lg-6">
+                                        <fieldset>
+                                            <section>
+                                                <label class="label"><%= translate.language %></label>
+                                                <label class="select">
+                                                    <select name="multipleSelect" id="multipleSelect"  ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-model="lang.idioma" >
+                                                        <option value="pt-br"><%= translate.pt_br %></option>
+                                                        <option value="en"><%= translate.en %></option>
+                                                    </select>
+                                                    <i></i>
+                                                </label>
+                                            </section>
+                                        </fieldset>
+                                    </section>
+                                </div>
+                                    
+                                <button id="btnGravarDb" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-click="saveIdioma();"
+                                    style="float: right; width:100px; height:30px;margin-right:15px; margin-bottom: 15px;"><%= translate.apply %>
+                                </button>
+                            </form>
+                        </div>
+                    </section>
+                </script>
+                <script>
+                    angular.module('app', ['ngRoute', 'ngResource'])
+                        //---------------
+                        // Services
+                        //---------------
+                        .factory('Idioma', ['$resource', function ($resource) {
+                            return $resource('/idioma/:id', null, {
+                                'update': { method: 'PUT' },
+                            });
+                        }])
+                        //---------------
+                        // Controllers
+                        //---------------
+                        .controller('IdiomaController', ['$scope', 'Idioma', function ($scope, Idioma) {
+                            $scope.lang = Idioma.get();
+                            console.log($scope.lang);
+                            $scope.saveIdioma = function() {
+                                var idioma = $scope.lang;
+                                Idioma.update(idioma);
+                                $.bigBox({
+                                    title: "<%= translate.idioma_info %>",
+                                    content: "<%= translate.success %>",
+                                    color: "#275B89",
+                                    timeout: 5000,
+                                    icon: "fa fa-check fadeInLeft animated"
+                                });
+                            }
+                            $scope.nomeUsuario = '<%= username %>';
+                            $scope.acessoUsuario = '<%= userAccess %>';
+                            $scope.emailUsuario = '<%= userEmail %>';
+                        }])
+                        //---------------
+                        // Routes
+                        //---------------
+                        .config(['$routeProvider', function ($routeProvider) {
+                            $routeProvider
+                                .when('/', {
+                                    templateUrl: '/modulo.html',
+                                    controller: 'IdiomaController'
+                                })
+                        }]);
+                </script>
+
+            </div>
+            <!-- END MAIN CONTENT -->
+
+        </div>
+        <div class="modal fade" id="modalRotulosString" tabindex="-1" role="dialog" aria-labelledby="modalRotulosString" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+                        <h4 class="modal-title" id="modalRotulosString"><%= translate.string_labels %></h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="ddlString"> <%= translate.string %></label>
+                                    <select class="form-control" id="ddlString" onchange="getRotuloValue();">
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tags"> <%= translate.label %></label>
+                                    <input type="text" maxlength="9" class="form-control" id="txtRotuloString" placeholder=" <%= translate.label %>" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <%= translate.cancel %>
+								</button>
+                        <button type="button" class="btn btn-primary" onclick="saveRotuloString();">
+                            <%= translate.save %>
+								</button>
+
+                    </div>
+                    <label style="font-size: 8pt;">&nbsp&nbsp<%= translate.obs %></label>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+        
+        <% include partials/footer %>
+</body>
+
+</html>

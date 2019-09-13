@@ -109,41 +109,45 @@
                 <ul>
                     <li <%if (pageName=='usuarioview' ) {%> class='active'
                         <%}%>>
-                            <a href="usuarioview" title="Gerenciamento de usuários"><span class="menu-item-parent"><%= translate_header.users %></span></a>
+                            <a href="usuarioview" title="<%= translate_header.users %>"><span class="menu-item-parent"><%= translate_header.users %></span></a>
                     </li>
                     <li <%if (pageName=='moduloview' ) {%> class='active'
                         <%}%>>
-                            <a href="moduloview" title="Módulos, alarme e bateria"><span class="menu-item-parent"></span><%= translate_header.modules_config %></a>
+                            <a href="moduloview" title="<%= translate_header.modules_config %>"><span class="menu-item-parent"></span><%= translate_header.modules_config %></a>
                     </li>
                     <li <%if (pageName=='emailserverview' ) {%> class='active'
                         <%}%>>
-                            <a href="emailserverview" title="Configuração de email server"><span class="menu-item-parent"><%= translate_header.email_config %></span></a>
+                            <a href="emailserverview" title="<%= translate_header.email_config %>"><span class="menu-item-parent"><%= translate_header.email_config %></span></a>
                     </li>
                     <li <%if (pageName=='timeserverview' ) {%> class='active'
                         <%}%>>
-                            <a href="timeserverview" title="Configuração de timeserver"><span class="menu-item-parent"><%= translate_header.timeserver_config %></span></a>
+                            <a href="timeserverview" title="<%= translate_header.timeserver_config %>"><span class="menu-item-parent"><%= translate_header.timeserver_config %></span></a>
                     </li>
                     <li <%if (pageName=='redesegurancaview' ) {%> class='active'
                         <%}%>>
-                            <a href="redesegurancaview" title="Rede & Segurança"><span class="menu-item-parent"><%= translate_header.network_config %></span></a>
+                            <a href="redesegurancaview" title="<%= translate_header.network_config %>"><span class="menu-item-parent"><%= translate_header.network_config %></span></a>
+                    </li>
+                    <li <%if (pageName=='idiomaview' ) {%> class='active'
+                        <%}%>>
+                            <a href="idiomaview" title="<%= translate_header.language %>"><span class="menu-item-parent"><%= translate_header.language %></span></a>
                     </li>
                     <% if (userAccess =='administrador') {%>
                         <li <%if (pageName=='parameterview' ) {%> class='active'
                             <%}%>>
-                                <a href="parameterview" title="Parâmetros"><span class="menu-item-parent"><%= translate_header.params %></span></a>
+                                <a href="parameterview" title="<%= translate_header.params %>"><span class="menu-item-parent"><%= translate_header.params %></span></a>
                         </li>
                         <%}%>
                     <% if (userAccess =='administrador') {%>
-                        <li <%if (pageName=='Análise de Tendência' ) {%> class='active'
+                        <li <%if (pageName=='tendanaliticsview' ) {%> class='active'
                             <%}%>>
-                                <a href="tendanaliticsview" title="Análise de Tendência"><span class="menu-item-parent"><%= translate_header.tendencies_config %></span></a>
+                                <a href="tendanaliticsview" title="<%= translate_header.tendencies_config %>"><span class="menu-item-parent"><%= translate_header.tendencies_config %></span></a>
                         </li>
                     <%}%>
 
                     <% if (userAccess =='administrador') {%>
-                        <li <%if (pageName=='SNMP' ) {%> class='active'
+                        <li <%if (pageName=='snmpconfigview' ) {%> class='active'
                             <%}%>>
-                                <a href="snmpconfigview" title="SNMP"><span class="menu-item-parent"><%= translate_header.snmp %></span></a>
+                                <a href="snmpconfigview" title="<%= translate_header.snmp %>"><span class="menu-item-parent"><%= translate_header.snmp %></span></a>
                         </li>
                     <%}%>
                 </ul>

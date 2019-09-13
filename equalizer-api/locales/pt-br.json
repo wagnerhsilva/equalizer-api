@@ -20,7 +20,8 @@
         "logout_msg": "Você irá encerrar sua sessão.",
         "full_screen": "Tela cheia",
         "exit": "Sair",
-        "hide_menu": "Ocultar Menu"
+        "hide_menu": "Ocultar Menu",
+        "language": "Idiomas"
     },
     "statusmodulo": {
         "title": "Estado dos módulos",
@@ -349,5 +350,15 @@
         "password": "Senha",
         "first_time": "Primeira vez? Registre-se.",
         "enter": "Entrar"
+    },
+    "idioma": {
+        "config": "Configuração",
+        "idioma": "Idiomas",
+        "idioma_msg": "Configuração de idiomas",
+        "apply": "Aplicar",
+        "pt_br": "Português (Brasil)",
+        "en": "Inglês (EUA)",
+        "info": "Informações Idiomas",
+        "success": "Dados salvos com sucesso!"
     }
 }
