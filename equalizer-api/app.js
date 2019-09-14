@@ -125,15 +125,6 @@ snmpmodel.init_snmp();
  */
 var app = express();
 
-/*
- * Inicializando a localização
- */
-app.use(i18n);
-var Idioma = require('./models/Idioma');
-var lang = Idioma.getLast();
-i18n.configure
-
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -149,6 +140,11 @@ app.use(expressSession({ secret: 'minhaChaveSecreta' }));
 // Configuring Passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+/*
+ * Inicializando a localização
+ */
+app.use(i18n);
 
 // Using the flash middleware provided by connect-flash to store messages in session
 // and displaying in templates
