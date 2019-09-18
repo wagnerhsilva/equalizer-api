@@ -64,7 +64,8 @@
 		"y2_scale_max": "Max Y sec. scale",
 		"apply": "Apply",
 		"choose_batteries": "Choose the batteries (series)",
-		"bus_voltage": "Bus voltage"
+		"bus_voltage": "Bus voltage",
+		"image": "Image"
 	},
 	"chart2": {
 		"status": "Status",

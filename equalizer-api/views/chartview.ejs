@@ -3,116 +3,117 @@
 
 <head>
     <% include partials/head %>
-        <style>
-            div.container4 {
-                margin: 0;
-                position: absolute;
-                left: 50%;
-                margin-right: -50%;
-                transform: translate(-50%, -50%)
-            }
-
-            .few .dygraph-legend > span { display: none !important; }
-
-            .few .dygraph-legend > span.highlight { display: inline !important; }
-
-            .modal {
-                display: none;
-                position: fixed;
-                z-index: 1000;
-                top: 0;
-                left: 0;
-                height: 100%;
-                width: 100%;
-                background: rgba( 255, 255, 255, .8) url('http://i.stack.imgur.com/FhHRx.gif') 50% 50% no-repeat;
-            }
-
-            body.loading {
-                overflow: hidden;
-            }
-
-            body.loading .modal {
-                display: block;
-            }
-        </style>
+    <style>
+        div.container4 {
+            margin: 0;
+            position: absolute;
+            left: 50%;
+            margin-right: -50%;
+            transform: translate(-50%, -50%)
+        }
+        
+        .few .dygraph-legend > span { display: none !important; }
+        
+        .few .dygraph-legend > span.highlight { display: inline !important; }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba( 255, 255, 255, .8) url('http://i.stack.imgur.com/FhHRx.gif') 50% 50% no-repeat;
+        }
+        
+        body.loading {
+            overflow: hidden;
+        }
+        
+        body.loading .modal {
+            display: block;
+        }
+    </style>
 </head>
 
 <body class="">
     <% include partials/header %>
-        <div id="main" role="main">
-
-            <!-- RIBBON -->
-            <div id="ribbon">
-
-                <!-- breadcrumb -->
-                <ol class="breadcrumb">
-                    <li><%= translate.status %></li>
-                    <li><%= translate.graphics %></li>
-                </ol>
-            </div>
-            <div id="content">
-                <div class="row">
-                    <article class="col-sm-12 col-md-12 col-lg-12">
-                        <div>
-
-                            <div class="jarviswidget-editbox">
+    <div id="main" role="main">
+        
+        <!-- RIBBON -->
+        <div id="ribbon">
+            
+            <!-- breadcrumb -->
+            <ol class="breadcrumb">
+                <li><%= translate.status %></li>
+                <li><%= translate.graphics %></li>
+            </ol>
+        </div>
+        <div id="content">
+            <div class="row">
+                <article class="col-sm-12 col-md-12 col-lg-12">
+                    <div>
+                        
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body">
+                            <button type="button" class="btn btn-primary pull-right" style="margin-left:5px;" onclick="setVisao(3);"><%= translate.voltage %></button>
+                            <button type="button" class="btn btn-primary pull-right" style="margin-left:5px;" onclick="setVisao(2);"><%= translate.temperature %></button>
+                            <button type="button" class="btn btn-primary pull-right" onclick="setVisao(1);"><%= translate.impedance %></button>
+                            <label><%= translate.string %>:</label>
+                            <select id="ddlStrings">
+                            </select> &nbsp&nbsp&nbsp&nbsp&nbsp
+                            <label><%= translate.period %>:</label>
+                            <input type="text" name="txtDateStart" style="width: 100px;" id="txtDateStart" readonly placeholder="Data Início" required
+                            class="datepicker" data-dateformat='dd/mm/yy'>
+                            <input type="text" name="txtHourStart" style="width: 80px;" value="00:00" id="txtHourStart" readonly placeholder="Hora Início"
+                            required>
+                            <label> <%= translate.to %> </label>
+                            <input type="text" name="txtDateEnd" style="width: 100px;" id="txtDateEnd" readonly placeholder="Data Fim" required class="datepicker"
+                            data-dateformat='dd/mm/yy'>
+                            <input type="text" name="txtHourEnd" style="width: 80px;" value="23:59" id="txtHourEnd" readonly placeholder="Hora Fim" required>                                &nbsp
+                            <button type="button" class="btn btn-primary" onclick="pesquisar();"><%= translate.search %></button>
+                            <button type="button" class="btn btn-primary" onclick="gerarCSV();"><%= translate.csv %></button>
+                            <button type="button" class="btn btn-primary" onclick="gerarImagem();"><%= translate.image %></button>
+                            <br />
+                            <br />
+                            <div>
+                                <label><%= translate.y_scale_min %>:</label>
+                                <input id="txtEscalaYMin" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
+                                <label><%= translate.y_scale_max %>:</label>
+                                <input id="txtEscalaYMax" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
+                                <div style="float:right;">
+                                    <label><%= translate.y2_scale_min %>:</label>
+                                    <input id="txtEscalaYSecMin" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
+                                    <label><%= translate.y2_scale_max %>:</label>
+                                    <input id="txtEscalaYSecMax" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
+                                    <button type="button" class="btn btn-primary" onclick="aplicarEscalaYSec();"><%= translate.apply %></button>
+                                </div>
                             </div>
-                            <div class="widget-body">
-                                <button type="button" class="btn btn-primary pull-right" style="margin-left:5px;" onclick="setVisao(3);"><%= translate.voltage %></button>
-                                <button type="button" class="btn btn-primary pull-right" style="margin-left:5px;" onclick="setVisao(2);"><%= translate.temperature %></button>
-                                <button type="button" class="btn btn-primary pull-right" onclick="setVisao(1);"><%= translate.impedance %></button>
-                                <label><%= translate.string %>:</label>
-                                <select id="ddlStrings">
-                                </select> &nbsp&nbsp&nbsp&nbsp&nbsp
-                                <label><%= translate.period %>:</label>
-                                <input type="text" name="txtDateStart" style="width: 100px;" id="txtDateStart" readonly placeholder="Data Início" required
-                                    class="datepicker" data-dateformat='dd/mm/yy'>
-                                <input type="text" name="txtHourStart" style="width: 80px;" value="00:00" id="txtHourStart" readonly placeholder="Hora Início"
-                                    required>
-                                <label> <%= translate.to %> </label>
-                                <input type="text" name="txtDateEnd" style="width: 100px;" id="txtDateEnd" readonly placeholder="Data Fim" required class="datepicker"
-                                    data-dateformat='dd/mm/yy'>
-                                <input type="text" name="txtHourEnd" style="width: 80px;" value="23:59" id="txtHourEnd" readonly placeholder="Hora Fim" required>                                &nbsp
-                                <button type="button" class="btn btn-primary" onclick="pesquisar();"><%= translate.search %></button>
-                                <button type="button" class="btn btn-primary" onclick="gerarCSV();"><%= translate.csv %></button>
-                                <br />
-                                <br />
+                            <br />
+                            <div class="jarviswidget" id="wid-id-0" style="z-index: -0;">
+                                <header>
+                                    <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                                </header>
                                 <div>
-                                    <label><%= translate.y_scale_min %>:</label>
-                                    <input id="txtEscalaYMin" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
-                                    <label><%= translate.y_scale_max %>:</label>
-                                    <input id="txtEscalaYMax" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
-                                    <div style="float:right;">
-                                        <label><%= translate.y2_scale_min %>:</label>
-                                        <input id="txtEscalaYSecMin" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
-                                        <label><%= translate.y2_scale_max %>:</label>
-                                        <input id="txtEscalaYSecMax" type="text" style="width: 80px;" pattern="[0-9]+([,\.][0-9]+)?" />
-                                        <button type="button" class="btn btn-primary" onclick="aplicarEscalaYSec();"><%= translate.apply %></button>
+                                    <div class="jarviswidget-editbox">
+                                        <input class="form-control" type="text">
+                                    </div>
+                                    <div class="widget-body">
+                                        <div id="noroll" class="few" style="height:500px;"></div>
                                     </div>
                                 </div>
-                                <br />
-                                <div class="jarviswidget" id="wid-id-0" style="z-index: -0;">
-                                    <header>
-                                        <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
-                                    </header>
-                                    <div>
-                                        <div class="jarviswidget-editbox">
-                                            <input class="form-control" type="text">
-                                        </div>
-                                        <div class="widget-body">
-                                            <div id="noroll" class="few" style="height:500px;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="labels" class="few"></div>
-                                <br />
-                                <form class="smart-form" id="frmSeries" style="display: none;">
-                                    <section>
-                                        <label class="label"><%= translate.choose_batteries %></label>
-                                        <label class="select select-multiple">
-														<select id="ddlSeries" multiple="" class="custom-scroll">
-															
-														</select> </label>
+                            </div>
+                            <div id="labels" class="few"></div>
+                            <br />
+                            <form class="smart-form" id="frmSeries" style="display: none;">
+                                <section>
+                                    <label class="label"><%= translate.choose_batteries %></label>
+                                    <label class="select select-multiple">
+                                        <select id="ddlSeries" multiple="" class="custom-scroll">
+                                            
+                                        </select> </label>
                                         <div class="note">
                                             <strong>Note:</strong> hold down the ctrl/cmd button to select multiple options.
                                         </div>
@@ -125,7 +126,7 @@
             </div>
         </div>
         <div class="modal"><img src="/equalizer-api/public/smartadmin/img/loader.gif" /></div>
-
+        
         <script type="text/javascript">
             $body = $("body");
             // Flavio Alves: a visao padrao dos graficos e a de tensao
@@ -138,25 +139,25 @@
             var escalaYImpedancia = [0, 50];
             var escalaYTemperatura = [0, 70];
             var escalaYSec = [0, 18];
-
+            
             min = parseFloat(app_get_cookie("Chart_TxtEscalaYSecMin"));
             max = parseFloat(app_get_cookie("Chart_TxtEscalaYSecMax"));
             if(min != "" && max != "" && min < max){
                 escalaYSec = [min, max];
             }
-
+            
             min = parseFloat(app_get_cookie("Chart_TxtEscalaYMinTensao"));
             max = parseFloat(app_get_cookie("Chart_TxtEscalaYMaxTensao"));
             if(min != "" && max != "" && min < max){
                 escalaYTensao = [min, max];
             }
-
+            
             min = parseFloat(app_get_cookie("Chart_TxtEscalaYMinImpedancia"));
             max = parseFloat(app_get_cookie("Chart_TxtEscalaYMaxImpedancia"));
             if(min != "" && max != "" && min < max){
                 escalaYImpedancia = [min, max];
             }
-
+            
             min = parseFloat(app_get_cookie("Chart_TxtEscalaYMinTemperatura"));
             max = parseFloat(app_get_cookie("Chart_TxtEscalaYMaxTemperatura"));
             if(min != "" && max != "" && min < max){
@@ -187,12 +188,12 @@
                     nBaterias = parseInt(data[0].n_baterias_por_strings);
                     for (var i = 1; i <= n_strings; i++) {
                         $.get("/moduloview/rotuloStringObj/" + "S" + i.toString(), "", function (data) {
-                             $('#ddlStrings').append($('<option>', {
-                            value: data.string == null ? data : data.string,
-                            text: data.string == null ? data : data.apelido
-                        }));
+                            $('#ddlStrings').append($('<option>', {
+                                value: data.string == null ? data : data.string,
+                                text: data.string == null ? data : data.apelido
+                            }));
                         });
-                       
+                        
                     }
                 });
             }
@@ -211,7 +212,7 @@
                             if (conta > 0) {
                                 for (x = 0; x < row.length; x++) {
                                     if (x == 0)
-                                        row[x] = new Date(row[x].toString());
+                                    row[x] = new Date(row[x].toString());
                                 }
                                 lstObj.push(row);
                             }
@@ -241,7 +242,7 @@
                                 highlightCircleSize: 2,
                                 strokeWidth: 1,
                                 strokeBorderWidth: 1,
-
+                                
                                 highlightSeriesOpts: {
                                     strokeWidth: 3,
                                     strokeBorderWidth: 1,
@@ -277,7 +278,7 @@
                             if (conta > 0) {
                                 for (x = 0; x < row.length; x++) {
                                     if (x == 0)
-                                        row[x] = new Date(row[x].toString());
+                                    row[x] = new Date(row[x].toString());
                                 }
                                 lstObj.push(row);
                             }
@@ -307,7 +308,7 @@
                                 highlightCircleSize: 2,
                                 strokeWidth: 1,
                                 strokeBorderWidth: 1,
-
+                                
                                 highlightSeriesOpts: {
                                     strokeWidth: 3,
                                     strokeBorderWidth: 1,
@@ -343,7 +344,7 @@
                             if (conta > 0) {
                                 for (x = 0; x < row.length; x++) {
                                     if (x == 0)
-                                        row[x] = new Date(row[x].toString());
+                                    row[x] = new Date(row[x].toString());
                                 }
                                 lstObj.push(row);
                             }
@@ -415,216 +416,460 @@
                 }
             }
 
-            function legendFormatter(data) {
-                if (data.x == null) {
-                    // This happens when there's no selection and {legend: 'always'} is set.
-                    return '<br>' + data.series.map(function (series) { return series.dashHTML + ' ' + series.labelHTML }).join('<br>');
-                }
-
-                var html = this.getLabels()[0] + ': ' + data.xHTML;
-                data.series.forEach(function (series) {
-                    if (!series.isVisible) return;
-                    var labeledData = series.labelHTML + ': ' + series.yHTML;
-                    if (series.isHighlighted) {
-                        labeledData = '<b>' + labeledData + '</b>';
-                    }
-                    html += '<br>' + series.dashHTML + ' ' + labeledData;
-                });
-                return html;
-            }
-            function pesquisar() {
-                if ($("#txtDateStart").val().toString().trim() != "" && $("#txtDateEnd").val().toString().trim() != "") {
-                    getData();
-                } else {
-                    g1 = new Dygraph(document.getElementById("noroll"), null, {
-                        title: '<%= translate.voltage %>',
-                        ylabel: '<%= translate.voltage %> (V)',
-                        legend: 'always',
-                        labelsDivStyles: {
-                            'textAlign': 'right'
-                        },
-                        showRangeSelector: true
-                        // Flavio Alves: Definindo o range de plotagem
-                        // valueRange: [0, 14]
-                        // Esse aqui e o vazio ... por hora, fica sem
-                    });
-                }
-            }
-            function gerarCSV() {
-                var filename = "";
-                switch (visao) {
-                    case 1:
-                        filename = "report_impedance.csv";
-                        break;
-                    case 2:
-                        filename = "report_temperature.csv";
-                        break;
-                    case 3:
-                        filename = "report_voltage.csv";
-                        break;
-                    default:
-                        filename = "report.csv";
-                        break;
-                }
-                var a = document.createElement('a');
-                a.href = 'data:attachment/csv,' + encodeURIComponent(csvData.replaceAll(",", ";"));
-                a.target = '_blank';
-                a.download = filename;
-
-                document.body.appendChild(a);
-                a.click();
-            }
-            $(function () {
-                getStrings();
-                var today = new Date();
-                var dd = today.getDate();
-                var mm = today.getMonth() + 1;
-                var yyyy = today.getFullYear();
-                if (dd < 10) {
-                    dd = '0' + dd;
-                }
-                if (mm < 10) {
-                    mm = '0' + mm;
-                }
-                var today = dd + '/' + mm + '/' + yyyy;
-                $("#txtDateStart").val(today);
-                $("#txtDateEnd").val(today);
-                $('#txtHourStart').clockpicker({
-                    placement: 'bottom',
-                    donetext: 'Done'
-                });
-                $('#txtHourEnd').clockpicker({
-                    placement: 'bottom',
-                    donetext: 'Done'
-                });
-                setTimeout(function () {
-                    var dateTimeParam = getUrlVars()["datetime"];
-                    var tipoParam = decodeURIComponent(getUrlVars()["tipo"]);
-                    var stringParam = getUrlVars()["string"];
-                    var bateriaParam = getUrlVars()["bateria"];
-                    if (tipoParam == "Target" || tipoParam == "Tensão de Barramento") {
-                        var dataFormatada = (new Date(dateTimeParam).getDate().toString().length < 2 ? "0" + new Date(dateTimeParam).getDate().toString() : new Date(dateTimeParam).getDate().toString()) + "/" + ((new Date(dateTimeParam).getMonth() + 1).toString().length < 2 ? "0" + (new Date(dateTimeParam).getMonth() + 1).toString() : (new Date(dateTimeParam).getMonth() + 1).toString()) + "/" + new Date(dateTimeParam).getFullYear().toString();
-                        var horaFormatada = new Date(dateTimeParam).getHours().toString();
-                        $("#txtDateStart").val(dataFormatada);
-                        $("#txtDateEnd").val(dataFormatada);
-                        $("#txtHourStart").val((horaFormatada.length < 2 ? "0" + horaFormatada : horaFormatada) + ":00");
-                        $("#txtHourEnd").val((horaFormatada.length < 2 ? "0" + horaFormatada : horaFormatada) + ":59");
-                        setVisao(3);
-                        selectSerie(tipoParam);
-                        return;
-                    } else if (dateTimeParam != undefined && tipoParam != undefined && stringParam != undefined && bateriaParam != undefined) {
-                        var dataFormatada = (new Date(dateTimeParam).getDate().toString().length < 2 ? "0" + new Date(dateTimeParam).getDate().toString() : new Date(dateTimeParam).getDate().toString()) + "/" + ((new Date(dateTimeParam).getMonth() + 1).toString().length < 2 ? "0" + (new Date(dateTimeParam).getMonth() + 1).toString() : (new Date(dateTimeParam).getMonth() + 1).toString()) + "/" + new Date(dateTimeParam).getFullYear().toString();
-                        var horaFormatada = new Date(dateTimeParam).getHours().toString();
-                        $("#txtDateStart").val(dataFormatada);
-                        $("#txtDateEnd").val(dataFormatada);
-                        $("#txtHourStart").val((horaFormatada.length < 2 ? "0" + horaFormatada : horaFormatada) + ":00");
-                        $("#txtHourEnd").val((horaFormatada.length < 2 ? "0" + horaFormatada : horaFormatada) + ":59");
-                        $("#ddlStrings").val(stringParam);
-                        switch (tipoParam) {
-                            case "Tensão":
-                                setVisao(3);
-                                break;
-                            case "Temperatura":
-                                setVisao(2);
-                                break;
-                            case "Impedância":
-                                setVisao(1);
-                                break;
-                        }
-                        selectSerie(bateriaParam);
-                        return;
-                    } else {
-                        pesquisar();
-                    }
-                }, 500);
-            });
-            String.prototype.replaceAll = function (search, replacement) {
-                var target = this;
-                return target.replace(new RegExp(search, 'g'), replacement);
-            };
-            function selectSerie(bateria) {
-                setTimeout(function () {
-                    if ($("#ddlSeries > option").length <= 0)
-                        selectSerie(bateria);
-                    $("#ddlSeries > option").each(function () {
-                        if (this.text.toLowerCase() == bateria.toLowerCase()) {
-                            g1.setVisibility(parseInt(this.value), true);
-                            this.selected = true;
-                        }
-                        else {
-                            g1.setVisibility(parseInt(this.value), false);
-                            this.selected = false;
-                        }
-                    });
-                }, 200);
-            }
-
-            /*
-            * Converts the string given to a valid float
-            * for now only swaps ',' to '.'
-            */
-            function uniformalize(name){
-                var v = $(name).val();
-                v = v.replace(",", ".");
-                v = parseFloat(v);
-                return v;
-            }
-
-            function aplicarEscalaY() {
-
+            function getDataImagem() {
+                console.log("Inicio getDataImagem");
                 if (visao == 1) {
-                    escalaYImpedancia[0] = uniformalize("#txtEscalaYMin");
-                    escalaYImpedancia[1] = uniformalize("#txtEscalaYMax");
-                    app_set_cookie("Chart_TxtEscalaYMinImpedancia", escalaYImpedancia[0], 24);
-                    app_set_cookie("Chart_TxtEscalaYMaxImpedancia", escalaYImpedancia[1], 24);
-
-                    console.log(escalaYImpedancia);
-
+                    console.log("Identificada visao 1");
+                    $body.addClass("loading");
+                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
+                        csvData = data;
+                        var rows = csvData.toString().split('\n');
+                        var lstObj = [];
+                        var conta = 0;
+                        var rotulos = [];
+                        var seriesVisibility = [];
+                        rows.forEach(function (element) {
+                            row = element.toString().replace("'", "\"").replace("'", "\"").split(',');
+                            if (conta > 0) {
+                                for (x = 0; x < row.length; x++) {
+                                    if (x == 0)
+                                    row[x] = new Date(row[x].toString());
+                                }
+                                lstObj.push(row);
+                            }
+                            else {
+                                $('#ddlSeries').empty();
+                                for (x = 0; x < row.length; x++) {
+                                    rotulos.push(row[x].toString());
+                                    seriesVisibility.push(true);
+                                    if (x > 0) {
+                                        $('#ddlSeries').append($('<option>', {
+                                            value: (x - 1),
+                                            text: row[x].toString(),
+                                            selected: "selected"
+                                        }));
+                                    }
+                                }
+                            }
+                            conta++;
+                        }, this);
+                        if (lstObj.length > 0) {
+                            $("#frmSeries").show();
+                            g1 = new Dygraph(document.getElementById("noroll"), data, {
+                                title: 'Impedância',
+                                ylabel: 'Impedância',
+                                legend: 'always',
+                                // labelsDiv: document.getElementById("labels"),
+                                highlightCircleSize: 2,
+                                strokeWidth: 1,
+                                strokeBorderWidth: 1,
+                                
+                                highlightSeriesOpts: {
+                                    strokeWidth: 3,
+                                    strokeBorderWidth: 1,
+                                    highlightCircleSize: 5
+                                },
+                                showRangeSelector: true,
+                                // Flavio Alves: Definindo o range de plotagem
+                                valueRange: escalaYImpedancia
+                            });
+                            html2canvas(document.querySelector("#noroll")).then(canvas => {
+                                // Export canvas as a blob
+                                canvas.toBlob(function(blob) {
+                                    // Generate file download
+                                    window.saveAs(blob, "impedancia.png");
+                                });
+                            });
+                        }
+                        $body.removeClass("loading");
+                    });
                 }
                 else if (visao == 2) {
-                    escalaYTemperatura[0] = uniformalize("#txtEscalaYMin");
-                    escalaYTemperatura[1] = uniformalize("#txtEscalaYMax");
-                    app_set_cookie("Chart_TxtEscalaYMinTemperatura", escalaYTemperatura[0], 24);
-                    app_set_cookie("Chart_TxtEscalaYMaxTemperatura", escalaYTemperatura[1], 24);
-
-                    console.log(escalaYTemperatura);
-
+                    $body.addClass("loading");
+                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
+                        csvData = data;
+                        var rows = csvData.toString().split('\n');
+                        var lstObj = [];
+                        var conta = 0;
+                        var rotulos = [];
+                        var seriesVisibility = [];
+                        rows.forEach(function (element) {
+                            row = element.toString().replace("'", "\"").replace("'", "\"").split(',');
+                            if (conta > 0) {
+                                for (x = 0; x < row.length; x++) {
+                                    if (x == 0)
+                                    row[x] = new Date(row[x].toString());
+                                }
+                                lstObj.push(row);
+                            }
+                            else {
+                                $('#ddlSeries').empty();
+                                for (x = 0; x < row.length; x++) {
+                                    rotulos.push(row[x].toString());
+                                    seriesVisibility.push(true);
+                                    if (x > 0) {
+                                        $('#ddlSeries').append($('<option>', {
+                                            value: (x - 1),
+                                            text: row[x].toString(),
+                                            selected: "selected"
+                                        }));
+                                    }
+                                }
+                            }
+                            conta++;
+                        }, this);
+                        if (lstObj.length > 0) {
+                            $("#frmSeries").show();
+                            g1 = new Dygraph(document.getElementById("noroll"), data, {
+                                title: '<%= translate.temperarure %>',
+                                ylabel: '<%= translate.temperarure %>',
+                                legend: 'always',
+                                // labelsDiv: document.getElementById("labels"),
+                                highlightCircleSize: 2,
+                                strokeWidth: 1,
+                                strokeBorderWidth: 1,
+                                
+                                highlightSeriesOpts: {
+                                    strokeWidth: 3,
+                                    strokeBorderWidth: 1,
+                                    highlightCircleSize: 5
+                                },
+                                showRangeSelector: true,
+                                // Flavio Alves: Definindo o range de plotagem
+                                valueRange: escalaYTemperatura
+                            });
+                            html2canvas(document.querySelector("#noroll")).then(canvas => {
+                                // Export canvas as a blob
+                                canvas.toBlob(function(blob) {
+                                    // Generate file download
+                                    window.saveAs(blob, "temperatura.png");
+                                });
+                            });
+                        }
+                        $body.removeClass("loading");
+                    });
                 }
                 else if (visao == 3) {
-                    escalaYTensao[0] = uniformalize("#txtEscalaYMin");
-                    escalaYTensao[1] = uniformalize("#txtEscalaYMax");
-                    app_set_cookie("Chart_TxtEscalaYMinTensao", escalaYTensao[0], 24);
-                    app_set_cookie("Chart_TxtEscalaYMaxTensao", escalaYTensao[1], 24);
+                    $body.addClass("loading");
+                    $.get("/chart/" + nBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
+                        csvData = data;
+                        var rows = csvData.toString().split('\n');
+                        var lstObj = [];
+                        var conta = 0;
+                        var rotulos = [];
+                        var seriesVisibility = [];
+                        rows.forEach(function (element) {
+                            row = element.toString().replace("'", "\"").replace("'", "\"").split(',');
+                            if (conta > 0) {
+                                for (x = 0; x < row.length; x++) {
+                                    if (x == 0)
+                                    row[x] = new Date(row[x].toString());
+                                }
+                                lstObj.push(row);
+                            }
+                            else {
+                                $('#ddlSeries').empty();
+                                for (x = 0; x < row.length; x++) {
+                                    rotulos.push(row[x].toString());
+                                    seriesVisibility.push(true);
+                                    if (x > 0) {
+                                        $('#ddlSeries').append($('<option>', {
+                                            value: (x - 1),
+                                            text: row[x].toString(),
+                                            selected: "selected"
+                                        }));
+                                    }
+                                }
+                            }
+                            conta++;
+                        }, this);
+                        if (lstObj.length > 0) {
+                            $("#frmSeries").show();
+                            g1 = new Dygraph(document.getElementById("noroll"), lstObj, {
+                                title: '<%= translate.voltage %>',
+                                ylabel: '<%= translate.voltage %> (V)',
+                                legend: 'always',
+                                labels: rotulos,
+                                visibility: seriesVisibility,
+                                series: {
+                                    '<%= translate.bus_voltage %>': {
+                                        axis: 'y2'
+                                    },
+                                },
+                                axes: {
+                                    y: {
+                                        axisLabelWidth: 100,
+                                        // Flavio Alves: Definindo o range de plotagem
+                                        valueRange: escalaYTensao
+                                    },
+                                    y2: {
+                                        // set axis-related properties here
+                                        labelsKMB: true,
+                                        axisLineColor: "#DD1124",
+                                        // Flavio Alves: Definindo o range de plotagem
+                                        valueRange: escalaYSec
+                                    }
+                                },
+                                highlightCircleSize: 2,
+                                strokeWidth: 1,
+                                strokeBorderWidth: 1,
+                                // labelsDiv: document.getElementById("labels"),
+                                highlightSeriesOpts: {
+                                    strokeWidth: 3,
+                                    strokeBorderWidth: 1,
+                                    highlightCircleSize: 5
+                                },
+                                showRangeSelector: true
+                            });
+                            html2canvas(document.querySelector("#noroll")).then(canvas => {
 
-                    console.log(escalaYTensao);
+                                // Export canvas as a blob 
+                                canvas.toBlob(function(blob) {
+                                    // Generate file download
+                                    window.saveAs(blob, "tensao.png");
+                                });
+                            });
+                        }
+                        $body.removeClass("loading");
+                    });
                 }
-
             }
-
-            function aplicarEscalaYSec() {
-                
-                aplicarEscalaY();
-                
-                escalaYSec[0] = uniformalize("#txtEscalaYSecMin");
-                escalaYSec[1] = uniformalize("#txtEscalaYSecMax");
-
-                app_set_cookie("Chart_TxtEscalaYSecMin", escalaYSec[0], 24);
-                app_set_cookie("Chart_TxtEscalaYSecMax", escalaYSec[1], 24);
-
-                pesquisar();
-            }
-            function getUrlVars() {
-                var vars = [], hash;
-                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-                for (var i = 0; i < hashes.length; i++) {
-                    hash = hashes[i].split('=');
-                    vars.push(hash[0]);
-                    vars[hash[0]] = hash[1];
-                }
-                return vars;
-            }
-        </script>
-        <% include partials/footer %>
-</body>
-
-</html>
+            
+            
+                    
+                    function legendFormatter(data) {
+                        if (data.x == null) {
+                            // This happens when there's no selection and {legend: 'always'} is set.
+                            return '<br>' + data.series.map(function (series) { return series.dashHTML + ' ' + series.labelHTML }).join('<br>');
+                        }
+                        
+                        var html = this.getLabels()[0] + ': ' + data.xHTML;
+                        data.series.forEach(function (series) {
+                            if (!series.isVisible) return;
+                            var labeledData = series.labelHTML + ': ' + series.yHTML;
+                            if (series.isHighlighted) {
+                                labeledData = '<b>' + labeledData + '</b>';
+                            }
+                            html += '<br>' + series.dashHTML + ' ' + labeledData;
+                        });
+                        return html;
+                    }
+                    function pesquisar() {
+                        if ($("#txtDateStart").val().toString().trim() != "" && $("#txtDateEnd").val().toString().trim() != "") {
+                            getData();
+                        } else {
+                            g1 = new Dygraph(document.getElementById("noroll"), null, {
+                                title: '<%= translate.voltage %>',
+                                ylabel: '<%= translate.voltage %> (V)',
+                                legend: 'always',
+                                labelsDivStyles: {
+                                    'textAlign': 'right'
+                                },
+                                showRangeSelector: true
+                                // Flavio Alves: Definindo o range de plotagem
+                                // valueRange: [0, 14]
+                                // Esse aqui e o vazio ... por hora, fica sem
+                            });
+                        }
+                    }
+                    function gerarImagem() {
+                        if ($("#txtDateStart").val().toString().trim() != "" && $("#txtDateEnd").val().toString().trim() != "") {
+                            getDataImagem();
+                        } else {
+                            g1 = new Dygraph(document.getElementById("noroll"), null, {
+                                title: '<%= translate.voltage %>',
+                                ylabel: '<%= translate.voltage %> (V)',
+                                legend: 'always',
+                                labelsDivStyles: {
+                                    'textAlign': 'right'
+                                },
+                                showRangeSelector: true
+                                // Flavio Alves: Definindo o range de plotagem
+                                // valueRange: [0, 14]
+                                // Esse aqui e o vazio ... por hora, fica sem
+                            });
+                            var img = document.getElementById('noroll');
+                            /*
+                            * Exporta o grafico gerado como imagem
+                            */
+                            Dygraph.Export.asPNG(g1,img);
+                        }
+                    }
+                    function gerarCSV() {
+                        var filename = "";
+                        switch (visao) {
+                            case 1:
+                            filename = "report_impedance.csv";
+                            break;
+                            case 2:
+                            filename = "report_temperature.csv";
+                            break;
+                            case 3:
+                            filename = "report_voltage.csv";
+                            break;
+                            default:
+                            filename = "report.csv";
+                            break;
+                        }
+                        var a = document.createElement('a');
+                        a.href = 'data:attachment/csv,' + encodeURIComponent(csvData.replaceAll(",", ";"));
+                        a.target = '_blank';
+                        a.download = filename;
+                        
+                        document.body.appendChild(a);
+                        a.click();
+                    }
+                    $(function () {
+                        getStrings();
+                        var today = new Date();
+                        var dd = today.getDate();
+                        var mm = today.getMonth() + 1;
+                        var yyyy = today.getFullYear();
+                        if (dd < 10) {
+                            dd = '0' + dd;
+                        }
+                        if (mm < 10) {
+                            mm = '0' + mm;
+                        }
+                        var today = dd + '/' + mm + '/' + yyyy;
+                        $("#txtDateStart").val(today);
+                        $("#txtDateEnd").val(today);
+                        $('#txtHourStart').clockpicker({
+                            placement: 'bottom',
+                            donetext: 'Done'
+                        });
+                        $('#txtHourEnd').clockpicker({
+                            placement: 'bottom',
+                            donetext: 'Done'
+                        });
+                        setTimeout(function () {
+                            var dateTimeParam = getUrlVars()["datetime"];
+                            var tipoParam = decodeURIComponent(getUrlVars()["tipo"]);
+                            var stringParam = getUrlVars()["string"];
+                            var bateriaParam = getUrlVars()["bateria"];
+                            if (tipoParam == "Target" || tipoParam == "Tensão de Barramento") {
+                                var dataFormatada = (new Date(dateTimeParam).getDate().toString().length < 2 ? "0" + new Date(dateTimeParam).getDate().toString() : new Date(dateTimeParam).getDate().toString()) + "/" + ((new Date(dateTimeParam).getMonth() + 1).toString().length < 2 ? "0" + (new Date(dateTimeParam).getMonth() + 1).toString() : (new Date(dateTimeParam).getMonth() + 1).toString()) + "/" + new Date(dateTimeParam).getFullYear().toString();
+                                var horaFormatada = new Date(dateTimeParam).getHours().toString();
+                                $("#txtDateStart").val(dataFormatada);
+                                $("#txtDateEnd").val(dataFormatada);
+                                $("#txtHourStart").val((horaFormatada.length < 2 ? "0" + horaFormatada : horaFormatada) + ":00");
+                                $("#txtHourEnd").val((horaFormatada.length < 2 ? "0" + horaFormatada : horaFormatada) + ":59");
+                                setVisao(3);
+                                selectSerie(tipoParam);
+                                return;
+                            } else if (dateTimeParam != undefined && tipoParam != undefined && stringParam != undefined && bateriaParam != undefined) {
+                                var dataFormatada = (new Date(dateTimeParam).getDate().toString().length < 2 ? "0" + new Date(dateTimeParam).getDate().toString() : new Date(dateTimeParam).getDate().toString()) + "/" + ((new Date(dateTimeParam).getMonth() + 1).toString().length < 2 ? "0" + (new Date(dateTimeParam).getMonth() + 1).toString() : (new Date(dateTimeParam).getMonth() + 1).toString()) + "/" + new Date(dateTimeParam).getFullYear().toString();
+                                var horaFormatada = new Date(dateTimeParam).getHours().toString();
+                                $("#txtDateStart").val(dataFormatada);
+                                $("#txtDateEnd").val(dataFormatada);
+                                $("#txtHourStart").val((horaFormatada.length < 2 ? "0" + horaFormatada : horaFormatada) + ":00");
+                                $("#txtHourEnd").val((horaFormatada.length < 2 ? "0" + horaFormatada : horaFormatada) + ":59");
+                                $("#ddlStrings").val(stringParam);
+                                switch (tipoParam) {
+                                    case "Tensão":
+                                    setVisao(3);
+                                    break;
+                                    case "Temperatura":
+                                    setVisao(2);
+                                    break;
+                                    case "Impedância":
+                                    setVisao(1);
+                                    break;
+                                }
+                                selectSerie(bateriaParam);
+                                return;
+                            } else {
+                                pesquisar();
+                            }
+                        }, 500);
+                    });
+                    String.prototype.replaceAll = function (search, replacement) {
+                        var target = this;
+                        return target.replace(new RegExp(search, 'g'), replacement);
+                    };
+                    function selectSerie(bateria) {
+                        setTimeout(function () {
+                            if ($("#ddlSeries > option").length <= 0)
+                            selectSerie(bateria);
+                            $("#ddlSeries > option").each(function () {
+                                if (this.text.toLowerCase() == bateria.toLowerCase()) {
+                                    g1.setVisibility(parseInt(this.value), true);
+                                    this.selected = true;
+                                }
+                                else {
+                                    g1.setVisibility(parseInt(this.value), false);
+                                    this.selected = false;
+                                }
+                            });
+                        }, 200);
+                    }
+                    
+                    /*
+                    * Converts the string given to a valid float
+                    * for now only swaps ',' to '.'
+                    */
+                    function uniformalize(name){
+                        var v = $(name).val();
+                        v = v.replace(",", ".");
+                        v = parseFloat(v);
+                        return v;
+                    }
+                    
+                    function aplicarEscalaY() {
+                        
+                        if (visao == 1) {
+                            escalaYImpedancia[0] = uniformalize("#txtEscalaYMin");
+                            escalaYImpedancia[1] = uniformalize("#txtEscalaYMax");
+                            app_set_cookie("Chart_TxtEscalaYMinImpedancia", escalaYImpedancia[0], 24);
+                            app_set_cookie("Chart_TxtEscalaYMaxImpedancia", escalaYImpedancia[1], 24);
+                            
+                            console.log(escalaYImpedancia);
+                            
+                        }
+                        else if (visao == 2) {
+                            escalaYTemperatura[0] = uniformalize("#txtEscalaYMin");
+                            escalaYTemperatura[1] = uniformalize("#txtEscalaYMax");
+                            app_set_cookie("Chart_TxtEscalaYMinTemperatura", escalaYTemperatura[0], 24);
+                            app_set_cookie("Chart_TxtEscalaYMaxTemperatura", escalaYTemperatura[1], 24);
+                            
+                            console.log(escalaYTemperatura);
+                            
+                        }
+                        else if (visao == 3) {
+                            escalaYTensao[0] = uniformalize("#txtEscalaYMin");
+                            escalaYTensao[1] = uniformalize("#txtEscalaYMax");
+                            app_set_cookie("Chart_TxtEscalaYMinTensao", escalaYTensao[0], 24);
+                            app_set_cookie("Chart_TxtEscalaYMaxTensao", escalaYTensao[1], 24);
+                            
+                            console.log(escalaYTensao);
+                        }
+                        
+                    }
+                    
+                    function aplicarEscalaYSec() {
+                        
+                        aplicarEscalaY();
+                        
+                        escalaYSec[0] = uniformalize("#txtEscalaYSecMin");
+                        escalaYSec[1] = uniformalize("#txtEscalaYSecMax");
+                        
+                        app_set_cookie("Chart_TxtEscalaYSecMin", escalaYSec[0], 24);
+                        app_set_cookie("Chart_TxtEscalaYSecMax", escalaYSec[1], 24);
+                        
+                        pesquisar();
+                    }
+                    function getUrlVars() {
+                        var vars = [], hash;
+                        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                        for (var i = 0; i < hashes.length; i++) {
+                            hash = hashes[i].split('=');
+                            vars.push(hash[0]);
+                            vars[hash[0]] = hash[1];
+                        }
+                        return vars;
+                    }
+                </script>
+                <% include partials/footer %>
+            </body>
+            
+            </html>
