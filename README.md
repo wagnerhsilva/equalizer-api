@@ -77,3 +77,54 @@ Este [link](https://code.visualstudio.com/docs/cpp/config-wsl) mostra como este 
 O software pode ser acessado através de um browser na própria máquina.
 
 O link a ser executado é o seguinte: http://localhost:3000
+
+# Procedimento para inclusão de mais um idioma
+
+O procedimento para inclusão de mais um idioma envolve duas partes:
+
+1. Alteração no software **equalizer-api** (interface web)
+2. Alteração do software **equalizer-serial-service** (serviço de leitura dos sensores)
+
+O primeiro contém todas a interface com o usuário do produto, enquanto o segundo possui as mensagens de alarmes geradas.
+
+## Alteração Equalizer-Api
+
+O primeiro passo é a criação de um arquivo JSON a ser inserido no diretório *locales*, contendo o nome do idioma a ser criado (por exemplo, *es.json*).
+
+Este arquivo deve conter a mesma estrutura dos arquivos JSON atualmente presentes no diretório, porém com o conteúdo traduzido para o novo idioma (no caso, espanhol).
+
+Além disso, é preciso incluir mais um campo dentro de "idioma" em todos os arquivos JSON contendo o novo idioma a ser incorporado. **IMPORTANTE:** A chave a ser criada deve ter o nome a locale escolhida (no caso do exemplo inicial, deve ser 'es').
+
+O segundo passo é incluir na lista de idiomas suportado o novo idioma. Isso é feito editando o arquivo **views/idiomaview.ejs**, a partir a linha 79.
+
+Para o nosso exemplo de inclusão do espanhol, basta incluir a seguinte instrução:
+
+```
+<option value="es"><%= translate.es %></option>
+```
+
+Com essas alteração tem-se a inclusão de um novo idioma no produto, do ponto de vista de interface com o usuário.
+
+# Alteração Equalizer-serial-service
+
+Todas as mensagens referentes a idioma se encontram no arquivo **database.c**.
+
+A primeira alteração a ser feita é incluir o suporte ao novo idioma nas mensagens presentes no software. Para isso, basta incluir um novo vetor de strings na variável **alert_messages**, definida na linha 75 do arquivo.
+
+O segundo passo é criar um código para o novo idioma. Isso é feito no arquivo **defs.h**. Como exemplo, na linha 43 pode-se incluir o seguinte código:
+
+```
+#define LANG_CODE_ES 2
+```
+
+Por fim, deve-se incluir a detecção do novo idioma, a partir da leitura do idioma salvo no banco de dados. Para isso, seguindo o exemplo, deve-se incluir as seguintes instruções na linha 1154 do arquivo **database.c**:
+
+```
+else if (strcmp(text,"es") == 0) {
+	Lang->code = LANG_CODE_ES;
+} else {
+    Lang->code = LANG_CODE_PT_BR;
+}
+```
+
+Feitas essas alterações, deve-se recompilar o software para que as alterações possam ser efetivadas.
