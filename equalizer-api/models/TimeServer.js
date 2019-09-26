@@ -39,6 +39,23 @@ var getAll = function (data) {
     });
     db.close();
 }
+
+var getTimezone = function (data) {
+    var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 60000;')
+    db.get("SELECT timeZone FROM TimeServer LIMIT 1", function (err, row) {
+        if (row) {
+            console.log("Timezone do banco de dados:" + row.timeZone);
+            var tz = row.timeZone;
+            data(err, tz);
+        }
+        else {
+            data(err, null);
+        }
+    });
+    db.close();
+}
+
 var getById = function (id, data) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;')
@@ -91,3 +108,4 @@ module.exports.createTimeServer = createTimeServer;
 module.exports.getAll = getAll;
 module.exports.getById = getById;
 module.exports.update = update;
+module.exports.getTimezone = getTimezone;
