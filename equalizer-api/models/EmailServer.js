@@ -95,14 +95,15 @@ var sendEmail = function (data) {
                         var smtpConfig = {
                             host: emailServer[0].server,
                             port: emailServer[0].portaSMTP,
-                            secureConnection: emailServer[0].usarCriptografiaTLS == 1 ? true : false,
+                            secure: emailServer[0].portaSMTP == 465 ? true : false,
                             auth: {
                                 user: emailServer[0].login,
                                 pass: emailServer[0].senha
                             },
                             tls:{
                                 rejectUnauthorized: false
-                            }
+                            },
+                            requireTLS: emailServer[0].usarCriptografiaTLS == 1 ? true : false
                         };
                         var transporter = nodemailer.createTransport(smtpConfig);
                         var mailOptions = {
