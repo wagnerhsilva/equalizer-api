@@ -93,7 +93,11 @@
         "remove": "Excluir",
         "user_register": "Registro de Usuário",
         "invalid_register": "Registro Inválido",
-        "register_success": "Registro feito com sucesso!"
+        "register_success": "Registro feito com sucesso!",
+        "_first_name": "Nome",
+        "_last_name": "Sobrenome",
+        "_email": "E-mail",
+        "_phone": "Telefone"
     },
     "modulo": {
         "config": "Configuração",

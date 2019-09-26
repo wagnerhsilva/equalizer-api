@@ -104,10 +104,10 @@
                             <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <td><%= translate.first_name %></td>
-                                        <td><%= translate.last_name %></td>
-                                        <td><%= translate.email %></td>
-                                        <td><%= translate.phone %></td>
+                                        <td><%= translate._first_name %></td>
+                                        <td><%= translate._last_name %></td>
+                                        <td><%= translate._email %></td>
+                                        <td><%= translate._phone %></td>
                                         <td><%= translate.access %></td>
                                         <td></td>
                                     </tr>
@@ -120,7 +120,10 @@
                                         <td>{{ usuario.telefone }}</td>
                                         <td>
                                             <label ng-if="acessoUsuario == 'administrador'" class="select">
-                                                <select name="ddlAcesso" id="ddlAcesso" ng-model="usuario.acesso" ng-change="updateAcesso($index)">
+                                                <select name="ddlAcesso" 
+                                                        id="ddlAcesso" 
+                                                        ng-model="usuario.acesso" 
+                                                        ng-change="updateAcesso($index)">
                                                     <option value="usuario"><%= translate.user %></option>
                                                     <option value="administrador"><%= translate.admin %></option>
                                                     <option value="local"><%= translate.technician %></option>
@@ -128,10 +131,19 @@
                                                 <i></i>
                                             </label>
                                         </td>
-                                        <td align="center"><span class="glyphicon glyphicon-pencil" style="cursor:pointer;" title="<%= translate.edit %>" ng-click="editar($index);"
-                                                ng-if="acessoUsuario == 'administrador' || emailUsuario == usuario.email"></span>&nbsp&nbsp
-                                            <span class="glyphicon glyphicon-trash" style="cursor:pointer;" title="<%= translate.remove %>" ng-if="acessoUsuario == 'administrador' && emailUsuario != usuario.email"
-                                                ng-click="remove($index);"></span>
+                                        <td align="center">
+                                            <span class="glyphicon glyphicon-pencil" 
+                                                style="cursor:pointer;" 
+                                                title="<%= translate.edit %>" 
+                                                ng-click="editar($index);"
+                                                ng-if="acessoUsuario == 'administrador' || emailUsuario == usuario.email">
+                                            </span>&nbsp&nbsp
+                                            <span class="glyphicon glyphicon-trash" 
+                                                style="cursor:pointer;" 
+                                                title="<%= translate.remove %>" 
+                                                ng-if="acessoUsuario == 'administrador' && emailUsuario != usuario.email"
+                                                ng-click="remove($index);">
+                                            </span>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -189,13 +201,52 @@
                                 }
                             }
                             $scope.remove = function (index) {
-                                var usuario = $scope.usuarios[index];
-                                Usuarios.delete({ id: usuario.id });
-                                $scope.usuarios.splice(index, 1);
+                                /* Verifica a quantidade de usuarios na lista e,
+                                 * caso exista somente 1 e nao for administrador, acusa erro antes
+                                 * de remover o usuario */
+                                console.log($scope.usuarios);
+                                console.log($scope.usuarios.length);
+                                var nbAdmins = 0;
+                                var liberado = false;
+                                for (_user in $scope.usuarios) {
+                                    if ($scope.usuarios[_user].acesso === "administrador") {
+                                        console.log("Usuario admin");
+                                        nbAdmins++;
+                                    }
+                                }
+                                console.log(nbAdmins);
+                                if (nbAdmins > 1) {
+                                    /* Caso exista mais de um administrador cadastrado, independente de quem seja
+                                     * o usuario, este pode ser removido */
+                                    liberado = true;
+                                } else {
+                                    /* Caso exista apenas um usuario, e importante que o usuario a ser removido
+                                     * nao seja o administrador */
+                                    if ((nbAdmins === 1) && ($scope.usuarios[index].acesso !== "administrador")) {
+                                        liberado = true;
+                                    }
+                                }
+                                /* Caso tudo esteja correto, o usuario pode ser removido */
+                                if (liberado === true) {
+                                    var usuario = $scope.usuarios[index];
+                                    Usuarios.delete({ id: usuario.id });
+                                    $scope.usuarios.splice(index, 1);
+                                }
                             }
                             $scope.updateAcesso = function (index) {
-                                var usuario = $scope.usuarios[index];
-                                Usuarios.update({ id: usuario.id }, usuario);
+                                /* Calcula a quantidade de usuarios admin presentes no sistema */
+                                var nbAdmins = 0;
+                                for (_user in $scope.usuarios) {
+                                    if ($scope.usuarios[_user].acesso === "administrador") {
+                                        console.log("Usuario admin");
+                                        nbAdmins++;
+                                    }
+                                }
+                                /* Atualiza somente se a quantidade admins for maior do que 1 */
+                                if (nbAdmins > 1) {
+                                    var usuario = $scope.usuarios[index];
+                                    Usuarios.update({ id: usuario.id }, usuario);
+                                }
                             }
                             $scope.update = function () {
                                 var usuario = $scope.usuarioSelecionado;

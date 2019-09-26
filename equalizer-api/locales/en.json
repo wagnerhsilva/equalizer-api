@@ -93,7 +93,11 @@
 		"remove": "Delete",
 		"user_register": "User register",
 		"invalid_register": "Invalid register",
-		"register_success": "Register successful!"
+		"register_success": "Register successful!",
+		"_first_name": "First name",
+        "_last_name": "Last name",
+        "_email": "E-mail",
+        "_phone": "Phone"
 	},
 	"modulo": {
 		"config": "Configuration",
