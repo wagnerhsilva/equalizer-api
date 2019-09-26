@@ -314,7 +314,8 @@
         "perm_rw": "Leitura/Escrita",
         "info": "Informações SNMP",
         "success": "Dados salvos com sucesso!",
-        "apply": "Aplicar"
+        "apply": "Aplicar",
+        "incorrect_len": "Tamanho incorreto da senha"
     },
     "alarmlog": {
         "locale": "pt-br",

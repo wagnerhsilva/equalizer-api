@@ -396,17 +396,37 @@
                             $scope.applyConfiguration = function(){
                                 var args = $scope.snmpconfig;
                                 var old = $scope.oldsnmpconfig;
-                                data = [args, old];
-                                SnmpConfig.update(data);
-                                $.bigBox({
-                                    title: "<%= translate.info %>",
-                                    content: "<%= translate.success %>",
-                                    color: "#275B89",
-                                    timeout: 5000,
-                                    icon: "fa fa-check fadeInLeft animated"
-                                });
+                                /* Verifica o tamanho da string, em caso de escolha pela opcao
+                                 * SNMPv3, que deve ser entre 8 e 32 caracteres */
+                                var _sucess = false;
+                                if (args.is_on === true) {
+                                    if (args.version === 1) {
+                                        var _passLen = args.pass.length;
+                                        if ((_passLen < 8) || (_passLen > 32)) {
+                                            $.bigBox({
+                                                title: "<%= translate.info %>",
+                                                content: "<%= translate.incorrect_len %>",
+                                                color: "#275B89",
+                                                timeout: 5000,
+                                                icon: "fa fa-check fadeInLeft animated"
+                                            });
+                                        } else {
+                                            _sucess = true;
+                                        }
+                                    }
+                                }
+                                if (_sucess === true) {
+                                    data = [args, old];
+                                    SnmpConfig.update(data);
+                                    $.bigBox({
+                                        title: "<%= translate.info %>",
+                                        content: "<%= translate.success %>",
+                                        color: "#275B89",
+                                        timeout: 5000,
+                                        icon: "fa fa-check fadeInLeft animated"
+                                    });
+                                }
                             };
-
                         }])
                         //---------------
                         // Routes

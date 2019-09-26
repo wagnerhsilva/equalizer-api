@@ -313,7 +313,8 @@
 		"perm_rw": "Read/Write",
 		"info": "SNMP Information",
 		"success": "Success!",
-		"apply": "Apply"
+		"apply": "Apply",
+		
 	},
 	"alarmlog": {
 		"locale": "us",
