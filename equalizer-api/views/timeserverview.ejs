@@ -44,7 +44,7 @@
                         <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                             <header>
                                 <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                                <h2><%= translate.time_server_config %></h2>
+                                <h2><%= translate.time_server_config2 %></h2>
                             </header>
                             <div>
                                 <div class="jarviswidget-editbox">
@@ -83,6 +83,47 @@
                     </article>
 
                 </div>
+
+                <div class="row">
+                    <article class="col-sm-12 col-md-12 col-lg-12">
+
+                        <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                            <header>
+                                <span class="widget-icon"><i class="fa fa-edit"></i></span>
+                                <h2><%= translate.time_server_config3 %></h2>
+                            </header>
+                            <div>
+                                <div class="jarviswidget-editbox">
+                                </div>
+                                <div class="widget-body no-padding">
+                                    <form id="smart-form-register" class="smart-form">
+
+                                        <fieldset>
+                                            <section class="col-sm-12 col-md-12 col-lg-12">
+                                                <section class="col-sm-3 col-md-3 col-lg-2" style="margin-top: 5px;">
+                                                    <label class="label"><%= translate.timezone %></label>
+                                                </section>
+                                                <section class="col-sm-4 col-md-4 col-lg-2">
+                                                        <label class="input">
+                                                                <input type="text" ng-model="timeserver[0].timeZone" id="txtTimezone" placeholder="<%= translate.timezone %>" style="margin-right: 5px;" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                                <b class="tooltip tooltip-bottom-right"><%= translate.timezone %></b>
+                                                        </label>
+                                                </section>
+                                                
+                                            </section>
+                                            <button id="btnSetTimezone" onclick="setTimezone();" class="btn btn-primary pull-right" style="width: 100px; height: 30px;"
+                                                <%if (userAccess !='administrador') {%>  disabled  <%}%>>
+                                                <%= translate.define %>
+         </button>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
                 <script type="text/ng-template" id="/timeserver.html">
                     <fieldset>
                         <section class="col-sm-12 col-md-12 col-lg-12">
