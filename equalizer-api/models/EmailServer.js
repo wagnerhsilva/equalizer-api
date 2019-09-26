@@ -106,10 +106,12 @@ var sendEmail = function (data) {
                             requireTLS: emailServer[0].usarCriptografiaTLS == 1 ? true : false
                         };
                         var transporter = nodemailer.createTransport(smtpConfig);
+                        /* Incluindo a descrição do alarme no assunto do email */
+                        var _assunto = emailServer[0].assunto + ":" + logToText;
                         var mailOptions = {
                             from: emailServer[0].email,
                             to: redeSeguranca[0].contatoDoSistema,
-                            subject: emailServer[0].assunto,
+                            subject: _assunto,
                             text: 'Alarme de sistema disparado',
                             html: '<b>Alarme de sistema disparado</b>',
                             attachments: attachment
