@@ -318,7 +318,7 @@
 		"info": "SNMP Information",
 		"success": "Success!",
 		"apply": "Apply",
-		
+		"incorrect_len": "Incorrect password lenght"
 	},
 	"alarmlog": {
 		"locale": "us",
