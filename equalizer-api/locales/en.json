@@ -211,6 +211,8 @@
 		"config": "Configurarion",
 		"time_server": "Time server",
 		"time_server_config": "Time server configuration",
+		"time_server_config2": "Manual date/time configuration",
+		"time_server_config3": "Timezone configuration",
 		"current_datetime": "System date/time",
 		"timeserver": "Time Server address",
 		"datetime": "Date/Time",
@@ -220,7 +222,8 @@
 		"save": "Save",
 		"define": "Define",
 		"success": "Success!",
-		"err1": "Fill date and time values"
+		"err1": "Fill date and time values",
+		"timezone": "Timezone"
 	},
 	"redeseguranca": {
 		"config": "Configuration",

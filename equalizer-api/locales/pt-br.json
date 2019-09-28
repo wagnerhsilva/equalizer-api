@@ -211,6 +211,8 @@
         "config": "Configuração",
         "time_server": "Servidor de tempo",
         "time_server_config": "Configuração de TimeServer",
+        "time_server_config2": "Configuração manual de data e hora",
+		"time_server_config3": "Configuração de timezone",
         "current_datetime": "Data/hora atual do sistema",
         "timeserver": "Endereço Time Server",
         "datetime": "Data/Hora",
@@ -220,7 +222,8 @@
         "save": "Salvar",
         "define": "Definir",
         "success": "Dados salvos com sucesso!",
-        "err1": "Preencha os valores de data e hora"
+        "err1": "Preencha os valores de data e hora",
+        "timezone": "Fuso horário"
     },
     "redeseguranca": {
         "config": "Configuração",

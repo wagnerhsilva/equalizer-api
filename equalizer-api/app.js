@@ -1,3 +1,6 @@
+/*
+ * Componentes
+ */
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -7,7 +10,13 @@ var bodyParser = require('body-parser');
 // Configuring Passport
 var passport = require('passport');
 var expressSession = require('express-session');
+var i18n = require('./i18n');
+var equalizerdb = require('./database/equalizerdb');
+var emailServerModel = require('./models/EmailServer.js');
 
+/*
+ * Rotas
+ */
 var index = require('./routes/index')(passport);
 var home = require('./routes/home');
 var snmpconfig = require('./routes/snmpconfig');
@@ -24,8 +33,6 @@ var chart = require('./routes/chart');
 var chart2 = require('./routes/chart2');
 var alarmeConfig = require('./routes/alarmeConfig');
 var dataLog = require('./routes/dataLog');
-var dataLogDB = require('./models/DataLog');
-var snmpmodel = require('./models/SnmpConfig');
 var ntpconfig = require('./routes/ntpconfig');
 var enviaEmail = require('./routes/enviarEmail');
 var bacsstatus = require('./routes/bacsstatus');
@@ -50,18 +57,30 @@ var statusmoduloview = require('./routes/statusmoduloview');
 var livefeedsview = require('./routes/livefeedview');
 var chartview = require('./routes/chartview');
 var chart2view = require('./routes/chart2view');
-var equalizerdb = require('./database/equalizerdb');
-var emailServerModel = require('./models/EmailServer.js');
-var i18n = require('./i18n');
 var idiomaview = require('./routes/idiomaview');
 var idioma = require('./routes/idioma');
+
+/*
+ * Modelos
+ */
+var dataLogDB = require('./models/DataLog');
+var snmpmodel = require('./models/SnmpConfig');
+var TimeServer = require('./models/TimeServer');
 
 // Flavio Alves: configurando o timezone do projeto para o Brasil,
 // com o intuito de evitar divergencias na coleta de data e hora
 // do sistema
-process.env.TZ = 'America/Sao_Paulo';
+console.log("Iniciando Timezone");
+TimeServer.getTimezone(function(err, tz) {
+    console.log("Timezone configurado: " + tz);
+    if (tz != null) {
+        process.env.TZ = tz;
+    } else {
+        process.env.TZ = 'America/Sao_Paulo';
+    }
+});
 
-var TimeServer = require('./models/TimeServer');
+console.log("Iniciando SNTP");
 setInterval(updateDate, 1000 * 60 * 60); // atualizar uma vez por hora
 function updateDate() {
     TimeServer.getAll(function (err, timeServer) {
