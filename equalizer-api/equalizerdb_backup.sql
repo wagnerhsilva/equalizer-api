@@ -6,8 +6,32 @@ INSERT INTO "Usuario" VALUES(80,'Equalizer','Battery Management System','(11)569
 INSERT INTO "Usuario" VALUES(81,'CM','Comandos','(11) 5696.5000','cmcomandos@cmcomandos.com.br','cmcomandos','administrador');
 CREATE TABLE RedeSeguranca (id INTEGER PRIMARY KEY AUTOINCREMENT, mac, velocidadePlacaRede TEXT, localAddress TEXT, gateway TEXT, mascara TEXT, servidorDNS TEXT, nomeDoSistema TEXT, localDoSistema TEXT, contatoDoSistema TEXT, httpPort INTEGER, useHttps INTEGER, httpsPort INTEGER, httpTempoDeAtualizacao INTEGER, paginaPadraoHttp TEXT);
 INSERT INTO "RedeSeguranca" VALUES(1,'00:19:22:00:00:e6',NULL,'192.168.0.243','192.168.0.252','255.255.255.0','192.168.0.16','Equalizer 12V','Engenharia','equalizer@cmcomandos.com.br',NULL,NULL,NULL,NULL,'moduloview');
-CREATE TABLE TimeServer (id INTEGER PRIMARY KEY AUTOINCREMENT, timeServerAddress1 TEXT, timeServerAddress1_complemento TEXT, timeServerAddress2 TEXT, timeServerAddress2_complemento TEXT, timeServerAddress3 TEXT, timeServerAddress3_complemento TEXT, connectionRetries INTEGER, timeZone TEXT, automAdjustTimeDaylightSavingChanges INTEGER);
-INSERT INTO "TimeServer" VALUES(5,'192.168.0.16','200.160.7.186','b.st1.ntp.br','201.49.148.135','c.st1.ntp.br','200.186.125.195',156,'-3',1);
+
+CREATE TABLE TimeServer (
+    id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    timeServerAddress1 TEXT, 
+    timeServerAddress1_complemento TEXT, 
+    timeServerAddress2 TEXT, 
+    timeServerAddress2_complemento TEXT, 
+    timeServerAddress3 TEXT, 
+    timeServerAddress3_complemento TEXT, 
+    connectionRetries INTEGER, 
+    timeZone TEXT, 
+    automAdjustTimeDaylightSavingChanges INTEGER
+);
+INSERT INTO "TimeServer" VALUES(
+    5,
+    '192.168.0.16',
+    '200.160.7.186',
+    'b.st1.ntp.br',
+    '201.49.148.135',
+    'c.st1.ntp.br',
+    '200.186.125.195',
+    156,
+    '-3',
+    1
+);
+
 CREATE TABLE EmailServer (id INTEGER PRIMARY KEY AUTOINCREMENT, server TEXT, portaSMTP INTEGER, usarCriptografiaTLS INTEGER, email TEXT, assunto TEXT, usarAutenticacao INTEGER, login TEXT, senha TEXT);
 INSERT INTO "EmailServer" VALUES(3,'192.168.0.32',587,2,'equalizer@cmcomandos.com.br','Alarme',1,'equalizer@cmcomandos.com.br','cec2310');
 CREATE TABLE `ApelidoString` (
@@ -345,9 +369,13 @@ INSERT INTO "sqlite_sequence" VALUES('SnmpCfgs',2);
 INSERT INTO "sqlite_sequence" VALUES('SnmpTraps',5);
 INSERT INTO "sqlite_sequence" VALUES('SnmpCommunities',5);
 INSERT INTO "sqlite_sequence" VALUES('AlarmeConfig',1);
+
+
 CREATE TABLE Idioma (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     idioma TEXT
 );
 INSERT INTO "Idioma" VALUES(1,'pt-br');
+
 COMMIT;
+
