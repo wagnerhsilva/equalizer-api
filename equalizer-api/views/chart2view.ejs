@@ -144,22 +144,50 @@
                     strings.forEach(function (string) {
                         if ($("#bar-chart_" + string.replace(" ", "_")).length) {
                             $("#headerGrafico_" + string.replace(" ", "_")).text("String: " + string);
-                            var data1 = [];
+                            var data_val = [];
+                            var data_min = [];
+                            var data_max = [];
                             var labels1 = [];
                             var conta = 0;
+                            
                             data.forEach(function (element) {
                                 if (element.string == string) {
-                                    if (element.impedancia > element.max_imp) {
-                                        data1.push({ data: [[conta, parseFloat(element.impedancia)]], color: "red", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
-                                    } else if (element.impedancia < element.min_imp) {
-                                        data1.push({ data: [[conta, parseFloat(element.impedancia)]], color: "yellow", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
-                                    } else {
-                                        data1.push({ data: [[conta, parseFloat(element.impedancia)]], color: "green", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
-                                    }
+                                    /* Barra contendo o valor */
+                                    data_val.push([conta, parseFloat(element.impedancia)]);
+                                    /* Linha contendo o minimo */
+                                    data_min.push([conta, parseFloat(element.min_imp)]);
+                                    /* Linha contendo o maximo */
+                                    data_max.push([conta, parseFloat(element.max_imp)]);
+                                    /* Eixo x */
                                     labels1.push([conta, element.bateria]);
                                     conta++;
                                 }
                             }, this);
+                            // var data1 = data_val;
+                            var data1 = [
+                                {
+                                    label: "<%= translate.impedance %>",
+                                    data: data_val,
+                                    color: "#83ce16",
+                                    bars: {
+                                        show: true,
+                                        align: "center",
+                                        barWidth: 0.5
+                                    }
+                                 } , {
+                                    label: "Minimo",
+                                    data: data_min,
+                                    lines: {
+                                        show: "true"
+                                    }
+                                } , {
+                                    label: "Maximo",
+                                    data: data_max,
+                                    lines: {
+                                        show: "true"
+                                    }
+                                }
+                            ]
                             var options = {
                                 xaxis: { ticks: labels1 },
                                 grid: {
@@ -187,22 +215,48 @@
                     strings.forEach(function (string) {
                         if ($("#bar-chart_" + string.replace(" ", "_")).length) {
                             $("#headerGrafico_" + string.replace(" ", "_")).text("String: " + string);
-                            var data1 = [];
+                            var data_val = [];
+                            var data_min = [];
+                            var data_max = [];
                             var labels1 = [];
                             var conta = 0;
                             data.forEach(function (element) {
                                 if (element.string == string) {
-                                    if (element.temperatura > element.max_temp) {
-                                        data1.push({ data: [[conta, parseFloat(element.temperatura)]], color: "red", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
-                                    } else if (element.temperatura < element.min_temp) {
-                                        data1.push({ data: [[conta, parseFloat(element.temperatura)]], color: "yellow", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
-                                    } else {
-                                        data1.push({ data: [[conta, parseFloat(element.temperatura)]], color: "green", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
-                                    }
+                                    /* Barra contendo o valor */
+                                    data_val.push([conta, parseFloat(element.temperatura)]);
+                                    /* Linha contendo o minimo */
+                                    data_min.push([conta, parseFloat(element.min_temp)]);
+                                    /* Linha contendo o maximo */
+                                    data_max.push([conta, parseFloat(element.max_temp)]);
+                                    /* Eixo x */
                                     labels1.push([conta, element.bateria]);
                                     conta++;
                                 }
                             }, this);
+                            var data1 = [
+                                {
+                                    label: "<%= translate.temperature %>",
+                                    data: data_val,
+                                    color: "#83ce16",
+                                    bars: {
+                                        show: true,
+                                        align: "center",
+                                        barWidth: 0.5
+                                    }
+                                 } , {
+                                    label: "Minimo",
+                                    data: data_min,
+                                    lines: {
+                                        show: "true"
+                                    }
+                                } , {
+                                    label: "Maximo",
+                                    data: data_max,
+                                    lines: {
+                                        show: "true"
+                                    }
+                                }
+                            ]
                             var options = {
                                 xaxis: { ticks: labels1 },
                                 grid: {
@@ -228,22 +282,49 @@
                     strings.forEach(function (string) {
                         if ($("#bar-chart_" + string.replace(" ", "_")).length) {
                             $("#headerGrafico_" + string.replace(" ", "_")).text("String: " + string);
-                            var data1 = [];
+                            var data_val = [];
+                            var data_min = [];
+                            var data_max = [];
+                            // var data1 = [];
                             var labels1 = [];
                             var conta = 0;
                             data.forEach(function (element) {
                                 if (element.string == string) {
-                                    if (element.tensao > element.max_tensao) {
-                                        data1.push({ data: [[conta, parseFloat(element.tensao)]], color: "red", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
-                                    } else if (element.tensao < element.min_tensao) {
-                                        data1.push({ data: [[conta, parseFloat(element.tensao)]], color: "yellow", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
-                                    } else {
-                                        data1.push({ data: [[conta, parseFloat(element.tensao)]], color: "green", label: 'Impedância', bars: { show: true, align: 'center', barWidth: 0.5 } });
-                                    }
+                                    /* Barra contendo o valor */
+                                    data_val.push([conta, parseFloat(element.tensao)]);
+                                    /* Linha contendo o minimo */
+                                    data_min.push([conta, parseFloat(element.min_tensao)]);
+                                    /* Linha contendo o maximo */
+                                    data_max.push([conta, parseFloat(element.max_tensao)]);
+                                    /* Eixo x */
                                     labels1.push([conta, element.bateria]);
                                     conta++;
                                 }
                             }, this);
+                            var data1 = [
+                                {
+                                    label: "<%= translate.voltage %>",
+                                    data: data_val,
+                                    color: "#83ce16",
+                                    bars: {
+                                        show: true,
+                                        align: "center",
+                                        barWidth: 0.5
+                                    }
+                                 } , {
+                                    label: "Minimo",
+                                    data: data_min,
+                                    lines: {
+                                        show: "true"
+                                    }
+                                } , {
+                                    label: "Maximo",
+                                    data: data_max,
+                                    lines: {
+                                        show: "true"
+                                    }
+                                }
+                            ]
                             var options = {
                                 xaxis: { ticks: labels1 },
                                 grid: {
