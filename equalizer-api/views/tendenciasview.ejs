@@ -36,27 +36,35 @@
             <div id="content">
                 <div class="row">
                     <article class="col-sm-12 col-md-12 col-lg-12">
+                        <div>
+                            <!-- <div class="jarviswidget-editbox"></div>
+                            <div class="widget-body">
+                                <button type="button" class="btn btn-primary" style="margin-left:5px" onclick="gerarCSV();"><%= translate.export_csv %></button>
+                            </div>
+                            <br></br> -->
+                            <!-- Widget ID (each widget will need unique ID)-->
+                            <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                                <header>
+                                    <span class="widget-icon"><i class="fa fa-edit"></i></span>
+                                    <h2><%= translate.tendencies %></h2>
 
-                        <!-- Widget ID (each widget will need unique ID)-->
-                        <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
-                            <header>
-                                <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                                <h2><%= translate.tendencies %></h2>
-
-                            </header>
-                            <div>
-                                <div class="jarviswidget-editbox">
-                                </div>
-                                <div class="widget-body">
-                                    <ng-view></ng-view>
+                                </header>
+                                <div>
+                                    <div class="jarviswidget-editbox">
+                                    </div>
+                                    <div class="widget-body">
+                                        <ng-view></ng-view>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </article>
-
                 </div>
                 <script type="text/ng-template" id="/tendencias.html">
                     <section>
+                        <div>
+                            <button type="button" class="btn btn-primary" style="margin-left:5px" ng-click="gerarCSV();"><%= translate.export_csv %></button>
+                        </div>
                         <div>
                             <div class="row" style="padding-left: 20px;padding-right: 20px;padding-top: 20px;">
                                 <div>
@@ -207,6 +215,47 @@
                                     return "";
                                 }
                             };
+
+                            $scope.gerarCSV = function () {
+                                console.log("Entrei gerarCSV");
+                                StatusTendence.query(function(res){
+                                    console.log("Resultado da busca");
+                                    // console.log(res);
+                                    var data = res.data;
+                                    var csvData = [];
+                                    var _tempStr = "iteraction;datetime;string;battery;impedance;temperature;delta_temperature;delta_impedance";
+                                    csvData.push(_tempStr);
+                                    data.forEach(function (element) {
+                                        var _tempElement = element.iteration.toString() + ";";
+                                        _tempElement += element.dataHora + ";";
+                                        _tempElement += element.string + ";";
+                                        _tempElement += element.bateria + ";";
+                                        _tempElement += (element.impedancia / 100).toString() + ";";
+                                        _tempElement += (element.temperatura / 10).toString() + ";";
+                                        if (element.deltaImpedancia != null) {
+                                            _tempElement += element.deltaImpedancia.toString() + ";";
+                                        }
+                                        if (element.deltaTemperatura != null) {
+                                            _tempElement += element.deltaTemperatura.toString();
+                                        }
+                                        csvData.push(_tempElement);
+                                    });
+                                    var csvString = csvData.join("\n");
+                                    /*
+                                     * Gerando o CSV
+                                     */
+                                    var filename = "tendences.csv"
+                                    var a = document.createElement('a');
+                                    a.href = 'data:text/csv;charset=UTF-8,' + encodeURIComponent(csvString);
+                                    a.target = '_blank';
+                                    a.download = filename;
+                                    
+                                    document.body.appendChild(a);
+                                    a.click();
+                                }, function(error){
+                                    console.log("Erro da busca");
+                                });
+                            }
 
                             $scope.getInnerText = function(index, dataLength, hasImpedance, hasTemperature){
                                 if(dataLength === 4){

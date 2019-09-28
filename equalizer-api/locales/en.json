@@ -45,7 +45,8 @@
 		"impedance": "Impedance",
 		"temperature": "Temperature",
 		"ref_zero": "Reference date zero",
-		"battery": "Battery"
+		"battery": "Battery",
+		"export_csv": "Export do CSV File"
 	},
 	"chart": {
 		"status": "Status",
