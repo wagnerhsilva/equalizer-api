@@ -46,7 +46,13 @@
         "temperature": "Temperatura",
         "ref_zero": "Data referencia zero",
         "battery": "Bateria",
-        "export_csv": "Exportar para arquivo CSV"
+        "export_csv": "Exportar para arquivo CSV",
+        "history_reset": "Reset histórico",
+        "db_clear_confirm_title": "Limpar histórico",
+		"db_clear_confirm_msg": "Você tem certeza?",
+		"no": "Não",
+		"yes": "Sim",
+		"db_clear_ok": "Dados de tendências removidos"
     },
     "chart": {
         "status": "Status",

@@ -64,6 +64,7 @@
                     <section>
                         <div>
                             <button type="button" class="btn btn-primary" style="margin-left:5px" ng-click="gerarCSV();"><%= translate.export_csv %></button>
+                            <button type="button" class="btn btn-primary" style="margin-left:5px" ng-click="limparHistorico();"><%= translate.history_reset %></button>
                         </div>
                         <div>
                             <div class="row" style="padding-left: 20px;padding-right: 20px;padding-top: 20px;">
@@ -215,6 +216,26 @@
                                     return "";
                                 }
                             };
+
+                            $scope.limparHistorico = function () {
+                                $.SmartMessageBox({
+                                    title: "<%= translate.db_clear_confirm_title %>",
+                                    content: "<%= translate.db_clear_confirm_msg %>",
+                                    buttons: '[<%= translate.no %>][<%= translate.yes %>]'
+                                }, function (ButtonPressed) {
+                                    if (ButtonPressed === "<%= translate.yes %>") {
+                                        $.get("/tendenciasview/clearDb/", null, function (data, status) {
+                                        });
+                                        $.smallBox({
+                                            title: "<%= translate.db_clear_confirm_title %>",
+                                            content: "<i class='fa fa-clock-o'></i> <i><%= translate.db_clear_ok %></i>",
+                                            color: "#659265",
+                                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                            timeout: 4000
+                                        });
+                                    }
+                                });
+                            }
 
                             $scope.gerarCSV = function () {
                                 console.log("Entrei gerarCSV");

@@ -46,7 +46,13 @@
 		"temperature": "Temperature",
 		"ref_zero": "Reference date zero",
 		"battery": "Battery",
-		"export_csv": "Export do CSV File"
+		"export_csv": "Export do CSV File",
+		"history_reset": "Reset history",
+		"db_clear_confirm_title": "Clear history",
+		"db_clear_confirm_msg": "Are you sure?",
+		"no": "No",
+		"yes": "Yes",
+		"db_clear_ok": "Tendencies data cleared"
 	},
 	"chart": {
 		"status": "Status",

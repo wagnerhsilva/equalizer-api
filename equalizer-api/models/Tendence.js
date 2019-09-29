@@ -155,8 +155,28 @@ var persist = function(parameters, errCallback){
         }
     });
 }
+
+var clear = function(errCallback){
+    console.log("Limpando tabela de tendencias");
+    var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 60000;');
+    db.run('PRAGMA journal_mode=WAL;');
+    var strSql = "DELETE FROM Tendencias;";
+    db.all(strSql, function(err, data){
+        if(err){
+            console.log("Error:");
+            console.log(err);
+            errCallback(err);
+        }else{
+            console.log("Tabela de tendencias limpa");
+            db.run("VACUUM;");
+        }
+    });
+}
+
 module.exports.get = get;
 module.exports.get_data = get_data;
 module.exports.createTendenceZero = createZeroTendence;
 module.exports.createTendence = createTendence;
 module.exports.persist = persist;
+module.exports.clear = clear;
