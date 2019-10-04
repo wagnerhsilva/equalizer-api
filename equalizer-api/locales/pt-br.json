@@ -37,7 +37,11 @@
         "equalization": "Equalização",
         "status": "Status",
         "battery": "Bateria",
-        "target": "Target"
+        "target": "Target",
+        "accumulator_info": "Informações de acumulador",
+        "manufacture": "Fabricante",
+        "type": "Tipo",
+        "location": "Localização"
     },
     "tendencias": {
         "status": "Status",

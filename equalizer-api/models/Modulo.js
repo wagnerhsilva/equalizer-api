@@ -106,8 +106,25 @@ var update = function (modulo) {
                                     $baterias_por_hr: modulo.baterias_por_hr });
     db.close();
 }
+var get_acc = function (data) {
+    var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 60000;');
+    db.run('PRAGMA journal_mode=WAL;');
+    db.all("SELECT localizacao, fabricante, tipo " +
+            "FROM Modulo LIMIT 1", function (err, row) {
+        if (row) {
+            console.log("Dados acumulador:")
+            console.log(row);
+            data(err, row[0]);
+        } else {
+            data(err, null);
+        }
+    });
+    db.close();
+}
 module.exports.save = save;
 module.exports.createModulo = createModulo;
 module.exports.getAll = getAll;
 module.exports.getById = getById;
 module.exports.update = update;
+module.exports.get_acc = get_acc;

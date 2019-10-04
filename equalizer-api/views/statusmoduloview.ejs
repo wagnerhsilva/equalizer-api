@@ -31,6 +31,37 @@
                         <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                             <header>
                                 <span class="widget-icon"><i class="fa fa-edit"></i></span>
+                                <h2><%= translate.accumulator_info %></h2>
+
+                            </header>
+                            <div>
+                                <table class="table table-striped table-bordered table-hover datatabletemplate">
+                                    <thead>
+                                        <tr>
+                                            <td class="no-sort" align="center"><%= translate.manufacture %></td>
+                                            <td align="center"><%= translate.type %></td>
+                                            <td align="center"><%= translate.location %></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td align="center"><%= acc_data.fabricante %></td>
+                                            <td align="center"><%= acc_data.tipo %></td>
+                                            <td align="center"><%= acc_data.localizacao %></td>
+                                        </tr>
+                                    </tbody>
+                                </table>    
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="row">
+                    <article class="col-sm-12 col-md-12 col-lg-12">
+
+                        <!-- Widget ID (each widget will need unique ID)-->
+                        <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                            <header>
+                                <span class="widget-icon"><i class="fa fa-edit"></i></span>
                                 <h2><%= translate.title %></h2>
 
                             </header>
