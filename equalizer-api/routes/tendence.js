@@ -20,7 +20,10 @@ router.get('/', function (req, res, next) {
 /* GET /tendence/status */
 router.get('/status', function (req, res, next) {
     var data_callback = function(data){
-        console.log(data);
+        // console.log("FLAVIO ALVES: RETORNO DE DADOS");
+        // console.log("tamanho do array: " + data.length);
+        // console.log("tamanho do primeiro item:" + data[0].data.length);
+        // console.log(data);
         res.json(data);
     };
 
@@ -29,7 +32,8 @@ router.get('/status', function (req, res, next) {
         return next(err);
     };
 
-    Tendence.get_data(data_callback, err_callback);
+    // Tendence.get_data(data_callback, err_callback);
+    Tendence.get_data_strings(data_callback, err_callback);
 
 });
 module.exports = router;

@@ -75,36 +75,41 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover datatabletemplate">
-                                    <thead>
-                                        <tr>
-                                            <td class="no-sort" align="center"><%= translate.battery %></td>
-                                            <td align="center" colspan="{{ zeroWidth }}"><%= translate.ref_zero %></td>
-                                            <td align="center" ng-repeat="f in range(readsCount) track by $index" colspan="{{ dataLength }}">
-                                                {{ ($index + 1) }}º Medição
-                                            </td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td align="center" ng-class="{displayNone: hasImpedance == 0}"><%= translate.impedance %> Ohms</td>
-                                            <td align="center" ng-class="{displayNone: hasTemperature == 0}"><%= translate.temperature %> ºC</td>
-                                            <td align="center" ng-repeat="f in range(dataLength*readsCount) track by $index" >
-                                                <div ng-bind-html=" getInnerText($index, dataLength, hasImpedance, hasTemperature) | trust"></div>
-                                            </td>
-                                        </tr>
-                                        <tr ng-repeat= "f in range(tendenceStatus.batterycount) track by $index">
-                                            <td align="center">{{tendenceStatus.data[$index * tendenceStatus.iterations].bateria}}</td>
-                                            <td align="center" ng-class="{displayNone: hasImpedance == 0}">{{(tendenceStatus.data[$index * tendenceStatus.iterations].impedancia)/100}}</td>
-                                            <td align="center" ng-class="{displayNone: hasTemperature == 0}">{{(tendenceStatus.data[$index * tendenceStatus.iterations].temperatura)/10}}</td>
-                                            <td align="center" ng-repeat="s in range(dataLength*readsCount) track by $index">
-                                                <div ng-bind-html=" getInnerContent($index, $parent.$index, tendenceStatus.data, dataLength, hasImpedance, hasTemperature, tendenceStatus.iterations) | trust"></div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+
+                            <div ng-repeat="j in range(tendenceStatus.length) track by $index">
+                                <h3> String {{ tendenceStatus[$index].stringName }} </h3>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover datatabletemplate">
+                                        <thead>
+                                            <tr>
+                                                <td class="no-sort" align="center"><%= translate.battery %></td>
+                                                <td align="center" colspan="{{ zeroWidth }}"><%= translate.ref_zero %></td>
+                                                <td align="center" ng-repeat="f in range(readsCount) track by $index" colspan="{{ dataLength }}">
+                                                    {{ ($index + 1) }}º Medição
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td align="center" ng-class="{displayNone: hasImpedance == 0}"><%= translate.impedance %> Ohms</td>
+                                                <td align="center" ng-class="{displayNone: hasTemperature == 0}"><%= translate.temperature %> ºC</td>
+                                                <td align="center" ng-repeat="f in range(dataLength*readsCount) track by $index" >
+                                                    <div ng-bind-html=" getInnerText($index, dataLength, hasImpedance, hasTemperature) | trust"></div>
+                                                </td>
+                                            </tr>
+                                            <!-- <tr ng-repeat= "f in range(tendenceStatus.batterycount) track by $index"> -->
+                                            <tr ng-repeat= "f in range(tendenceStatus[$index].batterycount) track by $index">
+                                                <td align="center">{{tendenceStatus[$parent.$index].data[$index * tendenceStatus[$parent.$index].iterations].bateria}}</td>
+                                                <td align="center" ng-class="{displayNone: hasImpedance == 0}">{{(tendenceStatus[$parent.$index].data[$index * tendenceStatus[$parent.$index].iterations].impedancia)/100}}</td>
+                                                <td align="center" ng-class="{displayNone: hasTemperature == 0}">{{(tendenceStatus[$parent.$index].data[$index * tendenceStatus[$parent.$index].iterations].temperatura)/10}}</td>
+                                                <td align="center" ng-repeat="s in range(dataLength*readsCount) track by $index">
+                                                    <div ng-bind-html=" getInnerContent($index, $parent.$index, tendenceStatus[$parent.$parent.$index].data, dataLength, hasImpedance, hasTemperature, tendenceStatus[$parent.$parent.$index].iterations) | trust"></div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -120,7 +125,7 @@
                             return $resource('/tendence/status', null, {
                                 'update': { method: 'PUT' },
                                 'query': {
-                                    // isArray: true,
+                                    isArray: true,
                                     method: 'GET'
                                 }
                             });
@@ -158,8 +163,10 @@
 
                             StatusTendence.query(function(res){
                                 $scope.tendenceStatus = res;
-                                $scope.readsCount = $scope.tendenceStatus.iterations - 1;
-                                $scope.batteryCount = $scope.tendenceStatus.batterycount;
+                                console.log("tendenceStatus");
+                                console.log($scope.tendenceStatus);
+                                $scope.readsCount = $scope.tendenceStatus[0].iterations - 1;
+                                $scope.batteryCount = $scope.tendenceStatus[0].batterycount;
                             }, function(error){
 
                             });
@@ -184,6 +191,7 @@
                                     var cellLoc = index;
                                     var cindex = parseInt(cellLoc / dataLength) + 1;
                                     cindex += (parentIndex) * iterations;
+                                    // console.log("cindex: " + cindex);
                                     var TargetBaterry = data[cindex];
                                     if(dataLength === 4){
                                         if(index % 4 === 0){
