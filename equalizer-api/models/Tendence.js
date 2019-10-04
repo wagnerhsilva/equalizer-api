@@ -109,7 +109,7 @@ var get_data = function(dataCallback, errCallback){
                     }else{
                         var batCount = data2[0]['COUNT(1)'];
                         strsql = "SELECT dataHora, string, bateria, impedancia, temperatura,\
-                        iteration from Tendencias ORDER BY iteration, bateria ASC;";
+                        iteration from Tendencias ORDER BY iteration, CAST(SUBSTR(bateria, 2, length(bateria)) as integer);";
                         db.all(strsql, function(err3, data3){
                             if(err3){
                                 console.log("Error:");
