@@ -1,0 +1,9 @@
+{
+  "name": "passport-local",
+  "version": "1.0.0",
+  "dependencies": {
+    "passport-strategy": {
+      "version": "1.0.0"
+    }
+  }
+}
