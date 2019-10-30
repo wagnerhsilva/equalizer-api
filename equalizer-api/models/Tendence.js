@@ -86,6 +86,7 @@ var createTendence = function (is_on, install_date, zero_date_months,
         function linearize_get_strings(data, iteration, batcount){
             var _response = [];
             var initial = [];
+
             for(var i = 0; i < batcount; i += 1){
                 for(var j = 0; j < iteration; j += 1){
                     var index = i + j * batcount;
@@ -208,31 +209,36 @@ var createTendence = function (is_on, install_date, zero_date_months,
                 }else{
                     console.log(data);
                     var iteration = data[0]['MAX(iteration)'];
-                    if(iteration > 0){
-                        strsql = "SELECT COUNT(1) FROM Tendencias WHERE iteration=" + iteration.toString() + ";";
-                        db.all(strsql, function(err2, data2){
-                            if(err2){
-                                console.log("Error:");
-                                console.log(err2);
-                                errCallback(err2);
-                            }else{
-                                var batCount = data2[0]['COUNT(1)'];
-                                strsql = "SELECT dataHora, string, bateria, impedancia, temperatura,\
-                                iteration from Tendencias ORDER BY iteration, CAST(SUBSTR(bateria, 2, length(bateria)) as integer);";
-                                db.all(strsql, function(err3, data3){
-                                    if(err3){
-                                        console.log("Error:");
-                                        console.log(err3);
-                                        errCallback(err3);
-                                    }else{
-                                        dataCallback(linearize_get_strings(data3, iteration, batCount));
-                                    }
-                                });
-                            }
-                        });
-                    }else{
-                        dataCallback(linearize_get_strings([], 1, 1));
+                    if(iteration == null) {
+                        errCallback(err);
+                    } else {
+                        if(iteration > 0){
+                            strsql = "SELECT COUNT(1) FROM Tendencias WHERE iteration=" + iteration.toString() + ";";
+                            db.all(strsql, function(err2, data2){
+                                if(err2){
+                                    console.log("Error:");
+                                    console.log(err2);
+                                    errCallback(err2);
+                                }else{
+                                    var batCount = data2[0]['COUNT(1)'];
+                                    strsql = "SELECT dataHora, string, bateria, impedancia, temperatura,\
+                                    iteration from Tendencias ORDER BY iteration, CAST(SUBSTR(bateria, 2, length(bateria)) as integer);";
+                                    db.all(strsql, function(err3, data3){
+                                        if(err3){
+                                            console.log("Error:");
+                                            console.log(err3);
+                                            errCallback(err3);
+                                        }else{
+                                            dataCallback(linearize_get_strings(data3, iteration, batCount));
+                                        }
+                                    });
+                                }
+                            });
+                        }else{
+                            dataCallback(linearize_get_strings([], 1, 1));
+                        }
                     }
+                    
                 }
             });
         }
