@@ -287,7 +287,6 @@ var createTendence = function (is_on, install_date, zero_date_months,
                         db.run('UPDATE TendenciasConfig SET lastData=\"\";');
                         db.run('UPDATE TendenciasConfig SET zeroFilled=0;');
                         db.run('UPDATE TendenciasConfig SET lastIteration=0;');
-                        db.run('UPDATE TendenciasConfig SET dataZero=0;');
                         console.log("Configuracoes de Tendecias resetadas");
                         db.run("VACUUM;");
                     }
