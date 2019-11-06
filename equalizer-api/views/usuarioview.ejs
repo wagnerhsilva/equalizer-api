@@ -171,9 +171,11 @@
                             $scope.isEditing = false;
                             $scope.usuarios = Usuarios.query();
                             $scope.save = function () {
+                                console.log("Salvando novo usuario");
                                 var usuario = $scope.usuarioSelecionado;
                                 var fails = ((usuario == null) || (usuario.sobreNome == null || usuario.sobreNome.trim() == "")
                                             || (usuario.senha == null || usuario.senha.trim() == ""));
+                                console.log("fails:" + fails);
                                 if(fails){
                                     $.bigBox({
                                         title: "<%= translate.user_register %>",
@@ -185,8 +187,11 @@
                                     return;
                                 }else{
                                     if($scope.isEditing){ //I'm not sure what is this but I'll let it live here...
+                                        console.log("Executando atualização");
                                         $scope.update();
                                     }else{
+                                        console.log("Salvando novo usuario");
+                                        Usuarios.save(usuario);
                                         $.bigBox({
                                         title: "<%= translate.user_register %>",
                                         content: "<%= translate.register_success %>",
@@ -194,7 +199,7 @@
                                         timeout: 5000,
                                         icon: "fa fa-check fadeInLeft animated"
                                         });
-                                        Usuarios.save(usuario);
+                                        console.log("Atualizando a tela ...");
                                         // $scope.usuarioSelecionado = null; //this will clean the form and trigger the incorrect field validation...
                                         setTimeout(function () { $scope.usuarios = Usuarios.query(); }, 500);
                                     }
@@ -234,6 +239,7 @@
                                 }
                             }
                             $scope.updateAcesso = function (index) {
+                                console.log("updateAcesso")
                                 /* Calcula a quantidade de usuarios admin presentes no sistema */
                                 var nbAdmins = 0;
                                 for (_user in $scope.usuarios) {
@@ -242,16 +248,36 @@
                                         nbAdmins++;
                                     }
                                 }
+                                console.log("nbAdmins: " + nbAdmins);
                                 /* Atualiza somente se a quantidade admins for maior do que 1 */
-                                if (nbAdmins > 1) {
+                                if (nbAdmins >= 1) {
                                     var usuario = $scope.usuarios[index];
+                                    console.log("Atualizando banco");
                                     Usuarios.update({ id: usuario.id }, usuario);
+                                } else {
+                                    console.log("Configuração não atualizada");
                                 }
                             }
                             $scope.update = function () {
                                 var usuario = $scope.usuarioSelecionado;
-                                if (usuario != null)
-                                    Usuarios.update(usuario);
+                                if (usuario != null) {
+                                    /* Calcula a quantidade de usuarios admin presentes no sistema */
+                                    var nbAdmins = 0;
+                                    for (_user in $scope.usuarios) {
+                                        if ($scope.usuarios[_user].acesso === "administrador") {
+                                            console.log("Usuario admin");
+                                            nbAdmins++;
+                                        }
+                                    }
+                                    console.log("nbAdmins: " + nbAdmins);
+                                    /* Atualiza somente se a quantidade admins for maior do que 1 */
+                                    if (nbAdmins >= 1) {
+                                        console.log("Atualizando banco");
+                                        Usuarios.update(usuario);
+                                    } else {
+                                        console.log("Configuração não atualizada");
+                                    }
+                                }
                                 $scope.cancelarEdicao();
                             }
                             $scope.usuarioSelecionado = null;
