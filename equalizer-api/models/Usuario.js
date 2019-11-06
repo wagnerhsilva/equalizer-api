@@ -90,6 +90,26 @@ var getByEmail = function (email, data) {
     });
     db.close();
 }
+
+var getPassword = function(email, data) {
+    console.log("getPassword");
+    var ret = 0;
+    var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 60000;');
+    db.run('PRAGMA journal_mode=WAL;');
+    db.get("SELECT id, nome, sobreNome, telefone, email, senha, acesso FROM Usuario WHERE email = $email", { $email: email }, function (err, row) {
+        if (row) {
+            console.log("Usuario encontrado: senha: " + row.senha);
+            data(err,row.senha)
+        } else {
+            data(null)
+        }
+    });
+    db.close();
+
+    return ret;
+}
+
 var deleteUser = function (id) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
@@ -110,3 +130,4 @@ module.exports.getByEmail = getByEmail;
 module.exports.updateAcesso = updateAcesso;
 module.exports.update = update;
 module.exports.delete = deleteUser;
+module.exports.getPassword = getPassword;

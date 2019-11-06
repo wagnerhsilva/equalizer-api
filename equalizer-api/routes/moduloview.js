@@ -4,6 +4,7 @@ var child_process = require('child_process');
 var path = require('path');
 var rotuloString = require('../models/RotuloString');
 var parameters = require('../models/Parameters');
+var User = require('../models/Usuario');
 
 var noAuthRequired = function (req, res, next) {
     return next();
@@ -57,11 +58,35 @@ router.get('/clearLog', function (req, res, next) {
     });
     console.log("Log cleared");
 });
-router.get('/downloadDB', noAuthRequired, function (req, res) {
+router.get('/downloadDB', isAuthenticated, function (req, res) {
     console.log("downloadDB");
     var file = path.join(__dirname, '..', 'equalizerdb');
     console.log(file);
     res.download(file);
+});
+router.get('/downloadDB/:username/:password', noAuthRequired, function (req, res) {
+    var user = req.params.username
+    var password = req.params.password
+    console.log("downloadDB com autenticacao");
+
+    User.getPassword(user,
+        function(err,passwd) {
+            if(err) {
+                console.log("Erro na captura da senha");
+                res.redirect('/');
+            } else {
+                if (passwd == password) {
+                    console.log("Senha validada. Entregando banco");
+                    var file = path.join(__dirname, '..', 'equalizerdb');
+                    console.log(file);
+                    res.download(file);
+                } else {
+                    console.log("Senha invalida: " + passwd + " (" + password + "0");
+                    res.redirect('/');
+                }
+            }
+        }
+    );
 });
 router.post('/gravarRotuloString', isAuthenticated, function (req, res) {
     console.log("gravarRotuloString");
