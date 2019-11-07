@@ -12,6 +12,7 @@ var isAuthenticated = function (req, res, next) {
 }
 /* GET home page. */
 router.get('/', isAuthenticated, function (req, res, next) {
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
     res.render('snmpconfigview', { title: 'Configurações de SNMP', pageName: 'snmpconfigview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email, showHeaderData: global.showHeaderInfo, headerInfoCDec: global.headerInfoCDec, translate: res.__('snmpconfig'), translate_header: res.__('header') });
 });
 router.get('/showHideHeaderInfo', function (req, res, next) {
