@@ -249,27 +249,38 @@
                                 console.log("Entrei gerarCSV");
                                 StatusTendence.query(function(res){
                                     console.log("Resultado da busca");
-                                    // console.log(res);
-                                    var data = res.data;
+                                    var stringData = res;
+                                    var contador = 1;
+                                    /* Inicializacao do arquivo CSV */
                                     var csvData = [];
                                     var _tempStr = "iteraction;datetime;string;battery;impedance;temperature;delta_temperature;delta_impedance";
                                     csvData.push(_tempStr);
-                                    data.forEach(function (element) {
-                                        var _tempElement = element.iteration.toString() + ";";
-                                        _tempElement += element.dataHora + ";";
-                                        _tempElement += element.string + ";";
-                                        _tempElement += element.bateria + ";";
-                                        _tempElement += (element.impedancia / 100).toString() + ";";
-                                        _tempElement += (element.temperatura / 10).toString() + ";";
-                                        if (element.deltaImpedancia != null) {
-                                            _tempElement += element.deltaImpedancia.toString() + ";";
-                                        }
-                                        if (element.deltaTemperatura != null) {
-                                            _tempElement += element.deltaTemperatura.toString();
-                                        }
-                                        csvData.push(_tempElement);
+                                    /* Varredura das strings */
+                                    stringData.forEach(function (stringElement) {
+                                        console.log("String: " + contador);
+                                        var data = stringElement.data;
+                                        console.log("data");
+                                        console.log(data);
+                                        console.log("=========");
+                                        /* Preenchendo as linhas das strings */
+                                        data.forEach(function (element) {
+                                            var _tempElement = element.iteration.toString() + ";";
+                                            _tempElement += element.dataHora + ";";
+                                            _tempElement += element.string + ";";
+                                            _tempElement += element.bateria + ";";
+                                            _tempElement += (element.impedancia / 100).toString() + ";";
+                                            _tempElement += (element.temperatura / 10).toString() + ";";
+                                            if (element.deltaImpedancia != null) {
+                                                _tempElement += element.deltaImpedancia.toString() + ";";
+                                            }
+                                            if (element.deltaTemperatura != null) {
+                                                _tempElement += element.deltaTemperatura.toString();
+                                            }
+                                            csvData.push(_tempElement);
+                                        });
                                     });
                                     var csvString = csvData.join("\n");
+                                    
                                     /*
                                      * Gerando o CSV
                                      */
