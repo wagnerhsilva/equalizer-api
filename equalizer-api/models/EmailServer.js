@@ -107,7 +107,7 @@ var sendEmail = function (data) {
                         };
                         var transporter = nodemailer.createTransport(smtpConfig);
                         /* Incluindo a descrição do alarme no assunto do email */
-                        var _assunto = emailServer[0].assunto + ":" + logToText;
+                        var _assunto = emailServer[0].assunto + ":" + redeSeguranca[0].localDoSistema + ":";
                         var mailOptions = {
                             from: emailServer[0].email,
                             to: redeSeguranca[0].contatoDoSistema,

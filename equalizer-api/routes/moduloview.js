@@ -21,6 +21,7 @@ var isAuthenticated = function (req, res, next) {
 }
 /* GET home page. */
 router.get('/', isAuthenticated, function (req, res, next) {
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
     res.render('moduloview', { title: 'Configuração de módulo e alarme', pageName: 'moduloview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email, showHeaderData: global.showHeaderInfo, headerInfoCDec: global.headerInfoCDec, lastDutyMax: global.lastDutyMax, translate: res.__('modulo'), translate_header: res.__('header') });
 });
 router.get('/showHideHeaderInfo', function (req, res, next) {
