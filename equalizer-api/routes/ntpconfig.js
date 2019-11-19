@@ -94,8 +94,9 @@ router.get('/', isAuthenticated, function (req, res, next) {
     updateDate();
 });
 
-router.get('/test/:server', function (req, res, next) {
+router.get('/test/:server', function (req, res, next) {    
     var server = req.params.server;
+    console.log("Testando servidor: " + server);
     var options = {
         host: server,  // Defaults to pool.ntp.org 
         port: 123,                      // Defaults to 123 (NTP) 
