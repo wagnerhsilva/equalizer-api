@@ -276,21 +276,12 @@ var createTendence = function (is_on, install_date, zero_date_months,
                 var db = new sqlite3.Database('equalizerdb');
                 db.run('PRAGMA busy_timeout = 60000;');
                 db.run('PRAGMA journal_mode=WAL;');
-                var strSql = "DELETE FROM Tendencias;";
-                db.all(strSql, function(err, data){
-                    if(err){
-                        console.log("Error:");
-                        console.log(err);
-                        errCallback(err);
-                    }else{
-                        console.log("Tabela de tendencias limpa");
-                        db.run('UPDATE TendenciasConfig SET lastData=\"\";');
-                        db.run('UPDATE TendenciasConfig SET zeroFilled=0;');
-                        db.run('UPDATE TendenciasConfig SET lastIteration=0;');
-                        console.log("Configuracoes de Tendecias resetadas");
-                        db.run("VACUUM;");
-                    }
-                });
+                db.run('DELETE FROM Tendencias;');
+                console.log("Tabela de tendencias limpa");
+                db.run('UPDATE TendenciasConfig SET lastData=\"\";');
+                db.run('UPDATE TendenciasConfig SET zeroFilled=0;');
+                db.run('UPDATE TendenciasConfig SET lastIteration=0;');
+                console.log("Configuracoes de Tendecias resetadas");
             }
             
             module.exports.get = get;
