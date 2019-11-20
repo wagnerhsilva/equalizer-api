@@ -316,6 +316,7 @@
                 });
             }
             function setManualTime() {
+                /* Sanity check */
                 if ($("#txtDate").val().trim() == "" || $("#clockpicker").val().trim() == "") {
                     $.bigBox({
                         title: "<%= translate.time_server %>",
@@ -326,6 +327,7 @@
                     });
                     return;
                 }
+                /* Enviando requisicao de troca de data e hora */
                 $.get("/ntpconfig/manual/" + $("#txtDate").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#clockpicker").val(), null, function (data, status) {
                     $.bigBox({
                         title: "<%= translate.time_server %>",

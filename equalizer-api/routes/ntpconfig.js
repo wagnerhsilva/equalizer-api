@@ -132,25 +132,33 @@ router.get('/manual/:dateTime', function (req, res, next) {
     // Flavio Alves: retirando o ajuste para UTC da hora, que estava
     // causando inconsistencia de horario com o Linux
     var dateTime = new Date(ano, mes - 1, dia, hora, minuto);
-    console.log(dateTime);
-    try {
-        console.log(dateTime);
-        //setup.clock.set(dateTime);
-        require('child_process').exec('date -s "' + dateTime + '" ; TZ="America/SaoPaulo" hwclock --systz; hwclock --systohc;', (err, stdout, stderr) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
-            console.log("efetuado");
-            console.log(stdout);
-            res.json(stdout);
-        });
-    } catch (ex) {
-        console.log("Erro ao recuperar data/hora.");
-        console.log(ex);
-        res.json("Erro ao definir data/hora.");
-        return;
-    }
+    console.log("datetime = " + dateTime);
+    /* Recuperando o timezone */
+    TimeServer.getAll(function (err, timeServer) {
+        try {
+            var timezone = timeServer[0].timeZone;
+            console.log("timezone = " + timezone);
+            //setup.clock.set(dateTime);
+            var command_to_exec = 'date -s "' + dateTime + '" ; TZ="' + timezone + '" hwclock --systz; hwclock --systohc;';
+            console.log("command = " + command_to_exec);
+            require('child_process').exec(command_to_exec, (err, stdout, stderr) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                console.log("efetuado");
+                console.log(stdout);
+                res.json(stdout);
+            });
+        } catch (ex) {
+            console.log("Erro ao recuperar data/hora.");
+            console.log(ex);
+            res.json("Erro ao definir data/hora.");
+            return;
+        }
+    });
+
+    
 
 });
 Date.prototype.addHours = function (h) {
