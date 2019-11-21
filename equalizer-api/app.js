@@ -67,19 +67,6 @@ var dataLogDB = require('./models/DataLog');
 var snmpmodel = require('./models/SnmpConfig');
 var TimeServer = require('./models/TimeServer');
 
-// Flavio Alves: configurando o timezone do projeto para o Brasil,
-// com o intuito de evitar divergencias na coleta de data e hora
-// do sistema
-console.log("Iniciando Timezone");
-TimeServer.getTimezone(function(err, tz) {
-    console.log("Timezone configurado: " + tz);
-    if (tz != null) {
-        process.env.TZ = tz;
-    } else {
-        process.env.TZ = 'America/Sao_Paulo';
-    }
-});
-
 console.log("Iniciando SNTP");
 setInterval(updateDate, 1000 * 60 * 60); // atualizar uma vez por hora
 function updateDate() {
@@ -126,7 +113,26 @@ function updateDate() {
 };
 updateDate();
 
+// Flavio Alves: configurando o timezone do projeto para o Brasil,
+// com o intuito de evitar divergencias na coleta de data e hora
+// do sistema
 
+console.log("Iniciando Timezone");
+TimeServer.getTimezone(function(err, tz) {
+    console.log("Timezone configurado: " + tz);
+    if (tz != null) {
+        process.env.TZ = tz;
+    } else {
+        process.env.TZ = 'America/Sao_Paulo';
+    }
+    console.log('Configurando variavel de ambiente do fuso horario');
+    require('child_process').exec('export TZ="' + tz + '"', (err, stdout, stderr) => {
+        if(err){
+            console.error(err);
+            return;
+        }
+    });
+});
 
 /*
  * Inicializando Banco de Dados

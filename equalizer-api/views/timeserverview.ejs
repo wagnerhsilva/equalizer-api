@@ -83,7 +83,6 @@
                     </article>
 
                 </div>
-
                 <script type="text/ng-template" id="/timeserver.html">
                     <fieldset>
                         <section class="col-sm-12 col-md-12 col-lg-12">
@@ -92,7 +91,7 @@
                                     <section class="col-sm-7 col-md-7 col-lg-7">
                                         <label class="input">
          <label class="label"><%= translate.current_datetime %></label>
-                                        <input type="text" id="txtSystemTime" value="{{serverDate | date:'dd/MM/yyyy HH:mm:ss'}}" placeholder="<%= translate.current_datetime %>"
+                                        <input type="text" id="txtSystemTime" value="{{ updatedDate }}" placeholder="<%= translate.current_datetime %>"
                                             readonly>
                                         <b class="tooltip tooltip-bottom-right"><%= translate.current_datetime %></b>
                                         </label>
@@ -125,7 +124,8 @@
                                             </section>
                                             <section class="col-sm-4 col-md-4 col-lg-2">
                                                 <label class="select">
-                                                    <select name="timezoneList" id="timezoneList" ng-model="timeserver[0].timeZone" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+                                                        <select ng-options="zone as zone for zone in zoneToChoose" ng-model="timeserver[0].timeZone"></select>
+                                                    <!-- <select name="timezoneList" id="timezoneList" ng-model="timeserver[0].timeZone" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
                                                             <option></option>
                                                             <option value="Etc/GMT+12">(GMT-12:00) International Date Line West</option>
                                                             <option value="Pacific/Midway">(GMT-11:00) Midway Island, Samoa</option>
@@ -209,16 +209,9 @@
                                                             <option value="Pacific/Auckland">(GMT+12:00) Auckland, Wellington</option>
                                                             <option value="Pacific/Fiji">(GMT+12:00) Fiji, Kamchatka, Marshall Is.</option>
                                                             <option value="Pacific/Tongatapu">(GMT+13:00) Nuku'alofa</option>
-                                                         </select>
+                                                         </select> -->
                                                 </label>
-                                                    <!-- <label class="input">
-                                                            <input type="text" ng-model="timeserver[0].timeZone" id="txtTimezone" placeholder="<%= translate.timezone %>" style="margin-right: 5px;" <%if (userAccess != 'administrador') {%>  disabled  <%}%>>
-                                                            <b class="tooltip tooltip-bottom-right"><%= translate.timezone %></b>
-                                                    </label> -->
                                             </section>
-
-
-
                                 </section>
                             <button ng-click="update()" class="btn btn-primary pull-right" ng-disabled="acessoUsuario != 'administrador'" style="width: 100px; height: 30px;">
                                 <%= translate.save %>
@@ -228,6 +221,7 @@
 
 
                 </script>
+                <script src="smartadmin/js/plugin/moment/moment-timezone-with-data.js"></script>
                 <script>
                     angular.module('app', ['ngRoute', 'ngResource'])
                         //---------------
@@ -243,7 +237,19 @@
                         //---------------
                         .controller('TimeServerController', ['$scope', 'TimeServer', function ($scope, TimeServer) {
                             $scope.serverDate = new Date('<%= serverDate %>');
+                            $scope.timezone = '<%= timezone %>';
                             $scope.timeserver = TimeServer.query();
+                            $scope.zoneToChoose = moment.tz.names();
+                            /* Preparacao da data e hora considerando o fuso horario */
+                            var _date = $scope.serverDate;
+                            var _tz = $scope.timezone;
+                            console.log("date: " + _date);
+                            console.log("timezone: " + _tz);
+                            // var _newDate = moment.tz(_date,_tz).utcOffset(stdOffset);
+                            var _newDate = moment.tz(_date,_tz);
+                            console.log("updated date: " + _newDate);
+                            $scope.updatedDate = _newDate.format('DD/MM/YYYY HH:mm');
+                            /* Funcoes */
                             $scope.update = function () {
                                 var timeserver = $scope.timeserver[0];
                                 TimeServer.update(timeserver);
@@ -328,7 +334,23 @@
                     return;
                 }
                 /* Enviando requisicao de troca de data e hora */
-                $.get("/ntpconfig/manual/" + $("#txtDate").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#clockpicker").val(), null, function (data, status) {
+                // var _date = $("#txtDate").val().replace("/", "-").replace("/", "-").replace("/", "-");
+                var jsDate = $('#txtDate').datepicker('getDate');
+                var _date = jsDate.getFullYear() + "-" + jsDate.getMonth() + "-" + jsDate.getDate();
+                console.log("jsDate");
+                console.log(jsDate);
+                var _filledtime = $("#clockpicker").val();
+                var _filledDateTime = _date + " " + _filledtime;
+                console.log("_filledDateTime: " + _filledDateTime);
+                var _tz = '<%= timezone %>';
+                console.log("_tz = " + _tz);
+                var _newDateTime = moment.tz(_filledDateTime,_tz);
+                console.log("_newDateTime: ");
+                console.log(_newDateTime);
+                var _time = _newDateTime.utc().format("YYYY-MM-DD HH:mm");
+                console.log("_time:" + _time);
+
+                $.get("/ntpconfig/manual/" + _time, null, function (data, status) {
                     $.bigBox({
                         title: "<%= translate.time_server %>",
                         content: data,
