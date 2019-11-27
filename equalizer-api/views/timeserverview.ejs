@@ -164,6 +164,15 @@
                             var _newDate = moment.tz(_date,_tz);
                             console.log("updated date: " + _newDate);
                             $scope.updatedDate = _newDate.format('DD/MM/YYYY HH:mm');
+                            /* Solucao para considerar o horario de verao
+                             * No momento do desenvolvimento, o servidor NTP esta entregando
+                             * uma hora que leva em consideracao o horario de verao (ou o componente
+                             * moment esta levando em consideracao o horario de verao). Porem, em 
+                             * outros paises talvez o horario de verao esteja sendo considerado. Entao
+                             * achei melhor manter como esta, mas deixei a implementacao do ajuste
+                             * comentada no codigo em caso de necessidade.
+                             */
+                            //$scope.updatedDate =moment.tz(_date,_tz).subtract(moment.tz(_date,_tz).isDST() ? 1 : 0, 'hours').format('DD/MM/YYYY HH:mm')
                             /* Funcoes */
                             $scope.update = function () {
                                 var timeserver = $scope.timeserver[0];
@@ -250,7 +259,9 @@
                 }
                 /* Enviando requisicao de troca de data e hora */
                 // var _date = $("#txtDate").val().replace("/", "-").replace("/", "-").replace("/", "-");
-                var jsDate = $('#txtDate').datepicker('getDate');
+                var _jsDate = $('#txtDate').datepicker('getDate');
+                /* Workaround para incluir mais um mes, porque o datepicker esta pegand um mes antes */ 
+                var jsDate = new Date(_jsDate.setMonth(_jsDate.getMonth()+1));
                 var _date = jsDate.getFullYear() + "-" + jsDate.getMonth() + "-" + jsDate.getDate();
                 console.log("jsDate");
                 console.log(jsDate);
