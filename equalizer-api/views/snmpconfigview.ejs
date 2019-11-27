@@ -416,7 +416,13 @@
                                         } else {
                                             _sucess = true;
                                         }
+                                    } else {
+                                        /* nao e snmpv3. passa direto tambem */
+                                        _sucess = true;
                                     }
+                                } else {
+                                    /* quando nao se usa o snmpv3, tem que passar direto */
+                                    _sucess = true;
                                 }
                                 if (_sucess == true) {
                                     data = [args, old];
