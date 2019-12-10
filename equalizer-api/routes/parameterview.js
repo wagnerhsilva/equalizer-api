@@ -19,6 +19,7 @@ var isAuthenticated = function (req, res, next) {
 }
 /* GET home page. */
 router.get('/', isAuthenticated,  function (req, res, next) {
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
     res.render('parameterview', { title: 'Parâmetros', pageName: 'parameterview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email, showHeaderData: global.showHeaderInfo, translate: res.__('parameter'), translate_header: res.__('header') });
 });
 router.get('/reboot', isAuthenticated,  function (req, res, next) {
