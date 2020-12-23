@@ -23,6 +23,8 @@ var isAuthenticated = function (req, res, next) {
 router.get('/', isAuthenticated, function (req, res, next) {
     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
     res.render('moduloview', { title: 'Configuração de módulo e alarme', pageName: 'moduloview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email, showHeaderData: global.showHeaderInfo, headerInfoCDec: global.headerInfoCDec, lastDutyMax: global.lastDutyMax, translate: res.__('modulo'), translate_header: res.__('header') });
+    console.log("Elielder");
+    console.log(global.checkcurrent);
 });
 router.get('/showHideHeaderInfo', function (req, res, next) {
     if (global.showHeaderInfo)
@@ -142,5 +144,15 @@ router.get('/voltarDutyMax', isAuthenticated, function (req, res) {
     parameters.voltarDutyMax();
     global.lastDutyMax = 0;
     res.send("Equalização reconfigurada.");
+});
+router.post('/Read/HabilitaCorrente', isAuthenticated, function (req, res) {
+    global.checkcurrent = true;
+    parameters.HabilitaCorrente();    
+    res.send("Leitura de Corrente Habilitada.");
+});
+router.post('/Read/ReabilitaCorrente', isAuthenticated, function (req, res) {
+    global.checkcurrent = false;
+    parameters.ReabilitaCorrente();
+    res.send("Leitura de Corrente Desabilitada.");
 });
 module.exports = router;

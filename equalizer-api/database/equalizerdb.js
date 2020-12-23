@@ -9,12 +9,12 @@ var init = function () {
         db.run("CREATE TABLE IF NOT EXISTS DataLogRT ( id INTEGER PRIMARY KEY AUTOINCREMENT, dataHora TEXT, string TEXT, bateria TEXT, temperatura REAL, impedancia REAL, tensao REAL, equalizacao REAL, batstatus REAL )");
         db.run("CREATE TABLE IF NOT EXISTS EmailServer (id INTEGER PRIMARY KEY AUTOINCREMENT, server TEXT, portaSMTP INTEGER, usarCriptografiaTLS INTEGER, email TEXT, assunto TEXT, usarAutenticacao INTEGER, login TEXT, senha TEXT)");
         db.run("CREATE TABLE IF NOT EXISTS Modulo ( id INTEGER PRIMARY KEY AUTOINCREMENT, descricao TEXT, tensao_nominal REAL, capacidade_nominal INTEGER, n_strings INTEGER, n_baterias_por_strings INTEGER, contato TEXT, localizacao TEXT, fabricante TEXT, tipo TEXT, data_instalacao TEXT, baterias_por_hr TEXT, conf_alarme_id INTEGER, FOREIGN KEY(conf_alarme_id) REFERENCES AlarmeConfig(id) )");
-        db.run("CREATE TABLE IF NOT EXISTS Parameters ( id INTEGER PRIMARY KEY AUTOINCREMENT, avg_last TEXT, duty_min TEXT, duty_max TEXT, cte_index TEXT, delay TEXT, num_cycles_var_read TEXT, bus_voltage TEXT, save_log_time TEXT, disk_capacity TEXT, param1 TEXT, param2 TEXT, param3 TEXT, param4 TEXT, param5 TEXT, param6 TEXT, param7 TEXT, param8 TEXT, param9 TEXT, param10 TEXT )");
+        db.run("CREATE TABLE IF NOT EXISTS Parameters ( id INTEGER PRIMARY KEY AUTOINCREMENT, avg_last TEXT, duty_min TEXT, duty_max TEXT, cte_index TEXT, delay TEXT, num_cycles_var_read TEXT, bus_voltage TEXT, save_log_time TEXT, disk_capacity TEXT, param1 TEXT, param2 TEXT, param3 TEXT, param4 TEXT, param5 TEXT, param6 TEXT, param7 TEXT, param8 TEXT, param9 TEXT, param10 TEXT, CheckboxCurrent TEXT )");
         db.run("CREATE TABLE IF NOT EXISTS RedeSeguranca (id INTEGER PRIMARY KEY AUTOINCREMENT, mac, velocidadePlacaRede TEXT, localAddress TEXT, gateway TEXT, mascara TEXT, servidorDNS TEXT, nomeDoSistema TEXT, localDoSistema TEXT, contatoDoSistema TEXT, httpPort INTEGER, useHttps INTEGER, httpsPort INTEGER, httpTempoDeAtualizacao INTEGER, paginaPadraoHttp TEXT)");
         db.run("CREATE TABLE IF NOT EXISTS TimeServer (id INTEGER PRIMARY KEY AUTOINCREMENT, timeServerAddress1 TEXT, timeServerAddress1_complemento TEXT, timeServerAddress2 TEXT, timeServerAddress2_complemento TEXT, timeServerAddress3 TEXT, timeServerAddress3_complemento TEXT, connectionRetries INTEGER, timeZone TEXT, automAdjustTimeDaylightSavingChanges INTEGER)");
         db.run("CREATE TABLE IF NOT EXISTS Usuario (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, sobreNome TEXT, telefone TEXT, email TEXT, senha TEXT, acesso TEXT)");
         db.run("CREATE TABLE IF NOT EXISTS ApelidoString ( String TEXT, Apelido TEXT )");
-        db.run("CREATE TABLE IF NOT EXISTS Medias ( id INTEGER PRIMARY KEY, tensao REAL, target REAL )");
+        db.run("CREATE TABLE IF NOT EXISTS Medias ( id INTEGER PRIMARY KEY, tensao REAL, target REAL, current REAL, orientation REAL )");
         db.run("CREATE TABLE IF NOT EXISTS TendenciasConfig (id INTEGER PRIMARY KEY, dataInstalacao TEXT, lastData TEXT, dataZero REAL, period REAL, impMin REAL, impMax REAL, tempMin REAL, tempMax REAL, zeroFilled REAL, isOn REAL, lastIteration INTEGER )");
         db.run("CREATE TABLE IF NOT EXISTS Tendencias ( id INTEGER PRIMARY KEY, dataHora TEXT, string TEXT, bateria TEXT, impedancia REAL, temperatura REAL, iteration INTEGER )");
         db.run("CREATE TABLE IF NOT EXISTS SnmpCommunities ( id INTEGER PRIMARY KEY AUTOINCREMENT, Address TEXT, Community TEXT, Permission INTEGER )");
@@ -22,7 +22,6 @@ var init = function () {
         db.run("CREATE TABLE IF NOT EXISTS SnmpCfgs ( id INTEGER PRIMARY KEY AUTOINCREMENT, Running INTEGER, Version INTEGER, Security INTEGER, User TEXT, Pass TEXT )");
         db.run("CREATE TABLE IF NOT EXISTS Idioma ( id INTEGER PRIMARY KEY AUTOINCREMENT, idioma TEXT )");
         //TRIGGERS
-		
 		
         //INDEXES
         db.run("CREATE INDEX IF NOT EXISTS idx_alarmlog_ata ON AlarmLog (dataHora)");

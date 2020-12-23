@@ -110,7 +110,11 @@
                                                 <label class="input">
 										<input type="number" name="qtdBatPorStrings" placeholder="<%= translate.nb_batteries_strings %>"  ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-model="modulos[0].n_baterias_por_strings" required>
 										<b class="tooltip tooltip-bottom-right"><%= translate.nb_batteries_strings %></b> </label>
-
+                                            </section>            
+                                            <section>                                                
+                                            <label class="checkbox">
+                                            <input type="checkbox" id="enablingcurrent" autocomplete='off' onchange="HabilitaCorrente();" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" <% if (checkcurrent == true) { %> checked='checked' <% } %>>
+                                            <i></i><%= translate.enable_current %>
 
                                         </fieldset>
                                     </section>
@@ -140,7 +144,7 @@
 										<input type="text" name="dataInstalacao" id="dataInstalacao" placeholder="<%= translate.installation_date %>" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" ng-model="modulos[0].data_instalacao" required>
 										<b class="tooltip tooltip-bottom-right"><%= translate.installation_date %></b> </label>
                                             </section>
-
+                                            
                                             <section>
                                                 <label class="label"><%= translate.nb_batt_horizontal_bar %></label>
                                                 <label class="input">
@@ -813,6 +817,29 @@
                     $.get("/moduloview/voltarDutyMax", null, function (data) {
                         $.bigBox({
                             title: "<%= translate.equalization %>",
+                            content: data,
+                            color: "#659265",
+                            timeout: 1000,
+                            icon: "fa fa-check fadeInLeft animated"
+                        });
+                    });
+                }
+            }
+            function HabilitaCorrente() {
+                if ($("#enablingcurrent").is(":checked")) {
+                    $.post("/moduloview/Read/HabilitaCorrente", null, function (data) {
+                        $.bigBox({
+                            title: "<%= translate.enable_current %>",
+                            content: data,
+                            color: "#659265",
+                            timeout: 1000,
+                            icon: "fa fa-check fadeInLeft animated"
+                        });
+                    });
+                }else{
+                    $.post("/moduloview/Read/ReabilitaCorrente", null, function (data) {
+                        $.bigBox({
+                            title: "<%= translate.enable_current %>",
                             content: data,
                             color: "#659265",
                             timeout: 1000,

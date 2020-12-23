@@ -137,6 +137,7 @@ TimeServer.getTimezone(function(err, tz) {
 /*
  * Inicializando Banco de Dados
  */
+
 equalizerdb.init();
 
 /*
@@ -251,3 +252,4 @@ module.exports = app;
 global.showHeaderInfo = true;
 global.headerInfoCDec = 3;
 global.lastDutyMax = 0;
+global.checkcurrent = false;

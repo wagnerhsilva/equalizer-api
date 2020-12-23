@@ -41,7 +41,11 @@
         "accumulator_info": "Informações da bateria",
         "manufacture": "Fabricante",
         "type": "Tipo",
-        "location": "Localização"
+        "location": "Localização",
+		"current": "Corrente",
+		"charge": "Sentido",
+		"msg_carregando": "Carregando",
+		"msg_descarregando": "Descarregando"
     },
     "tendencias": {
         "status": "Status",
@@ -189,7 +193,8 @@
         "save_labels_alert": "String ou Rótulo não preenchidos.",
         "string_label": "Rótulo String",
         "decimals": "Casas decimais",
-        "equalization": "Equalização"
+        "equalization": "Equalização",
+        "enable_current": "Habilita Medição de Corrente"
     },
     "emailserver": {
         "config": "Configuração",

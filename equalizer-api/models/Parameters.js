@@ -172,6 +172,23 @@ var voltarDutyMax = function(){
     db.close();
 }
 
+var HabilitaCorrente = function(){
+    console.log("Habilita leitura de corrente");
+    var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 60000;');
+    db.run('PRAGMA journal_mode=WAL;');
+    db.run("UPDATE Parameters SET CheckboxCurrent = '1';");
+    db.close();
+}
+var ReabilitaCorrente = function(){
+    console.log("Desabilita leitura de corrente.");
+    var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 60000;');
+    db.run('PRAGMA journal_mode=WAL;');
+    db.run("UPDATE Parameters SET CheckboxCurrent = '0';");
+    db.close();
+}
+
 module.exports.save = save;
 module.exports.createParameters = createParameters;
 module.exports.getLast = getLast;
@@ -180,3 +197,5 @@ module.exports.updateTrap = updateTrap;
 module.exports.getTrap = getTrap;
 module.exports.zerarDutyMax = zerarDutyMax;
 module.exports.voltarDutyMax = voltarDutyMax;
+module.exports.HabilitaCorrente = HabilitaCorrente;
+module.exports.ReabilitaCorrente = ReabilitaCorrente;

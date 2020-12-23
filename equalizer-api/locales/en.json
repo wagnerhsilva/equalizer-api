@@ -41,7 +41,11 @@
         "accumulator_info": "Battery Information",
         "manufacture": "Manufacturer",
         "type": "Type",
-        "location": "Location"
+		"location": "Location",
+		"current": "Current",
+		"charge": "Direction",
+		"msg_carregando": "Charging",
+		"msg_descarregando": "Discharging"
 	},
 	"tendencias": {
 		"status": "Status",
@@ -189,7 +193,8 @@
 		"save_labels_alert": "Empty label or string",
 		"string_label": "String label",
 		"decimals": "Decimals",
-		"equalization": "Equalization"
+		"equalization": "Equalization", 
+		"enable_current": "Enable Current Measurement"
 	},
 	"emailserver": {
 		"config": "Configuration",

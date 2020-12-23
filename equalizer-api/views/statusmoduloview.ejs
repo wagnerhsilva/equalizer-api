@@ -87,7 +87,11 @@
                            
                         <!-- <div ng-repeat="string in stringsDistintas"> -->
                         <div ng-repeat="f in range(stringsDistintas.length) track by $index">
-                            <h3>{{ stringsDistintas[$index] }} - <%= translate.voltage %>: {{ moduleMap[$index][0].str_tensao / 1000 }} <%= translate.target %>: {{ moduleMap[$index][0].target / 1000  }}</h3>
+                            <h3>{{ stringsDistintas[$index] }} - <%= translate.voltage %>: {{ moduleMap[$index][0].str_tensao / 1000 }} <%= translate.target %>: {{ moduleMap[$index][0].target / 1000  }}
+                            <%= translate.current %>: {{ moduleMap[$index][0].str_corr / 10}} <%= translate.charge %>: {{ moduleMap[$index][0].carrega}} </h3>
+                            <h3> +  <%= translate.msg_carregando %> </h3>
+                            <h3> -  <%= translate.msg_descarregando %> </h3>
+
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover datatabletemplate">
                                     <caption style="caption-side: bottom"><b><%= translate.bold %></b>: <%= translate.no_read_batteries %></caption>
@@ -130,7 +134,11 @@
                     <section id="visao2" style="display: none">
                         <button id="btn" class="btn btn-primary pull-right" onclick="alterarVisao();"><%= translate.btn_change_view %></button>
                         <div ng-repeat=" i in range(stringsMap.length) track by $index">
-                            <h3>{{ stringsMap[$index] }} - <%= translate.voltage %>: {{ moduleMap[$index][0].str_tensao / 1000 }} <%= translate.target %>: {{ moduleMap[$index][0].target / 1000  }}</h3>
+                            <h3>{{ stringsDistintas[$index] }} - <%= translate.voltage %>: {{ moduleMap[$index][0].str_tensao / 1000 }} <%= translate.target %>: {{ moduleMap[$index][0].target / 1000  }}
+                                <%= translate.current %>: {{ moduleMap[$index][0].str_corr / 10 }} <%= translate.charge %>: {{ moduleMap[$index][0].carrega}} </h3>
+                            <h3> +  <%= translate.msg_carregando %> </h3>
+                            <h3> -  <%= translate.msg_descarregando %> </h3>
+
                                 <div ng-repeat="k in range(moduleMap[$index].length / baterias_por_hr) track by $index">
                                     <div class="table-responsive">
                                         <table class="table table-striped table-bordered table-hover" style="table-layout: fixed; width:100%;">

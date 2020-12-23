@@ -41,7 +41,12 @@
         "accumulator_info": "Información batería",
         "manufacture": "Fabricante",
         "type": "Tipo",
-        "location": "Ubicación"
+        "location": "Ubicación",
+		"current": "---",
+		"charge": "---", 
+		"enable_current": "---",
+		"msg_carregando": "-",
+		"msg_descarregando": "-"
 	},
 	"tendencias": {
 		"status": "Estado",
