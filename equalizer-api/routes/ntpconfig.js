@@ -99,6 +99,7 @@ router.get('/manual/:dateTime', function (req, res, next) {
     var dia = primeiraPart.split('-')[2];
     var hora = segundaPart.split(':')[0];
     var minuto = segundaPart.split(':')[1];
+    console.log(dateTimeSemFormato);
     /* Recuperando o timezone */
     TimeServer.getAll(function (err, timeServer) {
         try {
