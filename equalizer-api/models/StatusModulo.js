@@ -43,7 +43,7 @@ var getIconName = function(pequa, tensao, min_val, max_val){
     return name;
 }
 
-var createStatusModulo = function (string, bateria, temperatura, impedancia, tensao, equalizacao,
+var createStatusModulo = function (string, bateria, temperatura, impedancia, tensao, equalizacao, current,
  min_temp, max_temp, min_imp, max_imp, min_tensao, max_tensao,
   min_target, max_target, tensao_nominal_str, baterias_por_hr, batstatus, alarme_nivel_tens_pre, alarme_nivel_imped_pre,
   alarme_nivel_temp_pre, alarme_nivel_imped_pre_max, alarme_nivel_temp_pre_max, alarme_nivel_tens_pre_max, alarme_pre_enabled) 
@@ -78,6 +78,7 @@ var createStatusModulo = function (string, bateria, temperatura, impedancia, ten
         impedancia: up_exists ? 0.0 : (impedancia / 100).toFixed(impedancial_width),
         tensao: tens,
         equalizacao: up_exists ? 0.0 : equalizacao,
+        current: current,
         min_temp: up_exists ? 0.0 : min_temp,
         max_temp: up_exists ? 0.0 : max_temp,
         pre_temp: up_exists ? 0.0 : alarme_nivel_temp_pre,
@@ -166,6 +167,7 @@ var get = function (data) {
     strSql = strSql + "		    DLOG.IMPEDANCIA, ";
     strSql = strSql + "		    DLOG.TENSAO, ";
     strSql = strSql + "		    DLOG.EQUALIZACAO, ";
+    strSql = strSql + "		    DLOG.CURRENT, ";
     strSql = strSql + "         MODL.tensao_nominal, ";
     strSql = strSql + "         RVAL.baterias_por_hr, ";
     strSql = strSql + "         DLOG.BATSTATUS, ";
@@ -197,7 +199,7 @@ var get = function (data) {
         var strings = [];
         rows.forEach(function row(row) {
             statusModulos.push(new createStatusModulo(row.STRING, row.BATERIA, row.temperatura,
-                        row.impedancia, row.tensao, row.equalizacao, row.alarme_nivel_temp_min, row.alarme_nivel_temp_max,
+                        row.impedancia, row.tensao, row.equalizacao, row.current, row.alarme_nivel_temp_min, row.alarme_nivel_temp_max,
                         row.alarme_nivel_imped_min, row.alarme_nivel_imped_max, row.alarme_nivel_tensao_min,
                         row.alarme_nivel_tensao_max, row.alarme_nivel_target_min, row.alarme_nivel_target_max, row.tensao_nominal,
                         row.baterias_por_hr, row.batstatus, row.alarme_nivel_tens_pre, row.alarme_nivel_imped_pre,
@@ -227,6 +229,7 @@ var get = function (data) {
                         statusModulos[c].target = qrows[k].target;
                         statusModulos[c].str_tensao = qrows[k].tensao;
                         statusModulos[c].str_corr = qrows[k].current;
+                        statusModulos[c].status = qrows[k].orientation;
 			
 		                if(qrows[k].orientation==1){
                             statusModulos[c].carrega = '-';
@@ -322,7 +325,12 @@ var getChartDefault = function (params, data) {
         }
         strSql = strSql + " ||\",\"|| IFNULL(AVG(CASE WHEN BATERIA = 'M1' THEN TARGET / 1000.0000 ELSE NULL END), \"\")";
         strSql = strSql + " ||\",\"|| IFNULL(SUM(TENSAO / 1000), \"\")";
+    } else if (params.visao == 4) {
+        for (var i = 1; i <= params.totalBaterias; i++) {
+            strSql = strSql + " ||\",\"|| IFNULL(AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN CURRENT / 10.0 ELSE NULL END), \"\")";
+        }
     }
+    
     console.log(params.totalBaterias);
     strSql = strSql + " as \"data\"";
     strSql = strSql + " FROM DATALOG, MODULO ";
@@ -347,6 +355,11 @@ var getChartDefault = function (params, data) {
             strSql = strSql + " AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN TENSAO / 1000.0000 ELSE NULL END) \nAND ";
         }
         strSql = strSql + " AVG(CASE WHEN BATERIA = 'M" + params.totalBaterias.toString() + "' THEN TENSAO / 1000.0000 ELSE NULL END)";
+    } else if (params.visao == 4) {
+        for (var i = 1; i < params.totalBaterias; i++) {
+            strSql = strSql + " AVG(CASE WHEN BATERIA = 'M" + i.toString() + "' THEN CURRENT / 10.0 ELSE NULL END) \nAND ";
+        }
+        strSql = strSql + " AVG(CASE WHEN BATERIA = 'M" + params.totalBaterias.toString() + "' THEN CURRENT / 10.0 ELSE NULL END)";
     }
     // console.log("------------------------------------");
     // console.log(strSql);
@@ -363,7 +376,9 @@ var getChartDefault = function (params, data) {
         rows.forEach(function row(row) {
             strResult = strResult + "\n" + row.data;
         });
-        // console.log(strResult);
+        console.log("------------------------------------");
+        console.log(strResult);
+        console.log("------------------------------------");
         data(err, strResult);
     });
     db.close();

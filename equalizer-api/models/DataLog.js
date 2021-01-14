@@ -1,7 +1,7 @@
 var sqlite3 = require('sqlite3').verbose();
 var bCrypt = require('bcrypt-nodejs');
 
-var createDataLog = function (id, dataHora, string, bateria, temperatura, impedancia, tensao, equalizacao) {
+var createDataLog = function (id, dataHora, string, bateria, temperatura, impedancia, tensao, equalizacao, current) {
     return {
         id: id,
         dataHora: dataHora,
@@ -10,15 +10,16 @@ var createDataLog = function (id, dataHora, string, bateria, temperatura, impeda
         temperatura: (temperatura / 10).toFixed(1),
         impedancia: (impedancia / 100).toFixed(1),
         tensao: (tensao / 1000).toFixed(3),
-        equalizacao: equalizacao
+        equalizacao: equalizacao,
+        current: current
     }
 }
 var save = function (dataLog, err) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
-    var stmt = db.prepare("INSERT INTO DataLog(dataHora, string, bateria, temperatura, impedancia, tensao, equalizacao) VALUES (?,?,?,?,?,?,?)");
-    stmt.run(dataLog.dataHora, dataLog.string, dataLog.bateria, dataLog.temperatura, dataLog.impedancia, dataLog.tensao, function (error) {
+    var stmt = db.prepare("INSERT INTO DataLog(dataHora, string, bateria, temperatura, impedancia, tensao, equalizacao, current) VALUES (?,?,?,?,?,?,?,?)");
+    stmt.run(dataLog.dataHora, dataLog.string, dataLog.bateria, dataLog.temperatura, dataLog.impedancia, dataLog.tensao, dataLog.current, function (error) {
         if (error)
             err(error);
         else
@@ -31,10 +32,10 @@ var getAll = function (data) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
-    db.all("SELECT id, dataHora, string, bateria, temperatura, impedancia, tensao, equalizacao FROM DataLog ORDER BY id, string, bateria DESC limit 500", function (err, rows) {
+    db.all("SELECT id, dataHora, string, bateria, temperatura, impedancia, tensao, equalizacao, current FROM DataLog ORDER BY id, string, bateria DESC limit 500", function (err, rows) {
         var dataLogs = [];
         rows.forEach(function row(row) {
-            dataLogs.push(new createDataLog(row.id, row.dataHora, row.string, row.bateria, row.temperatura, row.impedancia, row.tensao, row.equalizacao));
+            dataLogs.push(new createDataLog(row.id, row.dataHora, row.string, row.bateria, row.temperatura, row.impedancia, row.tensao, row.equalizacao, row.current));
         });
         data(err, dataLogs);
     });
@@ -44,9 +45,9 @@ var getLast = function (id, data) {
     var db = new sqlite3.Database('equalizerdb');
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
-    db.get("SELECT id, dataHora, string, bateria, temperatura, impedancia, tensao, equalizacao FROM DataLog ORDER BY id DESC LIMIT 1", function (err, row) {
+    db.get("SELECT id, dataHora, string, bateria, temperatura, impedancia, tensao, equalizacao, current FROM DataLog ORDER BY id DESC LIMIT 1", function (err, row) {
         if (row) {
-            var dataLog = new createDataLog(row.id, row.dataHora, row.string, row.bateria, row.temperatura, row.impedancia, row.tensao, row.equalizacao);
+            var dataLog = new createDataLog(row.id, row.dataHora, row.string, row.bateria, row.temperatura, row.impedancia, row.tensao, row.equalizacao, row.current);
             console.log(dataLog);
             data(err, dataLog);
         }
