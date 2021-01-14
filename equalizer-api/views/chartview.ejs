@@ -58,6 +58,7 @@
                         <div class="jarviswidget-editbox">
                         </div>
                         <div class="widget-body">
+                            <button type="button" class="btn btn-primary pull-right" style="margin-left:5px;" onclick="setVisao(4);"><%= translate.current %></button>
                             <button type="button" class="btn btn-primary pull-right" style="margin-left:5px;" onclick="setVisao(3);"><%= translate.voltage %></button>
                             <button type="button" class="btn btn-primary pull-right" style="margin-left:5px;" onclick="setVisao(2);"><%= translate.temperature %></button>
                             <button type="button" class="btn btn-primary pull-right" onclick="setVisao(1);"><%= translate.impedance %></button>
@@ -132,10 +133,12 @@
             // Flavio Alves: a visao padrao dos graficos e a de tensao
             var visao = 3;
             var nBaterias = 0;
+            var newnBaterias = 1;
             var csvData = "";
             var min = 0;
             var max = 0;
             var escalaYTensao = [0, 18];
+            var escalaYCorrente = [-1000, 1000];
             var escalaYImpedancia = [0, 50];
             var escalaYTemperatura = [0, 70];
             var escalaYSec = [0, 18];
@@ -152,6 +155,12 @@
                 escalaYTensao = [min, max];
             }
             
+            min = parseFloat(app_get_cookie("Chart_TxtEscalaYMinCorrente"));
+            max = parseFloat(app_get_cookie("Chart_TxtEscalaYMaxCorrente"));
+            if(min != "" && max != "" && min < max){
+                escalaYCorrente = [min, max];
+            }
+
             min = parseFloat(app_get_cookie("Chart_TxtEscalaYMinImpedancia"));
             max = parseFloat(app_get_cookie("Chart_TxtEscalaYMaxImpedancia"));
             if(min != "" && max != "" && min < max){
@@ -414,6 +423,72 @@
                         $body.removeClass("loading");
                     });
                 }
+                else if (visao == 4) {
+                    $body.addClass("loading");
+                    $.get("/chart/" + newnBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
+                        csvData = data;
+                        var rows = csvData.toString().split('\n');
+                        var lstObj = [];
+                        var conta = 0;
+                        var rotulos = [];
+                        var seriesVisibility = [];
+                        rows.forEach(function (element) {
+                            row = element.toString().replace("'", "\"").replace("'", "\"").split(',');
+                            if (conta > 0) {
+                                for (x = 0; x < row.length; x++) {
+                                    if (x == 0)
+                                    row[x] = new Date(row[x].toString());
+                                }
+                                lstObj.push(row);
+                            }
+                            else {
+                                $('#ddlSeries').empty();
+                                for (x = 0; x < row.length; x++) {
+                                    rotulos.push(row[x].toString());
+                                    seriesVisibility.push(true);
+                                    if (x > 0) {
+                                        $('#ddlSeries').append($('<option>', {
+                                            value: (x - 1),
+                                            text: row[x].toString(),
+                                            selected: "selected"
+                                        }));
+                                    }
+                                }
+                            }
+                            conta++;
+                        }, this);
+                        if (lstObj.length > 0) {
+                            $("#frmSeries").show();
+                            g1 = new Dygraph(document.getElementById("noroll"), lstObj, {
+                                title: '<%= translate.current %>',
+                                ylabel: '<%= translate.current %> (A)',
+                                legend: 'always',
+                                
+                                highlightCircleSize: 2,
+                                strokeWidth: 1,
+                                strokeBorderWidth: 1,
+                                
+                                highlightSeriesOpts: {
+                                    strokeWidth: 3,
+                                    strokeBorderWidth: 1,
+                                    highlightCircleSize: 5
+                                },
+                                showRangeSelector: true,
+                                // Flavio Alves: Definindo o range de plotagem
+                                valueRange: escalaYCorrente
+                            });
+                            var onclick = function (ev) {
+                                if (g1.isSeriesLocked()) {
+                                    g1.clearSelection();
+                                } else {
+                                    g1.setSelection(g1.getSelection(), g1.getHighlightSeries(), true);
+                                }
+                            };
+                            g1.updateOptions({ clickCallback: onclick }, true);
+                        }
+                        $body.removeClass("loading");
+                    });
+                }
             }
 
             function getDataImagem() {
@@ -633,6 +708,71 @@
                         $body.removeClass("loading");
                     });
                 }
+                else if (visao == 4) {
+                    $body.addClass("loading");
+                    $.get("/chart/" + newnBaterias + "/" + $("#ddlStrings").val() + "/" + $("#txtDateStart").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourStart").val() + "/" + $("#txtDateEnd").val().replace("/", "-").replace("/", "-").replace("/", "-") + " " + $("#txtHourEnd").val() + "/" + visao, "", function (data, status) {
+                        csvData = data;
+                        var rows = csvData.toString().split('\n');
+                        var lstObj = [];
+                        var conta = 0;
+                        var rotulos = [];
+                        var seriesVisibility = [];
+                        rows.forEach(function (element) {
+                            row = element.toString().replace("'", "\"").replace("'", "\"").split(',');
+                            if (conta > 0) {
+                                for (x = 0; x < row.length; x++) {
+                                    if (x == 0)
+                                    row[x] = new Date(row[x].toString());
+                                }
+                                lstObj.push(row);
+                            }
+                            else {
+                                $('#ddlSeries').empty();
+                                for (x = 0; x < row.length; x++) {
+                                    rotulos.push(row[x].toString());
+                                    seriesVisibility.push(true);
+                                    if (x > 0) {
+                                        $('#ddlSeries').append($('<option>', {
+                                            value: (x - 1),
+                                            text: row[x].toString(),
+                                            selected: "selected"
+                                        }));
+                                    }
+                                }
+                            }
+                            conta++;
+                        }, this);
+                        if (lstObj.length > 0) {
+                            $("#frmSeries").show();
+                            g1 = new Dygraph(document.getElementById("noroll"), data, {
+                                title: '<%= translate.current %>',
+                                ylabel: '<%= translate.current %> (A)',
+                                legend: 'always',
+                                // labelsDiv: document.getElementById("labels"),
+                                highlightCircleSize: 2,
+                                strokeWidth: 1,
+                                strokeBorderWidth: 1,
+                                
+                                highlightSeriesOpts: {
+                                    strokeWidth: 3,
+                                    strokeBorderWidth: 1,
+                                    highlightCircleSize: 5
+                                },
+                                showRangeSelector: true,
+                                // Flavio Alves: Definindo o range de plotagem
+                                valueRange: escalaYCorrente
+                            });
+                            html2canvas(document.querySelector("#noroll")).then(canvas => {
+                                // Export canvas as a blob
+                                canvas.toBlob(function(blob) {
+                                    // Generate file download
+                                    window.saveAs(blob, "corrente.png");
+                                });
+                            });
+                        }
+                        $body.removeClass("loading");
+                    });
+                }
             }
             
             
@@ -707,6 +847,9 @@
                             case 3:
                             filename = "report_voltage.csv";
                             break;
+                            case 4:
+                            filename = "report_current.csv";
+                            break;
                             default:
                             filename = "report.csv";
                             break;
@@ -775,6 +918,9 @@
                                     case "Impedância":
                                     setVisao(1);
                                     break;
+                                    case "Corrente":
+                                    setVisao(4);
+                                    break;
                                 }
                                 selectSerie(bateriaParam);
                                 return;
@@ -842,6 +988,14 @@
                             app_set_cookie("Chart_TxtEscalaYMaxTensao", escalaYTensao[1], 24);
                             
                             console.log(escalaYTensao);
+                        }
+                        else if (visao == 4) {
+                            escalaYCorrente[0] = uniformalize("#txtEscalaYMin");
+                            escalaYCorrente[1] = uniformalize("#txtEscalaYMax");
+                            app_set_cookie("Chart_TxtEscalaYMinCorrente", escalaYCorrente[0], 24);
+                            app_set_cookie("Chart_TxtEscalaYMaxCorrente", escalaYCorrente[1], 24);
+                            
+                            console.log(escalaYCorrente);
                         }
                         
                     }

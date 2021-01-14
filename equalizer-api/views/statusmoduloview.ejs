@@ -7,6 +7,7 @@
         .no-sort::after { display: none!important; }
         .no-sort { pointer-events: none!important; cursor: default!important; }
         .boldClass {font-weight: bold !important;}
+        .colorwhite{color:white !important;}
     </style>
 </head>
 
@@ -87,10 +88,17 @@
                            
                         <!-- <div ng-repeat="string in stringsDistintas"> -->
                         <div ng-repeat="f in range(stringsDistintas.length) track by $index">
-                            <h3>{{ stringsDistintas[$index] }} - <%= translate.voltage %>: {{ moduleMap[$index][0].str_tensao / 1000 }} <%= translate.target %>: {{ moduleMap[$index][0].target / 1000  }}
-                            <%= translate.current %>: {{ moduleMap[$index][0].str_corr / 10}} <%= translate.charge %>: {{ moduleMap[$index][0].carrega}} </h3>
-                            <h3> +  <%= translate.msg_carregando %> </h3>
-                            <h3> -  <%= translate.msg_descarregando %> </h3>
+                            <h3>{{ stringsDistintas[$index] }} </h3> 
+                            <h3><%= translate.voltage %>: {{ moduleMap[$index][0].str_tensao / 1000 }} V <%= translate.target %>: {{ moduleMap[$index][0].target / 1000  }} V </h3>
+                            <h3 ng-class="{boldClass: {{moduleMap[$index][0].status == 3}}}"> <ng-class ng-if="moduleMap[$index][0].status != 4" class=bold> <%= translate.current %>: {{ moduleMap[$index][0].carrega}} {{ moduleMap[$index][0].str_corr / 10 }} A  <%= translate.status %>: <img ng-if="moduleMap[$index][0].status == 3"
+                                                                                                                                                                                                                                                                                                                                src="/smartadmin/img/red_bullet.png" width="30" />
+                                                                                                                                                                                                                                                                                                                        <img ng-if="moduleMap[$index][0].status == 0"
+                                                                                                                                                                                                                                                                                                                                src="/smartadmin/img/green_bullet.png" width="30" />
+                                                                                                                                                                                                                                                                                                                        <img ng-if="moduleMap[$index][0].status == 1"
+                                                                                                                                                                                                                                                                                                                                src="/smartadmin/img/green_bullet.png" width="30" />
+                                                                                                                                                                                                                                                                                                                        <img ng-if="moduleMap[$index][0].status == 2"
+                                                                                                                                                                                                                                                                                                                                src="/smartadmin/img/red_bullet.png" width="30" /></ng-class></h3>
+                            <p> <ng-class ng-if="moduleMap[$index][0].status != 4" class=bold> (+) <%= translate.msg_carregando %>  (-)  <%= translate.msg_descarregando %> </ng-class></p>
 
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover datatabletemplate">
@@ -134,10 +142,17 @@
                     <section id="visao2" style="display: none">
                         <button id="btn" class="btn btn-primary pull-right" onclick="alterarVisao();"><%= translate.btn_change_view %></button>
                         <div ng-repeat=" i in range(stringsMap.length) track by $index">
-                            <h3>{{ stringsDistintas[$index] }} - <%= translate.voltage %>: {{ moduleMap[$index][0].str_tensao / 1000 }} <%= translate.target %>: {{ moduleMap[$index][0].target / 1000  }}
-                                <%= translate.current %>: {{ moduleMap[$index][0].str_corr / 10 }} <%= translate.charge %>: {{ moduleMap[$index][0].carrega}} </h3>
-                            <h3> +  <%= translate.msg_carregando %> </h3>
-                            <h3> -  <%= translate.msg_descarregando %> </h3>
+                            <h3>{{ stringsDistintas[$index] }} </h3> 
+                            <h3><%= translate.voltage %>: {{ moduleMap[$index][0].str_tensao / 1000 }} V <%= translate.target %>: {{ moduleMap[$index][0].target / 1000  }} V </h3>
+                            <h3 ng-class="{boldClass: {{moduleMap[$index][0].status == 3}}}"> <ng-class ng-if="moduleMap[$index][0].status != 4" class=bold> <%= translate.current %>: {{ moduleMap[$index][0].carrega}} {{ moduleMap[$index][0].str_corr / 10 }} A  <%= translate.status %>: <img ng-if="moduleMap[$index][0].status == 3"
+                                                                                                                                                                                                                                                                                                                                src="/smartadmin/img/red_bullet.png" width="30" />
+                                                                                                                                                                                                                                                                                                                        <img ng-if="moduleMap[$index][0].status == 0"
+                                                                                                                                                                                                                                                                                                                                src="/smartadmin/img/green_bullet.png" width="30" />
+                                                                                                                                                                                                                                                                                                                        <img ng-if="moduleMap[$index][0].status == 1"
+                                                                                                                                                                                                                                                                                                                                src="/smartadmin/img/green_bullet.png" width="30" />
+                                                                                                                                                                                                                                                                                                                        <img ng-if="moduleMap[$index][0].status == 2"
+                                                                                                                                                                                                                                                                                                                                src="/smartadmin/img/red_bullet.png" width="30" /></ng-class></h3>
+                            <p> <ng-class ng-if="moduleMap[$index][0].status != 4" class=bold> (+) <%= translate.msg_carregando %>  (-)  <%= translate.msg_descarregando %> </ng-class></p>
 
                                 <div ng-repeat="k in range(moduleMap[$index].length / baterias_por_hr) track by $index">
                                     <div class="table-responsive">

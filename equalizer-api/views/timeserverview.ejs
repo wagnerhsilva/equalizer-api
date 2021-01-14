@@ -59,7 +59,7 @@
                                                 </section>
                                                 <section class="col-sm-3 col-md-3 col-lg-3">
                                                     <label class="input"> <i class="icon-append fa fa-calendar"></i>
-            <input type="text" name="request" id="txtDate" readonly placeholder="<%= translate.sel_date %>" required class="datepicker" data-dateformat='dd/mm/yy'<%if (userAccess != 'administrador') {%>  disabled  <%}%>>
+            <input type="text" name="request" id="txtDate" readonly placeholder="<%= translate.sel_date %>" required class="datepicker" data-dateformat='yy/mm/dd'<%if (userAccess != 'administrador') {%>  disabled  <%}%>>
            </label>
                                                 </section>
                                                 <section class="col-sm-3 col-md-3 col-lg-3">
@@ -258,17 +258,24 @@
                     return;
                 }
                 /* Enviando requisicao de troca de data e hora */
-                // var _date = $("#txtDate").val().replace("/", "-").replace("/", "-").replace("/", "-");
+                //var _date = $("#txtDate").val().replace("/", "-").replace("/", "-").replace("/", "-");
                 var _jsDate = $('#txtDate').datepicker('getDate');
-                /* Workaround para incluir mais um mes, porque o datepicker esta pegand um mes antes */ 
-                var jsDate = new Date(_jsDate.setMonth(_jsDate.getMonth()+1));
-                var _date = jsDate.getFullYear() + "-" + jsDate.getMonth() + "-" + jsDate.getDate();
+                /* Workaround para incluir mais um mes, porque o datepicker esta pegand um mes antes */                
+                // if(_jsDate.getMonth()==11){
+                //     var _date = _jsDate.getFullYear() + "-" + 12 + "-" + _jsDate.getDate();;
+                // }else{
+                //     var jsDate = new Date(_jsDate.setMonth(_jsDate.getMonth()+1));
+                //     var _date = jsDate.getFullYear() + "-" + jsDate.getMonth() + "-" + _jsDate.getDate();
+                // }
+                //Mudança de layout Elielder yy/mm/dd (para funcionar corretamente)
+                var _date = $("#txtDate").val().replace("/", "-").replace("/", "-").replace("/", "-");
                 console.log("jsDate");
-                console.log(jsDate);
+                //console.log(jsDate);
                 var _filledtime = $("#clockpicker").val();
                 var _filledDateTime = _date + " " + _filledtime;
                 console.log("_filledDateTime: " + _filledDateTime);
-                var _tz = '<%= timezone %>';
+                //var _tz = '<%= timezone %>';
+                var _tz = 0;
                 console.log("_tz = " + _tz);
                 var _newDateTime = moment.tz(_filledDateTime,_tz);
                 console.log("_newDateTime: ");
@@ -276,7 +283,7 @@
                 var _time = _newDateTime.utc().format("YYYY-MM-DD HH:mm");
                 console.log("_time:" + _time);
 
-                $.get("/ntpconfig/manual/" + _time, null, function (data, status) {
+                $.get("/ntpconfig/manual/" + _time, function (data, status) {
                     $.bigBox({
                         title: "<%= translate.time_server %>",
                         content: data,
