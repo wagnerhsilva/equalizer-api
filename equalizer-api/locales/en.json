@@ -80,7 +80,8 @@
 		"apply": "Apply",
 		"choose_batteries": "Choose the batteries (series)",
 		"bus_voltage": "Bus voltage",
-		"image": "Image"
+		"image": "Image",
+		"current": "Current"
 	},
 	"chart2": {
 		"status": "Status",

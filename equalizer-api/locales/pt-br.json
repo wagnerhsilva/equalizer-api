@@ -80,7 +80,8 @@
         "apply": "Aplicar",
         "choose_batteries": "Selecione as baterias (Series)",
         "bus_voltage": "Tensão de Barramento",
-        "image": "Imagem"
+        "image": "Imagem",
+        "current": "Corrente"
     },
     "chart2": {
         "status": "Status",

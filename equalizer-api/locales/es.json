@@ -42,11 +42,11 @@
         "manufacture": "Fabricante",
         "type": "Tipo",
         "location": "Ubicación",
-		"current": "---",
+		"current": "Corriente",
 		"charge": "---", 
 		"enable_current": "---",
-		"msg_carregando": "-",
-		"msg_descarregando": "-"
+		"msg_carregando": "Cargando",
+		"msg_descarregando": "Descarga"
 	},
 	"tendencias": {
 		"status": "Estado",
@@ -81,7 +81,8 @@
 		"apply": "Aplicar",
 		"choose_batteries": "Elegir las baterías (serie)",
 		"bus_voltage": "Voltaje del bus",
-		"image": "Imagen"
+		"image": "Imagen",
+		"current": "Corriente"
 	},
 	"chart2": {
 		"status": "Estado",
@@ -194,7 +195,8 @@
 		"save_labels_alert": "Etiqueta o String vacía",
 		"string_label": "Etiqueta de string",
 		"decimals": "Decimales",
-		"equalization": "Ecualización"
+		"equalization": "Ecualización", 
+		"enable_current": "Permite la medición de corriente"
 	},
 	"emailserver": {
 		"config": "Configuración",
