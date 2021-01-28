@@ -244,8 +244,8 @@
                         if (lstObj.length > 0) {
                             $("#frmSeries").show();
                             g1 = new Dygraph(document.getElementById("noroll"), data, {
-                                title: 'Impedância',
-                                ylabel: 'Impedância',
+                                title: '<%= translate.impedance %>',
+                                ylabel:'<%= translate.impedance %> (m&Omega;)',
                                 legend: 'always',
                                 // labelsDiv: document.getElementById("labels"),
                                 highlightCircleSize: 2,
@@ -310,8 +310,8 @@
                         if (lstObj.length > 0) {
                             $("#frmSeries").show();
                             g1 = new Dygraph(document.getElementById("noroll"), data, {
-                                title: '<%= translate.temperarure %>',
-                                ylabel: '<%= translate.temperarure %>',
+                                title: '<%= translate.temperature %>',
+                                ylabel: '<%= translate.temperature %> (°C)',
                                 legend: 'always',
                                 // labelsDiv: document.getElementById("labels"),
                                 highlightCircleSize: 2,

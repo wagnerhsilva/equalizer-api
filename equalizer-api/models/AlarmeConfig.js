@@ -5,7 +5,7 @@ var createAlarmeConfig = function (id, tipo_modulo, nivel_alert_tensao_max, nive
     nivel_alert_impedancia_min, nivel_max_tensao_ativo, nivel_max_tensao_val, alarme_nivel_tensao_max, alarme_nivel_tensao_min,
     alarme_nivel_temp_max, alarme_nivel_temp_min, alarme_nivel_imped_max, alarme_nivel_imped_min, alarme_nivel_tensao_barr_max,
     alarme_nivel_tensao_barr_min, alarme_nivel_target_max, alarme_nivel_target_min, alarme_nivel_imped_pre, alarme_nivel_temp_pre, alarme_nivel_tens_pre,
-    alarme_nivel_imped_pre_max, alarme_nivel_temp_pre_max, alarme_nivel_tens_pre_max,  alarme_pre_enabled) {
+    alarme_nivel_imped_pre_max, alarme_nivel_temp_pre_max, alarme_nivel_tens_pre_max,  alarme_pre_enabled, alarme_corr_min, alarme_corr_max) {
     return {
         id: id,
         tipo_modulo: tipo_modulo,
@@ -33,7 +33,9 @@ var createAlarmeConfig = function (id, tipo_modulo, nivel_alert_tensao_max, nive
         alarme_nivel_imped_pre_max: alarme_nivel_imped_pre_max != 0 ? alarme_nivel_imped_pre_max.toFixed(3) : 0,
         alarme_nivel_temp_pre_max: alarme_nivel_temp_pre_max != 0 ? alarme_nivel_temp_pre_max.toFixed(3) : 0,
         alarme_nivel_tens_pre_max: alarme_nivel_tens_pre_max != 0 ? alarme_nivel_tens_pre_max.toFixed(3) : 0,
-        alarme_pre_enabled: alarme_pre_enabled == 1 ? true : false
+        alarme_pre_enabled: alarme_pre_enabled == 1 ? true : false,
+        alarme_corr_min: alarme_corr_min != 0? alarme_corr_min.toFixed(1) : 0,
+        alarme_corr_max: alarme_corr_max != 0? alarme_corr_max.toFixed(1) : 0
     }
 }
 var save = function (alarmeConfig, err) {
@@ -43,13 +45,13 @@ var save = function (alarmeConfig, err) {
     var stmt = db.prepare("INSERT INTO AlarmeConfig(tipo_modulo, nivel_alert_tensao_max, nivel_alert_tensao_min, nivel_alert_temp_max, nivel_alert_temp_min, nivel_alert_impedancia_max, " +
         "nivel_alert_impedancia_min, nivel_max_tensao_ativo, nivel_max_tensao_val, alarme_nivel_tensao_max, alarme_nivel_tensao_min, " +
         "alarme_nivel_temp_max, alarme_nivel_temp_min, alarme_nivel_imped_max, alarme_nivel_imped_min, alarme_nivel_tensaoBarr_max, " +
-        "alarme_nivel_tensaoBarr_min, alarme_nivel_target_max, alarme_nivel_target_min, alarme_pre_enabled) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        "alarme_nivel_tensaoBarr_min, alarme_nivel_target_max, alarme_nivel_target_min, alarme_pre_enabled, alarme_corr_min, alarme_corr_max) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
     stmt.run(alarmeConfig.tipo_modulo, alarmeConfig.nivel_alert_tensao_max, alarmeConfig.nivel_alert_tensao_min, alarmeConfig.nivel_alert_temp_max, alarmeConfig.nivel_alert_temp_min,
         alarmeConfig.nivel_alert_impedancia_max, alarmeConfig.nivel_alert_impedancia_min, alarmeConfig.nivel_max_tensao_ativo, alarmeConfig.nivel_max_tensao_val,
         alarmeConfig.alarme_nivel_tensao_max, alarmeConfig.alarme_nivel_tensao_min, alarmeConfig.alarme_nivel_temp_max, alarmeConfig.alarme_nivel_temp_min,
         alarmeConfig.alarme_nivel_imped_max, alarmeConfig.alarme_nivel_imped_min, alarmeConfig.alarme_nivel_tensaoBarr_max, alarmeConfig.alarme_nivel_tensaoBarr_min,
         alarmeConfig.alarme_nivel_target_max, alarmeConfig.alarme_nivel_target_min,
-        alarmeConfig.alarme_pre_enabled ? 1 : 0);
+        alarmeConfig.alarme_pre_enabled ? 1 : 0, alarmeConfig.alarme_corr_min, alarmeConfig.alarme_corr_max);
     stmt.finalize();
     db.close();
 }
@@ -61,7 +63,7 @@ var save_complete = function(alarmeConfig, err){
     var stmt = db.prepare("INSERT INTO AlarmeConfig(tipo_modulo, nivel_alert_tensao_max, nivel_alert_tensao_min, nivel_alert_temp_max, nivel_alert_temp_min, nivel_alert_impedancia_max, " +
         "nivel_alert_impedancia_min, nivel_max_tensao_ativo, nivel_max_tensao_val, alarme_nivel_tensao_max, alarme_nivel_tensao_min, " +
         "alarme_nivel_temp_max, alarme_nivel_temp_min, alarme_nivel_imped_max, alarme_nivel_imped_min, alarme_nivel_tensaoBarr_max, " +
-        "alarme_nivel_tensaoBarr_min, alarme_nivel_target_max, alarme_nivel_target_min, alarme_nivel_imped_pre, alarme_nivel_temp_pre, alarme_nivel_tens_pre, alarme_nivel_imped_pre_max, alarme_nivel_temp_pre_max, alarme_nivel_tens_pre_max,  alarme_pre_enabled) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        "alarme_nivel_tensaoBarr_min, alarme_nivel_target_max, alarme_nivel_target_min, alarme_nivel_imped_pre, alarme_nivel_temp_pre, alarme_nivel_tens_pre, alarme_nivel_imped_pre_max, alarme_nivel_temp_pre_max, alarme_nivel_tens_pre_max,  alarme_pre_enabled, alarme_corr_min, alarme_corr_max) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
     stmt.run(alarmeConfig.tipo_modulo, alarmeConfig.nivel_alert_tensao_max, alarmeConfig.nivel_alert_tensao_min, alarmeConfig.nivel_alert_temp_max, alarmeConfig.nivel_alert_temp_min,
         alarmeConfig.nivel_alert_impedancia_max, alarmeConfig.nivel_alert_impedancia_min, alarmeConfig.nivel_max_tensao_ativo, alarmeConfig.nivel_max_tensao_val,
         alarmeConfig.alarme_nivel_tensao_max, alarmeConfig.alarme_nivel_tensao_min, alarmeConfig.alarme_nivel_temp_max, alarmeConfig.alarme_nivel_temp_min,
@@ -73,7 +75,7 @@ var save_complete = function(alarmeConfig, err){
         alarmeConfig.alarme_nivel_imped_pre_max,
         alarmeConfig.alarme_nivel_temp_pre_max,
         alarmeConfig.alarme_nivel_tens_pre_max,
-        alarmeConfig.alarme_pre_enabled ? 1 : 0);
+        alarmeConfig.alarme_pre_enabled ? 1 : 0, alarmeConfig.alarme_corr_min, alarmeConfig.alarme_corr_max);
     stmt.finalize();
     db.close();
 };
@@ -85,7 +87,7 @@ var getAll = function (data) {
     db.all("SELECT id, tipo_modulo, nivel_alert_tensao_max, nivel_alert_tensao_min, nivel_alert_temp_max, nivel_alert_temp_min, nivel_alert_impedancia_max, " +
         "nivel_alert_impedancia_min, nivel_max_tensao_ativo, nivel_max_tensao_val, alarme_nivel_tensao_max, alarme_nivel_tensao_min, " +
         "alarme_nivel_temp_max, alarme_nivel_temp_min, alarme_nivel_imped_max, alarme_nivel_imped_min, alarme_nivel_tensaoBarr_max, " +
-        "alarme_nivel_tensaoBarr_min, alarme_nivel_target_max, alarme_nivel_target_min, alarme_nivel_imped_pre, alarme_nivel_temp_pre, alarme_nivel_tens_pre, alarme_nivel_imped_pre_max, alarme_nivel_temp_pre_max, alarme_nivel_tens_pre_max, alarme_pre_enabled FROM AlarmeConfig", function (err, rows) {
+        "alarme_nivel_tensaoBarr_min, alarme_nivel_target_max, alarme_nivel_target_min, alarme_nivel_imped_pre, alarme_nivel_temp_pre, alarme_nivel_tens_pre, alarme_nivel_imped_pre_max, alarme_nivel_temp_pre_max, alarme_nivel_tens_pre_max, alarme_pre_enabled, alarme_corr_min, alarme_corr_max FROM AlarmeConfig", function (err, rows) {
             var alarmesConfig = [];
             rows.forEach(function row(row) {
                 alarmesConfig.push(new createAlarmeConfig(row.id, row.tipo_modulo, row.nivel_alert_tensao_max, row.nivel_alert_tensao_min, row.nivel_alert_temp_max, row.nivel_alert_temp_min,
@@ -99,7 +101,9 @@ var getAll = function (data) {
                     row.alarme_nivel_imped_pre_max,
                     row.alarme_nivel_temp_pre_max,
                     row.alarme_nivel_tens_pre_max,
-                    row.alarme_pre_enabled));
+                    row.alarme_pre_enabled, 
+                    row.alarme_corr_min,
+                    row.alarme_corr_max));
             });
             data(err, alarmesConfig);
         });
@@ -112,7 +116,7 @@ var getById = function (id, data) {
     db.get("SELECT id, tipo_modulo, nivel_alert_tensao_max, nivel_alert_tensao_min, nivel_alert_temp_max, nivel_alert_temp_min, nivel_alert_impedancia_max, " +
         "nivel_alert_impedancia_min, nivel_max_tensao_ativo, nivel_max_tensao_val, alarme_nivel_tensao_max, alarme_nivel_tensao_min, " +
         "alarme_nivel_temp_max, alarme_nivel_temp_min, alarme_nivel_imped_max, alarme_nivel_imped_min, alarme_nivel_tensaoBarr_max, " +
-        "alarme_nivel_tensaoBarr_min, alarme_nivel_target_max, alarme_nivel_target_min, alarme_nivel_imped_pre, alarme_nivel_temp_pre, alarme_nivel_tens_pre, alarme_nivel_imped_pre_max, alarme_nivel_temp_pre_max, alarme_nivel_tens_pre_max, alarme_pre_enabled FROM AlarmeConfig WHERE id = $id", { $id: id }, function (err, row) {
+        "alarme_nivel_tensaoBarr_min, alarme_nivel_target_max, alarme_nivel_target_min, alarme_nivel_imped_pre, alarme_nivel_temp_pre, alarme_nivel_tens_pre, alarme_nivel_imped_pre_max, alarme_nivel_temp_pre_max, alarme_nivel_tens_pre_max, alarme_pre_enabled, alarme_corr_min, alarme_corr_max FROM AlarmeConfig WHERE id = $id", { $id: id }, function (err, row) {
             if (row) {
                 var alarmeConfig = new createAlarmeConfig(row.id, row.tipo_modulo, row.nivel_alert_tensao_max, row.nivel_alert_tensao_min, row.nivel_alert_temp_max, row.nivel_alert_temp_min,
                     row.nivel_alert_impedancia_max, row.nivel_alert_impedancia_min, row.nivel_max_tensao_ativo == 1 ? true : false, row.nivel_max_tensao_val,
@@ -125,7 +129,9 @@ var getById = function (id, data) {
                     row.alarme_nivel_imped_pre_max,
                     row.alarme_nivel_temp_pre_max,
                     row.alarme_nivel_tens_pre_max,
-                    row.alarme_pre_enabled);
+                    row.alarme_pre_enabled, 
+                    row.alarme_corr_min,
+                    row.alarme_corr_max);
                 console.log(alarmeConfig);
                 data(err, alarmeConfig);
             }
@@ -155,7 +161,9 @@ var update = function (alarmeConfig) {
         "alarme_nivel_imped_pre_max = $alarme_nivel_imped_pre_max, " +
         "alarme_nivel_temp_pre_max = $alarme_nivel_temp_pre_max, " +
         "alarme_nivel_tens_pre_max = $alarme_nivel_tens_pre_max, " +
-        "alarme_pre_enabled = $alarme_pre_enabled " +
+        "alarme_pre_enabled = $alarme_pre_enabled, " +
+        "alarme_corr_min = $alarme_corr_min, " +
+        "alarme_corr_max = $alarme_corr_max " +        
         "WHERE id = $id", {
             $id: alarmeConfig.id,
             $tipo_modulo: alarmeConfig.tipo_modulo,
@@ -184,6 +192,8 @@ var update = function (alarmeConfig) {
             $alarme_nivel_temp_pre_max: alarmeConfig.alarme_nivel_temp_pre_max,
             $alarme_nivel_tens_pre_max: alarmeConfig.alarme_nivel_tens_pre_max,
             $alarme_pre_enabled: alarmeConfig.alarme_pre_enabled ? 1 : 0,
+            $alarme_corr_min: alarmeConfig.alarme_corr_min,
+            $alarme_corr_max: alarmeConfig.alarme_corr_max,
         });
     db.close();
 }

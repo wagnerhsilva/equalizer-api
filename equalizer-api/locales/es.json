@@ -89,7 +89,9 @@
 		"graphics": "Gráficos",
 		"voltage": "Voltaje",
 		"temperature": "Temperatura",
-		"impedance": "Impedancia"
+		"impedance": "Impedancia",
+        "min": "Límite mínimo",
+        "max": "Límite máximo"
 	},
 	"usuario": {
 		"config": "Configuración",
@@ -196,7 +198,13 @@
 		"string_label": "Etiqueta de string",
 		"decimals": "Decimales",
 		"equalization": "Ecualización", 
-		"enable_current": "Permite la medición de corriente"
+		"enable_current": "Permite la medición de corriente",
+		"imp_measurement": "Medición de imp",
+		"current": "Corriente",
+		"current_min": "Min. Corriente", 
+		"current_max": "Max. Corriente",
+        "descarga_current": "Descarga (-)",
+        "carga_current": "Cargando (+)"
 	},
 	"emailserver": {
 		"config": "Configuración",

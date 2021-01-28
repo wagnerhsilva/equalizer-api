@@ -32,11 +32,13 @@
                     </article>
                 </div>
                 <script type="text/ng-template" id="/chart2.html">
-                    <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="chart(3)"><%= translate.voltage %></button>
-                    <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="chart(2)"><%= translate.temperature %></button>
-                    <button type="submit" class="btn btn-primary pull-right" ng-click="chart(1)"><%= translate.impedance %></button>
+                    <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="chart(3)"><%= translate.voltage %> (V)</button>
+                    <button type="submit" class="btn btn-primary pull-right" style="margin-left:5px;" ng-click="chart(2)"><%= translate.temperature %> (°C)</button>
+                    <button type="submit" class="btn btn-primary pull-right" ng-click="chart(1)"><%= translate.impedance %> (m&Omega;)</button>
                     <header>
-                        <h3 id="headerVisao"><%= translate.impedance %></h3>
+                        <h3 id="headerVisao"><%= translate.impedance %> (m&Omega;)</h3>
+                        <h4 id="headerVisao1"><%= translate.min %> </h4>
+                        <h4 id="headerVisao2"><%= translate.max %> </h4>
 
                     </header>
                     <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" ng-repeat="string in stringsDistintas2">
@@ -68,7 +70,10 @@
                         <!-- end widget div -->
 
                     </div>
+                
+                
                 </script>
+
                 <script>
                     angular.module('app', ['ngRoute', 'ngResource'])
                         //---------------
@@ -134,13 +139,17 @@
             /* orange    */
             var $chrt_fourth = "#7e9d3a";
             /* green     */
-            var $chrt_fifth = "#BD362F";
+            var $chrt_fifth = "#BD362F"; 
             /* dark red  */
             var $chrt_mono = "#000";
             function chart(data, index, strings) {
                 var visao = index;
                 if (visao == 1) {
-                    $("#headerVisao").text("<%= translate.impedance %>");
+                    $("#headerVisao").text("<%= translate.impedance %> (mΩ)");
+
+                    var min = 0;
+                    var max = 0;
+
                     strings.forEach(function (string) {
                         if ($("#bar-chart_" + string.replace(" ", "_")).length) {
                             $("#headerGrafico_" + string.replace(" ", "_")).text("String: " + string);
@@ -148,8 +157,8 @@
                             var data_min = [];
                             var data_max = [];
                             var labels1 = [];
-                            var conta = 0;
-                            
+                            var conta = 0;           
+
                             data.forEach(function (element) {
                                 if (element.string == string) {
                                     /* Barra contendo o valor */
@@ -161,14 +170,18 @@
                                     /* Eixo x */
                                     labels1.push([conta, element.bateria]);
                                     conta++;
+
+                                    min = element.min_imp;
+                                    max = element.max_imp;
+
                                 }
                             }, this);
                             // var data1 = data_val;
                             var data1 = [
                                 {
-                                    label: "<%= translate.impedance %>",
+                                    label: "<%= translate.impedance %> (m&Omega;)",
                                     data: data_val,
-                                    color: "#83ce16",
+                                    color: "#08478f",
                                     bars: {
                                         show: true,
                                         align: "center",
@@ -201,7 +214,7 @@
                                 legend: true,
                                 tooltip: true,
                                 tooltipOpts: {
-                                    content: "<b><%= translate.impedance %></b> = <span>%y.1</span>",
+                                    content: "<b><%= translate.impedance %> (m&Omega;)</b> = <span>%y.1</span>",
                                     defaultTheme: false
                                 }
                             };
@@ -209,9 +222,16 @@
                         }
                     }, this);
 
+                    $("#headerVisao1").text("<%= translate.min %>: " + min);
+                    $("#headerVisao2").text("<%= translate.max %>: " + max);
+
                 }
                 else if (visao == 2) {
-                    $("#headerVisao").text("<%= translate.temperature %>");
+                    $("#headerVisao").text("<%= translate.temperature %> (°C)");
+
+                    var min = 0;
+                    var max = 0;
+
                     strings.forEach(function (string) {
                         if ($("#bar-chart_" + string.replace(" ", "_")).length) {
                             $("#headerGrafico_" + string.replace(" ", "_")).text("String: " + string);
@@ -231,13 +251,17 @@
                                     /* Eixo x */
                                     labels1.push([conta, element.bateria]);
                                     conta++;
+
+                                    min = element.min_temp;
+                                    max = element.max_temp;
+
                                 }
                             }, this);
                             var data1 = [
                                 {
-                                    label: "<%= translate.temperature %>",
+                                    label: "<%= translate.temperature %> (°C)",
                                     data: data_val,
-                                    color: "#83ce16",
+                                    color: "#08478f",
                                     bars: {
                                         show: true,
                                         align: "center",
@@ -270,15 +294,23 @@
                                 legend: true,
                                 tooltip: true,
                                 tooltipOpts: {
-                                    content: "<b><%= translate.temperature %></b> = <span>%y.1</span>",
+                                    content: "<b><%= translate.temperature %> (°C)</b> = <span>%y.1</span>",
                                     defaultTheme: false
                                 }
                             };
                             $.plot($("#bar-chart_" + string.replace(" ", "_")), data1, options);
                         }
-                    }, this);
+                    }, this);                    
+
+                    $("#headerVisao1").text("<%= translate.min %>: " + min);
+                    $("#headerVisao2").text("<%= translate.max %>: " + max);
+
                 } else if (visao == 3) {
-                    $("#headerVisao").text("<%= translate.voltage %>");
+                    $("#headerVisao").text("<%= translate.voltage %> (V)");
+
+                    var min = 0;
+                    var max = 0;
+
                     strings.forEach(function (string) {
                         if ($("#bar-chart_" + string.replace(" ", "_")).length) {
                             $("#headerGrafico_" + string.replace(" ", "_")).text("String: " + string);
@@ -299,13 +331,17 @@
                                     /* Eixo x */
                                     labels1.push([conta, element.bateria]);
                                     conta++;
+
+                                    min = element.min_tensao;
+                                    max = element.max_tensao;
+
                                 }
                             }, this);
                             var data1 = [
                                 {
-                                    label: "<%= translate.voltage %>",
+                                    label: "<%= translate.voltage %> (V)",
                                     data: data_val,
-                                    color: "#83ce16",
+                                    color: "#08478f",
                                     bars: {
                                         show: true,
                                         align: "center",
@@ -338,13 +374,17 @@
                                 legend: true,
                                 tooltip: true,
                                 tooltipOpts: {
-                                    content: "<b><%= translate.voltage %></b> = <span>%y.3</span>",
+                                    content: "<b><%= translate.voltage %> (V)</b> = <span>%y.3</span>",
                                     defaultTheme: false
                                 }
                             };
                             $.plot($("#bar-chart_" + string.replace(" ", "_")), data1, options);
                         }
                     }, this);
+
+                    $("#headerVisao1").text("<%= translate.min %>: " + min);
+                    $("#headerVisao2").text("<%= translate.max %>: " + max);
+
                 }
             }
         </script>

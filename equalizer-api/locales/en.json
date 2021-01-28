@@ -88,7 +88,9 @@
 		"graphics": "Graphics",
 		"voltage": "Voltage",
 		"temperature": "Temperature",
-		"impedance": "Impedance"
+		"impedance": "Impedance",
+        "min": "Maximum Limit",
+        "max": "Minimum Limit"
 	},
 	"usuario": {
 		"config": "Configuration",
@@ -195,7 +197,13 @@
 		"string_label": "String label",
 		"decimals": "Decimals",
 		"equalization": "Equalization", 
-		"enable_current": "Enable Current Measurement"
+		"enable_current": "Enable Current Measurement",
+		"imp_measurement": "Imp Measurement",
+		"current": "Current",
+		"current_min": "Min. Current", 
+		"current_max": "Max. Current",
+        "descarga_current": "Discharging (-)",
+        "carga_current": "Charging (+)"
 	},
 	"emailserver": {
 		"config": "Configuration",

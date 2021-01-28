@@ -24,6 +24,13 @@ router.get('/', isAuthenticated, function (req, res, next) {
     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
     res.render('moduloview', { title: 'Configuração de módulo e alarme', pageName: 'moduloview', username: req.user.nome, userAccess: req.user.acesso, userEmail: req.user.email, showHeaderData: global.showHeaderInfo, headerInfoCDec: global.headerInfoCDec, lastDutyMax: global.lastDutyMax, translate: res.__('modulo'), translate_header: res.__('header') });
     console.log("Elielder");
+    parameters.getLast(function (err, parameter) {
+        if(parameter.CheckboxCurrent=='1'){
+            global.checkcurrent = true;
+        }else if(parameter.CheckboxCurrent=='0'){
+            global.checkcurrent = false;
+        }
+    });
     console.log(global.checkcurrent);
 });
 router.get('/showHideHeaderInfo', function (req, res, next) {
@@ -154,5 +161,9 @@ router.post('/Read/ReabilitaCorrente', isAuthenticated, function (req, res) {
     global.checkcurrent = false;
     parameters.ReabilitaCorrente();
     res.send("Leitura de Corrente Desabilitada.");
+});
+router.post('/callImp', isAuthenticated, function (req, res) {
+    parameters.HabLeituraImp();
+    res.send("Leitura de Impedância");
 });
 module.exports = router;

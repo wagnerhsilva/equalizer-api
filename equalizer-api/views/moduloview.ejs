@@ -114,7 +114,7 @@
                                             <section>                                                
                                             <label class="checkbox">
                                             <input type="checkbox" id="enablingcurrent" autocomplete='off' onchange="HabilitaCorrente();" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" <% if (checkcurrent == true) { %> checked='checked' <% } %>>
-                                            <i></i><%= translate.enable_current %>
+                                            <i></i><%= translate.enable_current %>                                            
 
                                         </fieldset>
                                     </section>
@@ -157,6 +157,8 @@
                                         style="float: right; width:100px; height:30px;"><%= translate.apply %></button>
                                     <button id="btnStringRotulos" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" onclick="abrirModalRotulosStrings();"
                                         style="float: right; width:150px; height:30px; margin-right:10px;"><%= translate.string_labels %></button>
+                                    <button id="btnImpedancia" class="btn btn-primary" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" onclick="callImp();"
+                                        style="float: right; width:150px; height:30px; margin-right:10px;"><%= translate.imp_measurement %></button>
                                 </div>
                             </form>
                             <form name="form2">
@@ -315,11 +317,36 @@
                                                             <input type="text" name="alarme_targetMax" id="alarme_targetMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="<%= translate.target_max %>" ng-model="alarmes[0].alarme_nivel_target_max">
                                                             <b class="tooltip tooltip-bottom-right"><%= translate.target_max %></b> 
                                                         </label>
-                                                            </td>
-                                                    
+                                                            </td>                                                    
                                                         </tr>
+                                                        <tr>
+                                                            <td><%= translate.current %> <%= translate.descarga_current %>:</td>                                                            
+                                                            <td></td>
+                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}"></td>
+                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}"></td>  
+                                                            <td>
+                                                                <label class="input">
+                                                            <input type="text" name="alarme_currentMin" id="alarme_currentMin" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="<%= translate.current_min %>" ng-model="alarmes[0].alarme_corr_min">
+                                                            <b class="tooltip tooltip-bottom-right"><%= translate.current_max %></b> 
+                                                        </label>
+                                                            </td>                                                
+                                                        </tr>
+                                                        <tr>
+                                                            <td><%= translate.current %> <%= translate.carga_current %>:</td>
+                                                            <td></td>
+                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}"></td>
+                                                            <td ng-class="{displayNone: alarmes[0].alarme_pre_enabled == 0}"></td>
+                                                            <td>
+                                                                <label class="input">
+                                                            <input type="text" name="alarme_currentMax" id="alarme_currentMax" ng-disabled="acessoUsuario != 'administrador' && acessoUsuario != 'local'" placeholder="<%= translate.current_max %>" ng-model="alarmes[0].alarme_corr_max">
+                                                            <b class="tooltip tooltip-bottom-right"><%= translate.current_min %></b> 
+                                                        </label>
+                                                            </td>                                                    
+                                                        </tr>
+                                                        
                                                     </tbody>
                                                 </table>
+                                                
                                             </section>
                                             <div style="width:350px;">
                                                 <label><%= translate.voltage_decimals %></label>
@@ -622,6 +649,9 @@
                 $("#alarme_targetMin").maskMoney({ decimal: ".", thousands: "", precision: 3 });
                 $("#alarme_targetMax").maskMoney({ decimal: ".", thousands: "", precision: 3 });
 
+                $("#alarme_currentMin").maskMoney({ decimal: ".", thousands: "", precision: 1 });
+                $("#alarme_currentMax").maskMoney({ decimal: ".", thousands: "", precision: 1 });                
+
                 $('#alarme_tensMin').on('change', function () {
                     if ($(this).val() > 16000 || $(this).val() < 0) {
                         $.bigBox({
@@ -847,6 +877,17 @@
                         });
                     });
                 }
+            }
+            function callImp(){
+                $.post("/moduloview/callImp", null, function (data) {
+                    $.bigBox({
+                        title: "<%= translate.imp_measurement %>",
+                        content: data,
+                        color: "#659265",
+                        timeout: 1000,
+                        icon: "fa fa-check fadeInLeft animated"
+                    });
+                });
             }
         </script>
         <% include partials/footer %>

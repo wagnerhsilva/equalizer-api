@@ -209,7 +209,7 @@ var get = function (data) {
         });
 
         var uniques = toUnique(strings);
-        sql = "SELECT tensao, target, current, orientation FROM Medias WHERE id IN ( ";
+        sql = "SELECT tensao, target, current, orientation, status_current FROM Medias WHERE id IN ( ";
         uniques.forEach(function el(e){
             var name = e.substr(1);
             iname = parseInt(name) - 1;
@@ -229,12 +229,15 @@ var get = function (data) {
                         statusModulos[c].target = qrows[k].target;
                         statusModulos[c].str_tensao = qrows[k].tensao;
                         statusModulos[c].str_corr = qrows[k].current;
-                        statusModulos[c].status = qrows[k].orientation;
+                        statusModulos[c].status = qrows[k].status_current;
+                        statusModulos[c].com = qrows[k].orientation;
 			
 		                if(qrows[k].orientation==1){
                             statusModulos[c].carrega = '-';
-                        }else{
+                        }else if(qrows[k].orientation==0){
                             statusModulos[c].carrega = '+';
+                        }else{
+                            statusModulos[c].carrega = ' ';
                         }
 
                     }

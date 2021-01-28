@@ -39,7 +39,7 @@ var SSH_handle = function(ssh_enabled){
     }
 }
 
-var createParameters = function (duty_min, duty_max, delay, num_cycles_var_read, save_log_time, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10, SshDisabled) {
+var createParameters = function (duty_min, duty_max, delay, num_cycles_var_read, save_log_time, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10, CheckboxCurrent, SshDisabled) {
     return {
         duty_min: duty_min,
         duty_max: duty_max,
@@ -56,6 +56,7 @@ var createParameters = function (duty_min, duty_max, delay, num_cycles_var_read,
         param8: param8, 
         param9: param9, 
         param10: param10,
+        CheckboxCurrent: CheckboxCurrent,
         ssh_enabled: !SshDisabled,
         ssh_title: SshDisabled ? "Desativado" : "Ativado"
     }
@@ -118,11 +119,11 @@ var getLast = function (data) {
     db.run('PRAGMA busy_timeout = 60000;');
     db.run('PRAGMA journal_mode=WAL;');
     db.get("SELECT duty_min, duty_max, delay, num_cycles_var_read, save_log_time, param1, param2, param3, param4, param5,"
-                            +" param6, param7, param8, param9, param10 FROM Parameters LIMIT 1", function (err, row) {
+                            +" param6, param7, param8, param9, param10, CheckboxCurrent FROM Parameters LIMIT 1", function (err, row) {
         if (row) {
             var IsFilePresent = file_exists(SSH_DISABLED);
             var parameter = new createParameters(row.duty_min, row.duty_max, row.delay, row.num_cycles_var_read, row.save_log_time, row.param1, row.param2, 
-                                                    row.param3, row.param4, row.param5, row.param6, row.param7, row.param8, row.param9, row.param10, IsFilePresent);
+                                                    row.param3, row.param4, row.param5, row.param6, row.param7, row.param8, row.param9, row.param10, row.CheckboxCurrent, IsFilePresent);
             console.log(parameter);
             data(err, parameter);
         }
@@ -189,6 +190,15 @@ var ReabilitaCorrente = function(){
     db.close();
 }
 
+var HabLeituraImp = function(){
+    console.log("Faz leitura de impedância.");
+    var db = new sqlite3.Database('equalizerdb');
+    db.run('PRAGMA busy_timeout = 60000;');
+    db.run('PRAGMA journal_mode=WAL;');
+    db.run("UPDATE Parameters SET ReadImpedance = '1';");
+    db.close();
+}
+
 module.exports.save = save;
 module.exports.createParameters = createParameters;
 module.exports.getLast = getLast;
@@ -199,3 +209,4 @@ module.exports.zerarDutyMax = zerarDutyMax;
 module.exports.voltarDutyMax = voltarDutyMax;
 module.exports.HabilitaCorrente = HabilitaCorrente;
 module.exports.ReabilitaCorrente = ReabilitaCorrente;
+module.exports.HabLeituraImp = HabLeituraImp;
